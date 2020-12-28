@@ -1,0 +1,58 @@
+{
+    "name" : "Employee",
+
+    "unique_identifier" : "employee",
+
+    "version" : "1.0",
+
+    "minimum_item_version" : "2.3",
+
+    "addon_banner" : "employee.png",
+
+    "directory" :
+    [
+        {
+          "name" : ["resources/views/addon/employee","public/addon","app/Http/Controllers/addon"]
+        }
+    ],
+
+    "sql_file"  : "",
+
+    "files"     :
+    [
+
+        {
+            "root_directory"    : "views/employee/create.blade.php",
+            "update_directory"  : "resources/views/addon/employee/create.blade.php"
+        },
+        {
+            "root_directory"    : "views/employee/edit.blade.php",
+            "update_directory"  : "resources/views/addon/employee/edit.blade.php"
+        },
+        {
+            "root_directory"    : "views/employee/index.blade.php",
+            "update_directory"  : "resources/views/addon/employee/index.blade.php"
+        },
+        {
+            "root_directory"    : "views/employee/profile.blade.php",
+            "update_directory"  : "resources/views/addon/employee/profile.blade.php"
+        },
+        {
+            "root_directory"    : "assets/employee.png",
+            "update_directory"  : "public/addon/employee.png"
+        },
+        {
+            "root_directory"    : "controllers/EmployeeController.php",
+            "update_directory"  : "app/Http/Controllers/addon/EmployeeController.php"
+        },
+        {
+            "root_directory"    : "models/Employee.php",
+            "update_directory"  : "app/Models/Employee.php"
+        },
+        {
+            "root_directory"    : "routes/addon.php",
+            "update_directory"  : "routes/addon.php"
+        }
+       
+    ]
+}
