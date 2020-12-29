@@ -182,8 +182,11 @@ Route::get('/addon/delete/{id}',[AddonManagerController::class, 'delete'])->name
 // Pages area start
 
 
+
 Route::get('/page',[MediaManagerController::class, 'insert'])->name('page');
 Route::post('/media',[MediaManagerController::class, 'mediaManager'])->name('admin.media.file.upload');
 Route::post('/get/image',[MediaManagerController::class, 'getImage'])->name('admin.media.file.use');
 Route::get('/show/image',[MediaManagerController::class, 'showImage'])->name('admin.media.file.show');
 Route::get('/media/manager/pagination/{id}',[MediaManagerController::class, 'showPaginationImage'])->name('admin.media.manager.pagination');
+Route::get('admin/media/manager/delete/{id}',[MediaManagerController::class, 'mediaDelete']);
+Route::get('test',[MediaManagerController::class, 'test']);

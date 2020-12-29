@@ -711,6 +711,30 @@
             });
         });
     </script> 
+
+    
+<script>
+    
+    function deleteImg(el){
+        $(el).closest('.img_item').remove();
+        // console.dir($(el)[0].children[2].style.display="block");
+        var id =$(el).attr("data-id");
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('admin/media/manager/delete') }}/" +id,
+				
+                success: function(data) {
+                    $('#showImage').html(data);
+                }
+            });
+        
+    }        
+</script>
     <!-- app JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
 
