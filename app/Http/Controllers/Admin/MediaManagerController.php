@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Image;
 use App\Models\ImageManager;
+use App\Traits\DirectoryController;
 
 class MediaManagerController extends Controller
 {
@@ -27,7 +28,7 @@ class MediaManagerController extends Controller
             $imageid = rand(9999,999999);
             $about_img = $request->file('image');
             $imagename = $imageid . '.' . $about_img->getClientOriginalExtension();
-            Image::make($about_img)->resize(600, 400)->save(base_path('public/uploads/imagemanager/' . $imagename), 100);
+            Image::make($about_img)->save(base_path('public/uploads/imagemanager/' . $imagename), 100);
             $image = new ImageManager;
             $image->image = $imagename;
             $image->save();
@@ -62,5 +63,27 @@ class MediaManagerController extends Controller
         $start_form = ($id - 1) * $per_page;
         $images = ImageManager::orderby('id','DESC')->skip($start_form)->take($per_page)->get();
         return view('backend.pages.ajax.addpost',compact('images'));   
+    }
+
+    public function mediaDelete($id)
+    {
+        $imgdelete = ImageManager::findOrFail($id);
+        if($imgdelete){
+            $link =base_path('public/uploads/imagemanager/' . $imgdelete->image);
+            unlink($link);
+            $imgdelete->delete();
+        }
+
+        $images = ImageManager::orderby('id','DESC')->paginate(28);
+        return view('backend.pages.ajax.addpost',compact('images'));
+
+    }
+
+    public function test()
+    {
+        
+        $this->copy('4273945.png')
+                ->to('public/uploads/test/');
+ 
     }
 }

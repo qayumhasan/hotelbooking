@@ -66,6 +66,27 @@
         color: #fff;
         background-image: linear-gradient(135deg, #008094, #18ffff);
     }
+    .img_item{
+        position: relative;
+    }
+    .dlt_btn{
+        position: absolute;
+        top: 0;
+        right: 0;
+        
+    }
+    .dlt_btn i{
+        font-size: 20px;
+        
+    }
+    .img_item span{
+        display: none;
+        cursor: pointer;
+        
+    }
+    .img_item:hover span{
+        display: block;
+    }
 </style>
 <div class="modal-body">
                         
@@ -82,8 +103,10 @@
 
     <ul id="imagemanager">
         @foreach($images as $image)
-        <li><input type="checkbox" class="myCheckbox" onclick="uploadimg(this)" id="cb{{$image->id}}" value="{{$image->image}}" />
+        <li class="img_item"><input type="checkbox" class="myCheckbox" onclick="uploadimg(this)" id="cb{{$image->id}}" value="{{$image->image}}" />
+            
             <label for="cb{{$image->id}}"><img src="{{asset('public/uploads/imagemanager/')}}/{{$image->image}}" /></label>
+            <span onclick="deleteImg(this)" data-id="{{$image->id}}" class="text-danger dlt_btn"><i class="fa fa-times-circle"></i></span>
         </li>
         @endforeach
 
@@ -92,6 +115,7 @@
         $total_row = count($paginate);
         $total_page = ceil($total_row / 28)+1;
     @endphp
+    @if($total_row >0)
     <div class="img_fotter m-auto">
     <div class="pagination">
         
@@ -104,6 +128,7 @@
         <a href="{{route('admin.media.manager.pagination',$total_page -1)}}" class="pagination-item ">Last</a>
     </div>
     </div>
+    @endif
     <script>
         $('input[type="checkbox"]').on('change', function() {
             $('input[type="checkbox"]').not(this).prop('checked', false);
