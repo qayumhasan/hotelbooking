@@ -445,12 +445,11 @@
                         </button>
                     </div>
 
-                    
-
-                    <div class="modal-body" id="showImage">
-                        
+                    <div id="showImage">
 
                     </div>
+
+                   
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary uploadbtn" data-toggle="modal" data-target="#imageuploadbtn" data-whatever="@mdo"><i class="fa fa-upload"></i>Upload Image</button>
@@ -676,6 +675,38 @@
                         }
                         
                     }
+                });
+            });
+        });
+    </script> 
+
+
+<!-- pagination area start -->
+
+<script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $(document).on('click', '.pagination-item', function(e){
+                e.preventDefault();
+                
+                var url = $(this).attr('href');
+                
+                console.log(url);
+                $.ajax({
+                    url:url,
+                    type:"get",
+                    success:function(data){
+                        //log(data);
+                        $('#showImage').html(data);
+                        $('#imageuploadbtn').modal('hide');
+                        
+                        
+                    },
+                  
                 });
             });
         });

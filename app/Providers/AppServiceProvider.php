@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\Logo;
 use App\Models\Seo;
 use App\Models\Addon;
-
+use App\Models\ImageManager;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
         view()->share('seo', $seo);
         $permit = new Addon();
         view()->share('permit', $permit);
+        $paginate = ImageManager::all();
+        view()->share('paginate', $paginate);
     }
 }

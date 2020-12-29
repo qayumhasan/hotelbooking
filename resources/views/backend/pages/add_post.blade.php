@@ -330,50 +330,33 @@
     function uploadimg(el) {
         
         $('#usefile').click(function(params) {
-            if ($(el).is(':checked')) {
+            if (el.checked == true) {
+               
                 var imgID = el.value;
-            }
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('admin.media.file.use') }}",
-                data: {
-                    imgID: imgID
-                },
-                success: function(data) {
+               
 
-                    // var mainimage = document.getElementById('mainimage');
-                    // var mainimageupload = document.getElementById('mainimageupload');
-
-                    // var delectimage = document.querySelector('#delectimage');
-                    // mainimage.classList.remove("d-none");
-                    // mainimageupload.classList.add("d-none");
-
-                    // mainimage.src = "public/uploads/imagemanager/" + data.image;
-                    // delectimage.style.display = "block";
-
-                    var photo_div = '<div class="card-body">';
+                var photo_div = '<div class="card-body" id="delectselctImage">';
                         photo_div += '<div class="row">';
                         photo_div += '<div class="col-md-12">';
-                        photo_div += '<img src="public/uploads/imagemanager/'+data.image+'" id="mainimage" class="w-100">';
+                        photo_div += '<img src="public/uploads/imagemanager/'+imgID+'" id="mainimage" class="w-100">';
                         photo_div += '<button type="button" class="btn-danger btn-sm" onclick="delectselctImage(this)" id="delectimage"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-                        photo_div += '<input type="hidden" name="image"/ value="'+data.image+'">';
+                        photo_div += '<input type="hidden" name="image"/ value="'+imgID+'">';
 
                         photo_div += '</div>';
                         photo_div += '</div>';
-                        photo_div += '</div>';  
+                        photo_div += '</div>'; 
 
+                    
+                    $('#delectselctImage').closest('.card-body').remove();
                     $('#frontupload').hide();
                     $('#imageuploaditem').append(photo_div);
                     
 
-                }
-            });
+            }
+            
         });
+
+        
 
 
 
