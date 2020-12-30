@@ -181,6 +181,11 @@
                                         <i class="las la-list-alt"></i><span>All Item</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.ordercusition.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.ordercusition.create')}}">
+                                        <i class="las la-list-alt"></i><span>Order Recusition</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 

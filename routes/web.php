@@ -16,8 +16,9 @@ use App\Http\Controllers\Admin\Hotel\UnitMasterController;
 use App\Http\Controllers\Admin\Hotel\MenuCategoryController;
 use App\Http\Controllers\Admin\Hotel\StockCenterController;
 use App\Http\Controllers\Admin\Hotel\ItemEntryController;
-use App\Http\Controllers\Admin\AddonManagerController;
+use App\Http\Controllers\Admin\Hotel\OrderRequisitionController;
 
+use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Admin\MediaManagerController;
 
@@ -165,6 +166,19 @@ Route::get('admin/itementry/deactive/{id}', [ItemEntryController::class, 'deacti
 Route::get('admin/itementry/delete/{id}', [ItemEntryController::class, 'delete']);
 Route::get('admin/itementry/edit/{id}', [ItemEntryController::class, 'edit']);
 Route::post(md5('admin/itementry/update'), [ItemEntryController::class, 'update'])->name('admin.itementry.update');
+
+// order recusition
+Route::get(md5('admin/ordercusition/create'), [OrderRequisitionController::class, 'create'])->name('admin.ordercusition.create');
+Route::get(md5('admin/ordercusition/index'), [OrderRequisitionController::class, 'index'])->name('admin.ordercusition.index');
+Route::get('/get/item/all/{item_name}', [OrderRequisitionController::class, 'getitem']);
+Route::post('/get/item/show/{invoice}', [OrderRequisitionController::class, 'allrecuitem'])->name('get.item.show');
+
+Route::post('/get/item/delete/', [OrderRequisitionController::class, 'itemdelete'])->name('get.item.delete');
+
+Route::get('/get/item/insert/', [OrderRequisitionController::class, 'iteminsert'])->name('item.insert.data');
+Route::post('/get/item/order/submit/', [OrderRequisitionController::class, 'ordersubmit'])->name('orderhead.submit');
+
+
 
 
 // hotel section end --------------------------------------------------------------------------------------------------------------------
