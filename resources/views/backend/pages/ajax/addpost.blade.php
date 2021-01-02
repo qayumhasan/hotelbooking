@@ -111,12 +111,13 @@
         @endforeach
 
     </ul>
+    
     @php
         $total_row = count($paginate);
         $total_page = ceil($total_row / 28)+1;
     @endphp
     @if($total_row >0)
-    <div class="img_fotter m-auto">
+    <div class="img_fotter m-auto d-block">
     <div class="pagination">
         
         <a href="{{route('admin.media.manager.pagination',1)}}" class="pagination-item ">First</a>

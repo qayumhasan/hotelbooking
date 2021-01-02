@@ -3,47 +3,56 @@
 <style>
    .card-item {
       transform-style: preserve-3d;
-      border-radius: 30px;
+      border-radius: 5px;
       box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2), 0px 0px 50px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
    }
 
-   .sneaker {
-      min-height: 10vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+   .status-heading {
+      font-size: 24px;
+      font-weight: bold;
+      color: black;
+   }
+   .list-group-item{
+      font-size: 12px;
+      padding: 8px 0 0 10px;
+
+   }
+   .list-group{
+      border-radius: 0px;
+   }
+   .service{
+      padding-top: 8px;
+   }
+   .service ul li{
+      list-style-type: none;
+      font-size: 12px;
+      padding: 3px 0;
    }
 
 
-   .circle {
-      position: absolute;
-      width: 26%;
-      height: 35%;
-      background: linear-gradient(to right,
-            rgba(247, 70, 66, 0.75),
-            rgba(8, 83, 156, 0.75));
-      border-radius: 50%;
-      z-index: 1;
+   .bg-navyblue {
+      background-color: #66CCFF;
+      color: #ffffff;
    }
 
-   .room-no{
-      color: white;
-      z-index: 9999;
+   .bg-yellow {
+      background: #FFFF66;
    }
 
-  
-
-   .sizes {
-      display: flex;
-      /* padding-bottom: 8%; */
-      padding: 0 5% 8% 5%;
-      justify-content: space-between;
-      transition: all 0.75s ease-out;
+   .bg-green {
+      background-color: #99CC00;
    }
-   .status{
-      border-radius: 30px 30px 0 0;
+   .bg-menu{
+      background: #E7E9E6;
+      color: #1D627E;
+      font-weight: bold;
    }
-
+   .text-color-service{
+      color: #1D627E;
+      font-weight: bold;
+   }
 
 </style>
 <div class="content-page">
@@ -62,264 +71,361 @@
          </div>
       </div>
       <div class="row">
-         <div class="col-md-6 col-lg-3">
-            <div class="cardoverflow-hidden card-min-height" style="position: relative;">
-               <!-- <div class="card-body pb-0">
-                        <div class="text-center">
-                           <h2 class="mb-0 room-number"><span>103</span></h2>
-                           <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i>House-Keeping</p>
-                        </div>
-                     </div> -->
+         <div class="col-md-6 col-lg-4">
+            <div class="cardoverflow-hidden card-min-height">
+
 
                <div class="card-item">
-                  <div class="status text-center bg-primary">
-                     <span class="status-heading">House-Keeping</span>
-                     <hr>
+                  <div class="status text-center bg-navyblue">
+                     <span class="status-heading">103</span>
+
                   </div>
-                  <div class="sneaker">
-                     <div class="circle"></div>
-                     <h2 class="room-no">301</h2>
-                  </div>
-                  <div class="info">
-                     <!-- <h1 class="title">Adidas ZX</h1> -->
-                     <div class="sizes">
-                        
-                        <h5 class="text-orange">$100.00</h5>
-                        <h5 class="text-primary">Second Floor</h5>
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">House Kepping</li>
+                              <li>Cleaning</li>
+                              <li>First Floor</li>
+                           </ul>
+                        </div>
                      </div>
-                     
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        
+                        </ul>
+                     </div>
                   </div>
-                  
+
+
                </div>
 
             </div>
          </div>
-         <div class="col-md-6 col-lg-3">
-            <div class="cardoverflow-hidden card-min-height" style="position: relative;">
-               <!-- <div class="card-body pb-0">
-                        <div class="text-center">
-                           <h2 class="mb-0 room-number"><span>103</span></h2>
-                           <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i>House-Keeping</p>
-                        </div>
-                     </div> -->
+
+         <div class="col-md-6 col-lg-4">
+            <div class="cardoverflow-hidden card-min-height">
+
 
                <div class="card-item">
-                  <div class="status text-center bg-primary">
-                     <span class="status-heading">House-Keeping</span>
-                     <hr>
+                  <div class="status text-center bg-red">
+                     <span class="status-heading">104</span>
+
                   </div>
-                  <div class="sneaker">
-                     <div class="circle"></div>
-                     <h2 class="room-no">301</h2>
-                  </div>
-                  <div class="info">
-                     <!-- <h1 class="title">Adidas ZX</h1> -->
-                     <div class="sizes">
-                        
-                        <h5 class="text-orange">$100.00</h5>
-                        <h5 class="text-primary">Second Floor</h5>
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">House Kepping</li>
+                              <li>Cleaning</li>
+                              <li>First Floor</li>
+                           </ul>
+                        </div>
                      </div>
-                     
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        
+                        </ul>
+                     </div>
                   </div>
-                  
+
+
                </div>
 
             </div>
          </div>
-         <div class="col-md-6 col-lg-3">
-            <div class="cardoverflow-hidden card-min-height" style="position: relative;">
-               <!-- <div class="card-body pb-0">
-                        <div class="text-center">
-                           <h2 class="mb-0 room-number"><span>103</span></h2>
-                           <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i>House-Keeping</p>
-                        </div>
-                     </div> -->
+
+         <div class="col-md-6 col-lg-4">
+            <div class="cardoverflow-hidden card-min-height">
+
 
                <div class="card-item">
-                  <div class="status text-center bg-primary">
-                     <span class="status-heading">House-Keeping</span>
-                     <hr>
+                  <div class="status text-center bg-green">
+                     <span class="status-heading">105</span>
+
                   </div>
-                  <div class="sneaker">
-                     <div class="circle"></div>
-                     <h2 class="room-no">301</h2>
-                  </div>
-                  <div class="info">
-                     <!-- <h1 class="title">Adidas ZX</h1> -->
-                     <div class="sizes">
-                        
-                        <h5 class="text-orange">$100.00</h5>
-                        <h5 class="text-primary">Second Floor</h5>
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">House Kepping</li>
+                              <li>Cleaning</li>
+                              <li>First Floor</li>
+                           </ul>
+                        </div>
                      </div>
-                     
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        
+                        </ul>
+                     </div>
                   </div>
-                  
+
+
                </div>
 
             </div>
          </div>
-         <div class="col-md-6 col-lg-3">
-            <div class="cardoverflow-hidden card-min-height" style="position: relative;">
-               <!-- <div class="card-body pb-0">
-                        <div class="text-center">
-                           <h2 class="mb-0 room-number"><span>103</span></h2>
-                           <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i>House-Keeping</p>
-                        </div>
-                     </div> -->
+
+         <div class="col-md-6 col-lg-4">
+            <div class="cardoverflow-hidden card-min-height">
+
 
                <div class="card-item">
-                  <div class="status text-center bg-primary">
-                     <span class="status-heading">House-Keeping</span>
-                     <hr>
+                  <div class="status text-center bg-navyblue">
+                     <span class="status-heading">103</span>
+
                   </div>
-                  <div class="sneaker">
-                     <div class="circle"></div>
-                     <h2 class="room-no">301</h2>
-                  </div>
-                  <div class="info">
-                     <!-- <h1 class="title">Adidas ZX</h1> -->
-                     <div class="sizes">
-                        
-                        <h5 class="text-orange">$100.00</h5>
-                        <h5 class="text-primary">Second Floor</h5>
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">House Kepping</li>
+                              <li>Cleaning</li>
+                              <li>First Floor</li>
+                           </ul>
+                        </div>
                      </div>
-                     
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        
+                        </ul>
+                     </div>
                   </div>
-                  
+
+
                </div>
 
             </div>
          </div>
-         <div class="col-md-6 col-lg-3">
-            <div class="cardoverflow-hidden card-min-height" style="position: relative;">
-               <!-- <div class="card-body pb-0">
-                        <div class="text-center">
-                           <h2 class="mb-0 room-number"><span>103</span></h2>
-                           <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i>House-Keeping</p>
-                        </div>
-                     </div> -->
+
+         <div class="col-md-6 col-lg-4">
+            <div class="cardoverflow-hidden card-min-height">
+
 
                <div class="card-item">
-                  <div class="status text-center bg-primary">
-                     <span class="status-heading">House-Keeping</span>
-                     <hr>
+                  <div class="status text-center bg-green">
+                     <span class="status-heading">105</span>
+
                   </div>
-                  <div class="sneaker">
-                     <div class="circle"></div>
-                     <h2 class="room-no">301</h2>
-                  </div>
-                  <div class="info">
-                     <!-- <h1 class="title">Adidas ZX</h1> -->
-                     <div class="sizes">
-                        
-                        <h5 class="text-orange">$100.00</h5>
-                        <h5 class="text-primary">Second Floor</h5>
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">House Kepping</li>
+                              <li>Cleaning</li>
+                              <li>First Floor</li>
+                           </ul>
+                        </div>
                      </div>
-                     
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        
+                        </ul>
+                     </div>
                   </div>
-                  
+
+
                </div>
 
             </div>
          </div>
-         <div class="col-md-6 col-lg-3">
-            <div class="cardoverflow-hidden card-min-height" style="position: relative;">
-               <!-- <div class="card-body pb-0">
-                        <div class="text-center">
-                           <h2 class="mb-0 room-number"><span>103</span></h2>
-                           <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i>House-Keeping</p>
-                        </div>
-                     </div> -->
+
+         <div class="col-md-6 col-lg-4">
+            <div class="cardoverflow-hidden card-min-height">
+
 
                <div class="card-item">
-                  <div class="status text-center bg-primary">
-                     <span class="status-heading">House-Keeping</span>
-                     <hr>
+                  <div class="status text-center bg-red">
+                     <span class="status-heading">104</span>
+
                   </div>
-                  <div class="sneaker">
-                     <div class="circle"></div>
-                     <h2 class="room-no">301</h2>
-                  </div>
-                  <div class="info">
-                     <!-- <h1 class="title">Adidas ZX</h1> -->
-                     <div class="sizes">
-                        
-                        <h5 class="text-orange">$100.00</h5>
-                        <h5 class="text-primary">Second Floor</h5>
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">House Kepping</li>
+                              <li>Cleaning</li>
+                              <li>First Floor</li>
+                           </ul>
+                        </div>
                      </div>
-                     
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        
+                        </ul>
+                     </div>
                   </div>
-                  
+
+
                </div>
 
             </div>
          </div>
-         <div class="col-md-6 col-lg-3">
-            <div class="cardoverflow-hidden card-min-height" style="position: relative;">
-               <!-- <div class="card-body pb-0">
-                        <div class="text-center">
-                           <h2 class="mb-0 room-number"><span>103</span></h2>
-                           <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i>House-Keeping</p>
-                        </div>
-                     </div> -->
+
+      
+
+      
+
+
+
+
+
+
+
+
+
+      </div>
+   </div>
+
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card">
+               <div class="card-header d-flex justify-content-between">
+                  <div class="header-title">
+                     <h4 class="card-title">SUPERIOR ROOMS</h4>
+                  </div>
+                  <button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-sm bg-primary"><span class="pl-1">KSH 13000.00</span>
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-6 col-lg-4">
+            <div class="cardoverflow-hidden card-min-height">
+
 
                <div class="card-item">
-                  <div class="status text-center bg-primary">
-                     <span class="status-heading">House-Keeping</span>
-                     <hr>
+                  <div class="status text-center bg-navyblue">
+                     <span class="status-heading">103</span>
+
                   </div>
-                  <div class="sneaker">
-                     <div class="circle"></div>
-                     <h2 class="room-no">301</h2>
-                  </div>
-                  <div class="info">
-                     <!-- <h1 class="title">Adidas ZX</h1> -->
-                     <div class="sizes">
-                        
-                        <h5 class="text-orange">$100.00</h5>
-                        <h5 class="text-primary">Second Floor</h5>
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">House Kepping</li>
+                              <li>Cleaning</li>
+                              <li>First Floor</li>
+                           </ul>
+                        </div>
                      </div>
-                     
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        
+                        </ul>
+                     </div>
                   </div>
-                  
+
+
                </div>
 
             </div>
          </div>
-         <div class="col-md-6 col-lg-3">
-            <div class="cardoverflow-hidden card-min-height" style="position: relative;">
-               <!-- <div class="card-body pb-0">
-                        <div class="text-center">
-                           <h2 class="mb-0 room-number"><span>103</span></h2>
-                           <p class="mb-0 text-secondary line-height"><i class="ri-arrow-up-line text-success mr-1"></i>House-Keeping</p>
-                        </div>
-                     </div> -->
+
+         <div class="col-md-6 col-lg-4">
+            <div class="cardoverflow-hidden card-min-height">
+
 
                <div class="card-item">
-                  <div class="status text-center bg-primary">
-                     <span class="status-heading">House-Keeping</span>
-                     <hr>
+                  <div class="status text-center bg-red">
+                     <span class="status-heading">104</span>
+
                   </div>
-                  <div class="sneaker">
-                     <div class="circle"></div>
-                     <h2 class="room-no">301</h2>
-                  </div>
-                  <div class="info">
-                     <!-- <h1 class="title">Adidas ZX</h1> -->
-                     <div class="sizes">
-                        
-                        <h5 class="text-orange">$100.00</h5>
-                        <h5 class="text-primary">Second Floor</h5>
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">House Kepping</li>
+                              <li>Cleaning</li>
+                              <li>First Floor</li>
+                           </ul>
+                        </div>
                      </div>
-                     
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        
+                        </ul>
+                     </div>
                   </div>
-                  
+
+
                </div>
 
             </div>
          </div>
-     
-         
+
+         <div class="col-md-6 col-lg-4">
+            <div class="cardoverflow-hidden card-min-height">
+
+
+               <div class="card-item">
+                  <div class="status text-center bg-green">
+                     <span class="status-heading">105</span>
+
+                  </div>
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">House Kepping</li>
+                              <li>Cleaning</li>
+                              <li>First Floor</li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
+                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        
+                        </ul>
+                     </div>
+                  </div>
+
+
+               </div>
+
+            </div>
+         </div>
+
+      
+
+
+
+
+
+
+
+
+
       </div>
    </div>
 </div>

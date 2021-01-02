@@ -299,8 +299,7 @@ pre,code,kbd,samp
 }
 
 .card-min-height{
-  min-height: 270px;
-  
+ padding-bottom: 40px; 
 }
 .room-number{
   margin-top: 30%;
