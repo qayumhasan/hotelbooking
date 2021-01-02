@@ -177,6 +177,16 @@ Route::post('/get/item/delete/', [OrderRequisitionController::class, 'itemdelete
 
 Route::get('/get/item/insert/', [OrderRequisitionController::class, 'iteminsert'])->name('item.insert.data');
 Route::post('/get/item/order/submit/', [OrderRequisitionController::class, 'ordersubmit'])->name('orderhead.submit');
+Route::post('/get/oderrecusition/edit/', [OrderRequisitionController::class, 'orderedit'])->name('get.item.edit');
+Route::get('admin/ordercusition/edit/{id}', [OrderRequisitionController::class, 'edit']);
+Route::post('admin/ordercusition/update/', [OrderRequisitionController::class, 'orderupdate'])->name('orderhead.update');
+Route::get('admin/ordercusition/delete/{id}', [OrderRequisitionController::class, 'orderdelete']);
+
+
+
+
+
+
 
 
 

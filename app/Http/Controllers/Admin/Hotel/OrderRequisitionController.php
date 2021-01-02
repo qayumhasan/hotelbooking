@@ -9,6 +9,7 @@ use App\Models\OrderHead;
 use App\Models\OrderHeadDetails;
 use Carbon\Carbon;
 use DB;
+use Auth;
 
 class OrderRequisitionController extends Controller
 {
@@ -53,7 +54,8 @@ class OrderRequisitionController extends Controller
     // order recuinser
     public function iteminsert(Request $request){
         //return $request;
-        $validated = $request->validate([
+       if($request->i_id == ''){
+           $validated = $request->validate([
             'item_name' => 'required',
         ]);
         $item=ItemEntry::where('item_name',$request->item_name)->first();
@@ -61,7 +63,7 @@ class OrderRequisitionController extends Controller
         $itemorder=OrderHeadDetails::where('invoice_no',$request->invoice_no)->where('item_id',$item->id)->first();
 
         if($itemorder){
-          // return "ok ase";
+          
             $update=OrderHeadDetails::where('item_id',$itemorder->item_id)->update([
                 'qty'=> $itemorder->qty + $request->qty,
             ]);
@@ -72,7 +74,7 @@ class OrderRequisitionController extends Controller
             }
 
         }else{
-          // return "nai";
+         
             $insert=OrderHeadDetails::insert([
                 'item_name'=>$request->item_name,
                 'item_id'=>$item->id,
@@ -88,6 +90,29 @@ class OrderRequisitionController extends Controller
                 return response()->json($insert);
             }
         }
+       }else{
+
+            $validated = $request->validate([
+                'item_name' => 'required',
+            ]);
+            $item=ItemEntry::where('item_name',$request->item_name)->first();
+            $insert=OrderHeadDetails::where('id',$request->i_id)->update([
+                'item_name'=>$request->item_name,
+                'item_id'=>$item->id,
+                'unit'=>$request->unit,
+                'qty'=>$request->qty,
+                'invoice_no'=>$request->invoice_no, 
+                'date'=>$request->date,
+                'updated_at'=>Carbon::now()->toDateTimeString(),
+            ]);
+            if($insert){
+                return response()->json($insert);
+            }else{
+                return response()->json($insert);
+            }
+       
+       }
+       
        
     }
 
@@ -126,17 +151,6 @@ class OrderRequisitionController extends Controller
     }
     // item delete
     public function itemdelete(Request $request){
-      
-        // $orderhed=OrderHead::orderBy('id','DESC')->first();
-        // if($orderhed){
-        //     $year= Carbon::now()->format('Y');
-        //     $date= Carbon::now()->format('d');
-        //     $invoice_id='HT'.$year.'-'.$date.'-A-'.$orderhed->id;
-        // }else{
-        //     $year= Carbon::now()->format('Y');
-        //     $date= Carbon::now()->format('d');
-        //     $invoice_id='HT'.$year.'-'.$date.'-A-'.'0';
-        // }
 
         $delete=OrderHeadDetails::where('id',$request->item_id)->delete();
         if($delete){
@@ -146,6 +160,72 @@ class OrderRequisitionController extends Controller
         }
 
     }
+
+    // edit order recusition
+    public function orderedit(Request $request){
+       $data = DB::table('order_head_details')
+       ->where('order_head_details.id',$request->item_id)
+       ->join('unit_masters', 'order_head_details.unit', '=', 'unit_masters.id')
+       ->select('order_head_details.*', 'unit_masters.name')
+       ->first();
+      // dd($data);
+       return response()->json($data);
+    }
+
+    public function edit($id){
+        $edit=OrderHead::where('id',$id)->first();
+        $allitem=ItemEntry::where('is_deleted',0)->where('is_active',1)->latest()->get();
+        return view('hotelbooking.orderrecusition.update',compact('edit','allitem'));
+    }
+
+    // update
+    public function orderupdate(Request $request){
+        $update=OrderHead::where('id',$request->id)->update([
+            'num_of_qty'=>$request->num_of_qty,
+            'date'=>$request->date,
+            'num_of_item'=>$request->num_of_item,
+            'remarks'=>$request->remarks,
+            'updated_by'=>Auth::user()->id,
+            'updated_date'=>Carbon::now()->toDateTimeString(),
+            'updated_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        if($update){
+            $notification=array(
+                'messege'=>'update Success',
+                'alert-type'=>'success'
+                );
+            return redirect()->back()->with($notification);
+        }else{
+            $notification=array(
+                'messege'=>'update Faild',
+                'alert-type'=>'error'
+                );
+            return redirect()->back()->with($notification);
+        }
+    }
+    // delete
+    public function orderdelete($id){
+        $delete=OrderHead::where('id',$id)->update([
+            'is_deleted'=>1,
+            'updated_by'=>Auth::user()->id,
+            'updated_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        if($delete){
+            $notification=array(
+                'messege'=>'Delete Success',
+                'alert-type'=>'success'
+                );
+            return redirect()->back()->with($notification);
+        }else{
+            $notification=array(
+                'messege'=>'Delete Faild',
+                'alert-type'=>'error'
+                );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+
     
 
 }

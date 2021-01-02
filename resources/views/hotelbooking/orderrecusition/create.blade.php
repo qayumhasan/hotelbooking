@@ -32,11 +32,12 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row" id="mainfile">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Item Name: *</label>
                                             <input type="text" id="item_name" name="item_name" class="form-control" list="allitem" placeholder="Item" />
+                                            <input type="hidden" id="i_id" name="i_id"/>
                                             <datalist id="allitem">
                                                 @foreach($allitem as $item)
                                                 <option value="{{$item->item_name}}"></option>
@@ -46,7 +47,7 @@
                                             
                                         </div>
                                     </div>
-                                     <div class="col-md-4">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Unit: *</label>
                                             <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="unit"/>
@@ -65,6 +66,7 @@
                                             <button type="button" class="btn btn-primary" id="addnow">Add</button>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -178,8 +180,10 @@ $(document).ready(function() {
                 $('#unit').val("");
                 $('#unit_name').val("");
                 $('#Qty').val("");
+                $("#i_id").val("");
 
                 alldatashow();
+                mainshow();
             },
 
             error: function (err) {
@@ -204,15 +208,16 @@ $(document).ready(function() {
 			   $('#showallitem').html(data);
 
             });
+            
 	}
 
 	alldatashow();
 </script>
+
 <script>
     function cartDatadelete(el) {
         
-        
-       //alert(el.value);
+       
         $.post('{{route('get.item.delete')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
             function(data) {
                 $('#addtocartshow').html(data);
@@ -226,8 +231,30 @@ $(document).ready(function() {
 
             });
      alldatashow();
+   
 	}
 	cartheaderdelete();
+</script>
+<script>
+    function cartdata(el) {
+        
+       //alert(el.value)
+        $.post('{{route('get.item.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
+            function(data) {
+                //$('#addtocartshow').html(data);
+                            $("#item_name").val(data.item_name);
+                            $("#i_id").val(data.id);
+                            $("#unit").val(data.unit);
+                            $("#unit_name").val(data.name);
+                            $("#Qty").val(data.qty);
+
+
+            });
+     alldatashow();
+   
+	}
+	cartheaderdelete();
+
 </script>
 
 @endsection
