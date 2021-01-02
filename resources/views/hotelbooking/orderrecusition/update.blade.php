@@ -1,180 +1,256 @@
 @extends('hotelbooking.master')
-@section('title', 'Add Room | '.$seo->meta_title)
+@section('title', 'Order Recusition | '.$seo->meta_title)
 @section('content')
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-12 col-lg-12">
+            <div class="col-md-8">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Update Item</h4>
+                            <h4 class="card-title">Update Order Recusition</h4>
                         </div>
-                       <a href="{{route('admin.itementry.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Item</span></i></button></a>
+                       <a href="{{route('admin.ordercusition.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Order</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.itementry.update')}}" method="POST">
-                @csrf
+              
                 <div class="row">
-                    <div class="col-md-9">
+                    
+                    <div class="col-md-12">
+                    <form action="#" method="get" id="option-choice-form">
+                        @csrf
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Item Content</h4>
+                                    <h6 class="card-title">Invoice Id: {{$edit->invoice_no}}</h6>
+                                </div>
+                                <div class="header-title">
+                                    <h6 class="card-title">
+                                        <input type="date" class="form-control" name="date" value="">
+                                    </h6>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Item Name: *</label>
-                                            <input type="text" class="form-control" id="fname" name="item_name" placeholder="Item Name" value="{{$edit->item_name}}"/>
-                                            <input type="hidden" name="id" value="{{$edit->id}}"/>
-                                            @error('item_name')
-                                                <div style="color:red">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="fname">Short Name: *</label>
-                                            <input type="text" class="form-control" id="fname" name="short_name" placeholder="Short Name" value="{{$edit->short_name}}"/>
-                                            @error('branch_id')
-                                                <div style="color:red">{{ $message }}</div>
-                                            @enderror
-                                          
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="fname">Category Name: </label>
-                                            <select name="category_name" class="form-control" id="category_name">
-                                                <option value="">--Select--</option>
-                                                @foreach($category as $cate)
-                                                <option value="{{$cate->id}}" @if($edit->category_name == $cate->id) selected @endif>{{$cate->name}}</option>
+                                            <input type="text" id="item_name" name="item_name" class="form-control" list="allitem" placeholder="Item" />
+                                            <datalist id="allitem">
+                                                @foreach($allitem as $item)
+                                                <option value="{{$item->item_name}}"></option>
                                                 @endforeach
-                                            </select>
-                                            @error('room_type')
-                                                <div style="color:red">{{ $message }}</div>
-                                            @enderror
-                                          
+                                            </datalist>
+                                                <div style="color:red" id="item_err"></div>
+                                            
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="fname">Unit Name: </label>
-                                            <select name="unit_name" class="form-control floor" id="unit_name">
-                                                <option value="">--Select--</option>
-                                                @foreach($unit as $allunit)
-                                                <option value="{{$allunit->id}}" @if($edit->unit_name == $allunit->id) selected @endif>{{$allunit->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('unit')
-                                                <div style="color:red">{{ $message }}</div>
-                                            @enderror
-                                          
+                                            <label for="fname">Unit: *</label>
+                                            <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="unit"/>
+                                            <input type="hidden" class="form-control" id="unit" name="unit" />
+                                            <input type="hidden" name="invoice_no" value="{{$edit->invoice_no}}" id="invoice_no"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="fname">Rate:</label>
-                                            <input type="text" class="form-control" id="fname" name="rate" placeholder="Rate" value="{{$edit->rate}}"/>
+                                            <label for="fname">Qty: </label>
+                                            <input type="number" class="form-control" id="Qty" name="qty" placeholder="Qty"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-12 text-right">
                                         <div class="form-group">
-                                            <label for="fname">Minimum Level:</label>
-                                           <Input type="text" name="min_level" class="form-control" value="{{$edit->min_level}}">
-                                         
+                                            <button type="button" class="btn btn-primary" id="addnow">Add</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
+                    </form>
                     </div>
-
-                    <div class="col-md-3">
+        <form action="{{route('orderhead.update')}}" method="post">
+            @csrf
+                    <div class="col-md-12">
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
-                                    <h4 class="card-title">Menu Type</h4>
+                                    <h4 class="card-title">All Item</h4>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="custom-control custom-radio custom-radio-color-checked custom-control">
-                                            <input type="radio" name="menu_type" id="customRadio-1" class="custom-control-input bg-primary" value="Food"  @if($edit->menu_item == 'Food') checked @endif>
-                                            <label class="custom-control-label" for="customRadio-1"> Food </label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">
-                                            <input type="radio" name="menu_type" id="customRadio-2"  class="custom-control-input bg-primary" value="Beverage" @if($edit->menu_item == 'Beverage') checked @endif>
-                                            <label class="custom-control-label" for="customRadio-2"> Beverage </label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">
-                                            <input type="radio" name="menu_type" id="customRadio-3"  class="custom-control-input bg-primary" value="Cigarette" @if($edit->menu_item == 'Cigarette') checked @endif>
-                                            <label class="custom-control-label" for="customRadio-3"> Cigarette </label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">
-                                            <input type="radio" name="menu_type" id="customRadio-4"  class="custom-control-input bg-primary" value="Banquet" @if($edit->menu_item == 'Banquet') checked @endif>
-                                            <label class="custom-control-label" for="customRadio-4"> Banquet </label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">
-                                            <input type="radio" name="menu_type" id="customRadio-5" class="custom-control-input bg-primary" value="House_kipping" @if($edit->menu_item == 'House_kipping') checked @endif>
-                                            <label class="custom-control-label" for="customRadio-5"> House-kipping </label>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="row" id="showallitem">
+                                 
+                                 </div>
                             </div>
-
-                        </div>
-                        <div class="card shadow-sm shadow-showcase">
-                            <div class="card-header d-flex justify-content-between">
-                                <div class="header-title">
-                                    <h4 class="card-title">Publish</h4>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="custom-control custom-radio custom-radio-color-checked custom-control">
-                                            <input type="radio" name="is_active" id="customRadio-8" class="custom-control-input bg-primary" value="1" @if($edit->is_active == 1) checked @endif>
-                                            <label class="custom-control-label" for="customRadio-8"> Active </label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">
-                                            <input type="radio" name="is_active" id="customRadio-9" name="customRadio-10" class="custom-control-input bg-warning" value="0" @if($edit->is_active == 0) checked @endif>
-                                            <label class="custom-control-label" for="customRadio-9"> Deactive </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="card shadow-sm shadow-showcase">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div id="file-upload-form" class="uploader-file">
-                                            <button type="submit" class="btn btn-success">Update</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
-                 
                 </div>
-            </form>
             </div>
-
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                            <div class="card shadow-sm shadow-showcase">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="header-title">
+                                        <h4 class="card-title">Item Name</h4>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <ul>
+                                                @foreach($allitem as $item)
+                                                <li>{{$item->item_name}}</li>
+                                                @endforeach
+                                              
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="id" value="{{$edit->id}}">
+                            </div>
+                            <div class="card shadow-sm shadow-showcase">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div id="file-upload-form" class="uploader-file">
+                                                <button type="submit" class="btn btn-success">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         </div>
     </div>
 </div>
-<script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
-<script>
-   CKEDITOR.replace('editor3');
+<script type="text/javascript">
+  $(document).ready(function() {
+     $('input[name="item_name"]').on('change', function(){
+         var item_name = $(this).val();
+         //alert(item_name);
+
+         if(item_name) {
+             $.ajax({
+                 url: "{{  url('/get/item/all/') }}/"+item_name,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+
+                        $('#unit').val(data.unit_name);
+                        $('#unit_name').val(data.name);
+                        $('#Qty').val(1);
+                       
+
+                    }
+             });
+         } else {
+             //alert('danger');
+         }
+
+     });
+ });
 </script>
+
+<script>
+$(document).ready(function() {
+    $('#addnow').on('click', function() {
+      // alert('ok');
+        $.ajax({
+            type: 'GET',
+            url: "{{route('item.insert.data')}}",
+            data: $('#option-choice-form').serializeArray(),
+
+            success: function(data) {
+                $('#item_err').html('');
+                iziToast.success({  message: 'success ',
+                                        'position':'topCenter'
+                                    });
+                //  document.getElementById('cartdatacount').innerHTML = data.count;
+                //  document.getElementById('checkoutid').innerHTML = data.count;
+                $('#item_name').val("");
+                $('#unit').val("");
+                $('#unit_name').val("");
+                $('#Qty').val("");
+
+                alldatashow();
+            },
+
+            error: function (err) {
+                $('#item_err').html(err.responseJSON.errors.item_name[0]);
+            }
+          
+        });
+       
+
+    });
+});
+</script>
+
+
+<script>
+    function alldatashow() {
+      //alert("ok");
+        var invoice = $("#invoice_no").val();
+        //alert(invoice);
+        $.post('{{ url('/get/item/show/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
+            function(data) {
+			   $('#showallitem').html(data);
+
+            });
+	}
+
+	alldatashow();
+</script>
+<script>
+    function cartDatadelete(el) {
+        
+        
+       //alert(el.value);
+        $.post('{{route('get.item.delete')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
+            function(data) {
+                $('#addtocartshow').html(data);
+
+                if (data) {
+                  iziToast.success({  message: 'Delete success ',
+                                          'position':'topCenter'
+                                      });
+                }
+
+
+            });
+     alldatashow();
+	}
+	cartheaderdelete();
+</script>
+
+<script>
+    function cartdata(el) {
+        
+       //alert(el.value)
+        $.post('{{route('get.item.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
+            function(data) {
+                //$('#addtocartshow').html(data);
+                            $("#item_name").val(data.item_name);
+                            $("#i_id").val(data.id);
+                            $("#unit").val(data.unit);
+                            $("#unit_name").val(data.name);
+                            $("#Qty").val(data.qty);
+
+
+            });
+     alldatashow();
+   
+	}
+	cartheaderdelete();
+
+</script>
+
 @endsection

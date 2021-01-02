@@ -28,9 +28,9 @@
                                                                 <td>{{$data->unit}}</td>
                                                                 <td>{{$data->qty}}</td>
                                                                 <td>
-                                                                <a class="badge bg-primary-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/itementry/edit/'.$data->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
-                                                              
-                                                                 <button type="button" onclick="cartDatadelete(this)" data-toggle="tooltip" title="" class="badge bg-danger-light mr-2" value="{{$data->id}}" data-original-title="Remove"><i class="la la-trash"></i></button>
+                                                                <!-- <a id="edit" data-id="{{$data->id}}"  class="editcat badge bg-primary-light mr-2"  data-toggle="tooltip" data-placement="top"  data-original-title="Edit"><i class="lar la-edit"></i></a> -->
+                                                                <button type="button" onclick="cartdata(this)" data-toggle="tooltip" title="" class="editcat badge bg-primary-light" value="{{$data->id}}" data-original-title="Remove"><i class="lar la-edit"></i></button>
+                                                                 <button type="button" onclick="cartDatadelete(this)" data-toggle="tooltip" title="" class="badge bg-danger-light" value="{{$data->id}}" data-original-title="Remove"><i class="la la-trash"></i></button>
                                                                 </td>
                                                             </tr>
                                                             @endforeach
@@ -64,7 +64,7 @@
                                                     <div class="form-group">
                                                         <label for="fname">Number Of Quantity: </label>
                                                         <input type="text" class="form-control" value="{{$allqty}}" disabled/>
-                                                        <input type="hidden" name="num_of_item"  value="{{$allqty}}"/>
+                                                        <input type="hidden" name="num_of_item"  value="{{$singlecount}}"/>
                                                         <input type="hidden" name="num_of_qty"  value="{{$allqty}}"/>
                                                         <input type="hidden" name="invoice_no"  value="{{$invoice}}"/>
                                                     </div>
