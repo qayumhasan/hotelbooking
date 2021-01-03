@@ -194,6 +194,44 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="">
+                            <a href="#supplier" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Supplier</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="supplier" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.supplier.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.supplier.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Supplier</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.supplier.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.supplier.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Supplier</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#purchase" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Purchase</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="purchase" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="">
+                                    <a href="">
+                                        <i class="las la-list-alt"></i><span>All Purchase</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.purchase.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.purchase.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Purchase</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
                         <li class="">
                             <a href="#setting" class="collapsed" data-toggle="collapse" aria-expanded="false">

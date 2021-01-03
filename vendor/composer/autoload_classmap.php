@@ -26,10 +26,15 @@ return array(
     'App\\Http\\Controllers\\Admin\\Hotel\\ItemEntryController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/ItemEntryController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\MenuCategoryController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/MenuCategoryController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\OrderRequisitionController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/OrderRequisitionController.php',
+    'App\\Http\\Controllers\\Admin\\Hotel\\PurchaseController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/PurchaseController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\RoomController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/RoomController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\RoomTypeController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/RoomTypeController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\StockCenterController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/StockCenterController.php',
+
+    'App\\Http\\Controllers\\Admin\\Hotel\\SupplierController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/SupplierController.php',
+
     'App\\Http\\Controllers\\Admin\\Hotel\\TaxSettingController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/TaxSettingController.php',
+
     'App\\Http\\Controllers\\Admin\\Hotel\\UnitMasterController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/UnitMasterController.php',
     'App\\Http\\Controllers\\Admin\\LoginController' => $baseDir . '/app/Http/Controllers/Admin/LoginController.php',
     'App\\Http\\Controllers\\Admin\\MediaManagerController' => $baseDir . '/app/Http/Controllers/Admin/MediaManagerController.php',
@@ -66,6 +71,8 @@ return array(
     'App\\Models\\MenuCategory' => $baseDir . '/app/Models/MenuCategory.php',
     'App\\Models\\OrderHead' => $baseDir . '/app/Models/OrderHead.php',
     'App\\Models\\OrderHeadDetails' => $baseDir . '/app/Models/OrderHeadDetails.php',
+    'App\\Models\\Purchase' => $baseDir . '/app/Models/Purchase.php',
+    'App\\Models\\PurchaseHead' => $baseDir . '/app/Models/PurchaseHead.php',
     'App\\Models\\Room' => $baseDir . '/app/Models/Room.php',
     'App\\Models\\RoomType' => $baseDir . '/app/Models/RoomType.php',
     'App\\Models\\Seo' => $baseDir . '/app/Models/Seo.php',
@@ -73,7 +80,11 @@ return array(
     'App\\Models\\Social' => $baseDir . '/app/Models/Social.php',
     'App\\Models\\StockCenter' => $baseDir . '/app/Models/StockCenter.php',
     'App\\Models\\Subscrive' => $baseDir . '/app/Models/Subscrive.php',
+
+    'App\\Models\\Supplier' => $baseDir . '/app/Models/Supplier.php',
+
     'App\\Models\\TaxSetting' => $baseDir . '/app/Models/TaxSetting.php',
+
     'App\\Models\\UnitMaster' => $baseDir . '/app/Models/UnitMaster.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

@@ -652,10 +652,15 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Http\\Controllers\\Admin\\Hotel\\ItemEntryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/ItemEntryController.php',
         'App\\Http\\Controllers\\Admin\\Hotel\\MenuCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/MenuCategoryController.php',
         'App\\Http\\Controllers\\Admin\\Hotel\\OrderRequisitionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/OrderRequisitionController.php',
+        'App\\Http\\Controllers\\Admin\\Hotel\\PurchaseController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/PurchaseController.php',
         'App\\Http\\Controllers\\Admin\\Hotel\\RoomController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/RoomController.php',
         'App\\Http\\Controllers\\Admin\\Hotel\\RoomTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/RoomTypeController.php',
         'App\\Http\\Controllers\\Admin\\Hotel\\StockCenterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/StockCenterController.php',
+
+        'App\\Http\\Controllers\\Admin\\Hotel\\SupplierController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/SupplierController.php',
+
         'App\\Http\\Controllers\\Admin\\Hotel\\TaxSettingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/TaxSettingController.php',
+
         'App\\Http\\Controllers\\Admin\\Hotel\\UnitMasterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/UnitMasterController.php',
         'App\\Http\\Controllers\\Admin\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LoginController.php',
         'App\\Http\\Controllers\\Admin\\MediaManagerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/MediaManagerController.php',
@@ -692,6 +697,8 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\MenuCategory' => __DIR__ . '/../..' . '/app/Models/MenuCategory.php',
         'App\\Models\\OrderHead' => __DIR__ . '/../..' . '/app/Models/OrderHead.php',
         'App\\Models\\OrderHeadDetails' => __DIR__ . '/../..' . '/app/Models/OrderHeadDetails.php',
+        'App\\Models\\Purchase' => __DIR__ . '/../..' . '/app/Models/Purchase.php',
+        'App\\Models\\PurchaseHead' => __DIR__ . '/../..' . '/app/Models/PurchaseHead.php',
         'App\\Models\\Room' => __DIR__ . '/../..' . '/app/Models/Room.php',
         'App\\Models\\RoomType' => __DIR__ . '/../..' . '/app/Models/RoomType.php',
         'App\\Models\\Seo' => __DIR__ . '/../..' . '/app/Models/Seo.php',
@@ -699,7 +706,11 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\Social' => __DIR__ . '/../..' . '/app/Models/Social.php',
         'App\\Models\\StockCenter' => __DIR__ . '/../..' . '/app/Models/StockCenter.php',
         'App\\Models\\Subscrive' => __DIR__ . '/../..' . '/app/Models/Subscrive.php',
+
+        'App\\Models\\Supplier' => __DIR__ . '/../..' . '/app/Models/Supplier.php',
+
         'App\\Models\\TaxSetting' => __DIR__ . '/../..' . '/app/Models/TaxSetting.php',
+
         'App\\Models\\UnitMaster' => __DIR__ . '/../..' . '/app/Models/UnitMaster.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

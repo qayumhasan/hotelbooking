@@ -17,11 +17,17 @@ use App\Http\Controllers\Admin\Hotel\MenuCategoryController;
 use App\Http\Controllers\Admin\Hotel\StockCenterController;
 use App\Http\Controllers\Admin\Hotel\ItemEntryController;
 use App\Http\Controllers\Admin\Hotel\OrderRequisitionController;
+
+use App\Http\Controllers\Admin\Hotel\SupplierController;
+use App\Http\Controllers\Admin\Hotel\PurchaseController;
+
 use App\Http\Controllers\Admin\Hotel\TaxSettingController;
+
 
 use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Admin\MediaManagerController;
+
 
 
 
@@ -173,15 +179,26 @@ Route::get(md5('admin/ordercusition/create'), [OrderRequisitionController::class
 Route::get(md5('admin/ordercusition/index'), [OrderRequisitionController::class, 'index'])->name('admin.ordercusition.index');
 Route::get('/get/item/all/{item_name}', [OrderRequisitionController::class, 'getitem']);
 Route::post('/get/item/show/{invoice}', [OrderRequisitionController::class, 'allrecuitem'])->name('get.item.show');
-
 Route::post('/get/item/delete/', [OrderRequisitionController::class, 'itemdelete'])->name('get.item.delete');
-
 Route::get('/get/item/insert/', [OrderRequisitionController::class, 'iteminsert'])->name('item.insert.data');
 Route::post('/get/item/order/submit/', [OrderRequisitionController::class, 'ordersubmit'])->name('orderhead.submit');
 Route::post('/get/oderrecusition/edit/', [OrderRequisitionController::class, 'orderedit'])->name('get.item.edit');
 Route::get('admin/ordercusition/edit/{id}', [OrderRequisitionController::class, 'edit']);
 Route::post('admin/ordercusition/update/', [OrderRequisitionController::class, 'orderupdate'])->name('orderhead.update');
 Route::get('admin/ordercusition/delete/{id}', [OrderRequisitionController::class, 'orderdelete']);
+
+
+Route::get(md5('admin/supplier/create'), [SupplierController::class, 'create'])->name('admin.supplier.create');
+Route::post(md5('admin/supplier/store'), [SupplierController::class, 'store'])->name('admin.supplier.store');
+Route::get(md5('admin/supplier/index'), [SupplierController::class, 'index'])->name('admin.supplier.index');
+Route::get('admin/supplier/active/{id}', [SupplierController::class, 'active']);
+Route::get('admin/supplier/deactive/{id}', [SupplierController::class, 'deactive']);
+Route::get('admin/supplier/delete/{id}', [SupplierController::class, 'delete']);
+Route::get('admin/supplier/edit/{id}', [SupplierController::class, 'edit']);
+Route::post(md5('admin/supplier/update'), [SupplierController::class, 'update'])->name('admin.supplier.update');
+// purchase
+Route::get(md5('admin/purchase/create'), [PurchaseController::class, 'create'])->name('admin.purchase.create');
+Route::get(md5('get/itempurchase/insert'), [PurchaseController::class, 'itempurchase'])->name('itempurchese.insert.data');
 
 // setting area start here
 Route::middleware(['admin'])->prefix(md5('admin/tax'))->group(function () {
@@ -194,6 +211,7 @@ Route::middleware(['admin'])->prefix(md5('admin/tax'))->group(function () {
 
     
 });
+
 
 
 
