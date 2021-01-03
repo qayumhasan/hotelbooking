@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\Hotel\MenuCategoryController;
 use App\Http\Controllers\Admin\Hotel\StockCenterController;
 use App\Http\Controllers\Admin\Hotel\ItemEntryController;
 use App\Http\Controllers\Admin\Hotel\OrderRequisitionController;
+use App\Http\Controllers\Admin\Hotel\TaxSettingController;
 
 use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -181,6 +182,19 @@ Route::post('/get/oderrecusition/edit/', [OrderRequisitionController::class, 'or
 Route::get('admin/ordercusition/edit/{id}', [OrderRequisitionController::class, 'edit']);
 Route::post('admin/ordercusition/update/', [OrderRequisitionController::class, 'orderupdate'])->name('orderhead.update');
 Route::get('admin/ordercusition/delete/{id}', [OrderRequisitionController::class, 'orderdelete']);
+
+// setting area start here
+Route::middleware(['admin'])->prefix(md5('admin/tax'))->group(function () {
+    Route::get('/', [TaxSettingController::class, 'index'])->name('admin.tax.index');
+    Route::post('/store', [TaxSettingController::class, 'store'])->name('admin.tax.store');
+    Route::get('/delete/{id}', [TaxSettingController::class, 'delete'])->name('admin.taxsetting.delete');
+    Route::get('/status/{id}', [TaxSettingController::class, 'status'])->name('admin.taxsetting.status');
+    Route::get('/edit/{id}', [TaxSettingController::class, 'edit'])->name('admin.taxsetting.edit');
+    Route::post('/update/{id}', [TaxSettingController::class, 'update'])->name('admin.tax.update');
+
+    
+});
+
 
 
 

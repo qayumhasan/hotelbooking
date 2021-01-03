@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="{{asset('public/uploads/logo/'.$logos->favicon)}}" />
 
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/backend.css?v=1.0.1">
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datepiker.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/remixicon/fonts/remixicon.css">
@@ -191,6 +192,24 @@
                                         <i class="las la-list-alt"></i><span>All Order Recusition</span>
                                     </a>
                                 </li>
+                            </ul>
+                        </li>
+
+                        <li class="">
+                            <a href="#setting" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Setting</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="setting" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.itementry.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.tax.index')}}">
+                                        <i class="las la-list-alt"></i><span>Tax Setting</span>
+                                    </a>
+                                </li>
+                              
+                             
+                            
                             </ul>
                         </li>
 
@@ -427,6 +446,7 @@
     <!-- Mapbox Javascript -->
     <script src="{{asset('public/backend')}}/assets/js/mapbox-gl.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/mapbox.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/datepiker.js"></script>
 
     <!-- Fullcalender Javascript -->
     <script src="{{asset('public/backend')}}//assets/vendor/fullcalendar/core/main.js"></script>
@@ -459,29 +479,25 @@
             case 'success':
 
                 iziToast.success({
-                    message: '{{ Session::get('
-                    messege ') }}',
+                    message: '{{ Session::get('messege') }}',
                     'position': 'topCenter'
                 });
                 brack;
             case 'info':
                 iziToast.info({
-                    message: '{{ Session::get('
-                    messege ') }}',
+                    message: '{{ Session::get('messege') }}',
                     'position': 'topRight'
                 });
                 brack;
             case 'warning':
                 iziToast.warning({
-                    message: '{{ Session::get('
-                    messege ') }}',
+                    message: '{{ Session::get('messege') }}',
                     'position': 'topRight'
                 });
                 break;
             case 'error':
                 iziToast.error({
-                    message: '{{ Session::get('
-                    messege ') }}',
+                    message: '{{ Session::get('messege') }}',
                     'position': 'topRight'
                 });
                 break;
@@ -511,6 +527,9 @@
     </script>
     <!-- app JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script>
+        $('#datepicker').datepicker();
+    </script>
 
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>
 </body>
