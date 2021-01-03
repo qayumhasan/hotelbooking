@@ -17,8 +17,12 @@ use App\Http\Controllers\Admin\Hotel\MenuCategoryController;
 use App\Http\Controllers\Admin\Hotel\StockCenterController;
 use App\Http\Controllers\Admin\Hotel\ItemEntryController;
 use App\Http\Controllers\Admin\Hotel\OrderRequisitionController;
+
 use App\Http\Controllers\Admin\Hotel\SupplierController;
 use App\Http\Controllers\Admin\Hotel\PurchaseController;
+
+use App\Http\Controllers\Admin\Hotel\TaxSettingController;
+
 
 use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -183,7 +187,7 @@ Route::get('admin/ordercusition/edit/{id}', [OrderRequisitionController::class, 
 Route::post('admin/ordercusition/update/', [OrderRequisitionController::class, 'orderupdate'])->name('orderhead.update');
 Route::get('admin/ordercusition/delete/{id}', [OrderRequisitionController::class, 'orderdelete']);
 
-// supplier
+
 Route::get(md5('admin/supplier/create'), [SupplierController::class, 'create'])->name('admin.supplier.create');
 Route::post(md5('admin/supplier/store'), [SupplierController::class, 'store'])->name('admin.supplier.store');
 Route::get(md5('admin/supplier/index'), [SupplierController::class, 'index'])->name('admin.supplier.index');
@@ -195,6 +199,26 @@ Route::post(md5('admin/supplier/update'), [SupplierController::class, 'update'])
 // purchase
 Route::get(md5('admin/purchase/create'), [PurchaseController::class, 'create'])->name('admin.purchase.create');
 Route::get(md5('get/itempurchase/insert'), [PurchaseController::class, 'itempurchase'])->name('itempurchese.insert.data');
+
+// setting area start here
+Route::middleware(['admin'])->prefix(md5('admin/tax'))->group(function () {
+    Route::get('/', [TaxSettingController::class, 'index'])->name('admin.tax.index');
+    Route::post('/store', [TaxSettingController::class, 'store'])->name('admin.tax.store');
+    Route::get('/delete/{id}', [TaxSettingController::class, 'delete'])->name('admin.taxsetting.delete');
+    Route::get('/status/{id}', [TaxSettingController::class, 'status'])->name('admin.taxsetting.status');
+    Route::get('/edit/{id}', [TaxSettingController::class, 'edit'])->name('admin.taxsetting.edit');
+    Route::post('/update/{id}', [TaxSettingController::class, 'update'])->name('admin.tax.update');
+
+    
+});
+
+
+
+
+
+
+
+
 
 
 
