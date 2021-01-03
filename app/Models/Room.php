@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Room extends Model
 {
+    
     use HasFactory;
 
     public function branch()
@@ -21,4 +23,7 @@ class Room extends Model
     {
         return $this->belongsTo('App\Models\Floor', 'floor', 'id');
     }
+  
+
+   
 }
