@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Hotel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 
 class HotelManageController extends Controller
@@ -13,6 +15,7 @@ class HotelManageController extends Controller
     }
     // home
     public function index(){
-        return view('hotelbooking.home.index');
+        $rooms = RoomType::with('rooms')->get();
+        return view('hotelbooking.home.index',compact('rooms'));
     }
 }

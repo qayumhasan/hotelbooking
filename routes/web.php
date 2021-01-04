@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\Hotel\MenuCategoryController;
 use App\Http\Controllers\Admin\Hotel\StockCenterController;
 use App\Http\Controllers\Admin\Hotel\ItemEntryController;
 use App\Http\Controllers\Admin\Hotel\OrderRequisitionController;
+use App\Http\Controllers\Admin\Hotel\CheckingController;
 
 use App\Http\Controllers\Admin\Hotel\SupplierController;
 use App\Http\Controllers\Admin\Hotel\PurchaseController;
@@ -207,10 +208,16 @@ Route::middleware(['admin'])->prefix(md5('admin/tax'))->group(function () {
     Route::get('/delete/{id}', [TaxSettingController::class, 'delete'])->name('admin.taxsetting.delete');
     Route::get('/status/{id}', [TaxSettingController::class, 'status'])->name('admin.taxsetting.status');
     Route::get('/edit/{id}', [TaxSettingController::class, 'edit'])->name('admin.taxsetting.edit');
-    Route::post('/update/{id}', [TaxSettingController::class, 'update'])->name('admin.tax.update');
-
-    
+    Route::post('/update/{id}', [TaxSettingController::class, 'update'])->name('admin.tax.update'); 
 });
+
+// checking area start from here
+
+Route::middleware(['admin'])->prefix(md5('admin/checking'))->group(function () {
+    Route::get('/{id}', [CheckingController::class, 'index'])->name('admin.checking.index');
+});
+
+
 
 
 

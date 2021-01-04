@@ -56,230 +56,185 @@
 
 </style>
 <div class="content-page">
+   @foreach($rooms as $row)
    <div class="container-fluid">
       <div class="row">
          <div class="col-12">
             <div class="card">
                <div class="card-header d-flex justify-content-between">
                   <div class="header-title">
-                     <h4 class="card-title">DELUXE ROOMS</h4>
+                     <h4 class="card-title">{{$row->room_type}}</h4>
                   </div>
-                  <button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-sm bg-primary"><span class="pl-1">KSH 13000.00</span>
+                  <button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-sm bg-primary"><span class="pl-1">USD {{$row->price}}</span>
                   </button>
                </div>
             </div>
          </div>
       </div>
       <div class="row">
+         @foreach($row->rooms as $row)
          <div class="col-md-6 col-lg-4">
             <div class="cardoverflow-hidden card-min-height">
 
 
                <div class="card-item">
-                  <div class="status text-center bg-navyblue">
-                     <span class="status-heading">103</span>
+                  <div class="status text-center 
+                  @if($row->room_status == 1)
+                  bg-green
+                  @elseif($row->room_status == 2)
+                  bg-navyblue
+                  @elseif($row->room_status == 3)
+                  bg-red
+                  @elseif($row->room_status == 4)
+                  bg-yellow
+                  @endif
+                  ">
+                     <span class="status-heading">{{$row->room_no}}</span>
 
                   </div>
+
+
+                  <!-- room status Available area start -->
+                  @if($row->room_status == 1)
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">Available</li>
+                              <li> {{$row->tariff}}</li>
+                              <li>{{$row->flortype->name ?? ' '}}</li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="col-6">
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-history" aria-hidden="true"></i> At a Glance</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href="{{route('admin.checking.index',$row->id)}}"><i class="fa fa-globe" aria-hidden="true"></i>  Check In</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-calendar-check" aria-hidden="true"></i> History
+                              </a>
+                           </li>
+                        
+                        </ul>
+                     </div>
+                  </div>
+                  @endif
+                  <!-- room status Available area end -->
+
+                  <!-- room status House-Keeping area start -->
+                  @if($row->room_status == 2)
                   <div class="row p-0">
                      <div class="col-6 p-0">
                         <div class="service">
                            <ul>
                               <li class="text-color-service">House Kepping</li>
                               <li>Cleaning</li>
-                              <li>First Floor</li>
+                              <li>{{$row->flortype->name ?? ' '}}</li>
                            </ul>
                         </div>
                      </div>
                      <div class="col-6">
                         <ul class="list-group pt-1 bg-menu">
-                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-history" aria-hidden="true"></i> At a Glance</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-globe" aria-hidden="true"></i>  House Keeping</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-calendar-check" aria-hidden="true"></i> History
+                              </a>
+                           </li>
                         
                         </ul>
                      </div>
                   </div>
+                  @endif
+                  <!-- room status House-Keeping area end -->
 
-
-               </div>
-
-            </div>
-         </div>
-
-         <div class="col-md-6 col-lg-4">
-            <div class="cardoverflow-hidden card-min-height">
-
-
-               <div class="card-item">
-                  <div class="status text-center bg-red">
-                     <span class="status-heading">104</span>
-
-                  </div>
+                   <!-- room status Booking area start -->
+                   @if($row->room_status == 3)
                   <div class="row p-0">
                      <div class="col-6 p-0">
                         <div class="service">
                            <ul>
-                              <li class="text-color-service">House Kepping</li>
-                              <li>Cleaning</li>
-                              <li>First Floor</li>
+                              <li class="text-color-service">Qayum Hasan</li>
+                              <li>01559505992</li>
+                              <li>Durbar It</li>
                            </ul>
                         </div>
                      </div>
                      <div class="col-6">
                         <ul class="list-group pt-1 bg-menu">
-                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-history" aria-hidden="true"></i> At a Glance</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-globe" aria-hidden="true"></i>  Services</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-calendar-check" aria-hidden="true"></i> 
+                              Check Out
+                              </a>
+                           </li>
                         
                         </ul>
                      </div>
                   </div>
+                  @endif
+                  <!-- room status Booking area end -->
 
-
-               </div>
-
-            </div>
-         </div>
-
-         <div class="col-md-6 col-lg-4">
-            <div class="cardoverflow-hidden card-min-height">
-
-
-               <div class="card-item">
-                  <div class="status text-center bg-green">
-                     <span class="status-heading">105</span>
-
-                  </div>
+                   <!-- room status Maintenance: area start -->
+                   @if($row->room_status == 4)
                   <div class="row p-0">
                      <div class="col-6 p-0">
                         <div class="service">
                            <ul>
-                              <li class="text-color-service">House Kepping</li>
-                              <li>Cleaning</li>
-                              <li>First Floor</li>
+                              <li class="text-color-service">Maintenance</li>
+                              <li>Un-Use</li>
+                              <li>{{$row->flortype->name ?? ' '}}r</li>
                            </ul>
                         </div>
                      </div>
                      <div class="col-6">
                         <ul class="list-group pt-1 bg-menu">
-                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
+                        <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-history" aria-hidden="true"></i> At a Glance</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-globe" aria-hidden="true"></i>  House Keeping</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu" href=""><i class="fa fa-calendar-check" aria-hidden="true"></i> History
+                              </a>
+                           </li>
                         
                         </ul>
                      </div>
                   </div>
+                  @endif
+                  <!-- room status Maintenance: area end -->
 
 
                </div>
 
             </div>
          </div>
+         @endforeach
 
-         <div class="col-md-6 col-lg-4">
-            <div class="cardoverflow-hidden card-min-height">
-
-
-               <div class="card-item">
-                  <div class="status text-center bg-navyblue">
-                     <span class="status-heading">103</span>
-
-                  </div>
-                  <div class="row p-0">
-                     <div class="col-6 p-0">
-                        <div class="service">
-                           <ul>
-                              <li class="text-color-service">House Kepping</li>
-                              <li>Cleaning</li>
-                              <li>First Floor</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-6">
-                        <ul class="list-group pt-1 bg-menu">
-                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
-                        
-                        </ul>
-                     </div>
-                  </div>
-
-
-               </div>
-
-            </div>
-         </div>
-
-         <div class="col-md-6 col-lg-4">
-            <div class="cardoverflow-hidden card-min-height">
-
-
-               <div class="card-item">
-                  <div class="status text-center bg-green">
-                     <span class="status-heading">105</span>
-
-                  </div>
-                  <div class="row p-0">
-                     <div class="col-6 p-0">
-                        <div class="service">
-                           <ul>
-                              <li class="text-color-service">House Kepping</li>
-                              <li>Cleaning</li>
-                              <li>First Floor</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-6">
-                        <ul class="list-group pt-1 bg-menu">
-                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
-                        
-                        </ul>
-                     </div>
-                  </div>
-
-
-               </div>
-
-            </div>
-         </div>
-
-         <div class="col-md-6 col-lg-4">
-            <div class="cardoverflow-hidden card-min-height">
-
-
-               <div class="card-item">
-                  <div class="status text-center bg-red">
-                     <span class="status-heading">104</span>
-
-                  </div>
-                  <div class="row p-0">
-                     <div class="col-6 p-0">
-                        <div class="service">
-                           <ul>
-                              <li class="text-color-service">House Kepping</li>
-                              <li>Cleaning</li>
-                              <li>First Floor</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-6">
-                        <ul class="list-group pt-1 bg-menu">
-                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
-                        
-                        </ul>
-                     </div>
-                  </div>
-
-
-               </div>
-
-            </div>
-         </div>
+        
 
       
 
@@ -295,139 +250,9 @@
 
       </div>
    </div>
+   @endforeach
 
-   <div class="container-fluid">
-      <div class="row">
-         <div class="col-12">
-            <div class="card">
-               <div class="card-header d-flex justify-content-between">
-                  <div class="header-title">
-                     <h4 class="card-title">SUPERIOR ROOMS</h4>
-                  </div>
-                  <button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-sm bg-primary"><span class="pl-1">KSH 13000.00</span>
-                  </button>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div class="row">
-         <div class="col-md-6 col-lg-4">
-            <div class="cardoverflow-hidden card-min-height">
-
-
-               <div class="card-item">
-                  <div class="status text-center bg-navyblue">
-                     <span class="status-heading">103</span>
-
-                  </div>
-                  <div class="row p-0">
-                     <div class="col-6 p-0">
-                        <div class="service">
-                           <ul>
-                              <li class="text-color-service">House Kepping</li>
-                              <li>Cleaning</li>
-                              <li>First Floor</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-6">
-                        <ul class="list-group pt-1 bg-menu">
-                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
-                        
-                        </ul>
-                     </div>
-                  </div>
-
-
-               </div>
-
-            </div>
-         </div>
-
-         <div class="col-md-6 col-lg-4">
-            <div class="cardoverflow-hidden card-min-height">
-
-
-               <div class="card-item">
-                  <div class="status text-center bg-red">
-                     <span class="status-heading">104</span>
-
-                  </div>
-                  <div class="row p-0">
-                     <div class="col-6 p-0">
-                        <div class="service">
-                           <ul>
-                              <li class="text-color-service">House Kepping</li>
-                              <li>Cleaning</li>
-                              <li>First Floor</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-6">
-                        <ul class="list-group pt-1 bg-menu">
-                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
-                        
-                        </ul>
-                     </div>
-                  </div>
-
-
-               </div>
-
-            </div>
-         </div>
-
-         <div class="col-md-6 col-lg-4">
-            <div class="cardoverflow-hidden card-min-height">
-
-
-               <div class="card-item">
-                  <div class="status text-center bg-green">
-                     <span class="status-heading">105</span>
-
-                  </div>
-                  <div class="row p-0">
-                     <div class="col-6 p-0">
-                        <div class="service">
-                           <ul>
-                              <li class="text-color-service">House Kepping</li>
-                              <li>Cleaning</li>
-                              <li>First Floor</li>
-                           </ul>
-                        </div>
-                     </div>
-                     <div class="col-6">
-                        <ul class="list-group pt-1 bg-menu">
-                           <li class="list-group-item bg-menu"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-globe" aria-hidden="true"></i> Service</li>
-                           <li class="list-group-item bg-menu"><i class="fa fa-calendar-check" aria-hidden="true"></i> Checkout</li>
-                        
-                        </ul>
-                     </div>
-                  </div>
-
-
-               </div>
-
-            </div>
-         </div>
-
-      
-
-
-
-
-
-
-
-
-
-      </div>
-   </div>
+   
 </div>
 
 @endsection
