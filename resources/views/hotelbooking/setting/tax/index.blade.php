@@ -56,7 +56,7 @@ $current = date("m/d/Y");
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="fname">Calculation: *</label>
-                                                <input type="number" class="form-control" name="calculation" placeholder="Calculation" required />
+                                                <input type="text" class="form-control" name="calculation" placeholder="Calculation" required />
                                                 @error('calculation')
                                                 <div style="color:red">{{ $message }}</div>
                                                 @enderror
@@ -79,6 +79,7 @@ $current = date("m/d/Y");
                                                 @enderror -->
 
                                                 <select class="form-control base_on" id="base_on" name="base_on">
+                                                    <option value="">--select--</option>
                                                     <option value="percentage">Percentage</option>
                                                     <option value="amount">Amount</option>
                                                     
