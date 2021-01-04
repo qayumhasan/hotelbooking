@@ -66,6 +66,7 @@ class OrderRequisitionController extends Controller
           
             $update=OrderHeadDetails::where('item_id',$itemorder->item_id)->update([
                 'qty'=> $itemorder->qty + $request->qty,
+               
             ]);
             if($update){
                 return response()->json($update);
@@ -96,7 +97,7 @@ class OrderRequisitionController extends Controller
                 'item_name' => 'required',
             ]);
             $item=ItemEntry::where('item_name',$request->item_name)->first();
-            $insert=OrderHeadDetails::where('id',$request->i_id)->update([
+            $update=OrderHeadDetails::where('id',$request->i_id)->update([
                 'item_name'=>$request->item_name,
                 'item_id'=>$item->id,
                 'unit'=>$request->unit,
@@ -105,10 +106,10 @@ class OrderRequisitionController extends Controller
                 'date'=>$request->date,
                 'updated_at'=>Carbon::now()->toDateTimeString(),
             ]);
-            if($insert){
-                return response()->json($insert);
+            if($update){
+                return response()->json($update);
             }else{
-                return response()->json($insert);
+                return response()->json($update);
             }
        
        }

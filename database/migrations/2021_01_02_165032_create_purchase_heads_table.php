@@ -21,7 +21,7 @@ class CreatePurchaseHeadsTable extends Migration
             $table->integer('qty')->nullable();
             $table->string('unit')->nullable();
             $table->string('rate')->nullable();
-            $table->string('amount')->nullable();
+            $table->float('amount')->nullable();
             $table->timestamps();
         });
     }
