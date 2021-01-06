@@ -44,7 +44,8 @@
                                                     </tbody>
                                                     <tfoot class="text-center">
                                                         <tr>
-                                                            <td colspan="6" class="text-right">Net Amount:</td>
+                                                            <input type="hidden" value="{{$allamount}}" name="calculateamount" class="calculateamount">
+                                                            <td colspan="6" class="text-right">Gross Amount:</td>
                                                             <td colspan="2" class="text-left">{{$allamount}}</td>
                                                         </tr>
                                                     </tfoot>

@@ -22,13 +22,14 @@ class CreatePurchasesTable extends Migration
             $table->string('supplier_name',50)->nullable();
             $table->foreignId('stock_center')->nullable();
             $table->text('narration')->nullable();
-            $table->string('tota_amount',50)->nullable();
-            $table->string('gross_amount',50)->nullable();
-            $table->string('tax_amount',50)->nullable();
-            $table->string('net_amount',50)->nullable();
-            $table->string('payment',50)->nullable();
-            $table->string('due',50)->nullable();
-
+            $table->float('total_amount')->nullable();
+            $table->float('gross_amount')->nullable();
+            $table->float('tax_amount')->nullable();
+            $table->float('net_amount')->nullable();
+            $table->float('payment')->nullable();
+            $table->float('due')->nullable();
+            $table->foreignId('branch_id')->nullable();
+            
             $table->string('date',40)->nullable();
             $table->integer('is_active')->default(1);
             $table->string('entry_by',30)->nullable();

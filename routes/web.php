@@ -199,14 +199,30 @@ Route::get('admin/supplier/edit/{id}', [SupplierController::class, 'edit']);
 Route::post(md5('admin/supplier/update'), [SupplierController::class, 'update'])->name('admin.supplier.update');
 // purchase
 Route::get(md5('admin/purchase/create'), [PurchaseController::class, 'create'])->name('admin.purchase.create');
-Route::get(md5('get/itempurchase/insert'), [PurchaseController::class, 'itempurchase'])->name('itempurchese.insert.data');
+Route::post(md5('admin/purchase/insert'), [PurchaseController::class, 'insert'])->name('admin.purchase.insert');
+Route::post(md5('admin/purchase/update'), [PurchaseController::class, 'update'])->name('admin.purchase.update');
+Route::get(md5('admin/purchase/index'), [PurchaseController::class, 'index'])->name('admin.purchase.index');
+Route::get('admin/purchase/active/{id}', [PurchaseController::class, 'active']);
+Route::get('admin/purchase/deactive/{id}', [PurchaseController::class, 'deactive']);
+Route::get('admin/purchase/delete/{id}', [PurchaseController::class, 'delete']);
+Route::get('admin/purchase/edit/{id}', [PurchaseController::class, 'edit']);
 
+
+
+
+
+
+
+
+Route::get(md5('get/itempurchase/insert'), [PurchaseController::class, 'itempurchase'])->name('itempurchese.insert.data');
 Route::post('get/itempurchase/data/{invoice}', [PurchaseController::class, 'allitemdata']);
 Route::post('get/itempurchase/delete/', [PurchaseController::class, 'itempurchasedelete'])->name('get.purchaseitem.delete');
 Route::post('get/itempurchase/edit/', [PurchaseController::class, 'purchaseedit'])->name('get.itempurchase.edit');
 Route::get('get/tax/data/{tax}', [PurchaseController::class, 'gettax']);
 Route::get('get/tax/insert/', [PurchaseController::class, 'taxinsert'])->name('tax.insert.data');
-
+Route::post('get/alltax/data/{invoice}', [PurchaseController::class, 'alltaxinclude']);
+Route::post('get/tax/delete/', [PurchaseController::class, 'taxdatadelete'])->name('get.taxdata.delete');
+Route::post('get/total/amount/{invoice}', [PurchaseController::class, 'gettotalamount']);
 
 
 
