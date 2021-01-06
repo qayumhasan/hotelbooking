@@ -2,20 +2,33 @@
 @section('title', 'Add Purchase | '.$seo->meta_title)
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+.form-control {
+    height: 35px;
+ 
+}
+</style>
+@php
+date_default_timezone_set("asia/dhaka");
+$current = date("m/d/Y");
+@endphp
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
-           
+          
+       
             <div class="col-md-8">
+              
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
                             <h4 class="card-title">Purchase</h4>
                         </div>
-                       <a href="{{route('admin.ordercusition.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
+                       <a href="{{route('admin.purchase.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
                     </div>
                 </div>
-              
+                <form action="{{route('admin.purchase.insert')}}" method="post">
+                @csrf
                 <div class="row">
                     
                     <div class="col-md-12">
@@ -24,7 +37,7 @@
                             
                             <div class="card-body">
                                 <div class="row" id="mainfile">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="fname">Invoice No: *</label>
                                             <input type="text" value="{{$invoice_id}}" class="form-control" disabled>
@@ -32,16 +45,16 @@
                                         </div>
                                     </div>
                                   
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="fname">Order No: *</label>
-                                            <h6>011</h6>
+                                            <input type="text" value="{{$order_no}}" name="order_no" class="form-control">
 
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="fname">Ref Invoice No: *</label>
+                                            <label for="fname">Ref Invoice No: </label>
                                             <input type="text" id="ref_invoice" name="ref_invoice" class="form-control" list="ref_in" placeholder="Reference Invoice" />
                                             <datalist id="ref_in">
                                                 @foreach($allorderhead as $orderhead)
@@ -49,41 +62,45 @@
                                                 @endforeach
                                             </datalist>
                                         
-                                            <input type="hidden" name="invoice_no" value="{{$invoice_id}}" id="invoice_no"/>
+                                            <input type="hidden" class="invoice" name="invoice_no" value="{{$invoice_id}}" id="invoice_no"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">Date: </label>
+                                            <input id="datepicker" type="text" class="form-control" name="tax_date" value="{{$current}}"/>
+
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Supplier: *</label>
-                                            <input type="text" name="supplier" class="form-control" list="allsup" placeholder="--select--" />
-                                            <datalist id="allsup">
+                                            <select name="supplier" id="" class="form-control">
+                                                <option value="">--select--</option>
                                                 @foreach($allsupplier as $supplier)
-                                                <option value="{{$supplier->name}}">{{$supplier->name}}</option>
+                                                <option value="{{$supplier->id}}">{{$supplier->name}}</option>
                                                 @endforeach
-                                            </datalist>
-                                          
-                                            <input type="hidden" name="invoice_no" value="{{$invoice_id}}" id="invoice_no"/>
+                                            </select>
+                                            
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Stock Center : *</label>
-                                            <select name="stock-center" id="" class="form-control">
+                                            <select name="stock_center" id="" class="form-control">
                                                 <option value="">--select--</option>
                                                 @foreach($allstock as $stock)
                                                 <option value="{{$stock->id}}">{{$stock->name}}</option>
                                                 @endforeach
                                             </select>
-                                          
-                                            <input type="hidden" name="invoice_no" value="{{$invoice_id}}" id="invoice_no"/>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-                        <form action="#" method="get" id="option-choice-form">
-                        @csrf
+                        
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-body">
                                 <div class="row" id="mainfile">
@@ -131,7 +148,7 @@
                                     </div>
                                     <div class="col-md-12 text-right">
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-primary" id="addnow">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" id="addnow">Add</button>
                                         </div>
                                     </div>
 
@@ -139,7 +156,7 @@
                             </div>
 
                         </div>
-                    </form>
+                    
                     </div>
      
                     <div class="col-md-12">
@@ -159,89 +176,143 @@
                             </div>
                         </div>
                     </div>
-            <div class="col-sm-12">
-               <div class="card">
-                  <div class="card-header d-flex justify-content-between">
-                     <div class="header-title">
-                        <h4 class="card-title">Tax</h4>
-                     </div>
-                  </div>
-                  <div class="card-body">
-                     <div id="table" class="table-editable">
-                        <span class="table-add float-right mb-3 mr-2">
-                       
-                        </span>
-                        <table class="table table-bordered table-responsive-md table-striped text-center">
-                           <thead>
-                              <tr>
-                                 <th>Taxt Name</th>
-                                 <th>Calculation On</th>
-                                 <th>Based On</th>
-                                 <th>Rate</th>
-                                 <th>Amount</th>
-                                 <th></th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                            <form action="" id="tax_cal">
-                                 @csrf
-                              <tr>
-                                 <td>
-                                   <select name="tax_id" class="form-control" id="tax_id">
-                                        <option value="">--select--</option>
-                                        @foreach($alltax as $tax)
-                                        <option value="{{$tax->id}}">{{$tax->tax_description}}</option>
-                                        @endforeach
-                                   </select>
-                                 </td>
-                                 <td>
-                                    <select name="calculation_on" id="calculation_on" class="form-control">
-                                        <option value="">--select--</option>
-                                    </select>
-                                 </td>
-                                 <td>
-                                    <select name="based_on" id="based_on" class="form-control">
-                                        <option value="">--select--</option>
-                                    </select>
-                                </td>
-                                 <td>
-                                    <input type="text" class="form-control taxrate">
-                                 </td>
-                                 <td class="">
-                                 <input type="text" name="" id="tax_amount" class="form-control tax_amount" disabled value="0">
-                                 <input type="hidden" name="tax_amount" class="tax_amount" >
-                                 </td>
-                                 <td contenteditable="true"><button type="button" class="btn-sm btn-success" id="addtax">Add</button></td>
-                                 
-                              </tr>
-                              </form>
-                           </tbody>
-                        </table>
-                        <table class="table table-bordered table-responsive-md table-striped text-center">
-                           <thead>
-                              <tr>
-                                 <th></th>
-                                 <th>Tax Name</th>
-                                 <th>Calculation on</th>
-                                 <th>Based On</th>
-                                 <th>Effect</th>
-                                 <th>Rate</th>
-                                 <th>Amount</th>
-                              </tr>
-                           </thead>
-                           <tbody id="taxdata">
-                             
-                           </tbody>
-                        </table>
-                     </div>
-                  </div>
-               </div>
-            </div>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="header-title">
+                                    <h4 class="card-title">Tax</h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="table" class="table-editable">
+                                    <span class="table-add float-right mb-3 mr-2">
+                                
+                                    </span>
+                                    <table class="table table-bordered table-responsive-md table-striped text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Taxt Name</th>
+                                            <th>Calculation On</th>
+                                            <th>Based On</th>
+                                            <th>Rate</th>
+                                            <th>Amount</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        <tr>
+                                            <td>
+                                            <select name="tax_id" class="form-control" id="tax_id">
+                                                    <option value="">--select--</option>
+                                                    @foreach($alltax as $tax)
+                                                    <option value="{{$tax->id}}">{{$tax->tax_description}}</option>
+                                                    @endforeach
+                                            </select>
+                                            <div style="color:red" id="tax_err"></div>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" name="tax_invoice" value="{{$invoice_id}}">
+                                                <input type="text" id="calculation_on" name="calculation_on" class="form-control" list="calculation" placeholder="--select--" />
+                                                <datalist id="calculation">
+                                                
+                                                </datalist>
+                                            </td>
+                                            <td> 
+                                                <input type="text" id="based_on" name="based_on" class="form-control" list="allbase" placeholder="--select--" />
+                                                <datalist id="allbase">
+                                                <option value="amount">amount</option>
+                                                <option value="percentage">percentage</option>
+                                                </datalist>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="rate" class="form-control taxrate" id="taxrate">
+                                            </td>
+                                            <td class="">
+                                            <input type="text" name="" id="tax_amount" class="form-control tax_amount" disabled value="0">
+                                            <input type="hidden" name="tax_amount" class="tax_amount">
+                                            </td>
+                                            <td contenteditable="true"><button type="button" class="btn-sm btn-primary" id="addtax">Add</button></td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                    <table class="table table-bordered table-responsive-md table-striped text-center" id="taxdata">
+                                    
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
 
                 </div>
             </div>
-            
-           
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12">
+                            <div class="card shadow-sm shadow-showcase">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="header-title">
+                                        <h4 class="card-title"></h4>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="fname">Naration: *</label>
+                                                <textarea class="form-control" name="narration">
+                                                
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="fname">Total Amount: *</label>
+                                                    <input type="text" class="form-control totalamount" value="" disabled>
+                                                    <input type="hidden" name="totalamount" class="form-control totalamount" value="">
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="fname">Paid: *</label>
+                                                    <input type="number" class="form-control paidamount" name="paidamount">
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="fname">Due: *</label>
+                                                    <input type="text" class="form-control dueamount" value="" disabled>
+                                                    <input type="hidden" class="form-control dueamount" name="dueamount" value="">
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card shadow-sm shadow-showcase">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <!-- <input type="hidden" name="finalamount" class="finalamount">
+                                        <input type="hidden" name="finalpaidamount" class="finalpaidamount">
+                                        <input type="hidden" name="finaldueamount" class="finaldueamount"> -->
+                                        <div class="col-md-12">
+                                            <div>
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -249,31 +320,41 @@
 <script>
 $(document).ready(function() {
     $('#addtax').on('click', function() {
-      alert('ok');
+      var tax_id=$("#tax_id").val();
+      var calculation_on=$("#calculation_on").val();
+      var based_on=$("#based_on").val();
+      var tax_amount=$("#tax_amount").val();
+      var taxrate=$(".taxrate").val();
+      var invoice_no = $(".invoice").val();
+     
+      //alert(invoice_no);
         $.ajax({
             type: 'GET',
             url: "{{route('tax.insert.data')}}",
-            data: $('#tax_cal').serializeArray(),
+            //data: $('#tax_cal').serializeArray(),
+            data: {
+                tax_id:tax_id,
+                calculation_on:calculation_on,
+                based_on:based_on,
+                tax_amount:tax_amount,
+                taxrate:taxrate,
+                invoice_no:invoice_no,
+            },
 
             success: function(data) {
-                $('#item_err').html('');
-                iziToast.success({  message: 'success ',
-                                        'position':'topCenter'
-                                    });
-                $('#item_name').val("");
-                $('#unit').val("");
-                $('#unit_name').val("");
-                $('#Qty').val("");
-                $("#i_id").val("");
-                $(".rate").val("");
-                $(".amount").val("");
-
-                alldatashow();
-                mainshow();
+                $('#tax_id').val("");
+                $('#calculation_on').val("");
+                $('#based_on').val("");
+                $("#tax_amount").val("");
+                $(".taxrate").val("");
+                $(".taxamount").val("");
+                totalamount();
+                alltaxfile();
+               
             },
 
             error: function (err) {
-                $('#item_err').html(err.responseJSON.errors.item_name[0]);
+               $('#tax_err').html(err.responseJSON.errors.tax_id[0]);
             }
           
         });
@@ -283,17 +364,23 @@ $(document).ready(function() {
 });
 </script>
 
-
-
-
-
-
-
-
-
-
-
 <!-- tax include script-->
+
+<script>
+    function alltaxfile() {
+      //alert("ok");
+        var invoice = $("#invoice_no").val();
+        //alert(invoice);
+        $.post('{{ url('/get/alltax/data/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
+            function(data) {
+			   $('#taxdata').html(data);
+
+            });
+            
+	}
+
+	alltaxfile();
+</script>
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -308,11 +395,10 @@ $(document).ready(function() {
                  dataType:"json",
                  success:function(data) {
                       //console.log(data.amount);
-                        $("#calculation_on").html("<option value=" + data.data.calculation+ ">"+ data.data.calculation +"</option>");
-                        $("#based_on").html("<option value=" + data.data.base_on+ ">"+ data.data.base_on +"</option>");
-
+                        $("#calculation_on").val(data.data.calculation);
+                        //$("#based_on").html("<option value=" + data.data.base_on+ ">"+ data.data.base_on +"</option>");
+                        $("#based_on").val(data.data.base_on);
                         $('.tax_amount').val(data.amount);
-
                         if(data.data.base_on == 'amount'){
                             $('.taxrate').val(data.data.amount);
                         }else if(data.data.base_on == 'percentage'){
@@ -330,6 +416,29 @@ $(document).ready(function() {
 
      });
  });
+</script>
+
+<script>
+    function taxDatadelete(el) {
+        
+       //alert(el.value);
+        $.post('{{route('get.taxdata.delete')}}', {_token: '{{ csrf_token() }}',tax_id: el.value},
+            function(data) {
+                //$('#addtocartshow').html(data);
+
+                // if (data) {
+                //   iziToast.success({  message: 'Delete success ',
+                //                           'position':'topCenter'
+                //                       });
+                // }
+
+                alltaxfile();
+                totalamount();
+            });
+           
+   
+	}
+	taxDatadelete();
 </script>
 
 <!-- tax include script end -->
@@ -363,6 +472,48 @@ $(document).ready(function() {
  });
 </script>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+     $('input[id="taxrate"]').on('keyup', function(){
+         var newtax = $(this).val();
+         var baseon = $("#based_on").val();
+         var amount = $(".calculateamount").val();
+         //alert(amount);
+
+         if(newtax) {
+             if(baseon=='amount'){
+                $('.tax_amount').val(newtax);
+             }else if(baseon=='percentage'){
+                $('.tax_amount').val(parseFloat(amount*newtax/100).toFixed(2));
+             }
+           
+         }
+
+     });
+ });
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+     $('input[id="based_on"]').on('change', function(){
+         var newtax = $("#taxrate").val();
+         var baseon = $(this).val();
+         var amount = $(".calculateamount").val();
+         //alert(baseon);
+
+         if(newtax) {
+             if(baseon=='amount'){
+                $('.tax_amount').val(newtax);
+             }else if(baseon=='percentage'){
+                $('.tax_amount').val(parseFloat(amount*newtax/100).toFixed(2));
+             }
+           
+         }
+
+     });
+ });
+</script>
+
+
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -385,18 +536,35 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     $('#addnow').on('click', function() {
-      //alert('ok');
+     
+       var item_name = $("#item_name").val();
+       var unit = $("#unit").val();
+       var unit_name = $("#unit_name").val();
+       var Qty = $("#Qty").val();
+       var i_id = $("#i_id").val();
+       var rate = $(".rate").val();
+       var amount = $(".amount").val();
+       var invoice_no = $(".invoice").val();
+       //alert(invoice);
+
         $.ajax({
             type: 'GET',
             url: "{{route('itempurchese.insert.data')}}",
-            data: $('#option-choice-form').serializeArray(),
+            //data: $('#option-choice-form').serializeArray(),
+            data: {
+                item_name:item_name,
+                unit:unit,
+                unit_name:unit_name,
+                Qty:Qty,
+                i_id:i_id,
+                rate:rate,
+                amount:amount,
+                invoice_no:invoice_no
+            },
 
             success: function(data) {
+                
                 $('#item_err').html('');
-                iziToast.success({  message: 'success ',
-                                        'position':'topCenter'
-                                    });
-               
                 $('#item_name').val("");
                 $('#unit').val("");
                 $('#unit_name').val("");
@@ -404,9 +572,12 @@ $(document).ready(function() {
                 $("#i_id").val("");
                 $(".rate").val("");
                 $(".amount").val("");
-
+                alltaxfile();
+                totalamount();
                 alldatashow();
                 mainshow();
+               
+              
             },
 
             error: function (err) {
@@ -436,7 +607,40 @@ $(document).ready(function() {
 
 	alldatashow();
 </script>
+<script>
+    function totalamount() {
+      //alert("ok");
+        var invoice = $("#invoice_no").val();
+        //alert(invoice);
+        $.post('{{ url('get/total/amount/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
+            function(data) {
+                //console.log(data);
+			   $('.totalamount').val(data.data);
+               $('.dueamount').val(data.data);
 
+            });
+            
+	}
+
+	totalamount();
+</script>
+<script>
+ $(document).ready(function() {
+     $('input[name="paidamount"]').on('keyup', function(){
+         var paidamount = $('.paidamount').val();
+         var totalamount = $('.totalamount').val();
+        
+
+         if(paidamount) {
+                $('.dueamount').val(totalamount - paidamount);
+          
+         }else {
+            $('.dueamount').val(totalamount);
+         }
+
+     });
+ });
+</script>
 <script>
     function cartDatadelete(el) {
         
@@ -446,14 +650,16 @@ $(document).ready(function() {
                 $('#addtocartshow').html(data);
 
                 if (data) {
-                  iziToast.success({  message: 'Delete success ',
-                                          'position':'topCenter'
-                                      });
+                //   iziToast.success({  message: 'Delete success ',
+                //                           'position':'topCenter'
+                //                       });
                 }
 
 
             });
      alldatashow();
+     alltaxfile();
+     totalamount();
    
 	}
 	cartheaderdelete();
@@ -475,6 +681,7 @@ $(document).ready(function() {
 
             });
      alldatashow();
+     totalamount();
    
 	}
 	cartheaderdelete();

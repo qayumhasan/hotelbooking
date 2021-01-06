@@ -29,7 +29,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Item Name: *</label>
-                                            <input type="text" class="form-control" id="fname" name="item_name" placeholder="Item Name"/>
+                                            <input type="text" class="form-control"  name="item_name" placeholder="Item Name"/>
                                             @error('item_name')
                                                 <div style="color:red">{{ $message }}</div>
                                             @enderror
@@ -38,7 +38,7 @@
                                      <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Short Name: *</label>
-                                            <input type="text" class="form-control" id="fname" name="short_name" placeholder="Short Name"/>
+                                            <input type="text" class="form-control short_name"  name="short_name" placeholder="Short Name"/>
                                             @error('branch_id')
                                                 <div style="color:red">{{ $message }}</div>
                                             @enderror
@@ -174,8 +174,18 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
-<script>
-   CKEDITOR.replace('editor3');
+
+<script type="text/javascript">
+  $(document).ready(function() {
+     $('input[name="item_name"]').on('change', function(){
+         var newname = $(this).val();
+         //alert(newname);
+         if(newname) {
+            $('.short_name').val(newname);
+         } 
+
+
+     });
+ });
 </script>
 @endsection

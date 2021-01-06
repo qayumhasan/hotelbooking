@@ -18,7 +18,7 @@
                 <div class="row">
                     
                     <div class="col-md-12">
-                    <form action="#" method="get" id="option-choice-form">
+                        <form action="#" method="get" id="option-choice-form">
                         @csrf
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-header d-flex justify-content-between">
@@ -73,8 +73,8 @@
                         </div>
                     </form>
                     </div>
-        <form action="{{route('orderhead.submit')}}" method="post">
-            @csrf
+                    <form action="{{route('orderhead.submit')}}" method="post">
+                        @csrf
                     <div class="col-md-12">
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-header d-flex justify-content-between">

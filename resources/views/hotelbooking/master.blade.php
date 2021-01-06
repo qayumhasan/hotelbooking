@@ -220,8 +220,8 @@
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
                             <ul id="purchase" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="">
-                                    <a href="">
+                                <li class="{{ request()->routeIs('admin.purchase.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.purchase.index')}}">
                                         <i class="las la-list-alt"></i><span>All Purchase</span>
                                     </a>
                                 </li>

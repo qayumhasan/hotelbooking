@@ -705,6 +705,9 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\StockCenter' => __DIR__ . '/../..' . '/app/Models/StockCenter.php',
         'App\\Models\\Subscrive' => __DIR__ . '/../..' . '/app/Models/Subscrive.php',
         'App\\Models\\Supplier' => __DIR__ . '/../..' . '/app/Models/Supplier.php',
+
+        'App\\Models\\TaxCalculation' => __DIR__ . '/../..' . '/app/Models/TaxCalculation.php',
+
         'App\\Models\\TaxSetting' => __DIR__ . '/../..' . '/app/Models/TaxSetting.php',
         'App\\Models\\UnitMaster' => __DIR__ . '/../..' . '/app/Models/UnitMaster.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
