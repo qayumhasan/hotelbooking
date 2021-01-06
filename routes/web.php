@@ -238,10 +238,13 @@ Route::middleware(['admin'])->prefix(md5('admin/tax'))->group(function () {
 
 // checking area start from here
 
-Route::middleware(['admin'])->prefix(md5('admin/checking'))->group(function () {
+Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
     Route::get('/{id}', [CheckingController::class, 'index'])->name('admin.checking.index');
     Route::get('/get/hostel', [CheckingController::class, 'getRoom'])->name('admin.get.hotel');
     Route::post('/checkin/store', [CheckingController::class, 'store'])->name('admin.checkin.store');
+
+    Route::get('/report/show', [CheckingController::class, 'checkinReport'])->name('admin.checkin.report');
+    Route::get('/report/edit/{id?}', [CheckingController::class, 'checkinEdit'])->name('admin.checkin.edit');
 });
 
 

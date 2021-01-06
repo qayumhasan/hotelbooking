@@ -72,6 +72,7 @@ $bookingno = rand(11111,99999);
                                                     <th class="control-label" scope="row">Date</th>
                                                     <td class="control-label">{{$current}}</td>
                                                     <input type="hidden" name="date" value="{{$current}}" >
+                                                    <input type="hidden" name="room_id" value="{{$room->id}}" >
                                                 </tr>
                                                 <tr>
                                                     <th class="control-label" scope="row">Booking No</th>
@@ -470,7 +471,7 @@ $bookingno = rand(11111,99999);
                                         <div class="col-md-6">
                                             <p>Upload Client Image:</p>
                                             <div class="custom-file mb-3">
-                                                <input type="file" class="custom-file-input" id="customFile" name="client_img">
+                                                <input type="file" class="custom-file-input" id="customFile" name="client_img" required>
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
                                         </div>
@@ -478,7 +479,7 @@ $bookingno = rand(11111,99999);
                                         <div class="col-md-6">
                                             <p>Upload ID Proof:</p>
                                             <div class="custom-file mb-3">
-                                                <input type="file" class="custom-file-input" id="customFile" name="id_proof_img">
+                                                <input type="file" class="custom-file-input" id="customFile" name="id_proof_img" required>
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
                                         </div>

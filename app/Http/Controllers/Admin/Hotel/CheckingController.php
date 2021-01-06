@@ -10,6 +10,9 @@ use Image;
 
 class CheckingController extends Controller
 {
+    public function __construct(){
+        $this->middleware('admin');
+    }
     public function index($id)
     {
         $room = Room::findOrFail($id);
@@ -24,10 +27,14 @@ class CheckingController extends Controller
 
     public function store(Request $request)
     {
-        
-       
-        
+        $room = Room::findOrFail($request->room_id);
+        $room->update([
+            'room_status'=> 3,
+        ]);
+
         $checkin = new Checkin();
+        $checkin->room_id =$request->room_id;
+        $checkin->checking_by = auth()->user()->id;
         $checkin->date = $request->date;
         $checkin->booking_no = $request->booking_no;
         $checkin->room_type = $request->room_type;
@@ -105,7 +112,33 @@ class CheckingController extends Controller
 
         
         $checkin->save();
-        return back();
+        $notification=array(
+            'messege'=>'Guest Check In successfully',
+            'alert-type'=>'success'
+            );
+        return redirect()->back()->with($notification);
 
+    }
+
+    public function checkinReport()
+    {
+        $checkins = Checkin::with('user')->get();
+        return view('hotelbooking.checking.index',compact('checkins'));
+    }
+
+    public function checkinEdit($id = null)
+    {
+        if(!$id){
+            $notification=array(
+                'messege'=>'Sorry! Check In Report Not Found or Null',
+                'alert-type'=>'error'
+                );
+            return redirect()->back()->with($notification);
+        }
+
+        $checkin = Checkin::findOrFail($id);
+
+
+        return view('hotelbooking.checking.edit',compact('checkin'));
     }
 }

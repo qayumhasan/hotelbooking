@@ -10,6 +10,7 @@ class Room extends Model
 {
     
     use HasFactory;
+    protected $fillable = ['room_status'];
 
     public function branch()
     {
@@ -23,6 +24,13 @@ class Room extends Model
     {
         return $this->belongsTo('App\Models\Floor', 'floor', 'id');
     }
+
+    public function checkin()
+    {
+        return $this->hasOne('App\Models\Checkin','room_id','id');
+    }
+
+
   
 
    
