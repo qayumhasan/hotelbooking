@@ -41,21 +41,20 @@ $current = date("m/d/Y");
                                         <div class="form-group">
                                             <label for="fname">Invoice No: *</label>
                                             <input type="text" value="{{$invoice_id}}" class="form-control" disabled>
-                                            
                                         </div>
                                     </div>
                                   
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="fname">Order No: *</label>
-                                            <input type="text" value="{{$order_no}}" name="order_no" class="form-control">
+                                            <label for="fname">Ref Invoice No: *</label>
+                                            <input type="text" name="ref_invoice" class="form-control" placeholder="Ref Invoice No">
 
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="fname">Ref Invoice No: </label>
-                                            <input type="text" id="ref_invoice" name="ref_invoice" class="form-control" list="ref_in" placeholder="Reference Invoice" />
+                                            <label for="fname">Order No: </label>
+                                            <input type="text" id="ref_invoice" name="order_no" class="form-control" list="ref_in" placeholder="Order No" />
                                             <datalist id="ref_in">
                                                 @foreach($allorderhead as $orderhead)
                                                 <option value="{{$orderhead->invoice_no}}">{{$orderhead->invoice_no}}</option>
@@ -110,11 +109,12 @@ $current = date("m/d/Y");
                                             <input type="text" id="item_name" name="item_name" class="form-control" list="allitem" placeholder="Item" />
                                             <input type="hidden" id="i_id" name="i_id"/>
                                             <datalist id="allitem">
-                                             
-                                                <option value=""></option>
+                                                @foreach($allitem as $item)
+                                                <option value="{{$item->item_name}}">{{$item->item_name}}</option>
+                                                @endforeach
                                            
                                             </datalist>
-                                                <div style="color:red" id="item_err"></div>
+                                            <div style="color:red" id="item_err"></div>
                                             
                                         </div>
                                     </div>
@@ -204,10 +204,10 @@ $current = date("m/d/Y");
                                         <tr>
                                             <td>
                                             <select name="tax_id" class="form-control" id="tax_id">
-                                                    <option value="">--select--</option>
-                                                    @foreach($alltax as $tax)
-                                                    <option value="{{$tax->id}}">{{$tax->tax_description}}</option>
-                                                    @endforeach
+                                                <option value="">--select--</option>
+                                                @foreach($alltax as $tax)
+                                                <option value="{{$tax->id}}">{{$tax->tax_description}}</option>
+                                                @endforeach
                                             </select>
                                             <div style="color:red" id="tax_err"></div>
                                             </td>
@@ -231,6 +231,8 @@ $current = date("m/d/Y");
                                             <td class="">
                                             <input type="text" name="" id="tax_amount" class="form-control tax_amount" disabled value="0">
                                             <input type="hidden" name="tax_amount" class="tax_amount">
+                                            <input type="hidden" name="taxupdate_id" class="taxupdate_id" id="taxupdate_id">
+                                            
                                             </td>
                                             <td contenteditable="true"><button type="button" class="btn-sm btn-primary" id="addtax">Add</button></td>
                                             
@@ -326,6 +328,7 @@ $(document).ready(function() {
       var tax_amount=$("#tax_amount").val();
       var taxrate=$(".taxrate").val();
       var invoice_no = $(".invoice").val();
+      var taxupdate_id = $("#taxupdate_id").val();
      
       //alert(invoice_no);
         $.ajax({
@@ -339,6 +342,7 @@ $(document).ready(function() {
                 tax_amount:tax_amount,
                 taxrate:taxrate,
                 invoice_no:invoice_no,
+                taxupdate_id:taxupdate_id,
             },
 
             success: function(data) {
@@ -348,6 +352,7 @@ $(document).ready(function() {
                 $("#tax_amount").val("");
                 $(".taxrate").val("");
                 $(".taxamount").val("");
+                $("#taxupdate_id").val("");
                 totalamount();
                 alltaxfile();
                
@@ -641,6 +646,29 @@ $(document).ready(function() {
      });
  });
 </script>
+<script>
+
+function taxedit(el) {
+
+        $.post('{{route('get.taxitem.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
+            function(data) {
+                  console.log(data.id);  
+                $("#tax_id").val(data.tax_descripton).selected;
+                $("#calculation_on").val(data.calculation);
+                $("#based_on").val(data.based_on);
+                $("#taxrate").val(data.rate);
+                $(".tax_amount").val(data.amount);
+                $("#taxupdate_id").val(data.id);
+
+            });
+   
+   
+	}
+	taxedit();
+
+</script>
+
+
 <script>
     function cartDatadelete(el) {
         
