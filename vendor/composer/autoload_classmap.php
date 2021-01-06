@@ -57,6 +57,7 @@ return array(
     'App\\Models\\AdminRole' => $baseDir . '/app/Models/AdminRole.php',
     'App\\Models\\Branch' => $baseDir . '/app/Models/Branch.php',
     'App\\Models\\BulkSms' => $baseDir . '/app/Models/BulkSms.php',
+    'App\\Models\\Checkin' => $baseDir . '/app/Models/Checkin.php',
     'App\\Models\\CompanyInformation' => $baseDir . '/app/Models/CompanyInformation.php',
     'App\\Models\\ContactMessage' => $baseDir . '/app/Models/ContactMessage.php',
     'App\\Models\\Employee' => $baseDir . '/app/Models/Employee.php',
@@ -78,7 +79,9 @@ return array(
     'App\\Models\\StockCenter' => $baseDir . '/app/Models/StockCenter.php',
     'App\\Models\\Subscrive' => $baseDir . '/app/Models/Subscrive.php',
     'App\\Models\\Supplier' => $baseDir . '/app/Models/Supplier.php',
+
     'App\\Models\\TaxCalculation' => $baseDir . '/app/Models/TaxCalculation.php',
+
     'App\\Models\\TaxSetting' => $baseDir . '/app/Models/TaxSetting.php',
     'App\\Models\\UnitMaster' => $baseDir . '/app/Models/UnitMaster.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
