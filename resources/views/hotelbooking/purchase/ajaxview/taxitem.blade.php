@@ -18,7 +18,7 @@
                            @foreach($alltax as $tax)
                               <tr>
                                  <td>
-                                 <!-- <button type="button" data-toggle="tooltip" title="" class="editcat badge bg-primary-light" value="{{$tax->id}}" data-original-title="Remove"><i class="lar la-edit"></i></button> -->
+                                 <button type="button"  onclick="taxedit(this)" data-toggle="tooltip" title="" class="editcat badge bg-primary-light" value="{{$tax->id}}" data-original-title="Remove"><i class="lar la-edit"></i></button>
                                  <button type="button" onclick="taxDatadelete(this)" data-toggle="tooltip" title="" class="badge bg-danger-light" value="{{$tax->id}}" data-original-title="Remove"><i class="la la-trash"></i></button>
                                  </td>
                                  <td>{{$invoice}}</td>
@@ -27,7 +27,7 @@
                                  <td>{{$tax->based_on}}</td>
                                  <td>{{$tax->rate}}</td>
                                  <td>{{$tax->effect}}</td>
-                                 <td>{{$tax->amount}}</td>
+                                 <td>{{round($tax->amount,2)}}</td>
                               
                               </tr>
 

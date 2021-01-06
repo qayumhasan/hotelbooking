@@ -42,8 +42,9 @@ class PurchaseController extends Controller
         $allsupplier=Supplier::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $allorderhead=OrderHead::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $alltax=TaxSetting::where('is_deleted',0)->where('is_active',1)->latest()->get();
+        $allitem=ItemEntry::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $order_no=$year.'-'.rand(333,6669);
-        return view('hotelbooking.purchase.create',compact('invoice_id','allstock','allsupplier','allorderhead','alltax','order_no'));
+        return view('hotelbooking.purchase.create',compact('invoice_id','allstock','allsupplier','allorderhead','alltax','order_no','allitem'));
     }
     // purchase insert
     public function insert(Request $request){
@@ -69,7 +70,8 @@ class PurchaseController extends Controller
             $data->narration =  $request->narration;
             $data->payment =  $request->paidamount;
             $data->due =  $request->dueamount;
-            $data->net_amount =  $netamount;
+            $data->gross_amount =  $netamount;
+            $data->net_amount =  $request->totalamount;
             $data->date = $request->tax_date;
 
             $data->entry_by= Auth::user()->id;
@@ -100,8 +102,42 @@ class PurchaseController extends Controller
         }
     }
     // update
-    public function update(Request $request){
-        return $request;
+    public function update(Request $request,$id){
+        $supplier_name=Supplier::where('id',$request->supplier)->select(['id','name'])->first();
+        $netamount=PurchaseHead::where('invoice_no',$request->invoice_no)->sum('amount');
+        $data = Purchase::findOrFail($id);
+        $data->order_no =  $request->order_no;
+        $data->ref_invoice_no = $request->ref_invoice;
+        $data->supplier_id = $request->supplier;
+        if($supplier_name){
+            $data->supplier_name = $supplier_name->name;
+        }
+        $data->stock_center =  $request->stock_center;
+        $data->total_amount =  $request->totalamount;
+        $data->narration =  $request->narration;
+        $data->payment =  $request->paidamount;
+        $data->due =  $request->dueamount;
+        $data->net_amount =  $netamount;
+        $data->date = $request->tax_date;
+
+        $data->updated_by= Auth::user()->id;
+        $data->updated_date= Carbon::now()->toDateTimeString();
+        $data->updated_at= Carbon::now()->toDateTimeString();
+
+       if($data->save()){
+            $notification=array(
+                'messege'=>'Purchase update Success',
+                'alert-type'=>'success'
+                );
+            return redirect()->back()->with($notification);
+       }else{
+        $notification=array(
+            'messege'=>'Purchase update Faild',
+            'alert-type'=>'info'
+            );
+        return redirect()->back()->with($notification);
+       }
+
     }
 
     //
@@ -218,33 +254,65 @@ class PurchaseController extends Controller
     // insert
     public function taxinsert(Request $request){
         //return $request;
-        $invoice = $request->invoice_no;
-        $check =PurchaseHead::where('invoice_no',$invoice)->first();
-        if($check){
-            $validated = $request->validate([
-                'tax_id' => 'required',
-            ]);
-            $taxeffect=TaxSetting::where('id',$request->tax_id)->first();
-            //dd($taxeffect->effect);
-            $insert=TaxCalculation::insert([
-                'ref_invoice'=>$invoice,
-                'tax_descripton'=>$request->tax_id,
-                'calculation'=>$request->calculation_on,
-                'based_on'=>$request->based_on,
-                'rate'=>$request->taxrate,
-                'amount'=>$request->tax_amount,
-                'effect'=>$taxeffect->effect,
-                'entry_by'=>Auth::user()->id,
-                'entry_date'=>Carbon::now()->toDateTimeString(),
-                'created_at'=>Carbon::now()->toDateTimeString(),
-            ]);
-            if($insert){
-                return response($insert);
-            }
+        if($request->taxupdate_id == ''){
+            $invoice = $request->invoice_no;
+            $check =PurchaseHead::where('invoice_no',$invoice)->first();
+            if($check){
+                $validated = $request->validate([
+                    'tax_id' => 'required',
+                ]);
+                $taxeffect=TaxSetting::where('id',$request->tax_id)->first();
+            
+                $insert=TaxCalculation::insert([
+                    'ref_invoice'=>$invoice,
+                    'tax_descripton'=>$request->tax_id,
+                    'calculation'=>$request->calculation_on,
+                    'based_on'=>$request->based_on,
+                    'rate'=>$request->taxrate,
+                    'amount'=>$request->tax_amount,
+                    'effect'=>$taxeffect->effect,
+                    'entry_by'=>Auth::user()->id,
+                    'entry_date'=>Carbon::now()->toDateTimeString(),
+                    'created_at'=>Carbon::now()->toDateTimeString(),
+                ]);
+                if($insert){
+                    return response($insert);
+                }
 
+            }else{
+                return "nae";
+            }
         }else{
-            return "nae";
+
+            $invoice = $request->invoice_no;
+            $check =PurchaseHead::where('invoice_no',$invoice)->first();
+            if($check){
+                $validated = $request->validate([
+                    'tax_id' => 'required',
+                ]);
+                $taxeffect=TaxSetting::where('id',$request->tax_id)->first();
+            
+                $insert=TaxCalculation::where('id',$request->taxupdate_id)->update([
+                    'ref_invoice'=>$invoice,
+                    'tax_descripton'=>$request->tax_id,
+                    'calculation'=>$request->calculation_on,
+                    'based_on'=>$request->based_on,
+                    'rate'=>$request->taxrate,
+                    'amount'=>$request->tax_amount,
+                    'effect'=>$taxeffect->effect,
+                    'updated_by'=>Auth::user()->id,
+                    'updated_date'=>Carbon::now()->toDateTimeString(),
+                    'updated_at'=>Carbon::now()->toDateTimeString(),
+                ]);
+                if($insert){
+                    return response($insert);
+                }
+
+            }else{
+                return "nae";
+            }
         }
+            
         
     }
 
@@ -288,8 +356,9 @@ class PurchaseController extends Controller
         $allsupplier=Supplier::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $allorderhead=OrderHead::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $alltax=TaxSetting::where('is_deleted',0)->where('is_active',1)->latest()->get();
+        $allitem=ItemEntry::where('is_deleted',0)->where('is_active',1)->latest()->get();
         
-        return view('hotelbooking.purchase.update',compact('edit','allstock','allsupplier','allorderhead','alltax'));
+        return view('hotelbooking.purchase.update',compact('edit','allstock','allsupplier','allorderhead','alltax','allitem'));
     }
 
     public function delete($id){
@@ -312,4 +381,12 @@ class PurchaseController extends Controller
             return redirect()->back()->with($notification);
         }
     }
+    // tax edit
+    public function taxedit(Request $request){
+        $data=TaxCalculation::where('id',$request->item_id)->first();
+        return response()->json($data);
+    }
+
+
+
 }

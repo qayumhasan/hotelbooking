@@ -251,6 +251,26 @@
                         </li>
 
                         <li class="">
+                            <a href="#stocktranfer" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Stock Transfar</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="stocktranfer" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.stocktransfer.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stocktransfer.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Stock Transfar</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.stocktransfer.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stocktransfer.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Stock Transfar</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="">
                             <a href="#setting" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <i class="far fa-user"></i><span>Setting</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>

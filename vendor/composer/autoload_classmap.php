@@ -30,6 +30,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\Hotel\\RoomController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/RoomController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\RoomTypeController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/RoomTypeController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\StockCenterController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/StockCenterController.php',
+    'App\\Http\\Controllers\\Admin\\Hotel\\StockTransferController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/StockTransferController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\SupplierController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/SupplierController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\TaxSettingController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/TaxSettingController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\UnitMasterController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/UnitMasterController.php',
@@ -77,11 +78,11 @@ return array(
     'App\\Models\\SmsModel' => $baseDir . '/app/Models/SmsModel.php',
     'App\\Models\\Social' => $baseDir . '/app/Models/Social.php',
     'App\\Models\\StockCenter' => $baseDir . '/app/Models/StockCenter.php',
+    'App\\Models\\StockTransferDetails' => $baseDir . '/app/Models/StockTransferDetails.php',
+    'App\\Models\\StockTransferHead' => $baseDir . '/app/Models/StockTransferHead.php',
     'App\\Models\\Subscrive' => $baseDir . '/app/Models/Subscrive.php',
     'App\\Models\\Supplier' => $baseDir . '/app/Models/Supplier.php',
-
     'App\\Models\\TaxCalculation' => $baseDir . '/app/Models/TaxCalculation.php',
-
     'App\\Models\\TaxSetting' => $baseDir . '/app/Models/TaxSetting.php',
     'App\\Models\\UnitMaster' => $baseDir . '/app/Models/UnitMaster.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',

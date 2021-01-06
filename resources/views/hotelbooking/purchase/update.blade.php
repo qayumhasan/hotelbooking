@@ -27,7 +27,7 @@ $current = date("m/d/Y");
                        <a href="{{route('admin.purchase.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.purchase.update')}}" method="post">
+                <form action="{{route('admin.purchase.update',$edit->id)}}" method="post">
                 @csrf
                 <div class="row">
                     
@@ -64,6 +64,7 @@ $current = date("m/d/Y");
                                             </datalist>
                                         
                                             <input type="hidden" class="invoice" name="invoice_no" value="{{$edit->invoice_no}}" id="invoice_no"/>
+                                            <input type="hidden" name="id" value="{{$edit->id}}"/>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -112,7 +113,9 @@ $current = date("m/d/Y");
                                             <input type="hidden" id="i_id" name="i_id"/>
                                             <datalist id="allitem">
                                              
-                                                <option value=""></option>
+                                                @foreach($allitem as $item)
+                                                <option value="{{$item->item_name}}">{{$item->item_name}}</option>
+                                                @endforeach
                                            
                                             </datalist>
                                                 <div style="color:red" id="item_err"></div>
@@ -220,16 +223,19 @@ $current = date("m/d/Y");
                                                 </datalist>
                                             </td>
                                             <td>
-                                                <select name="based_on" id="based_on" class="form-control">
-                                                    <option value="">--select--</option>
-                                                </select>
+                                               <input type="text" id="based_on" name="based_on" class="form-control" list="allbase" placeholder="--select--" />
+                                                <datalist id="allbase">
+                                                <option value="amount">amount</option>
+                                                <option value="percentage">percentage</option>
+                                                </datalist>
                                             </td>
                                             <td>
-                                                <input type="text" name="rate" class="form-control taxrate">
+                                                <input type="text" name="rate" class="form-control taxrate" id="taxrate">
                                             </td>
                                             <td class="">
                                             <input type="text" name="" id="tax_amount" class="form-control tax_amount" disabled value="0">
                                             <input type="hidden" name="tax_amount" class="tax_amount" >
+                                            <input type="hidden" name="taxupdate_id" class="taxupdate_id" id="taxupdate_id">
                                             </td>
                                             <td contenteditable="true"><button type="button" class="btn-sm btn-primary" id="addtax">Add</button></td>
                                             
@@ -277,18 +283,11 @@ $current = date("m/d/Y");
                                                     
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="fname">Paid: *</label>
                                                     <input type="number" class="form-control paidamount" name="paidamount" value="{{$edit->payment}}">
                                                     
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="fname">Due: *</label>
-                                                    <input type="text" class="form-control dueamount" disabled value="{{$edit->due}}">
-                                                    <input type="hidden" class="form-control dueamount" name="dueamount" value="{{$edit->due}}">
                                                 </div>
                                             </div>
                                     </div>
@@ -326,6 +325,7 @@ $(document).ready(function() {
       var tax_amount=$("#tax_amount").val();
       var taxrate=$(".taxrate").val();
       var invoice_no = $(".invoice").val();
+      var taxupdate_id = $("#taxupdate_id").val();
      
       //alert(invoice_no);
         $.ajax({
@@ -339,6 +339,7 @@ $(document).ready(function() {
                 tax_amount:tax_amount,
                 taxrate:taxrate,
                 invoice_no:invoice_no,
+                taxupdate_id:taxupdate_id,
             },
 
             success: function(data) {
@@ -348,6 +349,7 @@ $(document).ready(function() {
                 $("#tax_amount").val("");
                 $(".taxrate").val("");
                 $(".taxamount").val("");
+                $("#taxupdate_id").val("");
                 totalamount();
                 alltaxfile();
                
@@ -394,9 +396,8 @@ $(document).ready(function() {
                  type:"GET",
                  dataType:"json",
                  success:function(data) {
-                      //console.log(data.amount);
                         $("#calculation_on").val(data.data.calculation);
-                        $("#based_on").html("<option value=" + data.data.base_on+ ">"+ data.data.base_on +"</option>");
+                        $("#based_on").val(data.data.base_on);
                         $('.tax_amount').val(data.amount);
                         if(data.data.base_on == 'amount'){
                             $('.taxrate').val(data.data.amount);
@@ -439,7 +440,27 @@ $(document).ready(function() {
 	}
 	taxDatadelete();
 </script>
+<script>
 
+function taxedit(el) {
+
+        $.post('{{route('get.taxitem.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
+            function(data) {
+                  console.log(data.id);  
+                $("#tax_id").val(data.tax_descripton).selected;
+                $("#calculation_on").val(data.calculation);
+                $("#based_on").val(data.based_on);
+                $("#taxrate").val(data.rate);
+                $(".tax_amount").val(data.amount);
+                $("#taxupdate_id").val(data.id);
+
+            });
+   
+   
+	}
+	taxedit();
+
+</script>
 <!-- tax include script end -->
 
 <script type="text/javascript">
@@ -644,6 +665,46 @@ $(document).ready(function() {
 	}
 	cartheaderdelete();
 
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+     $('input[id="taxrate"]').on('keyup', function(){
+         var newtax = $(this).val();
+         var baseon = $("#based_on").val();
+         var amount = $(".calculateamount").val();
+         //alert(amount);
+
+         if(newtax) {
+             if(baseon=='amount'){
+                $('.tax_amount').val(newtax);
+             }else if(baseon=='percentage'){
+                $('.tax_amount').val(parseFloat(amount*newtax/100).toFixed(2));
+             }
+           
+         }
+
+     });
+ });
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+     $('input[id="based_on"]').on('change', function(){
+         var newtax = $("#taxrate").val();
+         var baseon = $(this).val();
+         var amount = $(".calculateamount").val();
+         //alert(baseon);
+
+         if(newtax) {
+             if(baseon=='amount'){
+                $('.tax_amount').val(newtax);
+             }else if(baseon=='percentage'){
+                $('.tax_amount').val(parseFloat(amount*newtax/100).toFixed(2));
+             }
+           
+         }
+
+     });
+ });
 </script>
 
 @endsection

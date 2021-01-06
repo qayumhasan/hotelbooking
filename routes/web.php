@@ -18,11 +18,10 @@ use App\Http\Controllers\Admin\Hotel\StockCenterController;
 use App\Http\Controllers\Admin\Hotel\ItemEntryController;
 use App\Http\Controllers\Admin\Hotel\OrderRequisitionController;
 use App\Http\Controllers\Admin\Hotel\CheckingController;
-
 use App\Http\Controllers\Admin\Hotel\SupplierController;
 use App\Http\Controllers\Admin\Hotel\PurchaseController;
-
 use App\Http\Controllers\Admin\Hotel\TaxSettingController;
+use App\Http\Controllers\Admin\Hotel\StockTransferController;
 
 
 use App\Http\Controllers\Admin\AddonManagerController;
@@ -200,20 +199,13 @@ Route::post(md5('admin/supplier/update'), [SupplierController::class, 'update'])
 // purchase
 Route::get(md5('admin/purchase/create'), [PurchaseController::class, 'create'])->name('admin.purchase.create');
 Route::post(md5('admin/purchase/insert'), [PurchaseController::class, 'insert'])->name('admin.purchase.insert');
-Route::post(md5('admin/purchase/update'), [PurchaseController::class, 'update'])->name('admin.purchase.update');
+Route::post('admin/purchase/update/{id}', [PurchaseController::class, 'update'])->name('admin.purchase.update');
 Route::get(md5('admin/purchase/index'), [PurchaseController::class, 'index'])->name('admin.purchase.index');
 Route::get('admin/purchase/active/{id}', [PurchaseController::class, 'active']);
 Route::get('admin/purchase/deactive/{id}', [PurchaseController::class, 'deactive']);
 Route::get('admin/purchase/delete/{id}', [PurchaseController::class, 'delete']);
 Route::get('admin/purchase/edit/{id}', [PurchaseController::class, 'edit']);
-
-
-
-
-
-
-
-
+Route::post('get/tax/edit/', [PurchaseController::class, 'taxedit'])->name('get.taxitem.edit');
 Route::get(md5('get/itempurchase/insert'), [PurchaseController::class, 'itempurchase'])->name('itempurchese.insert.data');
 Route::post('get/itempurchase/data/{invoice}', [PurchaseController::class, 'allitemdata']);
 Route::post('get/itempurchase/delete/', [PurchaseController::class, 'itempurchasedelete'])->name('get.purchaseitem.delete');
@@ -223,6 +215,31 @@ Route::get('get/tax/insert/', [PurchaseController::class, 'taxinsert'])->name('t
 Route::post('get/alltax/data/{invoice}', [PurchaseController::class, 'alltaxinclude']);
 Route::post('get/tax/delete/', [PurchaseController::class, 'taxdatadelete'])->name('get.taxdata.delete');
 Route::post('get/total/amount/{invoice}', [PurchaseController::class, 'gettotalamount']);
+// stock tranfer
+Route::get(md5('admin/stocktransfer/create'), [StockTransferController::class, 'create'])->name('admin.stocktransfer.create');
+
+Route::post(md5('admin/stocktransfer/insert'), [StockTransferController::class, 'insert'])->name('admin.stocktransfer.insert');
+Route::get(md5('admin/stocktransfer/index'), [StockTransferController::class, 'index'])->name('admin.stocktransfer.index');
+Route::get('admin/stocktransfer/edit/{id}', [StockTransferController::class, 'edit']);
+Route::get('admin/stocktransfer/delete/{id}', [StockTransferController::class, 'delete']);
+
+Route::post(md5('admin/stocktransfer/update'), [StockTransferController::class, 'update'])->name('admin.stocktransfer.update');
+
+Route::get(md5('get/stocktransfer/stockinsert'), [StockTransferController::class, 'stockinsert'])->name('stocktransfer.insert.data');
+
+Route::post('/get/itemstocktransfer/data/{invoice}', [StockTransferController::class, 'getstocktitem']);
+
+Route::post('get/totalitem/count/{invoice}', [StockTransferController::class, 'getstockitem']);
+
+Route::post('get/totalitem/stocktranfer/', [StockTransferController::class, 'getstocktransdelete'])->name('get.stocktransferitem.delete');
+Route::post('get/totalitem/stocktranfer/edit', [StockTransferController::class, 'getstocktransedit'])->name('get.itemstocktransfer.edit');
+
+
+
+
+
+
+
 
 
 
