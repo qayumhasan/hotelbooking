@@ -103,7 +103,7 @@
 
     <ul id="imagemanager">
         @foreach($images as $image)
-        <li class="img_item"><input type="checkbox" class="myCheckbox" onclick="uploadimg(this)" id="cb{{$image->id}}" value="{{$image->image}}" />
+        <li class="img_item"><input type="checkbox" class="myCheckbox" id="cb{{$image->id}}" value="{{$image->image}}" />
             
             <label for="cb{{$image->id}}"><img src="{{asset('public/uploads/imagemanager/')}}/{{$image->image}}" /></label>
             <span onclick="deleteImg(this)" data-id="{{$image->id}}" class="text-danger dlt_btn"><i class="fa fa-times-circle"></i></span>
@@ -131,8 +131,8 @@
     </div>
     @endif
     <script>
-        $('input[type="checkbox"]').on('change', function() {
-            $('input[type="checkbox"]').not(this).prop('checked', false);
+        $('.img_item input[type="checkbox"]').on('change', function() {
+            $('.img_item input[type="checkbox"]').not(this).prop('checked', false);
         });
     </script>
 

@@ -224,6 +224,8 @@ Route::middleware(['admin'])->prefix(md5('admin/tax'))->group(function () {
 
 Route::middleware(['admin'])->prefix(md5('admin/checking'))->group(function () {
     Route::get('/{id}', [CheckingController::class, 'index'])->name('admin.checking.index');
+    Route::get('/get/hostel', [CheckingController::class, 'getRoom'])->name('admin.get.hotel');
+    Route::post('/checkin/store', [CheckingController::class, 'store'])->name('admin.checkin.store');
 });
 
 

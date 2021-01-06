@@ -466,6 +466,12 @@
             </div>
         </div>
     </footer>
+
+        
+    
+
+
+
     <!-- Backend Bundle JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/backend-bundle.min.js"></script>
 
@@ -568,6 +574,8 @@
     <script>
         $('#datepicker').datepicker();
     </script>
+
+  
 
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>
 </body>
