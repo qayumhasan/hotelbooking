@@ -90,6 +90,23 @@
 
                             </ul>
                         </li>
+
+                        <li class=" ">
+                            <a href="#occupancy" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Occupancy Reports</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="occupancy" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.checkin.report') ? 'active' : '' }}">
+                                    <a href="{{route('admin.checkin.report')}}">
+                                        <i class="las la-user-plus"></i><span>Occupancy Reports</span>
+                                    </a>
+                                </li>
+                               
+
+                            </ul>
+                        </li>
                         <li class="">
                             <a href="#branch" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <i class="far fa-user"></i><span>Branch</span>
@@ -535,13 +552,13 @@
                 brack;
             case 'warning':
                 iziToast.warning({
-                    message: '{{ Session::get('messege') }}',
+                    message: '{{ Session::get('messege')}}',
                     'position': 'topRight'
                 });
                 break;
             case 'error':
                 iziToast.error({
-                    message: '{{ Session::get('messege') }}',
+                    message: '{{ Session::get('messege')}}',
                     'position': 'topRight'
                 });
                 break;

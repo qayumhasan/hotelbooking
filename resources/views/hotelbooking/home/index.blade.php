@@ -166,9 +166,9 @@
                      <div class="col-6 p-0">
                         <div class="service">
                            <ul>
-                              <li class="text-color-service">Qayum Hasan</li>
-                              <li>01559505992</li>
-                              <li>Durbar It</li>
+                              <li class="text-color-service">{{$row->checkin['guestname'] ?? ''}}</li>
+                              <li>{{$row->checkin['mobile'] ?? ''}}</li>
+                              <li>{{$row->checkin['company_name'] ?? ''}}</li>
                            </ul>
                         </div>
                      </div>
@@ -179,7 +179,7 @@
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu" href=""><i class="fa fa-globe" aria-hidden="true"></i>  Services</a>
+                              <a class="bg-menu" href="{{route('admin.checkin.edit',$row->checkin['id'] ?? '')}}"><i class="fa fa-globe" aria-hidden="true"></i>  Services</a>
                            </li>
 
                            <li class="list-group-item bg-menu">
