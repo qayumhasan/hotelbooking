@@ -40,8 +40,6 @@ class ItemEntryController extends Controller
             'rate'=>$request->rate,
             'min_level'=>$request->min_level,
             'menu_item'=>$request->menu_type,
-
-
             'is_active'=>$request->is_active,
             'date'=>Carbon::now()->toDateTimeString(),
             'entry_by'=>Auth::user()->id,

@@ -269,6 +269,25 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="">
+                            <a href="#purchaseorder" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Purchase Order</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="purchaseorder" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.purchaseorder.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.purchaseorder.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Purchase Order</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.purchaseorder.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.purchaseorder.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Purchase Order</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
                         <li class="">
                             <a href="#setting" class="collapsed" data-toggle="collapse" aria-expanded="false">

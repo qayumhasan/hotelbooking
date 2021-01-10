@@ -12,6 +12,8 @@ use App\Models\OrderHead;
 use App\Models\ItemEntry;
 use App\Models\TaxSetting;
 use App\Models\TaxCalculation;
+use App\Models\MenuCategory;
+use App\Models\UnitMaster;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -44,7 +46,9 @@ class PurchaseController extends Controller
         $alltax=TaxSetting::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $allitem=ItemEntry::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $order_no=$year.'-'.rand(333,6669);
-        return view('hotelbooking.purchase.create',compact('invoice_id','allstock','allsupplier','allorderhead','alltax','order_no','allitem'));
+        $category=MenuCategory::where('is_deleted',0)->where('is_active',1)->latest()->get();
+        $unit=UnitMaster::where('is_deleted',0)->where('is_active',1)->latest()->get();
+        return view('hotelbooking.purchase.create',compact('invoice_id','allstock','allsupplier','allorderhead','alltax','order_no','allitem','category','unit'));
     }
     // purchase insert
     public function insert(Request $request){
@@ -387,6 +391,87 @@ class PurchaseController extends Controller
         return response()->json($data);
     }
 
+    // supllir
+    public function supllymodalinsert(Request $request){
+        
+        $validated = $request->validate([
+            'title' => 'required',
+            'name' => 'required',
+            'mobile' => 'required',
+        ]);
+        $insert=Supplier::insert([
+            'title'=>$request->title,
+            'name'=>$request->name,
+            'print_name'=>$request->print_name,
+            'designation'=>$request->designation,
+            'tin_vat_no'=>$request->tin_vat_no,
+            'addressline_one'=>$request->addressline_one,
+            'addressline_two'=>$request->addressline_two,
+            'city'=>$request->city,
+            'zip_code'=>$request->zip_code,
+            'telephone'=>$request->telephone,
+            'contact_persion'=>$request->contact_persion,
+            'mobile'=>$request->mobile,
+            'email'=>$request->email,
+            'gender'=>$request->gender,
+            'is_active'=>$request->is_active,
+            'date'=>$request->date,
+            'entry_by'=>Auth::user()->id,
+            'entry_date'=>Carbon::now()->toDateTimeString(),
+            'created_at'=>Carbon::now()->toDateTimeString(),
+        ]);
 
+        if($insert){
+            $data="success";
+            return response()->json($data);
+        }else{
+            return response()->json(['query' => $validated->query()]);
+        }
+    }
+
+// get all supplier
+    public function getallsupplier(Request $request){
+        //return "ok";
+        $data=Supplier::where('is_active',1)->where('is_deleted',0)->select(['name','id'])->get();
+       // dd($data);
+        return response()->json($data);
+    }
+
+    // item insert data
+    public function itemajxinsert(Request $request){
+        //return $request;
+        $validated = $request->validate([
+            'item_name' => 'required|unique:item_entries|max:50',
+        ]);
+        $insert=ItemEntry::insertGetId([
+            'item_name'=>$request->item_name,
+            'short_name'=>$request->short_name,
+            'category_name'=>$request->category_name,
+            'unit_name'=>$request->unit_name,
+            'rate'=>$request->rate,
+            'min_level'=>$request->min_level,
+            'menu_item'=>$request->menu_type,
+            'is_active'=>$request->is_active,
+            'date'=>Carbon::now()->toDateTimeString(),
+            'entry_by'=>Auth::user()->id,
+            'entry_date'=>Carbon::now()->toDateTimeString(),
+            'created_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        if($insert){
+            $data="success";
+            return response()->json($data);
+        }else{
+            $data="faild";
+            return response()->json($data);
+        }
+    }
+
+    // 
+    public function getallpurchaseitem(Request $request){
+        //return "ok";
+        $data=ItemEntry::where('is_active',1)->where('is_deleted',0)->get();
+        //dd($data);
+         return response()->json($data);
+    }
 
 }
