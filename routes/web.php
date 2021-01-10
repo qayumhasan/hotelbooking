@@ -260,8 +260,24 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
     Route::get('/get/hostel', [CheckingController::class, 'getRoom'])->name('admin.get.hotel');
     Route::post('/checkin/store', [CheckingController::class, 'store'])->name('admin.checkin.store');
 
+
     Route::get('/report/show', [CheckingController::class, 'checkinReport'])->name('admin.checkin.report');
     Route::get('/report/edit/{id?}', [CheckingController::class, 'checkinEdit'])->name('admin.checkin.edit');
+
+    Route::post('/service/store', [CheckingController::class, 'serviceStore'])->name('admin.checkin.service.add');
+    Route::post('/service/update', [CheckingController::class, 'serviceUpdate'])->name('admin.checkin.service.update');
+
+    Route::get('/get/service/{id}', [CheckingController::class, 'getService'])->name('admin.checkin.get.service');
+
+    Route::get('/get/delete/service/{id}', [CheckingController::class, 'deleteService'])->name('admin.checkin.get.delete.service');
+
+    Route::get('/get/deleted/service/{id}', [CheckingController::class, 'deletedService'])->name('admin.checkin.get.deleted.service');
+
+    Route::get('/get/deleted/service/{id}', [CheckingController::class, 'deletedService'])->name('admin.checkin.get.deleted.service');
+
+    Route::get('/get/view/service/{id}', [CheckingController::class, 'viewService'])->name('admin.checkin.get.view.service');
+
+    Route::get('/print/service/{id}', [CheckingController::class, 'printService'])->name('admin.print.service');
 });
 
 

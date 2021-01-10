@@ -36,6 +36,11 @@ $bookingno = rand(11111,99999);
     .control-label {
         font-size: 12px;
     }
+
+    input:required:focus {
+        border: 1px solid red;
+        outline: none;
+    }
 </style>
 <div class="content-page">
     <div class="container-fluid">
@@ -71,8 +76,8 @@ $bookingno = rand(11111,99999);
                                                 <tr>
                                                     <th class="control-label" scope="row">Date</th>
                                                     <td class="control-label">{{$current}}</td>
-                                                    <input type="hidden" name="date" value="{{$current}}" >
-                                                    <input type="hidden" name="room_id" value="{{$room->id}}" >
+                                                    <input type="hidden" name="date" value="{{$current}}">
+                                                    <input type="hidden" name="room_id" value="{{$room->id}}">
                                                 </tr>
                                                 <tr>
                                                     <th class="control-label" scope="row">Booking No</th>
@@ -93,7 +98,7 @@ $bookingno = rand(11111,99999);
                                                     <th class="control-label" scope="row">Booking Type</th>
                                                     <td>
                                                         <div class="custom-control custom-radio custom-control-inline">
-                                                            <input type="radio" id="individual" name="booking_type"  class="custom-control-input" value="1" checked="checked">
+                                                            <input type="radio" id="individual" name="booking_type" class="custom-control-input" value="1" checked="checked">
                                                             <label class="custom-control-label" for="individual">Individual</label>
                                                         </div>
                                                         <div class="custom-control custom-radio custom-control-inline">
@@ -654,12 +659,12 @@ $bookingno = rand(11111,99999);
 
 
 
-        
+
         var groupBookingEvent = ctrui.element.group_booking.addEventListener('click', function(e) {
 
             if (e.target.checked == true) {
                 // e.target.disabled = true;
-                
+
                 ctrui.element.avilableroom.style.display = 'block';
                 rooms.forEach(function(e) {
                     e.forEach(function(element, i) {
@@ -675,10 +680,10 @@ $bookingno = rand(11111,99999);
                     })
                 })
             }
-            
+
         });
 
-        
+
 
 
         var individual = ctrui.element.individual.addEventListener('click', function() {
