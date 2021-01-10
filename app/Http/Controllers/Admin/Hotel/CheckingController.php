@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin\hotel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Checkin;
+use App\Models\CheckinService;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Image;
+use PDF;
 
 class CheckingController extends Controller
 {
@@ -25,8 +27,35 @@ class CheckingController extends Controller
         return response()->json($rooms);
     }
 
+
+    // Checkin area start from here
+
     public function store(Request $request)
     {
+        $request->validate([
+            'guest_name'=>'required',
+            'print_name'=>'required',
+            'gender'=>'required',
+            'address'=>'required',
+            'city'=>'required',
+            'mobile'=>'required',
+            'nationality'=>'required',
+            'doc_type'=>'required',
+            'id_no'=>'required',
+            'file_no'=>'required',
+            'checkin_date'=>'required',
+            'checkin_time'=>'required',
+            'expected_checkout_date'=>'required',
+            'exp_checkout_time'=>'required',
+            'tariff'=>'required',
+            'purpose_of_visit'=>'required',
+            'no_of_person'=>'required',
+            'relationship'=>'required',
+            'client_img'=>'required',
+            'id_proof_img'=>'required',
+        ]);
+
+
         $room = Room::findOrFail($request->room_id);
         $room->update([
             'room_status'=> 3,
@@ -120,6 +149,8 @@ class CheckingController extends Controller
 
     }
 
+
+
     public function checkinReport()
     {
         $checkins = Checkin::with('user')->get();
@@ -139,6 +170,125 @@ class CheckingController extends Controller
         $checkin = Checkin::findOrFail($id);
 
 
-        return view('hotelbooking.checking.edit',compact('checkin'));
+        return view('hotelbooking.checking.services.edit',compact('checkin'));
+    }
+
+    public function serviceStore(Request $request)
+    {
+       
+        $request->validate([
+            'service_date'=>'required',
+            'service_time'=>'required',
+            'service_category'=>'required',
+            'services'=>'required',
+            'rate'=>'required',
+            'qty'=>'required',
+        ]);
+
+        $services = new CheckinService();
+        $services->service_no =$request->service_no;
+        $services->checkin_id =$request->service_id;
+        $services->service_date =$request->service_date;
+        $services->service_time =$request->service_time;
+        $services->service_category =$request->service_category;
+        $services->services =$request->services;
+        $services->remarks =$request->remarks;
+        $services->rate =$request->rate;
+        $services->qty =$request->qty;
+        $services->is_third =$request->is_third;
+        if($request->is_third == 1){
+            $services->third_party =$request->third_party;
+        }
+        $services->save();
+
+        $notification=array(
+            'messege'=>'Services Added Successffully!',
+            'alert-type'=>'success'
+            );
+        
+        return redirect()->back()->with($notification);
+    }
+
+    public function getService($id)
+    {
+        $services = CheckinService::with('checkin')->where('checkin_id',$id)->get();
+        return view('hotelbooking.checking.services.ajax.edit',compact('services'));
+    }
+
+    public function serviceUpdate(Request $request)
+    {
+       
+        
+        
+        $request->validate([
+            'service_date'=>'required',
+            'service_time'=>'required',
+            'service_category'=>'required',
+            'services'=>'required',
+            'rate'=>'required',
+            'qty'=>'required',
+        ]);
+
+        $services = CheckinService::findOrFail($request->service_id);
+        $services->service_no =$request->service_no;
+        $services->service_date =$request->service_date;
+        $services->service_time =$request->service_time;
+        $services->service_category =$request->service_category;
+        $services->services =$request->services;
+        $services->remarks =$request->remarks;
+        $services->rate =$request->rate;
+        $services->qty =$request->qty;
+        $services->is_third =$request->is_third;
+        if($request->is_third == 1){
+            $services->third_party =$request->third_party;
+        }
+
+        $services->is_return =$request->is_return;
+
+        if($request->is_return == 1){
+            $services->return_date =$request->return_date;
+            $services->return_time =$request->return_time;
+        }
+        
+        $services->save();
+
+        $notification=array(
+            'messege'=>'Services Updated Successffully!',
+            'alert-type'=>'success'
+            );
+        
+        return redirect()->back()->with($notification);
+    }
+
+    public function deleteService($id)
+    {
+        $services = CheckinService::with('checkin')->where('checkin_id',$id)->get();
+        return view('hotelbooking.checking.services.ajax.delete',compact('services'));
+    }
+
+    public function deletedService($id)
+    {
+        $service = CheckinService::findOrFail($id)->delete();
+        $notification=array(
+            'messege'=>'Services Deleted Successffully!',
+            'alert-type'=>'success'
+            );
+        
+        return redirect()->back()->with($notification);
+    }
+
+    public function viewService($id)
+    {
+        $services = CheckinService::with('checkin')->where('checkin_id',$id)->get();
+        return view('hotelbooking.checking.services.ajax.view',compact('services'));
+    }
+
+    public function printService($id)
+    {
+        $checkin = Checkin::findOrFail($id);
+        $services = CheckinService::with('checkin')->where('checkin_id',$id)->get();
+        $pdf = PDF::loadView('hotelbooking.checking.services.printServices',compact('checkin','services'));
+        $serialno = rand(9999999,999999989);
+        return $pdf->download($serialno.'.pdf');
     }
 }

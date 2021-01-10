@@ -64,6 +64,16 @@ class CreateCheckinsTable extends Migration
             $table->string('id_proof_imag');
             $table->string('client_img');
             $table->text('additional_room')->nullable();
+
+            $table->integer('is_active')->default(1);
+            $table->string('entry_by',30)->nullable();
+            $table->string('entry_date',30)->nullable();
+            $table->string('updated_by',30)->nullable();
+            $table->string('updated_date',30)->nullable();
+            $table->integer('is_approve')->default(0);
+            $table->string('approve_by',30)->nullable();
+            $table->string('approve_date',30)->nullable();
+            $table->integer('is_deleted')->default(0);
             $table->timestamps();
         });
     }
