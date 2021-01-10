@@ -1,5 +1,5 @@
 @extends('hotelbooking.master')
-@section('title', 'Add StockTransfer | '.$seo->meta_title)
+@section('title', 'Update Purchase Order| '.$seo->meta_title)
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
@@ -22,12 +22,12 @@ $current = date("m/d/Y");
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Stock Transfer</h4>
+                            <h4 class="card-title">Update Purchase Order</h4>
                         </div>
-                       <a href="{{route('admin.stocktransfer.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Stock Transfer</span></i></button></a>
+                       <a href="{{route('admin.purchaseorder.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase Order</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.stocktransfer.insert')}}" method="post">
+                <form action="{{route('admin.purchaseorder.update',$edit->id)}}" method="post">
                 @csrf
                 <div class="row">
                     
@@ -37,46 +37,28 @@ $current = date("m/d/Y");
                             
                             <div class="card-body">
                                 <div class="row" id="mainfile">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Invoice No: *</label>
-                                            <input type="text" value="{{$invoice_id}}" class="form-control" disabled>
+                                            <input type="text" value="{{$edit->invoice_no}}" class="form-control" disabled>
                                         </div>
                                     </div>
                                    
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="fname">From Center : *</label>
-                                            <input  type="text" class="form-control" name="from_center"  list="allstock" placeholder="--select--"/>
-                                            <datalist id="allstock">
-                                                @foreach($allstock as $stock)
-                                                <option value="{{$stock->name}}">{{$stock->name}}</option>
+                                            <label for="fname">Supplier : </label>
+                                            <select class="form-control" name="supplier">
+                                                <option value="">--select--</option>
+                                                @foreach($allsupplier as $supplier)
+                                                <option value="{{$supplier->id}}" @if($edit->supplier_id == $supplier->id) selected @endif>{{ $supplier->name }}</option>
                                                 @endforeach
-                                            </datalist>
-                                            @error('from_center')
-                                                <div style="color:red">{{ $message }}</div>
-                                            @enderror
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label for="fname">To Center : *</label>
-                                            <input  type="text" class="form-control" name="to_center" list="alltostock" placeholder="--select--"/>
-                                            <datalist id="alltostock">
-                                                @foreach($allstock as $stock)
-                                                <option value="{{$stock->name}}">{{$stock->name}}</option>
-                                                @endforeach
-                                            </datalist>
-                                            @error('to_center')
-                                                <div style="color:red">{{ $message }}</div>
-                                            @enderror
-                                           
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Date: </label>
-                                            <input id="datepicker" type="text" class="form-control" name="date" value="{{$current}}"/>
+                                            <input id="datepicker" type="text" class="form-control" name="date" value="{{$edit->date}}"/>
 
                                         </div>
                                     </div>
@@ -88,7 +70,7 @@ $current = date("m/d/Y");
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-body">
                                 <div class="row" id="mainfile">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="fname">Item Name: *</label>
                                             <input type="text" id="item_name" name="item_name" class="form-control" list="allitem" placeholder="Item" />
@@ -103,20 +85,33 @@ $current = date("m/d/Y");
                                             
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="fname">Unit: *</label>
                                             <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="unit"/>
                                             <input type="hidden" class="form-control" id="unit" name="unit" />
-                                            <input type="hidden" name="invoice_no" value="{{$invoice_id}}" id="invoice_no"/>
+                                            <input type="hidden" name="invoice_no" value="{{$edit->invoice_no}}" id="invoice_no"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="fname">Qty: </label>
                                             <input type="number" class="form-control qty" id="Qty" name="qty" placeholder="Qty"/>
-                                            <input type="hidden" class="form-control rate" name="rate" />
-                                            <input type="hidden" class="form-control amount" name="amount"/>
+                              
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="fname">Rate: </label>
+                                            <input type="text" class="form-control rate" name="rate" placeholder="Rate" disabled/>
+                                            <input type="hidden" class="rate" name="rate" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">Amount: </label>
+                                            <input type="text" class="form-control amount" placeholder="Amount" disabled/>
+                                            <input type="hidden" class="amount" name="amount"/>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-right">
@@ -166,9 +161,7 @@ $current = date("m/d/Y");
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="fname">Naration: *</label>
-                                                <textarea class="form-control" name="narration">
-                                                
-                                                </textarea>
+                                                <textarea class="form-control" name="narration">{{$edit->narration}}</textarea>
                                             </div>
                                         </div>
                                         </div>
@@ -176,16 +169,16 @@ $current = date("m/d/Y");
                                         <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="fname">Number Of Item: </label>
-                                                    <input type="text" class="form-control num_of_item" value="" disabled>
-                                                    <input type="hidden" name="num_of_item" class="form-control num_of_item" value="">
+                                                    <input type="text" class="form-control num_of_item" value="{{$edit->number_of_item}}" disabled>
+                                                    <input type="hidden" name="num_of_item" class="form-control num_of_item" value="{{$edit->number_of_item}}">
                                                     
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="fname">Number Of Quantity: </label>
-                                                    <input type="number" class="form-control num_of_qty" disabled>
-                                                    <input type="hidden" name="num_of_qty" class="form-control num_of_qty">
+                                                    <input type="number" class="form-control num_of_qty" value="{{$edit->number_of_item}}" disabled>
+                                                    <input type="hidden" name="num_of_qty" class="form-control num_of_qty" value="{{$edit->number_of_item}}">
                                                     
                                                 </div>
                                             </div>
@@ -200,7 +193,7 @@ $current = date("m/d/Y");
                                         <input type="hidden" name="finaldueamount" class="finaldueamount"> -->
                                         <div class="col-md-12">
                                             <div>
-                                                <button type="submit" class="btn btn-success">Submit</button>
+                                                <button type="submit" class="btn btn-success">Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -281,7 +274,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'GET',
-            url: "{{route('stocktransfer.insert.data')}}",
+            url: "{{route('purchaseorder.insert.data')}}",
           
             data: {
                 item_name:item_name,
@@ -328,7 +321,7 @@ $(document).ready(function() {
       //alert("ok");
         var invoice = $("#invoice_no").val();
         //alert(invoice);
-        $.post('{{ url('/get/itemstocktransfer/data/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
+        $.post('{{ url('/get/purchaseorrder/data/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
             function(data) {
 			   $('#showallitem').html(data);
 
@@ -343,7 +336,7 @@ $(document).ready(function() {
       //alert("ok");
         var invoice = $("#invoice_no").val();
         //alert(invoice);
-        $.post('{{ url('get/totalitem/count/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
+        $.post('{{ url('get/purchaseorder/count/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
             function(data) {
                 //console.log(data);
 			   $('.num_of_item').val(data.numberofitem);
@@ -376,16 +369,14 @@ $(document).ready(function() {
 <script>
     function cartDatadelete(el) {
         
-      //alert(el.value);
-        $.post('{{route('get.stocktransferitem.delete')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
+     //alert(el.value);
+        $.post('{{route('get.purchaseorder.delete')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
             function(data) {
                 totalitem();
                 alldatashow();
 
                 if (data) {
-                //   iziToast.success({  message: 'Delete success ',
-                //                           'position':'topCenter'
-                //                       });
+                
                 }
 
 
@@ -400,7 +391,7 @@ $(document).ready(function() {
     function cartdata(el) {
         
        //alert(el.value)
-        $.post('{{route('get.itemstocktransfer.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
+        $.post('{{route('get.purchaseorder.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
             function(data) {
                 //$('#addtocartshow').html(data);
                 //console.log(data);

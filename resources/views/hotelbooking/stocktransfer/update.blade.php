@@ -175,7 +175,7 @@ $current = date("m/d/Y");
                                     <div class="row">
                                         <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="fname">Number Of Item: *</label>
+                                                    <label for="fname">Number Of Item: </label>
                                                     <input type="text" class="form-control num_of_item" value="" disabled  value="{{$edit->num_of_item}}">
                                                     <input type="hidden" name="num_of_item" class="form-control num_of_item" value="{{$edit->num_of_item}}">
                                                     
@@ -183,7 +183,7 @@ $current = date("m/d/Y");
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="fname">Number Of Quantity: *</label>
+                                                    <label for="fname">Number Of Quantity: </label>
                                                     <input type="number" class="form-control num_of_qty" disabled value="{{$edit->num_of_qty}}">
                                                     <input type="hidden" value="{{$edit->id}}" name="id">
                                                     <input type="hidden" name="num_of_qty" class="form-control num_of_qty" value="{{$edit->num_of_qty}}">
