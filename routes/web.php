@@ -23,6 +23,8 @@ use App\Http\Controllers\Admin\Hotel\PurchaseController;
 use App\Http\Controllers\Admin\Hotel\TaxSettingController;
 use App\Http\Controllers\Admin\Hotel\StockTransferController;
 use App\Http\Controllers\Admin\Hotel\PurchaseOrderController;
+use App\Http\Controllers\Admin\Hotel\VoucherController;
+use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
 
 use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -287,6 +289,19 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
 
     Route::get('/print/service/{id}', [CheckingController::class, 'printService'])->name('admin.print.service');
 });
+
+Route::middleware(['admin'])->prefix(md5('admin/voucher'))->group(function () {
+    Route::get('/create', [VoucherController::class, 'create'])->name('admin.voucher.create');
+});
+
+Route::middleware(['admin'])->prefix('admin')->group(function () {
+    Route::get('/room/change/{id}', [CheckinUpdateController::class, 'getNewRoomtarif']);
+    Route::post('/room/change', [CheckinUpdateController::class, 'roomChange'])->name('admin.room.change');
+    Route::post('/guest/update/{id}', [CheckinUpdateController::class, 'guestUpdate'])->name('admin.guest.update');
+    Route::get('/edit/book-in/{id}', [CheckinUpdateController::class, 'editBookingShow'])->name('admin.edit.booking');
+});
+
+
 
 
 

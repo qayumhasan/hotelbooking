@@ -571,6 +571,7 @@
 
     <!-- alert -->
     <script src="{{asset('public/backend')}}/assets/js/izitost.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
     <script>
         @if(Session::has('messege'))

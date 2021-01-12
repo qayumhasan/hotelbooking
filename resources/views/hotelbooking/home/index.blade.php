@@ -75,7 +75,7 @@
          @foreach($row->rooms as $row)
          <div class="col-md-6 col-lg-4">
             <div class="cardoverflow-hidden card-min-height">
-
+            
 
                <div class="card-item">
                   <div class="status text-center 
