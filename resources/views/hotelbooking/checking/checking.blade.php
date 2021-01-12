@@ -479,6 +479,7 @@ $bookingno = rand(11111,99999);
                                                 <input type="file" class="custom-file-input" id="customFile" name="client_img" required>
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
+                                            <span class="btn btn-warning" data-toggle="modal" data-target="#client_img"> Take a Image</span>
                                         </div>
 
                                         <div class="col-md-6">
@@ -486,7 +487,9 @@ $bookingno = rand(11111,99999);
                                             <div class="custom-file mb-3">
                                                 <input type="file" class="custom-file-input" id="customFile" name="id_proof_img" required>
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
+
                                             </div>
+                                            <span class="btn btn-warning" data-toggle="modal" data-target="#doc_img"> Take a Image</span>
                                         </div>
                                     </div>
 
@@ -588,6 +591,119 @@ $bookingno = rand(11111,99999);
         </div>
     </div>
 </div>
+
+
+
+
+
+
+<!-- Client Image -->
+<div class="modal fade" id="client_img" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Upload Client Image:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="my_camera"></div>
+                            <br />
+                            
+                            <input type="hidden" name="image" class="image-tag">
+                        </div>
+                        <div class="col-md-6">
+                            <div id="results">
+                                Your captured image will appear here...
+                            </div>
+                        </div>
+                       
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onClick="take_snapshot()" class="btn btn-secondary mr-auto">Take Snapshot</button>
+                <button type="button" data-dismiss="modal" class="btn btn-primary">Use It</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Document Image -->
+<div class="modal fade" id="doc_img" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="doc_camera"></div>
+                            <br />
+                            
+                            <input type="hidden" name="image" class="image-tag">
+                        </div>
+                        <div class="col-md-6">
+                            <div id="results_doc">Your captured image will appear here...</div>
+                        </div>
+                       
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onClick="take_snapshot_doc()" class="btn btn-secondary mr-auto">Take Snapshot</button>
+                <button type="button" data-dismiss="modal" class="btn btn-primary">Use It</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+
+<script language="JavaScript">
+    Webcam.set({
+        width: 370,
+        height: 320,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+  
+    Webcam.attach( '#my_camera' );
+    Webcam.attach( '#doc_camera' );
+  
+    function take_snapshot() {
+        Webcam.snap( function(data_uri) {
+
+
+            $(".image-tag").val(data_uri);
+            $(".client_web_img").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+        } );
+    }
+
+    function take_snapshot_doc() {
+        Webcam.snap( function(data_uri) {
+            $(".image-tag").val(data_uri);
+            document.getElementById('results_doc').innerHTML = '<img src="'+data_uri+'"/>';
+        } );
+    }
+</script>
 
 
 <script>

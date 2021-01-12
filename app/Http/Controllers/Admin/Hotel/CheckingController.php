@@ -168,9 +168,10 @@ class CheckingController extends Controller
         }
 
         $checkin = Checkin::findOrFail($id);
+        $rooms = Room::all();
 
 
-        return view('hotelbooking.checking.services.edit',compact('checkin'));
+        return view('hotelbooking.checking.services.edit',compact('checkin','rooms'));
     }
 
     public function serviceStore(Request $request)
