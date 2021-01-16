@@ -114,4 +114,103 @@ class CheckinUpdateController extends Controller
         
         return view('hotelbooking.checking.other.edit_booking',compact('checkin'));
     }
+
+    public function bookingUpdate(Request $request ,$id)
+    {
+       
+        
+        $request->validate([
+            'expected_checkout_date'=>'required',
+            'tariff'=>'required',
+            'going_to'=>'required',
+            'purpose_of_visit'=>'required',
+            'no_of_person'=>'required',
+        ]);
+        
+        $checkin = Checkin::findOrFail($id);
+        $checkin->exp_checkin_date = $request->expected_checkout_date;
+        $checkin->exp_checkin_time = $request->exp_checkout_time;
+        $checkin->comming_form = $request->coming_from;
+        $checkin->purpose_of_visit = $request->purpose_of_visit;
+        $checkin->thru_agent = $request->thru_agent;
+        if($request->own_vehicle){
+            $checkin->own_vehicle = $request->own_vehicle;    
+        }else{
+            $checkin->own_vehicle = 0;    
+        }
+        
+        $checkin->vehicle_type = $request->vehicle_type;
+        $checkin->male_no = $request->male_no;
+        $checkin->female_no = $request->female_no;
+        $checkin->children_no = $request->children_no;
+        $checkin->tarif = $request->tariff;
+        if($request->non_tax){
+            $checkin->non_taxable = $request->non_tax;
+        }else{
+            $checkin->non_taxable = 0;
+        }
+        
+        $checkin->comming_to = $request->going_to;
+        $checkin->find_us = $request->find_us;
+        $checkin->checkout_time = $request->checkout_time;
+        $checkin->vehicle_no = $request->vehicle_no;
+        $checkin->number_of_person = $request->no_of_person;
+        $checkin->remarks = $request->remarks;
+        if($request->post_to_room){
+
+            $checkin->is_active = $request->post_to_room;
+        }else{
+            $checkin->is_active = 0;
+        }
+        
+        $checkin->save();
+        $notification=array(
+            'messege'=>'Booking Information Cheanged successfully!',
+            'alert-type'=>'success'
+            );
+
+        return redirect()->back()->with($notification);
+        
+    }
+
+    public function tariffUpdate(Request $request ,$id)
+    {
+        $request->validate([
+            'tariff_change_date'=>'required',
+            'tariff_change_time'=>'required',
+            'new_tariff'=>'required',
+        ]);
+
+        $checkin = Checkin::findOrFail($id);
+        $checkin->tariff_change_date = $request->tariff_change_date;
+        $checkin->tariff_change_time = $request->tariff_change_time;
+        $checkin->tariff_remarks = $request->tariff_remarks;
+        $checkin->tarif = $request->new_tariff;
+        $checkin->save();
+        $notification=array(
+            'messege'=>'Tariff Information Cheanged successfully!',
+            'alert-type'=>'success'
+            );
+
+        return redirect()->back()->with($notification);
+
+    }
+
+    public function deleteBooking ($id)
+    {
+        $checkin = Checkin::findOrFail($id);
+        $room = Room::findOrFail($checkin->room_id);
+        $room->room_status = 1;
+        $room->save();
+        $checkin->delete();
+
+        $notification=array(
+            'messege'=>'Booking Deleted successfully!',
+            'alert-type'=>'success'
+            );
+
+        return redirect()->route('admin.hotel')->with($notification);
+
+        
+    }
 }

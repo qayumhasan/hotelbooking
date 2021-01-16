@@ -299,6 +299,9 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::post('/room/change', [CheckinUpdateController::class, 'roomChange'])->name('admin.room.change');
     Route::post('/guest/update/{id}', [CheckinUpdateController::class, 'guestUpdate'])->name('admin.guest.update');
     Route::get('/edit/book-in/{id}', [CheckinUpdateController::class, 'editBookingShow'])->name('admin.edit.booking');
+    Route::post('/edit/book-in/update/{id}', [CheckinUpdateController::class, 'bookingUpdate'])->name('admin.bookin.update');
+    Route::post('/edit/tariff/update/{id}', [CheckinUpdateController::class, 'tariffUpdate'])->name('admin.tarif.update');
+    Route::get('/delete/booking/{id}', [CheckinUpdateController::class, 'deleteBooking'])->name('admin.delete.booking');
 });
 
 

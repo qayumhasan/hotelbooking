@@ -234,17 +234,17 @@ $time = date("h:i:sa");
                                     </tr>
                                     <tr>
                                         <td class=" d-block">
-                                            <a style="font-size: 12px;" class="buttoncss add" href="#"><i class="fa fa-star" aria-hidden="true"></i> Change Tariff For new Day</a>
+                                            <a class="buttoncss add" data-toggle="modal" data-target="#changetarif"><i class="fa fa-star" aria-hidden="true"></i> Change Tariff For new Day</a>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" href="#"><i class="fa fa-star" aria-hidden="true"></i> Delete Booking</a>
+                                            <a class="buttoncss add" id="delete" href="{{route('admin.delete.booking',$checkin->id)}}"><i class="fa fa-star" aria-hidden="true"></i> Delete Booking</a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size: 12px;" class=" d-block">
+                                        <td class=" d-block">
                                             <a class="buttoncss add" href="#"><i class="fa fa-star" aria-hidden="true"></i> Link Advance Booking</a>
                                         </td>
                                     </tr>
@@ -752,7 +752,7 @@ $time = date("h:i:sa");
                 </button>
             </div>
             <form action="{{route('admin.guest.update',$checkin->id)}}" method="post" enctype="multipart/form-data">
-            @csrf
+                @csrf
                 <div class="modal-body">
 
                     <div class="form-group row">
@@ -879,14 +879,14 @@ $time = date("h:i:sa");
                     </div>
 
                     <div class="form-group row">
-                        
+
                         <div class="col-sm-6">
-                        <label for="staticEmail">Current Document Image</label>
-                           <img src="{{asset('public/uploads/checkin/')}}/{{$checkin->id_proof_imag}}" alt="" width="80%"/>
+                            <label for="staticEmail">Current Document Image</label>
+                            <img src="{{asset('public/uploads/checkin/')}}/{{$checkin->id_proof_imag}}" alt="" width="80%" />
                         </div>
 
                         <div class="col-sm-6">
-                        <label for="staticEmail">Upload ID <small class="text-danger">*</small></label>
+                            <label for="staticEmail">Upload ID <small class="text-danger">*</small></label>
                             <div class="custom-file mb-3">
                                 <input type="file" class="custom-file-input" id="customFile" name="doc_img">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
@@ -907,6 +907,74 @@ $time = date("h:i:sa");
 </div>
 
 <!-- guest info update end -->
+
+
+<!-- change tarif area start -->
+
+<div class="modal fade" id="changetarif" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Tariff Change</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('admin.tarif.update',$checkin->id)}}" method="post">
+                @csrf
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Shift Date/Time:</label>
+                        <div class="col-sm-6">
+                            <input type="date" name="tariff_change_date" class="form-control form-control-sm" id="inputEmail3" required>
+                            
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="time" class="form-control form-control-sm" name="tariff_change_time"  id="inputEmail3" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">Room No:</label>
+                        <div class="col-sm-6">
+                            <span>{{$checkin->room_no}} ({{$checkin->roomtype->room_type ?? ''}})</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">Old Tariff Rate:</label>
+                        <div class="col-sm-6">
+                            <input type="number" disabled class="form-control form-control-sm" value="{{$checkin->tarif}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">New Tariff Rate:</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control form-control-sm" required name="new_tariff">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">Remarks:</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control form-control-sm" name="tariff_remarks" rows="3"></textarea>
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update Traif</button>
+                </div>
+                   
+                </form>
+
+               
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- change tarif area end -->
+
 
 
 
