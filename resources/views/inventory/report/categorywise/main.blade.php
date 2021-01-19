@@ -1,5 +1,5 @@
 @extends('inventory.master')
-@section('title', 'Stock TypeWise|'.$seo->meta_title)
+@section('title', 'Category|'.$seo->meta_title)
 @section('content')
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -29,13 +29,13 @@ $current = date("m/d/Y");
                   </div>
                  
                   <div class="card-body" id="selector">
-                         <form action="{{route('admin.stockwise.create')}}" method="post">
+                         <form action="{{route('admin.categorywise.report')}}" method="post">
                               @csrf
                         <div class="row">
                               <div class="col-md-4">
                                  <div class="form-group row">
                                        <label for="" class="col-md-3">All Category</label>
-                                       <select name="stock_id" class="form-control col-md-5" style="font-size:12px">
+                                       <select name="cate_id" class="form-control col-md-5" style="font-size:12px">
                                             <option value="">--All-</option>
                                             @foreach($allcategory as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
@@ -68,9 +68,8 @@ $current = date("m/d/Y");
                         <table class="table table-striped table-bordered" >
                            <thead class="text-center">
                               <tr>
-                                 <th>SNo.</th>
+                              
                                  <th>Item Name</th>
-                                 <th>Unit</th>
                                  <th>Qty</th>
                                  <th>Rate</th>
                                  <th>Amount</th>
@@ -78,7 +77,30 @@ $current = date("m/d/Y");
                               </tr>
                            </thead>
                            <tbody class="text-center">
-                           
+                             @php
+                              $total=0;
+                             @endphp
+                             @foreach($allpurchase as $purchase)
+                                 @php
+                                    $allitem=App\Models\PurchaseHead::where('invoice_no',$purchase->invoice_no)->latest()->get();
+                                 @endphp
+                                 @foreach($allitem as $key => $pdata)
+                                    <tr>
+                                      
+                                       <td>{{$pdata->item_name}}</td>
+                                       <td>{{ $pdata->qty }}</td>
+                                       <td>{{ $pdata->rate }}</td>
+                                       <td>{{round($pdata->amount,2)}}</td>
+                                    </tr>
+                                    @php
+                                       $total=$total + $pdata->amount;
+                                    @endphp
+                                 @endforeach
+                              @endforeach
+                              <tr>
+                                 <th colspan="6">Total: {{ $total }} Tk</th>
+                              </tr>
+                                    
                            </tbody>
                         </table>
                         

@@ -76,8 +76,8 @@
                                         <i class="las la-list-alt"></i><span>Stock Wise Purchase</span>
                                     </a>
                                 </li>
-                                <li class="{{ request()->routeIs('admin.itemwise.report*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.itemwise.report')}}">
+                                <li class="{{ request()->routeIs('admin.categorywise.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.categorywise.report')}}">
                                         <i class="las la-list-alt"></i><span>Category Wise Purchase</span>
                                     </a>
                                 </li>

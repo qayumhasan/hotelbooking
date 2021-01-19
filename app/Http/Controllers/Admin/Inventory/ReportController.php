@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Purchase;
+use App\Models\PurchaseHead;
 use App\Models\StockCenter;
 use App\Models\MenuCategory;
 class ReportController extends Controller
@@ -91,7 +92,7 @@ class ReportController extends Controller
 
     }
     // Category wise purchase report
-    public function itemwisereport(){
+    public function categorywisereport(){
         $year= Carbon::now()->format('Y');
         $month= Carbon::now()->format('F');
         $date= Carbon::now()->format('d');
@@ -99,11 +100,26 @@ class ReportController extends Controller
         date_default_timezone_set("asia/dhaka");
         $current = date("m/d/Y");
         $allcategory=MenuCategory::where('is_deleted',0)->where('is_active',1)->orderBy('id','DESC')->get();
-        
-
-        return view('inventory.report.categorywise.main',compact('current','maindate','allcategory'));
+        $allpurchase=Purchase::where('is_deleted',0)->where('is_active',1)->get();
+        return view('inventory.report.categorywise.main',compact('current','maindate','allcategory','allpurchase'));
     }
 
+    // category wise search
+    public function categoriwise(Request $request){
+            $cateid=$request->cate_id;
+            $fdate=$request->formdate;
+            $tdate=$request->todate;
+            $year= Carbon::now()->format('Y');
+            $month= Carbon::now()->format('F');
+            $date= Carbon::now()->format('d');
+            $maindate=$date.' '.$month.' '.$year;
+            date_default_timezone_set("asia/dhaka");
+            $current = date("m/d/Y");
+            $allcategory=MenuCategory::where('is_deleted',0)->where('is_active',1)->orderBy('id','DESC')->get();
+            return view('inventory.report.categorywise.result',compact('current','maindate','allcategory','cateid','fdate','tdate'));
+       
+
+    }
 
 
 }
