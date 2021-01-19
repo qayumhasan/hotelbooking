@@ -1,6 +1,12 @@
 @extends('hotelbooking.master')
 @section('title', 'Edit Check In | '.$seo->meta_title)
 @section('content')
+
+@php
+date_default_timezone_set("Asia/Dhaka");
+$date = date("Y-m-d");
+$time = date("h:i:sa");
+@endphp
 <style>
     .heading_area {
         background: gainsboro;
@@ -95,7 +101,9 @@
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
                             <h4 class="card-title">Booking Service Add/Modify/Delete</h4>
+
                         </div>
+
 
                     </div>
                 </div>
@@ -164,7 +172,7 @@
 
                                     <tr class="item">
                                         <td class=" d-block">
-                                            <a class="buttoncss add" href="#"><i class="fa fa-plus" aria-hidden="true"></i> Add Voucher</a>
+                                            <a class="buttoncss add" href="{{route('admin.voucher.create')}}"><i class="fa fa-plus" aria-hidden="true"></i> Add Voucher</a>
                                         </td>
                                     </tr>
 
@@ -216,27 +224,27 @@
 
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" href="#"><i class="fas fa-edit"></i> Edit Guest Info</a>
+                                            <a class="buttoncss add" data-toggle="modal" data-target="#guest_info_update"><i class="fas fa-edit"></i> Edit Guest Info</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" href="#"><i class="fa fa-times" aria-hidden="true"></i> Edit Booking</a>
+                                            <a class="buttoncss add" href="{{route('admin.edit.booking',$checkin->id)}}"><i class="fa fa-times" aria-hidden="true"></i> Edit Booking</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class=" d-block">
-                                            <a style="font-size: 12px;" class="buttoncss add" href="#"><i class="fa fa-star" aria-hidden="true"></i> Change Tariff For new Day</a>
+                                            <a class="buttoncss add" data-toggle="modal" data-target="#changetarif"><i class="fa fa-star" aria-hidden="true"></i> Change Tariff For new Day</a>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" href="#"><i class="fa fa-star" aria-hidden="true"></i> Delete Booking</a>
+                                            <a class="buttoncss add" id="delete" href="{{route('admin.delete.booking',$checkin->id)}}"><i class="fa fa-star" aria-hidden="true"></i> Delete Booking</a>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size: 12px;" class=" d-block">
+                                        <td class=" d-block">
                                             <a class="buttoncss add" href="#"><i class="fa fa-star" aria-hidden="true"></i> Link Advance Booking</a>
                                         </td>
                                     </tr>
@@ -646,74 +654,68 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="{{route('admin.room.change')}}" method="post">
+                    @csrf
 
                     <div class="form-group row">
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Shift Date/Time</label>
                         <div class="col-sm-5">
-                            <input type="date" class="form-control form-control-sm" id="shift_date" placeholder="col-form-label-sm">
+                            <input required type="date" name="shift_date" value="{{$date}}" class="form-control form-control-sm" id="shift_date">
                         </div>
                         <div class="col-sm-5">
-                            <input type="time" class="form-control form-control-sm" id="shift_time" placeholder="col-form-label-sm">
+                            <input required type="time" class="form-control form-control-sm" name="sift_time" id="shift_time">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Old Room No:</label>
                         <div class="col-sm-5">
-                            203 (Delux Rooms)
+                            {{$checkin->room_no}} ({{$checkin->roomtype->room_type ?? ''}})
                         </div>
+                        <input type="hidden" required value="{{$checkin->room_no}}" name="room_no" />
+                        <input type="hidden" required value="{{$checkin->id}}" name="checkin_id" />
 
                     </div>
 
                     <div class="form-group row">
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Old Tariff Rate :</label>
                         <div class="col-sm-7">
-                            <input type="number" class="form-control form-control-sm" id="shift_date">
+                            <input required type="text" class="form-control form-control-sm" disabled value=" {{$checkin->tarif}}" id="shift_date">
                         </div>
 
                     </div>
 
+
                     <div class="form-group row">
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">New Room No:</label>
                         <div class="col-sm-7">
-                            <select class="form-control form-control-sm" id="exampleFormControlSelect1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                            <select required class="form-control form-control-sm" id="newroom" name="newroom">
+                                <option disabled selected>---Select Room---</option>
+                                @foreach($rooms as $row)
+                                <option value="{{$row->id}}">{{$row->room_no}} ({{$row->roomtype->room_type}})</option>
+                                @endforeach
                             </select>
+                            @error('newroom')
+                            <small style="color: red;">{{$message}}</small>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">New Tariff Rate :</label>
                         <div class="col-sm-7">
-                            <input type="number" class="form-control form-control-sm" id="shift_date">
+                            <input required type="number" name="newtariff" class="form-control form-control-sm" id="newtariff">
                         </div>
 
                     </div>
 
-                    
-                    <div class="form-group row">
-                        <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Plane Code:</label>
-                        <div class="col-sm-7">
-                            <select class="form-control form-control-sm" id="exampleFormControlSelect1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </div>
-                    </div>
+
 
                     <div class="form-group row">
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Remarks :</label>
                         <div class="col-sm-7">
-                            
-                            <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+                            <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" name="remarks" rows="3"></textarea>
                         </div>
 
                     </div>
@@ -722,12 +724,12 @@
                         <label for="colFormLabelSm" class="col-sm-6 col-form-label col-form-label-sm"></label>
                         <div class="col-sm-5">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
 
                     </div>
-                    
-                    
+
+
                 </form>
             </div>
 
@@ -737,6 +739,242 @@
     </div>
 </div>
 <!-- Change Room area end -->
+
+<!-- guest info update start -->
+
+<div class="modal fade" id="guest_info_update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Guest Info</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{route('admin.guest.update',$checkin->id)}}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="staticEmail">Title <small class="text-danger">*</small></label>
+                                <select required class="form-control form-control-sm" name="person_title" id="exampleFormControlSelect2">
+                                    <option @if($checkin->title =='Mr.') selected @endif value="Mr.">Mr.</option>
+                                    <option @if($checkin->title =='Miss') selected @endif value="Miss">Miss</option>
+                                    <option @if($checkin->title =='M/s') selected @endif value="M/s">M/S</option>
+                                    <option @if($checkin->title =='MS') selected @endif value="MS">MS</option>
+                                    <option @if($checkin->title =='Mrs') selected @endif value="Mrs">Mrs</option>
+                                    <option @if($checkin->title =='Dr.') selected @endif value="Dr.">Dr.</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <label for="staticEmail">Guest Name <small class="text-danger">*</small></label>
+                                <input required type="text" class="form-control form-control-sm" value="{{$checkin->guest_name}}" name="guest_name" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="staticEmail">Gender <small class="text-danger">*</small></label>
+                                <select required class="form-control form-control-sm" name="gender" id="exampleFormControlSelect2">
+                                    <option @if($checkin->gender == 1) selected @endif value="1">Male</option>
+                                    <option @if($checkin->gender == 2) selected @endif value="2">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <label for="staticEmail">Print Name <small class="text-danger">*</small></label>
+                                <input type="text" required class="form-control form-control-sm" value="{{$checkin->print_name}}" name="print_name" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="staticEmail">Father Name:</label>
+                                <input type="text" class="form-control form-control-sm" value="{{$checkin->father_name}}" name="father_name" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="staticEmail">Company Name:</label>
+                                <input type="text" value="{{$checkin->company_name}}" class="form-control form-control-sm" name="company_name" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="staticEmail">Email:</label>
+                                <input type="text" class="form-control form-control-sm" value="{{$checkin->email}}" name="email" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="staticEmail">Address <small class="text-danger">*</small></label>
+                                <input required type="text" class="form-control form-control-sm" value="{{$checkin->address}}" name="address" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="staticEmail">Mobile <small class="text-danger">*</small></label>
+                                <input type="text" required class="form-control form-control-sm" value="{{$checkin->mobile}}" name="mobile" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="staticEmail">Nationality<small class="text-danger">*</small></label>
+                                <input type="text" required class="form-control form-control-sm" value="{{$checkin->nationality}}" name="nationality" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="staticEmail">City <small class="text-danger">*</small></label>
+                                <input type="text" required class="form-control form-control-sm" value="{{$checkin->city}}" name=" city" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="staticEmail">ID Type <small class="text-danger">*</small></label>
+                                <select class="form-control form-control-sm" name="id_type" required id="exampleFormControlSelect2">
+                                    <option @if($checkin->doc_type == "passport") selected @endif value="passport">Passport</option>
+                                    <option @if($checkin->doc_type == "admit_card") selected @endif value="admit_card">Admit Card</option>
+                                    <option @if($checkin->doc_type == "bank_passbook") selected @endif value="bank_passbook">bank passbook</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <label for="staticEmail">ID No <small class="text-danger">*</small></label>
+                                <input type="text" class="form-control form-control-sm" required value="{{$checkin->id_no}}" name="id_no" id="formGroupExampleInput2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-sm-6">
+                            <label for="staticEmail">Current Document Image</label>
+                            <img src="{{asset('public/uploads/checkin/')}}/{{$checkin->id_proof_imag}}" alt="" width="80%" />
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="staticEmail">Upload ID <small class="text-danger">*</small></label>
+                            <div class="custom-file mb-3">
+                                <input type="file" class="custom-file-input" id="customFile" name="doc_img">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- guest info update end -->
+
+
+<!-- change tarif area start -->
+
+<div class="modal fade" id="changetarif" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Tariff Change</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('admin.tarif.update',$checkin->id)}}" method="post">
+                @csrf
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label">Shift Date/Time:</label>
+                        <div class="col-sm-6">
+                            <input type="date" name="tariff_change_date" class="form-control form-control-sm" id="inputEmail3" required>
+                            
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="time" class="form-control form-control-sm" name="tariff_change_time"  id="inputEmail3" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">Room No:</label>
+                        <div class="col-sm-6">
+                            <span>{{$checkin->room_no}} ({{$checkin->roomtype->room_type ?? ''}})</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">Old Tariff Rate:</label>
+                        <div class="col-sm-6">
+                            <input type="number" disabled class="form-control form-control-sm" value="{{$checkin->tarif}}">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">New Tariff Rate:</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control form-control-sm" required name="new_tariff">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 col-form-label">Remarks:</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control form-control-sm" name="tariff_remarks" rows="3"></textarea>
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update Traif</button>
+                </div>
+                   
+                </form>
+
+               
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- change tarif area end -->
+
 
 
 
@@ -818,6 +1056,27 @@
                     $('#viewservice').append(data);
                 }
             });
+        });
+    });
+</script>
+
+<script>
+    var room = document.querySelector('#newroom');
+    room.addEventListener('change', function(e) {
+        var id = e.target.value;
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'get',
+            url: "{{ url('/admin/room/change/') }}/" + id,
+            success: function(data) {
+                document.querySelector('#newtariff').value = data;
+
+            }
         });
     });
 </script>
