@@ -43,7 +43,7 @@
 
         <div class="iq-sidebar  sidebar-default ">
             <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="{{route('admin.hotel')}}" class="header-logo">
+                <a href="{{route('admin.inventory.home')}}" class="header-logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal darkmode-logo" alt="logo">
                 </a>
@@ -54,260 +54,35 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="{{ request()->routeIs('admin.hotel*') ? 'active' : '' }}">
+                        <li class="{{ request()->routeIs('admin.inventory.home*') ? 'active' : '' }}">
                             <a href="{{route('admin.hotel')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
-
-                        </li>
-                        <li class=" ">
-                            <a href="#user" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Room</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="user" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.room.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.room.index')}}">
-                                        <i class="las la-user-plus"></i><span>All Room</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.room.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.room.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Room</span>
-                                    </a>
-                                </li>
-                                <!-- <li class="">
-                                      <a href="">
-                                          <i class="las la-list-alt"></i><span>Room Attributes</span>
-                                      </a>
-                                  </li> -->
-                                <li class="{{ request()->routeIs('admin.rooomtype.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.rooomtype.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Room Type</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                        <li class=" ">
-                            <a href="#occupancy" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Occupancy Reports</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="occupancy" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.checkin.report') ? 'active' : '' }}">
-                                    <a href="{{route('admin.checkin.report')}}">
-                                        <i class="las la-user-plus"></i><span>Occupancy Reports</span>
-                                    </a>
-                                </li>
-                               
-
-                            </ul>
                         </li>
                         <li class="">
-                            <a href="#branch" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Branch</span>
+                            <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Reports</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
-                            <ul id="branch" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.branch.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.branch.index')}}">
-                                        <i class="las la-user-plus"></i><span>All Branch</span>
+                            <ul id="reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.dailypurchase.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.dailypurchase.create')}}">
+                                        <i class="las la-list-alt"></i><span>Daily Purchase</span>
                                     </a>
                                 </li>
-                                <li class="{{ request()->routeIs('admin.branch.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.branch.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Branch</span>
+                                <li class="{{ request()->routeIs('admin.stockwise.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stockwise.create')}}">
+                                        <i class="las la-list-alt"></i><span>Stock Wise Purchase</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.itemwise.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.itemwise.report')}}">
+                                        <i class="las la-list-alt"></i><span>Category Wise Purchase</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="">
-                            <a href="#floor" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Floor</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="floor" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.floor.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.floor.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Floor</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#unitmaster" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Unit-Master</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="unitmaster" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.unit.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.unit.create')}}">
-                                        <i class="las la-list-alt"></i><span>All Unit-Master</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#menucategory" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Menu Category</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="menucategory" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.menucategory.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.menucategory.create')}}">
-                                        <i class="las la-list-alt"></i><span>All Menu Category</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#stock-center" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Stock Center</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="stock-center" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.stockcenter.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.stockcenter.create')}}">
-                                        <i class="las la-list-alt"></i><span>All Stock Center</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#item-entry" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Item Entry</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="item-entry" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.itementry.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.itementry.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Item</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.itementry.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.itementry.index')}}">
-                                        <i class="las la-list-alt"></i><span>All Item</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.ordercusition.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.ordercusition.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Order Recusition</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.ordercusition.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.ordercusition.index')}}">
-                                        <i class="las la-list-alt"></i><span>All Order Recusition</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#supplier" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Supplier</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="supplier" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.supplier.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.supplier.index')}}">
-                                        <i class="las la-list-alt"></i><span>All Supplier</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.supplier.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.supplier.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Supplier</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#purchase" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Purchase</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="purchase" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.purchase.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.purchase.index')}}">
-                                        <i class="las la-list-alt"></i><span>All Purchase</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.purchase.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.purchase.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Purchase</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="">
-                            <a href="#stocktranfer" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Stock Transfar</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="stocktranfer" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.stocktransfer.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.stocktransfer.index')}}">
-                                        <i class="las la-list-alt"></i><span>All Stock Transfar</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.stocktransfer.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.stocktransfer.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Stock Transfar</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#purchaseorder" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Purchase Order</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="purchaseorder" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.purchaseorder.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.purchaseorder.index')}}">
-                                        <i class="las la-list-alt"></i><span>All Purchase Order</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.purchaseorder.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.purchaseorder.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Purchase Order</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        
-
-                        <li class="">
-                            <a href="#setting" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Setting</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="setting" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.itementry.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.tax.index')}}">
-                                        <i class="las la-list-alt"></i><span>Tax Setting</span>
-                                    </a>
-                                </li>
-                              
-                             
-                            
-                            </ul>
-                        </li>
-
                     </ul>
                 </nav>
                 <div class="p-3"></div>
@@ -318,7 +93,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light p-0">
                     <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
                         <i class="ri-menu-line wrapper-menu"></i>
-                        <a href="index.html" class="header-logo">
+                        <a href="{{route('admin.inventory.home')}}" class="header-logo">
                             <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                             <img src="{{asset('public/backend')}}/assets/images/logo-white.png" class="img-fluid rounded-normal darkmode-logo" alt="logo">
 
@@ -572,7 +347,6 @@
 
     <!-- alert -->
     <script src="{{asset('public/backend')}}/assets/js/izitost.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
     <script>
         @if(Session::has('messege'))
@@ -630,7 +404,7 @@
     <!-- app JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script>
-        $('#datepicker').datepicker();
+        $('.datepicker').datepicker();
     </script>
 
   

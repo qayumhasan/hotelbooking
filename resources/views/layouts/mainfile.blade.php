@@ -89,6 +89,25 @@
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block d-flex align-items-center justify-content-between mb-3">
+                                <a href="{{route('admin.inventory.home')}}"><h3 class="text-info">Inventory</h3></a>
+                                <div class="bg-info icon iq-icon-box-2 mr-2 rounded">
+                                    <i class="lar la-envelope"></i>
+                                </div>
+                                </div>
+                                <h4>Sent 272,2824</h4>
+                                <div class="mt-1">
+                                <p class="mb-0">Unsent 682,735</p>
+                                </div>
+                                <div class="iq-progress-bar mt-3">
+                                <span class="bg-info" data-percent="85"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-block card-stretch card-height">
+                            <div class="card-body">
+                                <div class="top-block d-flex align-items-center justify-content-between mb-3">
                                 <h3 class="text-orange">Staff</h3>
                                 <div class="bg-orange icon iq-icon-box-2 mr-2 rounded">
                                     <i class="las la-desktop"></i>
@@ -161,25 +180,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card card-block card-stretch card-height">
-                            <div class="card-body">
-                                <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-info">Inventory</h3>
-                                <div class="bg-info icon iq-icon-box-2 mr-2 rounded">
-                                    <i class="lar la-envelope"></i>
-                                </div>
-                                </div>
-                                <h4>Sent 272,2824</h4>
-                                <div class="mt-1">
-                                <p class="mb-0">Unsent 682,735</p>
-                                </div>
-                                <div class="iq-progress-bar mt-3">
-                                <span class="bg-info" data-percent="85"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              
                     <div class="col-md-4">
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">

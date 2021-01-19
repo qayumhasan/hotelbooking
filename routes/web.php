@@ -23,8 +23,13 @@ use App\Http\Controllers\Admin\Hotel\PurchaseController;
 use App\Http\Controllers\Admin\Hotel\TaxSettingController;
 use App\Http\Controllers\Admin\Hotel\StockTransferController;
 use App\Http\Controllers\Admin\Hotel\PurchaseOrderController;
+
+use App\Http\Controllers\Admin\Inventory\InventoryManageController;
+use App\Http\Controllers\Admin\Inventory\ReportController;
+
 use App\Http\Controllers\Admin\Hotel\VoucherController;
 use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
+
 
 use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -249,7 +254,15 @@ Route::get('admin/purchaseorder/delete/{id}', [PurchaseOrderController::class, '
 Route::get('admin/purchaseorder/edit/{id}', [PurchaseOrderController::class, 'edit']);
 Route::post('admin/purchaseorder/update/{id}', [PurchaseOrderController::class, 'update'])->name('admin.purchaseorder.update');
 
-
+// report controller
+Route::get(md5('admin/inventory/home'), [InventoryManageController::class, 'index'])->name('admin.inventory.home');
+// daily purchase report
+Route::get(md5('admin/dailypurchase/index'), [ReportController::class, 'dailypurchase'])->name('admin.dailypurchase.create');
+Route::post(md5('admin/dailypurchase/index'), [ReportController::class, 'dailypurchasesearch'])->name('admin.dailypurchase.create');
+// // Stockwise purchase report
+Route::get(md5('admin/stockwise/purchase/create'), [ReportController::class, 'stockwise'])->name('admin.stockwise.create');
+Route::post(md5('admin/stockwise/purchase/create'), [ReportController::class, 'stockwisesearch'])->name('admin.stockwise.create');
+Route::get(md5('admin/itemwise/purchase/create'), [ReportController::class, 'itemwisereport'])->name('admin.itemwise.report');
 
 
 
