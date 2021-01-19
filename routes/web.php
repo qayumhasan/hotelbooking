@@ -263,7 +263,9 @@ Route::post(md5('admin/dailypurchase/index'), [ReportController::class, 'dailypu
 // // Stockwise purchase report
 Route::get(md5('admin/stockwise/purchase/create'), [ReportController::class, 'stockwise'])->name('admin.stockwise.create');
 Route::post(md5('admin/stockwise/purchase/create'), [ReportController::class, 'stockwisesearch'])->name('admin.stockwise.create');
-Route::get(md5('admin/itemwise/purchase/create'), [ReportController::class, 'itemwisereport'])->name('admin.itemwise.report');
+// 
+Route::get(md5('admin/categorywise/purchase/create'), [ReportController::class, 'categorywisereport'])->name('admin.categorywise.report');
+Route::post(md5('admin/categorywise/purchase/create'), [ReportController::class, 'categoriwise'])->name('admin.categorywise.report');
 
 
 
