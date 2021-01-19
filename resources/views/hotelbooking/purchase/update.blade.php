@@ -47,19 +47,18 @@ $current = date("m/d/Y");
                                   
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="fname">Order No: *</label>
-                                            <input type="text" value="{{$edit->order_no}}" class="form-control" disabled>
-                                            <input type="hidden" value="{{$edit->order_no}}" name="order_no">
+                                            <label for="fname">Ref Invoice No: *</label>
+                                            <input type="text" value="{{$edit->ref_invoice_no}}" class="form-control" name="ref_invoice">
 
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="fname">Ref Invoice No: </label>
-                                            <input type="text" id="ref_invoice" name="ref_invoice" class="form-control" list="ref_in" placeholder="Reference Invoice" value="{{$edit->ref_invoice_no}}" />
+                                            <label for="fname">Order No: </label>
+                                            <input type="text" id="ref_invoice" name="order_no" class="form-control" list="ref_in" placeholder="Reference Invoice" value="{{$edit->order_no}}" />
                                             <datalist id="ref_in">
                                                 @foreach($allorderhead as $orderhead)
-                                                <option value="{{$orderhead->invoice_no}}" >{{$orderhead->invoice_no}}</option>
+                                                <option value="{{$orderhead->order_no}}" >{{$orderhead->order_no}}</option>
                                                 @endforeach
                                             </datalist>
                                         

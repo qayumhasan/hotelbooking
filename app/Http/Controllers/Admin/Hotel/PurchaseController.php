@@ -56,16 +56,14 @@ class PurchaseController extends Controller
         $invoice = $request->invoice_no;
         $checkpurchahead=PurchaseHead::where('invoice_no',$invoice)->first();
         if($checkpurchahead){
-            $supplier_name=Supplier::where('id',$request->supplier)->select(['id','name'])->first();
+           
             $netamount=PurchaseHead::where('invoice_no',$invoice)->sum('amount');
-            
-
-
             $data = new Purchase;
             $data->invoice_no =  $invoice;
             $data->order_no =  $request->order_no;
             $data->ref_invoice_no = $request->ref_invoice;
             $data->supplier_id = $request->supplier;
+            $supplier_name=Supplier::where('id',$request->supplier)->select(['id','name'])->first();
             if($supplier_name){
                 $data->supplier_name = $supplier_name->name;
             }

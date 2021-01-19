@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title',$seo->meta_title)</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{asset('public/uploads/logo/'.$logos->favicon)}}" />
 
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/backend.css?v=1.0.1">
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datepiker.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/remixicon/fonts/remixicon.css">
@@ -43,7 +43,7 @@
 
         <div class="iq-sidebar  sidebar-default ">
             <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="{{route('admin.main.dashboard')}}" class="header-logo">
+                <a href="{{route('admin.inventory.home')}}" class="header-logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal darkmode-logo" alt="logo">
                 </a>
@@ -54,116 +54,37 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="{{route('admin.main.dashboard')}}">
-                            <a href="{{route('admin.main.dashboard')}}">
+                        <li class="{{ request()->routeIs('admin.inventory.home*') ? 'active' : '' }}">
+                            <a href="{{route('admin.hotel')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
-
                         </li>
-                        <li class=" ">
-                            <a href="#user" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>User</span>
+                        <li class="">
+                            <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Reports</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
-                            <ul id="user" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.user.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.user.create')}}">
-                                        <i class="las la-user-plus"></i><span>User Add</span>
+                            <ul id="reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.dailypurchase.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.dailypurchase.create')}}">
+                                        <i class="las la-list-alt"></i><span>Daily Purchase</span>
                                     </a>
                                 </li>
-                                <li class="{{ request()->routeIs('admin.user*') ? 'active' : '' }} ">
-                                    <a href="{{route('admin.user')}}">
-                                        <i class="las la-list-alt"></i><span>User List</span>
+                                <li class="{{ request()->routeIs('admin.stockwise.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stockwise.create')}}">
+                                        <i class="las la-list-alt"></i><span>Stock Wise Purchase</span>
                                     </a>
                                 </li>
-
-                            </ul>
-
-                            <!-- Employee addon section start from here -->
-
-                            @if($permit->active('employee'))
-                        <li class=" ">
-                            <a href="#employee" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="las la-network-wired iq-arrow-left"></i><span>Employee</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="employee" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="">
-                                    <a href="{{route('admin.employee.create')}}">
-                                        <i class="las la-user-plus"></i><span>Employee Add</span>
-                                    </a>
-                                </li>
-                                <li class=" ">
-                                    <a href="{{route('admin.employee.index')}}">
-                                        <i class="las la-list-alt"></i><span>Employee List</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        @endif
-                        <!-- Employee addon section end from here -->
-
-                        <!-- addon manager start from here -->
-
-                        <li class=" ">
-                            <a href="{{route('admin.addon.manager')}}">
-                                <i class="las la-wrench aiz-side-nav-icon"></i><span>Addon Manager</span>
-                            </a>
-                        </li>
-                        <!-- addon manager end from here -->
-
-                        <!-- pages area start -->
-                        <li class=" ">
-                            <a href="{{route('page')}}">
-                                <i class="las la-wrench aiz-side-nav-icon"></i><span>Add Pages</span>
-                            </a>
-                        </li>
-                        <!-- pages area end -->
-
-
-
-                        <li class=" ">
-                            <a href="#settings" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="fas fa-cogs"></i><span>Settings</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="settings" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.settings.general*') ? 'active' : '' }} ">
-                                    <a href="{{route('admin.settings.general')}}">
-                                        <i class="las la-id-card"></i><span>General Settings</span>
-                                    </a>
-                                </li>
-                                <li class=" {{ request()->routeIs('admin.filemanager.check*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.filemanager.check')}}">
-                                        <i class="las la-id-card"></i><span>Ck Editor With File Manager</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.email*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.email')}}">
-                                        <i class="las la-id-card"></i><span>Mail</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.compose.email*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.compose.email')}}">
-                                        <i class="las la-id-card"></i><span>Compose Mail</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.bulksms.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.bulksms.create')}}">
-                                        <i class="las la-id-card"></i><span>Bulk Sms Send</span>
+                                <li class="{{ request()->routeIs('admin.itemwise.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.itemwise.report')}}">
+                                        <i class="las la-list-alt"></i><span>Category Wise Purchase</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-
-
                     </ul>
                 </nav>
-             
                 <div class="p-3"></div>
             </div>
         </div>
@@ -172,7 +93,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light p-0">
                     <div class="iq-navbar-logo d-flex align-items-center justify-content-between">
                         <i class="ri-menu-line wrapper-menu"></i>
-                        <a href="index.html" class="header-logo">
+                        <a href="{{route('admin.inventory.home')}}" class="header-logo">
                             <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                             <img src="{{asset('public/backend')}}/assets/images/logo-white.png" class="img-fluid rounded-normal darkmode-logo" alt="logo">
 
@@ -249,71 +170,6 @@
                                         </div>
                                     </div>
                                 </li>
-                                <!-- <li class="nav-item nav-icon dropdown">
-                              <a href="#" class="search-toggle dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                              <i class="ri-notification-line bg-info p-2 rounded-small"></i>
-                              <span class="bg-primary "></span>
-                              </a>
-                              <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <div class="card shadow-none m-0">
-                                      <div class="card-body p-0 ">
-                                      <div class="cust-title p-3">
-                                          <h5 class="mb-0">All Notifications</h5>
-                                      </div>
-                                      <div class="p-3">
-                                          <a href="#" class="iq-sub-card" >
-                                              <div class="media align-items-center">
-                                                  <div class="">
-                                                  <img class="avatar-40 rounded-small" src="{{asset('public/backend')}}/assets/images/user/01.jpg" alt="01">
-                                                  </div>
-                                                  <div class="media-body ml-3">
-                                                  <h6 class="mb-0">Emma Watson Barry <small class="badge badge-success float-right">New</small></h6>
-                                                  <p class="mb-0">95 MB</p>
-                                                  </div>
-                                              </div>
-                                          </a>
-                                          <a href="#" class="iq-sub-card" >
-                                              <div class="media align-items-center">
-                                                  <div class="">
-                                                  <img class="avatar-40 rounded-small" src="{{asset('public/backend')}}/assets/images/user/02.jpg" alt="02">
-                                                  </div>
-                                                  <div class="media-body ml-3">
-                                                  <h6 class="mb-0 ">New customer is join</h6>
-                                                  <p class="mb-0">Cyst Barry</p>
-                                                  </div>
-                                              </div>
-                                          </a>
-                                          <a href="#" class="iq-sub-card" >
-                                              <div class="media align-items-center">
-                                                  <div class="">
-                                                  <img class="avatar-40 rounded-small" src="{{asset('public/backend')}}/assets/images/user/03.jpg" alt="03">
-                                                  </div>
-                                                  <div class="media-body ml-3">
-                                                  <h6 class="mb-0 ">Two customer is left</h6>
-                                                  <p class="mb-0">Cyst Barry</p>
-                                                  </div>
-                                              </div>
-                                          </a>
-                                          <a href="#" class="iq-sub-card" >
-                                              <div class="media align-items-center">
-                                                  <div class="">
-                                                  <img class="avatar-40 rounded-small" src="{{asset('public/backend')}}/assets/images/user/04.jpg" alt="04">
-                                                  </div>
-                                                  <div class="media-body ml-3">
-                                                  <h6 class="mb-0 ">New Mail from Fenny <small class="badge badge-success float-right">New</small></h6>
-                                                  <p class="mb-0">Cyst Barry</p>
-                                                  </div>
-                                              </div>
-                                          </a>
-                                      </div>
-                                      <a class="right-ic btn btn-primary btn-block position-relative p-2" href="#" role="button">
-                                          <div class="dd-icon"><i class="las la-arrow-right mr-0"></i></div>
-                                          View All
-                                      </a>
-                                      </div>
-                                  </div>
-                              </div>
-                          </li> -->
                                 <li class="nav-item iq-full-screen"><a href="#" class="" id="btnFullscreen"><i class="ri-fullscreen-line"></i></a></li>
                                 <li class="caption-content">
                                     <a href="#" class="iq-user-toggle">
@@ -422,66 +278,6 @@
 
         @yield('content')
 
-        <!-- Media manager model start from here -->
-        
-        <div class="modal fade" id="imageuploadmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">File Manager</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div id="showImage">
-
-                    </div>
-
-                   
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary uploadbtn" data-toggle="modal" data-target="#imageuploadbtn" data-whatever="@mdo"><i class="fa fa-upload"></i>Upload Image</button>
-                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                        <button type="button" class="btn btn-primary" id="usefile" data-dismiss="modal">Use File</button>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-
-
-
-
-        <div class="modal fade" id="imageuploadbtn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New Image Upload</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{route('admin.media.file.upload')}}" id="store_media_form" method="post" enctype="multipart/form-data">
-                        @csrf
-                            <div class="custom-file mb-3">
-                                <input type="file" class="custom-file-input" id="customFile" name="image">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                <small class="header_error text-danger"></small>
-                            </div>
-                            <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Upload Image</button>
-                    </div>
-                            
-                        </form>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-
 
 
         <!-- yield -->
@@ -502,6 +298,12 @@
             </div>
         </div>
     </footer>
+
+        
+    
+
+
+
     <!-- Backend Bundle JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/backend-bundle.min.js"></script>
 
@@ -520,6 +322,7 @@
     <!-- Mapbox Javascript -->
     <script src="{{asset('public/backend')}}/assets/js/mapbox-gl.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/mapbox.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/datepiker.js"></script>
 
     <!-- Fullcalender Javascript -->
     <script src="{{asset('public/backend')}}//assets/vendor/fullcalendar/core/main.js"></script>
@@ -552,29 +355,25 @@
             case 'success':
 
                 iziToast.success({
-                    message: '{{ Session::get('
-                    messege ') }}',
+                    message: '{{ Session::get('messege') }}',
                     'position': 'topCenter'
                 });
                 brack;
             case 'info':
                 iziToast.info({
-                    message: '{{ Session::get('
-                    messege ') }}',
+                    message: '{{ Session::get('messege') }}',
                     'position': 'topRight'
                 });
                 brack;
             case 'warning':
                 iziToast.warning({
-                    message: '{{ Session::get('
-                    messege ') }}',
+                    message: '{{ Session::get('messege')}}',
                     'position': 'topRight'
                 });
                 break;
             case 'error':
                 iziToast.error({
-                    message: '{{ Session::get('
-                    messege ') }}',
+                    message: '{{ Session::get('messege')}}',
                     'position': 'topRight'
                 });
                 break;
@@ -602,130 +401,13 @@
                 });
         });
     </script>
-
-<script>
-        window.onload = function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'get',
-                url: "{{ route('admin.media.file.show') }}",
-                
-                success: function(data) {
-
-                  
-                    $('#showImage').html(data);
-                    
-
-                }
-            });
-        };
-    </script>
-
-<script>
-        $(document).ready(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(document).on('submit', '#store_media_form', function(e){
-                e.preventDefault();
-                
-                var url = $(this).attr('action');
-                var type = $(this).attr('method');
-                var request = $(this).serialize();
-                console.log(request);
-                $.ajax({
-                    url:url,
-                    type:type,
-                    data:new FormData(this),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success:function(data){
-                        //log(data);
-                        $('#showImage').html(data);
-                        $('#imageuploadbtn').modal('hide');
-                         setInterval(function() {
-                        // window.location = "{{ url()->current() }}";
-                    }, 700);
-                        
-                    },
-                    error:function(err){
-                       
-                        
-                        if(err.responseJSON.errors.image){
-                            $('.header_error').html('The image field is required');
-
-                        }
-                        
-                    }
-                });
-            });
-        });
-    </script> 
-
-
-<!-- pagination area start -->
-
-<script>
-        $(document).ready(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(document).on('click', '.pagination-item', function(e){
-                e.preventDefault();
-                
-                var url = $(this).attr('href');
-                
-                console.log(url);
-                $.ajax({
-                    url:url,
-                    type:"get",
-                    success:function(data){
-                        //log(data);
-                        $('#showImage').html(data);
-                        $('#imageuploadbtn').modal('hide');
-                        
-                        
-                    },
-                  
-                });
-            });
-        });
-    </script> 
-
-    
-<script>
-    
-    function deleteImg(el){
-        $(el).closest('.img_item').remove();
-        // console.dir($(el)[0].children[2].style.display="block");
-        var id =$(el).attr("data-id");
-        $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'GET',
-                url: "{{ url('admin/media/manager/delete') }}/" +id,
-				
-                success: function(data) {
-                    $('#showImage').html(data);
-                }
-            });
-        
-    }        
-</script>
     <!-- app JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script>
+        $('.datepicker').datepicker();
+    </script>
+
+  
 
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>
 </body>
