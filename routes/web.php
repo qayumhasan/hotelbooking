@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\Inventory\ReportController;
 
 use App\Http\Controllers\Admin\Hotel\VoucherController;
 use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
+use App\Http\Controllers\Admin\Hotel\AdvanceBookingController;
 
 
 use App\Http\Controllers\Admin\AddonManagerController;
@@ -315,6 +316,25 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
     Route::post('/edit/book-in/update/{id}', [CheckinUpdateController::class, 'bookingUpdate'])->name('admin.bookin.update');
     Route::post('/edit/tariff/update/{id}', [CheckinUpdateController::class, 'tariffUpdate'])->name('admin.tarif.update');
     Route::get('/delete/booking/{id}', [CheckinUpdateController::class, 'deleteBooking'])->name('admin.delete.booking');
+});
+
+
+Route::middleware(['admin'])->prefix('admin/advance/booking')->group(function () {
+    Route::get('/', [AdvanceBookingController::class, 'showAdvanceBookingForm'])->name('admin.advance.booking');
+    Route::get('/get/room/{id}', [AdvanceBookingController::class, 'advanceBookingGetRoom']);
+    Route::post('/guest/name/store', [AdvanceBookingController::class, 'guestNameStore'])->name('admin.guest.name.store');
+    Route::post('/advance/booking/store', [AdvanceBookingController::class, 'advanceBookingStore'])->name('admin.advance.booking.store');
+    Route::get('/check/{id}', [AdvanceBookingController::class, 'advanceBookingCheck']);
+
+});
+Route::middleware(['admin'])->prefix('admin/advance/report')->group(function () {
+    Route::get('/', [AdvanceBookingController::class, 'showAdvanceBookingReportPage'])->name('admin.advance.booking.report');
+    Route::get('/edit/{id}', [AdvanceBookingController::class, 'showAdvanceBookingReportEdit'])->name('admin.advance.booking.report.edit');
+    Route::post('/update/{id}', [AdvanceBookingController::class, 'showAdvanceBookingReportUpdate'])->name('admin.advance.booking.update');
+    Route::get('/delete/{id}', [AdvanceBookingController::class, 'deleteAdvanceBookingReport'])->name('admin.advance.booking.delete');
+    Route::get('/status/{id}', [AdvanceBookingController::class, 'statusAdvanceBookingReport'])->name('admin.advance.booking.status');
+    
+
 });
 
 

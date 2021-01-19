@@ -10,6 +10,9 @@
 
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/backend.css?v=1.0.1">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datepiker.css">
+    
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datatables.css">
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/select2.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/remixicon/fonts/remixicon.css">
@@ -92,21 +95,30 @@
                         </li>
 
                         <li class=" ">
-                            <a href="#occupancy" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Occupancy Reports</span>
+                            <a href="#advance_booking" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Advance Booking</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
-                            <ul id="occupancy" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.checkin.report') ? 'active' : '' }}">
-                                    <a href="{{route('admin.checkin.report')}}">
-                                        <i class="las la-user-plus"></i><span>Occupancy Reports</span>
+                            <ul id="advance_booking" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.advance.booking') ? 'active' : '' }}">
+                                    <a href="{{route('admin.advance.booking')}}">
+                                        <i class="las la-user-plus"></i><span>Advance Booking</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.advance.booking.report') ? 'active' : '' }}">
+                                    <a href="{{route('admin.advance.booking.report')}}">
+                                        <i class="las la-user-plus"></i><span>Advance Reports</span>
                                     </a>
                                 </li>
                                
 
                             </ul>
                         </li>
+
+
+
                         <li class="">
                             <a href="#branch" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <i class="far fa-user"></i><span>Branch</span>
@@ -569,10 +581,13 @@
 
     <!-- slider JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/slider.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/timepicker.js"></script>
 
     <!-- alert -->
     <script src="{{asset('public/backend')}}/assets/js/izitost.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/select2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/datatables.js"></script>
 
     <script>
         @if(Session::has('messege'))
@@ -631,6 +646,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script>
         $('#datepicker').datepicker();
+    </script>
+    <script>
+        $('.datepicker').datepicker(
+            {
+                format: 'dd/mm/yyyy',
+            }
+        );
     </script>
 
   
