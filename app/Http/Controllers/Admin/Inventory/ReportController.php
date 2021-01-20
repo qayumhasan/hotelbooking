@@ -9,6 +9,9 @@ use App\Models\Purchase;
 use App\Models\PurchaseHead;
 use App\Models\StockCenter;
 use App\Models\MenuCategory;
+use App\Models\Supplier;
+use App\Models\ItemEntry;
+use DB;
 class ReportController extends Controller
 {
     public function __construct(){
@@ -118,7 +121,53 @@ class ReportController extends Controller
             $allcategory=MenuCategory::where('is_deleted',0)->where('is_active',1)->orderBy('id','DESC')->get();
             return view('inventory.report.categorywise.result',compact('current','maindate','allcategory','cateid','fdate','tdate'));
        
+    }
 
+    public function supplierwisereport(){
+        $year= Carbon::now()->format('Y');
+        $month= Carbon::now()->format('F');
+        $date= Carbon::now()->format('d');
+        $maindate=$date.' '.$month.' '.$year;
+        date_default_timezone_set("asia/dhaka");
+        $current = date("m/d/Y");
+        $allsupplier=Supplier::where('is_deleted',0)->latest()->get();
+        return view('inventory.report.supplierwise.main',compact('current','maindate','allsupplier'));
+    }
+
+    // supplier wise
+    public function supplierwise(Request $request){
+        
+        $supplierid=$request->supplier_id;
+        $fdate=$request->formdate;
+        $tdate=$request->todate;
+        $year= Carbon::now()->format('Y');
+        $month= Carbon::now()->format('F');
+        $date= Carbon::now()->format('d');
+        $maindate=$date.' '.$month.' '.$year;
+        date_default_timezone_set("asia/dhaka");
+        $current = date("m/d/Y");
+        $allsupplier=Supplier::where('is_deleted',0)->latest()->get();
+        return view('inventory.report.supplierwise.result',compact('current','maindate','allsupplier','supplierid','fdate','tdate'));
+
+    }
+    // date wise
+    public function datewisereport(){
+        //return "ok";
+        $year= Carbon::now()->format('Y');
+        $month= Carbon::now()->format('F');
+        $date= Carbon::now()->format('d');
+        $maindate=$date.' '.$month.' '.$year;
+        date_default_timezone_set("asia/dhaka");
+        $current = date("m/d/Y");
+        $allitem=ItemEntry::where('is_deleted',0)->latest()->get();
+
+      
+        $allpurchase = Purchase::select(['date'])
+                ->groupByRaw('purchases.date')
+                ->get();
+        //dd($allpurchase);
+
+        return view('inventory.report.datewise.main',compact('current','maindate','allitem','allpurchase'));
     }
 
 

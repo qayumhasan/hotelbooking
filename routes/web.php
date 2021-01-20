@@ -267,6 +267,13 @@ Route::post(md5('admin/stockwise/purchase/create'), [ReportController::class, 's
 Route::get(md5('admin/categorywise/purchase/create'), [ReportController::class, 'categorywisereport'])->name('admin.categorywise.report');
 Route::post(md5('admin/categorywise/purchase/create'), [ReportController::class, 'categoriwise'])->name('admin.categorywise.report');
 
+Route::get(md5('admin/supplierwise/purchase/create'), [ReportController::class, 'supplierwisereport'])->name('admin.supplierwise.report');
+Route::post(md5('admin/supplierwise/purchase/create'), [ReportController::class, 'supplierwise'])->name('admin.supplierwise.report');
+
+// datewise
+Route::get(md5('admin/datewise/purchase/create'), [ReportController::class, 'datewisereport'])->name('admin.datewise.report');
+
+
 
 
 // setting area start here
