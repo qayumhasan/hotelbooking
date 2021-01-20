@@ -81,6 +81,16 @@
                                         <i class="las la-list-alt"></i><span>Category Wise Purchase</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.supplierwise.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.supplierwise.report')}}">
+                                        <i class="las la-list-alt"></i><span>Supplier Wise Purchase</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.datewise.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.datewise.report')}}">
+                                        <i class="las la-list-alt"></i><span>Date Wise Purchase</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
