@@ -45,8 +45,21 @@
                                         <th class="d-none">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-center">
+                                <tfoot class="text-center">
                                     <tr>
+                                        <th>Booking No</th>
+                                        <th>Room no</th>
+                                        <th>Guest</th>
+                                        <th>Mobile</th>
+                                        <th>In Date</th>
+                                        <th>Exp.Out Date</th>
+                                        <th>Tariff</th>
+                                        <th>Checkin By</th>
+                                        <th class="d-none">Action</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody class="text-center">
+                                    <!-- <tr>
                                         <th>Booking No</th>
                                         <th>Room No</th>
                                         <th>Guest</th>
@@ -56,7 +69,7 @@
                                         <th>Tariff</th>
                                         <th>Checkin By</th>
                                         <th width="150px">Action</th>
-                                    </tr>
+                                    </tr> -->
 
                                     @foreach($advances as $row)
 
@@ -71,7 +84,7 @@
                                         <td>{{$row->bookedby->username?? ''}}</td>
                                         
 
-                                        <td>
+                                        <td width="10%">
                                             @if($row->is_active==1)
                                             <a class="badge bg-success-light mr-2" data-toggle="tooltip" data-placement="top" href="{{route('admin.advance.booking.status',$row->id)}}" data-original-title="Active"><i class="la la-thumbs-up"></i></a>
                                             @else
@@ -107,7 +120,7 @@
             var title = $('#datatable thead th').eq($(this).index()).text();
             if(title !='Action'){
 
-                $(this).html('<input class="search_area form-control form-control-sm" type="text" placeholder="Search ' + title + '" />');
+                $(this).html('<input class="search_area form-control form-control-sm" type="text" placeholder="' + title + '" />');
             }
             
         });

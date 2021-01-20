@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Hotel;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AdvanceBooking as ResourcesAdvanceBooking;
+use App\Http\Resources\DayByDayCalenderCollection;
 use App\Models\AdvanceBooking;
 use App\Models\Checkin;
 use App\Models\Guest;
@@ -119,6 +121,7 @@ class AdvanceBookingController extends Controller
             $booking->room_type = $request->room_type;
             $booking->no_of_rooms = $request->no_of_room;
             $booking->room_id = $row;
+            $booking->year = (int)date('Y');
 
 
             $room = Room::findOrFail($row);
@@ -144,6 +147,7 @@ class AdvanceBookingController extends Controller
     public function advanceBookingCheck(Request $request, $id)
     {
         
+        
 
         $checkindate = $request->checkin;
 
@@ -159,13 +163,24 @@ class AdvanceBookingController extends Controller
 
         $checkin = Checkin::where('room_id', $id)->whereBetween('exp_checkin_date', [$checkindate, $checkoutdate])->first();
 
-    //    return $advancebooking = AdvanceBooking::where('room_id',$id)->whereBetween('checkoutdate', [$checkindate, $checkoutdate])->first();
+        $advancebooking = AdvanceBooking::where('room_id',$id)->whereBetween('checkoutdate', [$request->checkin, $request->checkout])->first();
       
 
-        if ($checkin) {
+        if ($checkin || $advancebooking) {
+            if(isset($checkin->checkin_date)){
+                $checkin = $checkin->checkin_date;
+            }else if(isset($advancebooking->checkindate)){
+                $checkin = $advancebooking->checkindate;
+            }
+
+            if(isset($checkin->exp_checkin_date)){
+                $checkout = $checkin->exp_checkin_date;
+            }else if(isset($advancebooking->checkoutdate)){
+                $checkout = $advancebooking->checkoutdate;
+            }
             return response()->json([
-                'checkindate' => $checkin->checkin_date,
-                'checkoutdate' => $checkin->exp_checkin_date,
+                'checkindate' => $checkin,
+                'checkoutdate' => $checkout,
             ]);
         }
     }
@@ -174,7 +189,7 @@ class AdvanceBookingController extends Controller
     public function showAdvanceBookingReportPage()
     {
         
-        $advances = AdvanceBooking::all();
+        $advances = AdvanceBooking::where('is_active',1)->where('is_deleted',0)->orderBy('id', 'DESC')->get();
         return view('hotelbooking.advancebooking.report.report', compact('advances'));
     }
 
@@ -230,6 +245,7 @@ class AdvanceBookingController extends Controller
                 $advancebooking->guest_id = $request->guest_name;
                 $advancebooking->room_type = $request->room_type;
                 $advancebooking->no_of_rooms = $request->no_of_room;
+                $advancebooking->year = (int)date('Y');
     
     
                 // $room = Room::findOrFail($row);
@@ -257,6 +273,7 @@ class AdvanceBookingController extends Controller
             $advancebooking->room_type = $request->room_type;
             $advancebooking->no_of_rooms = $request->no_of_room;
             $advancebooking->room_id = $row;
+            $advancebooking->year = (int)date('Y');
     
     
                 $room = Room::findOrFail($row);
@@ -312,5 +329,39 @@ class AdvanceBookingController extends Controller
             'alert-type'=>'success'
             );
         return redirect()->route('admin.advance.booking.report')->with($notification);
+    }
+
+
+    public function advanceBookingCalender()
+    {
+        $roomtypes = RoomType::where('is_active',1)->where('is_deleted',0)->get();
+        return view('hotelbooking.advancebooking.report.calender',compact('roomtypes'));
+    }
+
+    public function getadvanceBookingReport(Request $request)
+    {
+    
+        $advancebooking = AdvanceBooking::where('room_type',$request->room_type)->where('year',$request->year)->get();
+        return new ResourcesAdvanceBooking($advancebooking);
+    }
+
+    public function advanceBookingRoom($id)
+    {
+        $advancebooking = AdvanceBooking::findOrFail($id);
+        return view('hotelbooking.advancebooking.report.booking_show',compact('advancebooking'));
+    }
+
+    public function advanceBookingCalenderDaybyDay()
+    {
+        
+        $roomtypes = RoomType::where('is_active',1)->where('is_deleted',0)->get();
+        return view('hotelbooking.advancebooking.report.daybydaycalender',compact('roomtypes'));
+    }
+
+
+    public function getadvanceBookingReportDayByDay(Request $request)
+    {
+        $advancebooking = AdvanceBooking::where('room_type',$request->room_type)->where('year',$request->year)->get();
+        return new DayByDayCalenderCollection($advancebooking);
     }
 }

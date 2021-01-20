@@ -24,6 +24,7 @@
     <link rel='stylesheet' href="{{asset('public/backend')}}/assets/vendor/fullcalendar/list/main.css" />
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/mapbox/mapbox-gl.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/izitost.css">
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/fullcalender.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/Bootstrap-4-Tag-Input-Plugin-jQuery/tagsinput.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
@@ -110,6 +111,18 @@
                                 <li class="{{ request()->routeIs('admin.advance.booking.report') ? 'active' : '' }}">
                                     <a href="{{route('admin.advance.booking.report')}}">
                                         <i class="las la-user-plus"></i><span>Advance Reports</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.advance.booking.calender') ? 'active' : '' }}">
+                                    <a href="{{route('admin.advance.booking.calender')}}">
+                                        <i class="las la-user-plus"></i><span>Booking Calender</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.advance.booking.calender.daybyday') ? 'active' : '' }}">
+                                    <a href="{{route('admin.advance.booking.calender.daybyday')}}">
+                                        <i class="las la-user-plus"></i><span>Day By Day Calender</span>
                                     </a>
                                 </li>
                                
@@ -578,12 +591,15 @@
     <!-- Chart Custom JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/chart-custom.js"></script>
 
+   
+
     <!-- slider JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/slider.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/timepicker.js"></script>
 
     <!-- alert -->
     <script src="{{asset('public/backend')}}/assets/js/izitost.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/fullcalender.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/select2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/datatables.js"></script>

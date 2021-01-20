@@ -22,6 +22,7 @@ class CreateAdvanceBookingsTable extends Migration
             $table->string('checkintime');
             $table->string('checkoutdate');
             $table->string('checkouttime');
+            $table->string('year');
             $table->integer('guest_id');
             $table->string('room_type');
             $table->string('no_of_rooms');

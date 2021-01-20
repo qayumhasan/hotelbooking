@@ -289,8 +289,10 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
     Route::get('/get/view/service/{id}', [CheckingController::class, 'viewService'])->name('admin.checkin.get.view.service');
 
     Route::get('/print/service/{id}', [CheckingController::class, 'printService'])->name('admin.print.service');
+    
 });
 
+Route::get('/admin/service/categores/{id}', [CheckingController::class, 'ServiceCategores']);
 Route::middleware(['admin'])->prefix(md5('admin/voucher'))->group(function () {
     Route::get('/create', [VoucherController::class, 'create'])->name('admin.voucher.create');
 });
@@ -320,6 +322,11 @@ Route::middleware(['admin'])->prefix('admin/advance/report')->group(function () 
     Route::post('/update/{id}', [AdvanceBookingController::class, 'showAdvanceBookingReportUpdate'])->name('admin.advance.booking.update');
     Route::get('/delete/{id}', [AdvanceBookingController::class, 'deleteAdvanceBookingReport'])->name('admin.advance.booking.delete');
     Route::get('/status/{id}', [AdvanceBookingController::class, 'statusAdvanceBookingReport'])->name('admin.advance.booking.status');
+    Route::get('/calender', [AdvanceBookingController::class, 'advanceBookingCalender'])->name('admin.advance.booking.calender');
+    Route::get('/get', [AdvanceBookingController::class, 'getadvanceBookingReport']);
+    Route::get('/daybyday', [AdvanceBookingController::class, 'getadvanceBookingReportDayByDay']);
+    Route::get('/get/room/{id}', [AdvanceBookingController::class, 'advanceBookingRoom'])->name('admin.advance.booking.room');
+    Route::get('/day/by/day', [AdvanceBookingController::class, 'advanceBookingCalenderDaybyDay'])->name('admin.advance.booking.calender.daybyday');
     
 
 });
