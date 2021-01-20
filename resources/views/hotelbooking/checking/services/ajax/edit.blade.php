@@ -8,6 +8,12 @@
         background: none;
     }
 </style>
+
+@php
+                    date_default_timezone_set("Asia/Dhaka");
+                    $servicedate = date("d/m/Y");
+                    $servicetime = date("h:i");
+                    @endphp
 <div id="deleted_extra">
     <div class="row">
         <div class="col-md-1"></div>
@@ -18,8 +24,8 @@
                 <div class="row mt-2">
                     <label for="inputEmail3" class="col-sm-4 col-form-label text-center control-label">Date/Time:</label>
                     <div class="col-sm-4">
-                        <input type="date" required name="service_date" class="controll-from" id="service_date">
-                        <input type="text" name="service_id" class="controll-from" id="service_id">
+                        <input type="text" required name="service_date" class="controll-from editdatepicker" id="service_date">
+                        <input type="hidden" name="service_id" class="controll-from" id="service_id">
                         <input type="hidden" name="service_no" class="controll-from" id="service_no">
                     </div>
                     <div class="col-sm-4">
@@ -29,10 +35,11 @@
                 <div class=" row">
                     <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label">Services Category:</label>
                     <div class="col-sm-8">
-                        <select class="controll-from" id="service_category" name="service_category" required>
-                            <option value="1">Extra Rooms</option>
-                            <option value="2">Extra Bad</option>
-                            <option value="3">Wifi</option>
+                        <select class="controll-from" id="service_category_area" name="service_category" required>
+                            <option disabled selected>---Select Category----</option>
+                            @foreach($items as $row)
+                            <option value="{{$row->id}}">{{$row->item_name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -41,9 +48,10 @@
                     <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label">Services:</label>
                     <div class="col-sm-8">
                         <select class="controll-from" id="services" name="services" required>
-                            <option value="1">Extra Rooms</option>
-                            <option value="2">Extra Bad</option>
-                            <option value="3">Wifi</option>
+                            <option disabled selected>---Select service----</option>
+                            @foreach($menucategores as $row)
+                            <option value="{{$row->id}}">{{$row->name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -75,13 +83,13 @@
                         Third Party Supplier
                     </label>
                     <div class="col-sm-3">
-                        <input id="check_third" class="form-check-input check_third" name="is_third" type="checkbox" value="1"> Yes
+                        <input id="check_third_area" class="form-check-input check_third" name="is_third" type="checkbox" value="1"> Yes
                     </div>
                 </div>
-                <div class=" row third_party" id="third_party">
+                <div class=" row third_party" id="third_party_area_main">
                     <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label"></label>
                     <div class="col-sm-8">
-                        <select class="controll-from" id="exampleFormControlSelect1" name="third_party">
+                        <select class="controll-from" id="third_party_item" name="third_party">
                             <option disabled selected>--- Select Suppliers ---</option>
                             <option value="1">Extra Rooms</option>
                             <option value="2">Extra Bad</option>
@@ -99,14 +107,14 @@
                     </div>
                 </div>
 
-                <div class=" row third_party" id="return_time">
+                <div class=" row return" id="return_time">
                     <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label">Return Date/Time:</label>
                     <div class="col-sm-4">
-                        <input type="date" name="return_date" class="controll-from" id="service_date">
+                        <input type="text" name="return_date" class="controll-from editdatepicker" id="return_service_date" value="{{$servicedate}}">
                     </div>
 
                     <div class="col-sm-4">
-                        <input type="time" name="return_time" class="controll-from" id="service_date">
+                        <input type="time" name="return_time" class="controll-from" value="{{$servicetime}}" id="return_service_time">
                     </div>
 
                 </div>
@@ -182,7 +190,7 @@
         $('#service_id').val(data.id);
         $('#service_no').val(data.service_no);
         $('#service_time').val(data.service_time);
-        $('#service_category').val(data.service_category).selected;
+        $('#service_category_area').val(data.service_category).selected;
         $('#services').val(data.services).selected;
         $('#remarks').val(data.remarks);
         $('#rate').val(data.rate);
@@ -192,11 +200,22 @@
         if (data.is_third == '1') {
             $('.check_third').prop('checked', true);
             $('.third_party').show();
-            $('#third_party').val(data.third_party).selected;
+            $('#third_party_item').val(data.third_party).selected;
             // $("#check_third").is(":checked")
         } else {
             $('.check_third').prop('checked', false);
             $('.third_party').hide();
+        }
+
+        if (data.is_return == '1') {
+            $('#is_return').prop('checked', true);
+            $('#return_time').show();
+            $('#return_service_date').val(data.return_date);
+            $('#return_service_time').val(data.return_time);
+            // $("#check_third").is(":checked")
+        } else {
+            $('#is_return').prop('checked', false);
+            $('#return_time').hide();
         }
 
     })
@@ -208,4 +227,45 @@
             $('#return_time').hide();
         }
     });
+
+    $('#check_third_area').click(function(e) {
+        if (e.currentTarget.checked == true) {
+            
+            $('#third_party_area_main').show();
+        } else if (e.currentTarget.checked == false) {
+            $('#third_party_area_main').hide();
+        }
+    });
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#service_category_area').change(function(params) {
+            alert('ok');
+            var id = params.target.value;
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'get',
+                url: "{{ url('/admin/service/categores/') }}/"+id,
+                
+                success: function(data) {
+                 document.querySelector('#rate').value = data.rate;
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $('.editdatepicker').datepicker(
+        {
+                format: 'dd/mm/yyyy',
+            }
+    );
 </script>

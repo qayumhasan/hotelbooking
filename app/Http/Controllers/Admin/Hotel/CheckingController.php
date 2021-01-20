@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin\hotel;
 use App\Http\Controllers\Controller;
 use App\Models\Checkin;
 use App\Models\CheckinService;
+use App\Models\ItemEntry;
+use App\Models\MenuCategory;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Image;
@@ -168,10 +170,12 @@ class CheckingController extends Controller
         }
 
         $checkin = Checkin::findOrFail($id);
-        $rooms = Room::all();
+        $rooms = Room::where('is_active',1)->where('is_deleted',0)->get();
+        $items = ItemEntry::where('is_active',1)->where('is_deleted',0)->get();
+        $menucategores = MenuCategory::where('is_active',1)->where('is_deleted',0)->get();
 
 
-        return view('hotelbooking.checking.services.edit',compact('checkin','rooms'));
+        return view('hotelbooking.checking.services.edit',compact('checkin','rooms','items','menucategores'));
     }
 
     public function serviceStore(Request $request)
@@ -213,7 +217,10 @@ class CheckingController extends Controller
     public function getService($id)
     {
         $services = CheckinService::with('checkin')->where('checkin_id',$id)->get();
-        return view('hotelbooking.checking.services.ajax.edit',compact('services'));
+        $items = ItemEntry::where('is_active',1)->where('is_deleted',0)->get();
+        $menucategores = MenuCategory::where('is_active',1)->where('is_deleted',0)->get();
+
+        return view('hotelbooking.checking.services.ajax.edit',compact('services','items','menucategores'));
     }
 
     public function serviceUpdate(Request $request)
@@ -239,16 +246,25 @@ class CheckingController extends Controller
         $services->remarks =$request->remarks;
         $services->rate =$request->rate;
         $services->qty =$request->qty;
-        $services->is_third =$request->is_third;
-        if($request->is_third == 1){
+        
+        if(isset($request->is_third) && $request->is_third == 1){
+            $services->is_third =$request->is_third;
             $services->third_party =$request->third_party;
+        }else{
+            $services->is_third =0;
+            $services->third_party =null;
         }
 
-        $services->is_return =$request->is_return;
 
-        if($request->is_return == 1){
+        if(isset($request->is_return) && $request->is_return == 1){
+            
+            $services->is_return =$request->is_return;
             $services->return_date =$request->return_date;
             $services->return_time =$request->return_time;
+        }else{
+            $services->is_return =0;
+            $services->return_date =null;
+            $services->return_time =null;
         }
         
         $services->save();
@@ -291,5 +307,11 @@ class CheckingController extends Controller
         $pdf = PDF::loadView('hotelbooking.checking.services.printServices',compact('checkin','services'));
         $serialno = rand(9999999,999999989);
         return $pdf->download($serialno.'.pdf');
+    }
+
+    public function ServiceCategores ($id)
+    {
+        $itemscategore= ItemEntry::findOrFail($id);
+        return response()->json($itemscategore);
     }
 }

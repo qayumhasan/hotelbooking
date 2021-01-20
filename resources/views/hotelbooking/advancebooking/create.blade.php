@@ -4,7 +4,9 @@
 @php
 date_default_timezone_set("Asia/Dhaka");
 $current =date("d/m/Y");
+$time = date("h:i");
 @endphp
+
 
 <script src="{{asset('public/backend')}}/assets/js/select2.js"></script>
 <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/select2.css">
@@ -64,10 +66,11 @@ $current =date("d/m/Y");
                                                     <input type="text" required value="{{$current}}" name="checkindate" class="form-control datepicker form-control-sm" id="checkindate" >
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <input type="time" required name="checkintime" class="form-control form-control-sm" value="{{old('checkintime')}}">
+                                                    <input type="time" required name="checkintime" class="form-control form-control-sm" value="{{$time}}">
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label for="staticEmail" class="col-sm-4 col-form-label">CheckOut Date:</label>
@@ -75,7 +78,7 @@ $current =date("d/m/Y");
                                                     <input type="text" required value="{{$current}}" name="checkoutdate" class="form-control datepicker form-control-sm" id="checkoutdate">
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <input type="time" required name="checkouttime" class="form-control form-control-sm" value="{{old('checkouttime')}}">
+                                                    <input type="time" required name="checkouttime" class="form-control form-control-sm" value="{{$time}}">
                                                 </div>
                                             </div>
                                         </div>

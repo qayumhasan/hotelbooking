@@ -305,6 +305,12 @@ $time = date("h:i:sa");
                         <th>HouseKepping Services:</th>
                     </tr>
                 </table> -->
+
+                @php
+                    date_default_timezone_set("Asia/Dhaka");
+                    $servicedate = date("d/m/Y");
+                    $servicetime = date("h:i");
+                    @endphp
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-10 card basic-drop-shadow shadow-showcase mt-4 p-4">
@@ -314,21 +320,25 @@ $time = date("h:i:sa");
                             <div class="row mt-2">
                                 <label for="inputEmail3" class="col-sm-4 col-form-label text-center control-label">Date/Time:</label>
                                 <div class="col-sm-4">
-                                    <input type="date" required name="service_date" class="controll-from" id="inputEmail3">
+                                    <input type="text" required name="service_date" class="controll-from datepicker" value="{{$servicedate}}">
                                     <input type="hidden" name="service_id" value="{{$checkin->id}}" class="controll-from" id="inputEmail3">
                                     <input type="hidden" name="service_no" value="{{rand(1111,99999)}}" class="controll-from" id="inputEmail3">
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="time" required name="service_time" class="controll-from" id="inputEmail3">
+                                    <input type="time" required name="service_time" class="controll-from" value="{{$servicetime}}">
                                 </div>
                             </div>
                             <div class=" row">
                                 <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label">Services Category:</label>
                                 <div class="col-sm-8">
-                                    <select class="controll-from" id="exampleFormControlSelect1" name="service_category" required>
-                                        <option value="1">Extra Rooms</option>
-                                        <option value="2">Extra Bad</option>
-                                        <option value="3">Wifi</option>
+                                    <select class="controll-from" id="service_category" name="service_category" required>
+                                        <option disabled selected>---Select Category----</option>
+                                        @foreach($items as $row)
+                                            <option value="{{$row->id}}">{{$row->item_name}}</option>
+                                        @endforeach
+
+                                        
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -337,9 +347,10 @@ $time = date("h:i:sa");
                                 <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label">Services:</label>
                                 <div class="col-sm-8">
                                     <select class="controll-from" id="exampleFormControlSelect1" name="services" required>
-                                        <option value="1">Extra Rooms</option>
-                                        <option value="2">Extra Bad</option>
-                                        <option value="3">Wifi</option>
+                                    <option disabled selected>---Select service----</option>
+                                        @foreach($menucategores as $row)
+                                            <option value="{{$row->id}}">{{$row->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -354,7 +365,7 @@ $time = date("h:i:sa");
                             <div class="row mt-2">
                                 <label for="inputEmail3" class="col-sm-4 col-form-label text-center control-label">Rate:</label>
                                 <div class="col-sm-8">
-                                    <input type="number" required name="rate" class="controll-from" id="inputEmail3">
+                                    <input type="number" required name="rate" class="controll-from" id="service_rate">
                                 </div>
 
                             </div>
@@ -409,6 +420,8 @@ $time = date("h:i:sa");
 </div>
 </div>
 <!-- add service modal area end -->
+
+
 
 <!-- edit service area start -->
 <div class="modal fade" id="edit_service" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -660,10 +673,10 @@ $time = date("h:i:sa");
                     <div class="form-group row">
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Shift Date/Time</label>
                         <div class="col-sm-5">
-                            <input required type="date" name="shift_date" value="{{$date}}" class="form-control form-control-sm" id="shift_date">
+                            <input required type="text" name="shift_date" value="{{$servicedate}}" class="form-control form-control-sm datepicker" id="shift_date">
                         </div>
                         <div class="col-sm-5">
-                            <input required type="time" class="form-control form-control-sm" name="sift_time" id="shift_time">
+                            <input required type="time" class="form-control form-control-sm" name="sift_time" id="shift_time" value="{{$servicetime}}">
                         </div>
                     </div>
 
@@ -926,11 +939,11 @@ $time = date("h:i:sa");
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Shift Date/Time:</label>
                         <div class="col-sm-6">
-                            <input type="date" name="tariff_change_date" class="form-control form-control-sm" id="inputEmail3" required>
+                            <input type="text" name="tariff_change_date" class="form-control datepicker form-control-sm" id="inputEmail3" required value="{{$servicedate}}">
                             
                         </div>
                         <div class="col-sm-3">
-                            <input type="time" class="form-control form-control-sm" name="tariff_change_time"  id="inputEmail3" required>
+                            <input type="time" class="form-control form-control-sm" name="tariff_change_time"  id="inputEmail3" value="{{$servicetime}}" required>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -1077,6 +1090,28 @@ $time = date("h:i:sa");
                 document.querySelector('#newtariff').value = data;
 
             }
+        });
+    });
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#service_category').change(function(params) {
+            var id = params.target.value;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'get',
+                url: "{{ url('/admin/service/categores/') }}/"+id,
+                
+                success: function(data) {
+                 document.querySelector('#service_rate').value = data.rate;
+                }
+            });
         });
     });
 </script>
