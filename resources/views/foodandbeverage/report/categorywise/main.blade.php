@@ -1,12 +1,12 @@
 @extends('inventory.master')
-@section('title', 'Supplier Wise Report|'.$seo->meta_title)
+@section('title', 'Category|'.$seo->meta_title)
 @section('content')
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{asset('public/backend')}}/printThis.js"></script>
 <style>
 .form-control{
-   height:31px;
+   height:32px;
 }
 </style>
 @php
@@ -21,7 +21,7 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Date Wise Product Purchase Report:<span style="font-size:12px">  {{$maindate}}</span></h4>
+                        <h4 class="card-title">Category Wise Product Purchase Report:<span style="font-size:12px">  {{$maindate}}</span></h4>
                      </div>
                      <span class="float-right mr-2">
                       
@@ -29,16 +29,16 @@ $current = date("m/d/Y");
                   </div>
                  
                   <div class="card-body" id="selector">
-                         <form action="{{route('admin.supplierwise.report')}}" method="post">
+                         <form action="{{route('admin.categorywise.report')}}" method="post">
                               @csrf
                         <div class="row">
                               <div class="col-md-4">
                                  <div class="form-group row">
-                                       <label for="" class="col-md-3">All Item</label>
-                                       <select name="supplier_id" class="form-control col-md-5" style="font-size:12px">
+                                       <label for="" class="col-md-3">All Category</label>
+                                       <select name="cate_id" class="form-control col-md-5" style="font-size:12px">
                                             <option value="">--All-</option>
-                                            @foreach($allitem as $item)
-                                            <option value="{{ $item->id }}">{{$item->item_name}}</option>
+                                            @foreach($allcategory as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
                                             @endforeach
                                            
                                        </select>
@@ -68,9 +68,8 @@ $current = date("m/d/Y");
                         <table class="table table-striped table-bordered" >
                            <thead class="text-center">
                               <tr>
-                                 <th>SNo.</th>
+                              
                                  <th>Item Name</th>
-                                 <th>Unit</th>
                                  <th>Qty</th>
                                  <th>Rate</th>
                                  <th>Amount</th>
@@ -78,40 +77,30 @@ $current = date("m/d/Y");
                               </tr>
                            </thead>
                            <tbody class="text-center">
+                             @php
+                              $total=0;
+                             @endphp
+                             @foreach($allpurchase as $purchase)
                                  @php
-                                    $total_amount=0;
-                                @endphp
-                              @foreach($allpurchase as $key => $purchase)
-                                 <tr>
-                                    <th>{{$key}}</th>
-                                       @foreach($purchase as $itempurchase)
-                                          @php
-                                             $alllitem=App\Models\PurchaseHead::where('invoice_no',$itempurchase->invoice_no)->get();
-                                             $grouped = $alllitem->groupBy('item_id');
-                                             $alldata=$grouped->all();
-                                          @endphp
-                                          @foreach($alldata as $key => $data)
-                                             @foreach($data as $row)
-                                             <tr>
-                                                <td>{{$key}}</td>
-                                                <td>{{$row->item_name}}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                             </tr>
-                                             @endforeach
-                                          @endforeach
-                                     @endforeach
-                                      
-                                      
-                                 </tr>
-                              @endforeach
-                           
-                          
+                                    $allitem=App\Models\PurchaseHead::where('invoice_no',$purchase->invoice_no)->latest()->get();
+                                 @endphp
+                                 @foreach($allitem as $key => $pdata)
                                     <tr>
-                                       <th colspan="6">Total:{{$total_amount}} Tk</th>
+                                      
+                                       <td>{{$pdata->item_name}}</td>
+                                       <td>{{ $pdata->qty }}</td>
+                                       <td>{{ $pdata->rate }}</td>
+                                       <td>{{round($pdata->amount,2)}}</td>
                                     </tr>
+                                    @php
+                                       $total=$total + $pdata->amount;
+                                    @endphp
+                                 @endforeach
+                              @endforeach
+                              <tr>
+                                 <th colspan="6">Total: {{ $total }} Tk</th>
+                              </tr>
+                                    
                            </tbody>
                         </table>
                         

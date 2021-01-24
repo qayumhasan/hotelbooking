@@ -161,10 +161,9 @@ class ReportController extends Controller
         $current = date("m/d/Y");
         $allitem=ItemEntry::where('is_deleted',0)->latest()->get();
 
-      
-        $allpurchase = Purchase::select(['date'])
-                ->groupByRaw('purchases.date')
-                ->get();
+        $alpurchase = Purchase::where('is_deleted',0)->where('is_active',1)->get();
+        $grouped = $alpurchase->groupBy('date');
+        $allpurchase=$grouped->all();
         //dd($allpurchase);
 
         return view('inventory.report.datewise.main',compact('current','maindate','allitem','allpurchase'));
