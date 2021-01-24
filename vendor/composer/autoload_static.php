@@ -692,6 +692,9 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Http\\Controllers\\Admin\\Hotel\\TaxSettingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/TaxSettingController.php',
         'App\\Http\\Controllers\\Admin\\Hotel\\UnitMasterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/UnitMasterController.php',
         'App\\Http\\Controllers\\Admin\\Hotel\\VoucherController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Hotel/VoucherController.php',
+
+        'App\\Http\\Controllers\\Admin\\HouseKipping\\HouseKippingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HouseKipping/HouseKippingController.php',
+
         'App\\Http\\Controllers\\Admin\\Inventory\\InventoryManageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Inventory/InventoryManageController.php',
         'App\\Http\\Controllers\\Admin\\Inventory\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Inventory/ReportController.php',
         'App\\Http\\Controllers\\Admin\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LoginController.php',
@@ -728,6 +731,7 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\Employee' => __DIR__ . '/../..' . '/app/Models/Employee.php',
         'App\\Models\\Floor' => __DIR__ . '/../..' . '/app/Models/Floor.php',
         'App\\Models\\Guest' => __DIR__ . '/../..' . '/app/Models/Guest.php',
+        'App\\Models\\HouseKeeping' => __DIR__ . '/../..' . '/app/Models/HouseKeeping.php',
         'App\\Models\\ImageManager' => __DIR__ . '/../..' . '/app/Models/ImageManager.php',
         'App\\Models\\ItemEntry' => __DIR__ . '/../..' . '/app/Models/ItemEntry.php',
         'App\\Models\\KitchenOrderDetails' => __DIR__ . '/../..' . '/app/Models/KitchenOrderDetails.php',

@@ -39,6 +39,9 @@ return array(
     'App\\Http\\Controllers\\Admin\\Hotel\\TaxSettingController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/TaxSettingController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\UnitMasterController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/UnitMasterController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\VoucherController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/VoucherController.php',
+
+    'App\\Http\\Controllers\\Admin\\HouseKipping\\HouseKippingController' => $baseDir . '/app/Http/Controllers/Admin/HouseKipping/HouseKippingController.php',
+
     'App\\Http\\Controllers\\Admin\\Inventory\\InventoryManageController' => $baseDir . '/app/Http/Controllers/Admin/Inventory/InventoryManageController.php',
     'App\\Http\\Controllers\\Admin\\Inventory\\ReportController' => $baseDir . '/app/Http/Controllers/Admin/Inventory/ReportController.php',
     'App\\Http\\Controllers\\Admin\\LoginController' => $baseDir . '/app/Http/Controllers/Admin/LoginController.php',
@@ -75,6 +78,7 @@ return array(
     'App\\Models\\Employee' => $baseDir . '/app/Models/Employee.php',
     'App\\Models\\Floor' => $baseDir . '/app/Models/Floor.php',
     'App\\Models\\Guest' => $baseDir . '/app/Models/Guest.php',
+    'App\\Models\\HouseKeeping' => $baseDir . '/app/Models/HouseKeeping.php',
     'App\\Models\\ImageManager' => $baseDir . '/app/Models/ImageManager.php',
     'App\\Models\\ItemEntry' => $baseDir . '/app/Models/ItemEntry.php',
     'App\\Models\\KitchenOrderDetails' => $baseDir . '/app/Models/KitchenOrderDetails.php',
