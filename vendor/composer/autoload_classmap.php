@@ -20,6 +20,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\BulkSmsController' => $baseDir . '/app/Http/Controllers/Admin/BulkSmsController.php',
     'App\\Http\\Controllers\\Admin\\EmailController' => $baseDir . '/app/Http/Controllers/Admin/EmailController.php',
     'App\\Http\\Controllers\\Admin\\EmployeeController' => $baseDir . '/app/Http/Controllers/Admin/EmployeeController.php',
+    'App\\Http\\Controllers\\Admin\\FoodAndBeverage\\FoodAndBeverageController' => $baseDir . '/app/Http/Controllers/Admin/FoodAndBeverage/FoodAndBeverageController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\AdvanceBookingController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/AdvanceBookingController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\BranchController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/BranchController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\CheckinUpdateController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/CheckinUpdateController.php',
@@ -38,7 +39,9 @@ return array(
     'App\\Http\\Controllers\\Admin\\Hotel\\TaxSettingController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/TaxSettingController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\UnitMasterController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/UnitMasterController.php',
     'App\\Http\\Controllers\\Admin\\Hotel\\VoucherController' => $baseDir . '/app/Http/Controllers/Admin/Hotel/VoucherController.php',
+
     'App\\Http\\Controllers\\Admin\\HouseKipping\\HouseKippingController' => $baseDir . '/app/Http/Controllers/Admin/HouseKipping/HouseKippingController.php',
+
     'App\\Http\\Controllers\\Admin\\Inventory\\InventoryManageController' => $baseDir . '/app/Http/Controllers/Admin/Inventory/InventoryManageController.php',
     'App\\Http\\Controllers\\Admin\\Inventory\\ReportController' => $baseDir . '/app/Http/Controllers/Admin/Inventory/ReportController.php',
     'App\\Http\\Controllers\\Admin\\LoginController' => $baseDir . '/app/Http/Controllers/Admin/LoginController.php',
@@ -78,6 +81,8 @@ return array(
     'App\\Models\\HouseKeeping' => $baseDir . '/app/Models/HouseKeeping.php',
     'App\\Models\\ImageManager' => $baseDir . '/app/Models/ImageManager.php',
     'App\\Models\\ItemEntry' => $baseDir . '/app/Models/ItemEntry.php',
+    'App\\Models\\KitchenOrderDetails' => $baseDir . '/app/Models/KitchenOrderDetails.php',
+    'App\\Models\\KitchenOrderHead' => $baseDir . '/app/Models/KitchenOrderHead.php',
     'App\\Models\\Logo' => $baseDir . '/app/Models/Logo.php',
     'App\\Models\\MailSend' => $baseDir . '/app/Models/MailSend.php',
     'App\\Models\\MenuCategory' => $baseDir . '/app/Models/MenuCategory.php',

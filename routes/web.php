@@ -31,6 +31,8 @@ use App\Http\Controllers\Admin\Hotel\VoucherController;
 use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
 use App\Http\Controllers\Admin\Hotel\AdvanceBookingController;
 
+use App\Http\Controllers\Admin\FoodAndBeverage\FoodAndBeverageController;
+
 
 use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -272,6 +274,20 @@ Route::post(md5('admin/supplierwise/purchase/create'), [ReportController::class,
 
 // datewise
 Route::get(md5('admin/datewise/purchase/create'), [ReportController::class, 'datewisereport'])->name('admin.datewise.report');
+
+// food and beverage
+Route::get(md5('admin/foodandbeverage/index'), [FoodAndBeverageController::class, 'index'])->name('admin.foodandbeverage.create');
+Route::get('/get/checkin/data/{checkin_id}', [FoodAndBeverageController::class, 'getcheckindata']);
+Route::get('/kot/insert/data', [FoodAndBeverageController::class, 'kotinsert'])->name('kot.insert.data');
+Route::get('/kot/getinsert/data/{booking_no}', [FoodAndBeverageController::class, 'getkotinsertdata']);
+
+Route::get('/get/allkotdetails/data/{checkin_id}', [FoodAndBeverageController::class, 'getkotdetails']);
+Route::post('/get/allkotdetails/data/edit', [FoodAndBeverageController::class, 'getkotedit'])->name('get.kotitem.edit');
+Route::post('/get/allkotdetails/data/delete', [FoodAndBeverageController::class, 'getkotdelete'])->name('get.kotitem.delete');
+Route::post('admin/kitchenorder/insert', [FoodAndBeverageController::class, 'finalinsert'])->name('kot.final.insert');
+Route::get('/get/kotall/data/{checkin_id}', [FoodAndBeverageController::class, 'getkotdataall']);
+
+Route::post('/get/kotsub/data/delete', [FoodAndBeverageController::class, 'kotsubdelete'])->name('get.subkot.delete');
 
 
 

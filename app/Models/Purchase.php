@@ -13,4 +13,10 @@ class Purchase extends Model
     {
         return $this->belongsTo('App\Models\StockCenter', 'stock_center', 'id');
     }
+    public function purchaseheads()
+    {
+        return $this->hasMany(App\Models\PurchaseHead::class);
+    }
+
+
 }

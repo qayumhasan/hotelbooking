@@ -1,12 +1,12 @@
 @extends('inventory.master')
-@section('title', 'Supplier Wise Report|'.$seo->meta_title)
+@section('title', 'Stock TypeWise|'.$seo->meta_title)
 @section('content')
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="{{asset('public/backend')}}/printThis.js"></script>
 <style>
 .form-control{
-   height:31px;
+   height:27px;
 }
 </style>
 @php
@@ -21,7 +21,7 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Date Wise Product Purchase Report:<span style="font-size:12px">  {{$maindate}}</span></h4>
+                        <h4 class="card-title">StockType Wise Product Purchase Report:<span style="font-size:12px">  {{$maindate}}</span></h4>
                      </div>
                      <span class="float-right mr-2">
                       
@@ -29,16 +29,16 @@ $current = date("m/d/Y");
                   </div>
                  
                   <div class="card-body" id="selector">
-                         <form action="{{route('admin.supplierwise.report')}}" method="post">
+                         <form action="{{route('admin.stockwise.create')}}" method="post">
                               @csrf
                         <div class="row">
                               <div class="col-md-4">
                                  <div class="form-group row">
-                                       <label for="" class="col-md-3">All Item</label>
-                                       <select name="supplier_id" class="form-control col-md-5" style="font-size:12px">
+                                       <label for="" class="col-md-3">Stock Type</label>
+                                       <select name="stock_id" class="form-control col-md-5" style="font-size:12px">
                                             <option value="">--All-</option>
-                                            @foreach($allitem as $item)
-                                            <option value="{{ $item->id }}">{{$item->item_name}}</option>
+                                            @foreach($allstockcenter as $stock)
+                                            <option value="{{$stock->id}}">{{$stock->name}}</option>
                                             @endforeach
                                            
                                        </select>
@@ -78,40 +78,43 @@ $current = date("m/d/Y");
                               </tr>
                            </thead>
                            <tbody class="text-center">
+                            @foreach($allstockcenter as $stock)
                                  @php
+                                    $check=App\Models\Purchase::where('stock_center',$stock->id)->orderBy('id','DESC')->first();
+                                @endphp
+                                @if($check)
+                                <tr>
+                                    <th>{{ $stock->name}}</th>
+                                </tr>
+                                @php
+                                    $itemall=App\Models\Purchase::where('stock_center',$stock->id)->orderBy('id','DESC')->get();
                                     $total_amount=0;
                                 @endphp
-                              @foreach($allpurchase as $key => $purchase)
-                                 <tr>
-                                    <th>{{$key}}</th>
-                                       @foreach($purchase as $itempurchase)
-                                          @php
-                                             $alllitem=App\Models\PurchaseHead::where('invoice_no',$itempurchase->invoice_no)->get();
-                                             $grouped = $alllitem->groupBy('item_id');
-                                             $alldata=$grouped->all();
-                                          @endphp
-                                          @foreach($alldata as $key => $data)
-                                             @foreach($data as $row)
-                                             <tr>
-                                                <td>{{$key}}</td>
-                                                <td>{{$row->item_name}}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                             </tr>
-                                             @endforeach
-                                          @endforeach
-                                     @endforeach
-                                      
-                                      
-                                 </tr>
-                              @endforeach
-                           
-                          
+                                @foreach($itemall as $item)
+                                    @php
+                                    $mainitem=App\Models\PurchaseHead::where('invoice_no',$item->invoice_no)->orderBy('id','DESC')->get();
+                                   
+                                    @endphp
+                                    @foreach($mainitem as $val => $maini)
+                                       <tr>
+                                           <td></td>
+                                          <td>{{ $maini->item_name }}</td>
+                                          <td>{{ $maini->unit }}</td>
+                                          <td>{{ $maini->qty }}</td>
+                                          <td>{{ $maini->rate }}</td>
+                                          <td>{{ $maini->amount }}</td>
+                                       </tr>
+                                       @php
+                                       $total_amount = $total_amount + $maini->amount;
+                                       @endphp
+                                    @endforeach
+                                @endforeach
                                     <tr>
                                        <th colspan="6">Total:{{$total_amount}} Tk</th>
                                     </tr>
+                               
+                              @endif
+                            @endforeach
                            </tbody>
                         </table>
                         

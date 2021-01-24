@@ -21,7 +21,7 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Date Wise Product Purchase Report:<span style="font-size:12px">  {{$maindate}}</span></h4>
+                        <h4 class="card-title">Supplier Wise Product Purchase Report:<span style="font-size:12px">  {{$maindate}}</span></h4>
                      </div>
                      <span class="float-right mr-2">
                       
@@ -34,11 +34,11 @@ $current = date("m/d/Y");
                         <div class="row">
                               <div class="col-md-4">
                                  <div class="form-group row">
-                                       <label for="" class="col-md-3">All Item</label>
+                                       <label for="" class="col-md-3">Supplier</label>
                                        <select name="supplier_id" class="form-control col-md-5" style="font-size:12px">
                                             <option value="">--All-</option>
-                                            @foreach($allitem as $item)
-                                            <option value="{{ $item->id }}">{{$item->item_name}}</option>
+                                            @foreach($allsupplier as $supplier)
+                                            <option value="{{ $supplier->id }}">{{$supplier->name}}</option>
                                             @endforeach
                                            
                                        </select>
@@ -78,37 +78,43 @@ $current = date("m/d/Y");
                               </tr>
                            </thead>
                            <tbody class="text-center">
+                           @php
+                           $total_amount=0;
+                           @endphp
+                           @foreach($allsupplier as $supplier)
                                  @php
-                                    $total_amount=0;
+                                    $check=App\Models\Purchase::where('is_deleted',0)->where('supplier_id',$supplier->id)->orderBy('id','DESC')->first();
+                                   
                                 @endphp
-                              @foreach($allpurchase as $key => $purchase)
-                                 <tr>
-                                    <th>{{$key}}</th>
-                                       @foreach($purchase as $itempurchase)
-                                          @php
-                                             $alllitem=App\Models\PurchaseHead::where('invoice_no',$itempurchase->invoice_no)->get();
-                                             $grouped = $alllitem->groupBy('item_id');
-                                             $alldata=$grouped->all();
-                                          @endphp
-                                          @foreach($alldata as $key => $data)
-                                             @foreach($data as $row)
-                                             <tr>
-                                                <td>{{$key}}</td>
-                                                <td>{{$row->item_name}}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                             </tr>
-                                             @endforeach
-                                          @endforeach
-                                     @endforeach
-                                      
-                                      
-                                 </tr>
-                              @endforeach
-                           
-                          
+                                @if($check)
+                                <tr>
+                                    <th>{{ $supplier->name}}</th>
+                                </tr>
+                                @php
+                                    $itemall=App\Models\Purchase::where('is_deleted',0)->where('supplier_id',$supplier->id)->orderBy('id','DESC')->get();
+                                  
+                                @endphp
+                                @foreach($itemall as $item)
+                                    @php
+                                        $mainitem=App\Models\PurchaseHead::where('invoice_no',$item->invoice_no)->orderBy('id','DESC')->get();
+                                    @endphp
+                                    @foreach($mainitem as $val => $maini)
+                                       <tr>
+                                           <td></td>
+                                          <td>{{ $maini->item_name }}</td>
+                                          <td>{{ $maini->unit }}</td>
+                                          <td>{{ $maini->qty }}</td>
+                                          <td>{{ $maini->rate }}</td>
+                                          <td>{{ $maini->amount }}</td>
+                                       </tr>
+                                       @php
+                                       $total_amount = $total_amount + $maini->amount;
+                                       @endphp
+                                    @endforeach
+                                @endforeach
+                              @endif
+                                     
+                            @endforeach
                                     <tr>
                                        <th colspan="6">Total:{{$total_amount}} Tk</th>
                                     </tr>

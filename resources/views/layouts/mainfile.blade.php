@@ -108,7 +108,7 @@
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-orange">Staff</h3>
+                             <a href="{{route('admin.foodandbeverage.create')}}"><h3 class="text-orange">Food And Beverage</h3></a>
                                 <div class="bg-orange icon iq-icon-box-2 mr-2 rounded">
                                     <i class="las la-desktop"></i>
                                 </div>
