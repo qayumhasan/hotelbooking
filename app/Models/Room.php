@@ -29,6 +29,15 @@ class Room extends Model
     {
         return $this->hasOne('App\Models\Checkin','room_id','id');
     }
+    public function housekeeping()
+    {
+        return $this->hasOne('App\Models\HouseKeeping','room_id','id');
+    }
+
+    public function updatedby()
+    {
+        return $this->hasOne('App\Models\Admin','id','keeping_assign_name');
+    }
 
 
   
