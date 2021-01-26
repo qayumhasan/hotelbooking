@@ -41,7 +41,7 @@ class FoodAndBeverageController extends Controller
     // 
     public function getcheckindata($checkin_id){
 
-        $data=Checkin::where('room_id',$checkin_id)->first();
+        $data=Checkin::where('id',$checkin_id)->first();
 
         return response()->json($data);
     }
@@ -125,7 +125,7 @@ class FoodAndBeverageController extends Controller
     // 
     public function getkotdetails($checkin_id){
         //return $checkin_id;
-        $data=Checkin::where('room_id',$checkin_id)->first();
+        $data=Checkin::where('id',$checkin_id)->first();
        //dd($data->booking_no);
         $alldata=KitchenOrderDetails::where('booking_no',$data->booking_no)->where('kot_status',0)->latest()->get();
        // dd($alldata);
@@ -167,10 +167,10 @@ class FoodAndBeverageController extends Controller
                 'booking_no'=>$request->booking_no,
                 'guest_name'=>$request->guest_name,
                 'invoice_id'=>$request->invoice_id,
-                'num_of_item'=>$numberofitem,
-                'num_of_qty'=>$numberofqty,
+                'num_of_item'=>0,
+                'num_of_qty'=>0,
                 'date'=>$request->date,
-                'total_amount'=>$totalamount,
+                'total_amount'=>0,
                 'entry_by'=>Auth::user()->id,
                 'created_at'=>Carbon::now()->todateTimeString(),
             ]);
@@ -211,8 +211,8 @@ class FoodAndBeverageController extends Controller
 
     // billing get data
     public function getkotdataall($checkin_id){
-        $data=Checkin::where('room_id',$checkin_id)->first();
-        $alldata=KitchenOrderDetails::where('booking_no',$data->booking_no)->where('kot_status',1)->latest()->get();
+        $data=Checkin::where('id',$checkin_id)->first();
+        $alldata=KitchenOrderDetails::where('booking_no',$data->booking_no)->where('kot_status',1)->where('billing_status',0)->latest()->get();
         return view('foodandbeverage.home.ajaxview.allbilling',compact('alldata'));
        
     }
@@ -232,4 +232,113 @@ class FoodAndBeverageController extends Controller
 
     } 
 
+    public function getkothistory($checkin_id){
+        //return $checkin_id;
+        $data=Checkin::where('id',$checkin_id)->first();
+        $alldatadetails=KitchenOrderDetails::where('booking_no',$data->booking_no)->where('kot_status',1)->where('is_deleted',0)->latest()->get();
+        $alldata=KitchenOrderHead::where('booking_no',$data->booking_no)->where('is_deleted',0)->latest()->get();
+        return view('foodandbeverage.home.ajaxview.allhistory',compact('alldatadetails','alldata'));
+
+    }
+
+    // 
+    public function billingqtyupdate(Request $request){
+        $check=KitchenOrderDetails::where('id',$request->id)->first();
+        $update=KitchenOrderDetails::where('id',$request->id)->update([
+            'qty'=>$request->qty,
+            'amount'=>$check->rate * $request->qty,
+        ]);
+        if($update){
+            return response()->json("ok");
+        }else{
+            return response()->json("notok");
+        }
+    }
+
+
+    // billing status update
+    public function billingstatusupdate(Request $request){
+        //return $request;
+        $deleteid = $request['delid'];
+        if ($deleteid) {
+                $commentdelete=KitchenOrderDetails::whereIn('id',$deleteid)->get();
+                foreach ($commentdelete as $key => $value) {
+                    $update=KitchenOrderDetails::where('id',$value->id)->update([
+                        'billing_status'=>1,
+                    ]);
+                }
+            $alldata=KitchenOrderDetails::where('kot_status',1)->where('billing_status',0)->get();
+            return view('foodandbeverage.home.ajaxview.allbilling',compact('alldata'));
+            
+        } else {
+            $notification = array(
+                'messege' => 'Nothing To Delete',
+                'alert-type' => 'info'
+            );
+            return response()->json($notification);
+        }
+       
+    }
+    // save and print data
+    public function billingstatussaveandprint(Request $request){
+        //return $request;
+        $deleteid = $request['delid'];
+        if ($deleteid) {
+                $commentdelete=KitchenOrderDetails::whereIn('id',$deleteid)->get();
+                foreach ($commentdelete as $key => $value) {
+                    $update=KitchenOrderDetails::where('id',$value->id)->update([
+                        'billing_status'=>1,
+                    ]);
+                }
+            //$alldata=KitchenOrderDetails::where('kot_status',1)->where('billing_status',0)->get();
+            $allprint=KitchenOrderDetails::whereIn('id',$deleteid)->get();
+            $booki=KitchenOrderDetails::whereIn('id',$deleteid)->first();
+            $invo=uniqid().'KOT';
+            return view('foodandbeverage.home.ajaxview.billinginvoice',compact('allprint','booki','invo'));
+            
+        } else {
+            $notification = array(
+                'messege' => 'Nothing To Delete',
+                'alert-type' => 'info'
+            );
+            return response()->json($notification);
+        }
+       
+    }
+    // hitory
+    public function kotsubhitorydelete(Request $request){
+        $check=KitchenOrderHead::where('id',$request->item_id)->first();
+
+        $delete=KitchenOrderHead::where('id',$request->item_id)->update([
+                    'is_deleted'=>1,
+                    'updated_by'=>Auth::user()->id,
+                    'updated_at'=>Carbon::now()->todateTimeString(),
+        ]);
+        $deleteitem=KitchenOrderDetails::where('invoice_id',$check->invoice_id)->get();
+            foreach($deleteitem as $val){
+                KitchenOrderDetails::where('id',$val->id)->update([
+                    'is_deleted'=>1,
+                    'updated_by'=>Auth::user()->id,
+                    'updated_at'=>Carbon::now()->todateTimeString(),
+                ]);
+            }
+
+        $alldata=KitchenOrderHead::where('booking_no',$check->booking_no)->where('is_deleted',0)->latest()->get();
+        $alldatadetails=KitchenOrderDetails::where('booking_no',$check->booking_no)->where('kot_status',1)->where('is_deleted',0)->latest()->get();
+        return view('foodandbeverage.home.ajaxview.allhistory',compact('alldatadetails','alldata'));
+
+    }
+
+
+    // single history prrint
+    public function getsinglehistoryprint($checkin_id){
+        $alldata=KitchenOrderDetails::where('id',$checkin_id)->first();
+        return view('foodandbeverage.home.ajaxview.singlehistoryinvoice',compact('alldata'));
+    }
+    public function getdoublehistoryprint($kot_id){
+        // return $kot_id;
+        $alldata=KitchenOrderHead::where('id',$kot_id)->first();
+        $alldatadetails=KitchenOrderDetails::where('invoice_id',$alldata->invoice_id)->where('kot_status',1)->where('is_deleted',0)->latest()->get();
+        return view('foodandbeverage.home.ajaxview.doublehistoryprintinvoice',compact('alldata','alldatadetails'));
+    }
 }

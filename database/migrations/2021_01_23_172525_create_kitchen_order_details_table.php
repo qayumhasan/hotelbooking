@@ -31,6 +31,8 @@ class CreateKitchenOrderDetailsTable extends Migration
             $table->integer('complementary')->default(0);
             $table->string('invoice_id')->nullable();
             $table->integer('kot_status')->default(0);
+            
+            $table->integer('billing_status')->default(0);
 
 
             

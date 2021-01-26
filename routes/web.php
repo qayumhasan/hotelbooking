@@ -285,9 +285,20 @@ Route::get('/get/allkotdetails/data/{checkin_id}', [FoodAndBeverageController::c
 Route::post('/get/allkotdetails/data/edit', [FoodAndBeverageController::class, 'getkotedit'])->name('get.kotitem.edit');
 Route::post('/get/allkotdetails/data/delete', [FoodAndBeverageController::class, 'getkotdelete'])->name('get.kotitem.delete');
 Route::post('admin/kitchenorder/insert', [FoodAndBeverageController::class, 'finalinsert'])->name('kot.final.insert');
+// billing
 Route::get('/get/kotall/data/{checkin_id}', [FoodAndBeverageController::class, 'getkotdataall']);
+Route::get('/get/billingqty/update', [FoodAndBeverageController::class, 'billingqtyupdate'])->name('billing.quantity.update');
+Route::get('/get/billingstatus/update', [FoodAndBeverageController::class, 'billingstatusupdate'])->name('billing.status.update');
+Route::get('/get/billingstatus/update/save/print', [FoodAndBeverageController::class, 'billingstatussaveandprint'])->name('billingprint.status.update');
 
+// history
 Route::post('/get/kotsub/data/delete', [FoodAndBeverageController::class, 'kotsubdelete'])->name('get.subkot.delete');
+Route::post('/get/kotsubhitory/data/delete', [FoodAndBeverageController::class, 'kotsubhitorydelete'])->name('get.subkothitory.delete');
+Route::get('/get/kothistory/data/{checkin_id}', [FoodAndBeverageController::class, 'getkothistory']);
+Route::get('/get/singlehistory/invoice/{checkin_id}', [FoodAndBeverageController::class, 'getsinglehistoryprint']);
+Route::get('/get/doublehistory/invoice/{kot_id}', [FoodAndBeverageController::class, 'getdoublehistoryprint']);
+
+
 
 
 

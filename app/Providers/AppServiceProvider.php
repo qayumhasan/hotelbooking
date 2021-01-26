@@ -7,6 +7,7 @@ use App\Models\Logo;
 use App\Models\Seo;
 use App\Models\Addon;
 use App\Models\ImageManager;
+use App\Models\CompanyInformation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,5 +36,7 @@ class AppServiceProvider extends ServiceProvider
         view()->share('permit', $permit);
         $paginate = ImageManager::all();
         view()->share('paginate', $paginate);
+        $companyinformation = CompanyInformation::first();
+        view()->share('companyinformation', $companyinformation);
     }
 }
