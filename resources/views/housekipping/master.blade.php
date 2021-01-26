@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/mapbox/mapbox-gl.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/izitost.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/Bootstrap-4-Tag-Input-Plugin-jQuery/tagsinput.css">
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datatables.css">
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -307,6 +308,7 @@
 
     <!-- alert -->
     <script src="{{asset('public/backend')}}/assets/js/izitost.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/datatables.js"></script>
 
     <script>
         @if(Session::has('messege'))

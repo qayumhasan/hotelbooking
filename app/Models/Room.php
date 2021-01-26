@@ -38,6 +38,10 @@ class Room extends Model
     {
         return $this->hasOne('App\Models\Admin','id','keeping_assign_name');
     }
+    public function guestentry()
+    {
+        return $this->hasOne('App\Models\HouseKeepingGuestEntry','room_id','id');
+    }
 
 
   

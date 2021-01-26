@@ -298,23 +298,23 @@ $time = date("h:i");
                         <label for="inputPassword" class="col-sm-2 col-form-label">Room No:</label>
                         <div class="col-sm-10">
                             <b id="room_no"></b>
-                            <input type="hidden" name="room_id" id="room_id">
+                            <input type="hidden" required name="room_id" id="room_id">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-sm datepicker" name="keeping_date" id="keeping_date" value="{{$date}}">
+                            <input type="text" required class="form-control form-control-sm datepicker" name="keeping_date" id="keeping_date" value="{{$date}}">
                         </div>
                         <div class="col-sm-4">
-                            <input type="time" class="form-control form-control-sm" name="keeping_time" id="keeping_time" value="{{$time}}">
+                            <input type="time" required class="form-control form-control-sm" name="keeping_time" id="keeping_time" value="{{$time}}">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Updated By</label>
                         <div class="col-sm-8">
-                            <select class="form-control form-control-sm" id="updatedby" name="kepping_name">
+                            <select required class="form-control form-control-sm" id="updatedby" name="kepping_name">
                                 <option value="Qayum Hasan">Qayum Hasan</option>
                                 <option value="Asif Foysal">Asif Foysal</option>
 
@@ -325,7 +325,7 @@ $time = date("h:i");
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Status</label>
                         <div class="col-sm-8">
-                            <select class="form-control form-control-sm" id="status" name="kepping_status">
+                            <select required class="form-control form-control-sm" id="status" name="kepping_status">
                                 <option value="Dirty">Dirty</option>
                                 <option value="Cleanded">Cleanded</option>
                                 <option value="Repair">Repair</option>
@@ -338,7 +338,7 @@ $time = date("h:i");
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Remarks</label>
                         <div class="col-sm-8">
-                            <textarea rows="3" name="last_log" id="remarks" class="form-control form-control-sm"></textarea>
+                            <textarea required rows="3" name="last_log" id="remarks" class="form-control form-control-sm"></textarea>
                         </div>
 
                     </div>
