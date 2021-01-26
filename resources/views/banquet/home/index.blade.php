@@ -60,9 +60,7 @@
     height: 30px;
    
 }
-.card {
-    padding: 9px 0px;
-}
+
 </style>
 
 @php
@@ -76,26 +74,9 @@ $time = date("h:i");
       <div class="row">
          <div class="col-12">
             <div class="card">
-               <div class="row">
-                  <div class="col-md-2 text-right">
-                     <label for="">Room Type:</label>
-                  </div>
-                  <div class="col-md-3">
-                     <select name="" id="" class="form-control">
-                        <option value="">--select--</option>
-                        <option value="">Deluxe</option>
-                        <option value="">Deluxe</option>
-                     </select>
-                  </div>
-                  <div class="col-md-2 text-right">
-                     <label for="">Room No:</label>
-                  </div>
-                  <div class="col-md-3">
-                     <select name="" id="" class="form-control">
-                        <option value="">--select--</option>
-                        <option value="">Deluxe</option>
-                        <option value="">Deluxe</option>
-                     </select>
+               <div class="card-header d-flex justify-content-between">
+                  <div class="header-title">
+                     <h4 class="card-title">Room Types</h4>
                   </div>
                </div>
             </div>
@@ -453,7 +434,7 @@ $time = date("h:i");
 
 
 <script src="{{asset('public/backend')}}/assets/jquery.PrintArea.js"></script>
-   <script>
+        <script>
         $(function () {
             $(".savepritbtn").on('click', function () {
                 alert("ok");
