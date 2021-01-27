@@ -28,6 +28,15 @@ Route::middleware(['admin'])->prefix(md5('admin/house/person/entry'))->group(fun
 Route::middleware(['admin'])->prefix(md5('admin/housekeeping/distribution/items'))->group(function () {
     Route::get('/room/issue', [ItemEntryController::class, 'issueToRoom'])->name('admin.housekeeping.distribution.items.issue.room');   
     Route::post('/items/store', [ItemEntryController::class, 'itemStore'])->name('admin.housekeeping.item.store');   
+    Route::get('/items/store/list', [ItemEntryController::class, 'itemStoreList'])->name('admin.housekeeping.distribution.items.issue.list');   
+    Route::get('/items/store/list/edit/{id}', [ItemEntryController::class, 'itemStoreListEdit'])->name('admin.housekeeping.distribution.items.issue.list.edit');   
+    Route::post('/items/store/list/update', [ItemEntryController::class, 'itemStoreListUpdate'])->name('admin.housekeeping.item.update');   
+    Route::post('/items/store/ajax/list', [ItemEntryController::class, 'itemStoreAjaxList'])->name('admin.housekeeping.distribution.items.issue.ajax.list');   
+});
+
+Route::middleware(['admin'])->prefix(md5('admin/housekeeping/room/wise/items'))->group(function () {
+    Route::get('/list', [ItemEntryController::class, 'issueToRoomWiseList'])->name('admin.housekeeping.distribution.items.issue.room.list');   
+   
 });
 
 

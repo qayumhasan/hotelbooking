@@ -1,33 +1,24 @@
 @extends('housekipping.master')
-@section('title', 'All Room | '.$seo->meta_title)
+@section('title', 'Issue Item edit | '.$seo->meta_title)
 @section('content')
 
-@php
-date_default_timezone_set("Asia/Dhaka");
-$date = date("d/m/Y");
-$time = date("h:i");
-@endphp
 
-@php
-date_default_timezone_set("Asia/Dhaka");
-$current =date("d/m/Y");
-$time = date("h:i");
-@endphp
 
 <style>
-    .deletebtn{
+    .deletebtn {
         cursor: pointer;
         padding: 5%;
     }
-    .tbodyborder{
+
+    .tbodyborder {
         border: 2px solid red;
         padding: 150px;
     }
 </style>
 
 <div class="content-page">
-    <form id="get_issue_to_room_data" action="{{route('admin.housekeeping.item.store')}}" method="post">
-    @csrf
+    <form id="get_issue_to_room_data" action="{{route('admin.housekeeping.item.update')}}" method="post">
+        @csrf
         <div class="container-fluid">
 
             <div class="row">
@@ -47,15 +38,25 @@ $time = date("h:i");
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-1 col-form-label"><b>Issue Date:</b></label>
                                 <div class="col-sm-4">
-                                    <input class="form-control datepicker" name="issue_date" id="issuedate" type="text" required value="{{$date}}">
+                                    <input class="form-control datepicker" name="issue_date" id="issuedate" type="text" required value="{{$itemIssues->first()->issue_date}}">
                                     <small class="text-danger issue_date"></small>
                                 </div>
+
+
+                                @php
+                                $data = array();
+                                foreach($itemIssues as $row){
+
+                                array_push($data,$row->room_id);
+                                }
+
+                                @endphp
 
                                 <label for="inputPassword" class="col-sm-1 col-form-label"><b>Room No:</b></label>
                                 <div class="col-sm-4">
                                     <select class="form-control form-control-sm" required id="select_room_no" name="room_id[]" multiple="multiple">
                                         @foreach($rooms as $row)
-                                        <option value="{{$row->id}}">{{$row->room_no}}</option>
+                                        <option {{in_array($row->id,$data)?'selected':''}} value="{{$row->id}}">{{$row->room_no}}</option>
                                         @endforeach
                                     </select>
                                     <small class="text-danger room_no"></small>
@@ -133,12 +134,32 @@ $time = date("h:i");
                                             </tr>
                                         </thead>
                                         <tbody id="add_item_issue">
-                                           <tr id="itemalert">
+                                            <tr id="itemalert">
                                                 <td class="text-center border border-danger pt-4 text-danger" colspan="5">Please add some item!</td>
-                                           </tr>
+                                            </tr>
+                                            @foreach($itemslist as $key=>$value)
 
+                                            @foreach($value as $row)
+                                            @php
+                                                $orderid = $row->first()->order_id;
+                                            @endphp
+                                            <tr class="insertItem">
+                                                <th scope="row"><input type="hidden" name="order_id" value="{{$orderid}}"><input type="hidden" name="item_name[]" value="{{$row->first()->item_id}}" /><input type="hidden" name="item_qty[]" value="{{$row->first()->qty}}" /><input type="hidden" name="item_unit[]" value="{{$row->first()->unit_id}}" />{{$orderid}}</th>
+                                                <td>{{$row->first()->items->item_name??''}}</td>
+                                                <td>{{$row->first()->qty}}</td>
+                                                @if($row->first()->unit_id == 1)
+                                                <td>num</td>
+                                                @elseif($row->first()->unit_id == 2)
+                                                <td>pic</td>
+                                                @endif
+                                                <td><span onclick="deleteItem(this)" class="deletebtn"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
+                                            </tr>
+                                            @endforeach
+
+
+                                            @endforeach
                                         </tbody>
-                                        
+
                                     </table>
 
                                 </div>
@@ -147,10 +168,10 @@ $time = date("h:i");
 
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Narration</label>
-                                        <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" rows="2" name="remarks"></textarea>
+                                        <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" rows="2" name="remarks">{{$itemIssues->first()->remarks}}</textarea>
                                     </div>
                                     <div class="modal-footer text-center">
-                                        <button type="button" class="btn btn-primary mx-auto" id="itemsubmit">Save Items</button>
+                                        <button type="button" class="btn btn-primary mx-auto" id="itemsubmit">Update Items</button>
                                     </div>
 
                                 </div>
@@ -211,10 +232,10 @@ $time = date("h:i");
             iziToast.success({
                 title: 'Sorry',
                 message: 'Quantity Field Must Not be empty!',
-                position:'topCenter'
+                position: 'topCenter'
             });
         } else {
-            var html = '<tr class="insertItem"><th scope="row"><input type="hidden" name="order_id" value="{{rand(100,999)}}"><input type="hidden" name="item_name[]" value="%itemnameval%"/><input type="hidden" name="item_qty[]" value="%itemqty%"/><input type="hidden" name="item_unit[]" value="%itemunitval%"/>{{rand(100,999)}}</th><td>%itemname%</td><td>%qty%</td><td>%unitname%</td><td><span onclick="deleteItem(this)" class="deletebtn"><i class="fa fa-trash" aria-hidden="true"></i></span></td></tr>';
+            var html = '<tr class="insertItem"><th scope="row"><input type="hidden" name="order_id" value="{{$orderid}}"><input type="hidden" name="item_name[]" value="%itemnameval%"/><input type="hidden" name="item_qty[]" value="%itemqty%"/><input type="hidden" name="item_unit[]" value="%itemunitval%"/>{{$orderid}}</th><td>%itemname%</td><td>%qty%</td><td>%unitname%</td><td><span onclick="deleteItem(this)" class="deletebtn"><i class="fa fa-trash" aria-hidden="true"></i></span></td></tr>';
 
             var newhtml = html.replace('%itemname%', getAllValue().itemname);
             var newhtml = newhtml.replace('%qty%', getAllValue().itmeqty);
@@ -237,41 +258,38 @@ $time = date("h:i");
     });
 
 
- function deleteItem(el){
-    el.closest('.insertItem').remove();
- }
-
+    function deleteItem(el) {
+        el.closest('.insertItem').remove();
+    }
 </script>
 
 <script>
     var formdata = document.querySelector('#get_issue_to_room_data');
     var itemsubmit = document.querySelector('#itemsubmit');
-    
-    itemsubmit.addEventListener('click',function(e){
+
+    itemsubmit.addEventListener('click', function(e) {
         var insertItem = document.querySelector('.insertItem');
         var issuedate = document.querySelector('#issuedate');
         var select_room_no = document.querySelector('#select_room_no');
 
-        
-            if(insertItem == null){
-            
-            $('#itemalert').show();
-            
-            }else if(issuedate.value == ''){
-                issuedate.focus();
-                document.querySelector('.issue_date').innerHTML = 'Issue Date Can not be null!'
 
-            }else if(select_room_no.value == ''){
-                select_room_no.focus();
-                document.querySelector('.room_no').innerHTML = 'Please select a Room!'
-            }
-            else{
-                formdata.submit();
-            }
-        
-        
+        if (insertItem == null) {
+
+            $('#itemalert').show();
+
+        } else if (issuedate.value == '') {
+            issuedate.focus();
+            document.querySelector('.issue_date').innerHTML = 'Issue Date Can not be null!'
+
+        } else if (select_room_no.value == '') {
+            select_room_no.focus();
+            document.querySelector('.room_no').innerHTML = 'Please select a Room!'
+        } else {
+            formdata.submit();
+        }
+
+
     })
-    
 </script>
 
 
