@@ -67,6 +67,17 @@
                                     </a>
                                 </li>
 
+                                <li class="{{ request()->routeIs('admin.housekeeping.distribution.items.issue.list*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.distribution.items.issue.list')}}">
+                                        <i class="las la-list-alt"></i><span>Issue List</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.housekeeping.distribution.items.issue.room.list*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.distribution.items.issue.room.list')}}">
+                                        <i class="las la-list-alt"></i><span>Room Wise Issue</span>
+                                    </a>
+                                </li>
+
                             
                             </ul>
                         </li>

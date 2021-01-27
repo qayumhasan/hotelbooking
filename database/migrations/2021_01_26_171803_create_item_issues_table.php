@@ -22,7 +22,8 @@ class CreateItemIssuesTable extends Migration
             $table->string('qty');
             $table->string('unit_id');
             $table->string('issued_by');
-            $table->text('remarks');
+            $table->string('issued_date');
+            $table->text('remarks')->nullable();
               
             $table->string('date',40)->nullable();
             $table->integer('is_active')->default(1);
