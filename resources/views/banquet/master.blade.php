@@ -61,17 +61,70 @@
                         </li>
                         <li class="">
                             <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Food And Beverage</span>
+                                <i class="far fa-user"></i><span>Booking</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
                             <ul id="reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="">
                                     <a href="">
-                                        <i class="las la-list-alt"></i><span>Daily Purchase</span>
+                                        <i class="las la-list-alt"></i><span>New Booking</span>
                                     </a>
                                 </li>
-                         
+                                <li class="">
+                                    <a href="">
+                                        <i class="las la-list-alt"></i><span>Booking List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#hall" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Venue</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="hall" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.hall.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.hall.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Venue</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.hall.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.hall.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Venue</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#bookingfor" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Booking For</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="bookingfor" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.bookingfor.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.bookingfor.create')}}">
+                                        <i class="las la-list-alt"></i><span>All Booking For</span>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#menutype" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Menu Type</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="menutype" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.menutype.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.menutype.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Menu Type</span>
+                                    </a>
+                                </li>
+                               
                             </ul>
                         </li>
                     </ul>

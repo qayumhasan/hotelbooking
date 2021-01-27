@@ -153,7 +153,7 @@
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-success">Restaurants</h3>
+                             <a href="{{route('admin.banquet.index')}}"><h3 class="text-success">Banquet</h3></a>
                                 <div class="bg-success icon iq-icon-box-2 mr-2 rounded">
                                     <i class="las la-circle-notch"></i>
                                 </div>

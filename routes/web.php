@@ -23,15 +23,16 @@ use App\Http\Controllers\Admin\Hotel\PurchaseController;
 use App\Http\Controllers\Admin\Hotel\TaxSettingController;
 use App\Http\Controllers\Admin\Hotel\StockTransferController;
 use App\Http\Controllers\Admin\Hotel\PurchaseOrderController;
-
 use App\Http\Controllers\Admin\Inventory\InventoryManageController;
 use App\Http\Controllers\Admin\Inventory\ReportController;
-
 use App\Http\Controllers\Admin\Hotel\VoucherController;
 use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
 use App\Http\Controllers\Admin\Hotel\AdvanceBookingController;
-
 use App\Http\Controllers\Admin\FoodAndBeverage\FoodAndBeverageController;
+use App\Http\Controllers\Admin\Banquet\BanquetController;
+use App\Http\Controllers\Admin\Banquet\HallController;
+use App\Http\Controllers\Admin\Banquet\BookingforController;
+use App\Http\Controllers\Admin\Banquet\MenutypeController;
 
 
 use App\Http\Controllers\Admin\AddonManagerController;
@@ -298,10 +299,36 @@ Route::get('/get/kothistory/data/{checkin_id}', [FoodAndBeverageController::clas
 Route::get('/get/singlehistory/invoice/{checkin_id}', [FoodAndBeverageController::class, 'getsinglehistoryprint']);
 Route::get('/get/doublehistory/invoice/{kot_id}', [FoodAndBeverageController::class, 'getdoublehistoryprint']);
 
+// -----------------------------------------------------------Banquet-------------------------------------------------------------------------------------------------------------
+Route::get('admin/banquet/index', [BanquetController::class, 'index'])->name('admin.banquet.index');
+
+// hallcontroller
+Route::get(md5('admin/hall/create'), [HallController::class, 'create'])->name('admin.hall.create');
+Route::post(md5('admin/hall/create'), [HallController::class, 'store'])->name('admin.hall.create');
+Route::post(md5('admin/hall/update'), [HallController::class, 'update'])->name('admin.hall.update');
+Route::get(md5('admin/hall/index'), [HallController::class, 'index'])->name('admin.hall.index');
+Route::get('admin/hall/active/{id}', [HallController::class, 'active']);
+Route::get('admin/hall/deactive/{id}', [HallController::class, 'deactive']);
+Route::get('admin/hall/delete/{id}', [HallController::class, 'delete']);
+Route::get('admin/hall/edit/{id}', [HallController::class, 'edit']);
+// booking for
+Route::get(md5('admin/bookingfor/create'), [BookingforController::class, 'create'])->name('admin.bookingfor.create');
+Route::post(md5('admin/bookingfor/create'), [BookingforController::class, 'store'])->name('admin.bookingfor.create');
+Route::get('admin/bookingfor/active/{id}', [BookingforController::class, 'active']);
+Route::get('admin/bookingfor/deactive/{id}', [BookingforController::class, 'deactive']);
+Route::get('admin/bookingfor/delete/{id}', [BookingforController::class, 'delete']);
+Route::get('admin/bookingfor/edit/{id}', [BookingforController::class, 'edit']);
+// menutype
+Route::get(md5('admin/menutype/create'), [MenutypeController::class, 'create'])->name('admin.menutype.create');
+Route::post(md5('admin/menutype/create'), [MenutypeController::class, 'store'])->name('admin.menutype.create');
+Route::get('admin/menutype/active/{id}', [MenutypeController::class, 'active']);
+Route::get('admin/menutype/deactive/{id}', [MenutypeController::class, 'deactive']);
+Route::get('admin/menutype/delete/{id}', [MenutypeController::class, 'delete']);
+Route::get('admin/menutype/edit/{id}', [MenutypeController::class, 'edit']);
 
 
 
-
+// -----------------------------------------------------------------Banquet end------------------------------------------------------------------------------------------------
 
 // setting area start here
 Route::middleware(['admin'])->prefix(md5('admin/tax'))->group(function () {
