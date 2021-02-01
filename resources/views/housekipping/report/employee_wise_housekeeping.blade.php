@@ -38,7 +38,7 @@ $time = date("h:i");
                         
                         
 
-                        <label for="inputPassword" class="col-sm-1 col-form-label"><b>Room No:</b></label>
+                        <label for="inputPassword" class="col-sm-1 col-form-label"><b>Employee:</b></label>
                         <div class="col-sm-2">
                         <select class="form-control form-control-sm" id="updatedby" name="keeping_name">
                                 <option value="Qayum Hasan">Qayum Hasan</option>
@@ -60,7 +60,7 @@ $time = date("h:i");
 
         <div class="row">
             <div class="col-sm-12">
-                <div class="card">
+                <div class="card printableAreasaveprint">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
                             <h4 class="card-title">Employee Wise House Keeping</h4>
@@ -71,7 +71,7 @@ $time = date("h:i");
                             </a>
                         </span> -->
                     </div>
-                    <div class="card-body">
+                    <div class="card-body ">
                         <div class="table-responsive room_ajax_data">
                             
 
@@ -97,6 +97,11 @@ $time = date("h:i");
 
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-12">
+                <button type="button" class="btn-sm btn-info savepritbtn">Print</button>
             </div>
         </div>
     </div>

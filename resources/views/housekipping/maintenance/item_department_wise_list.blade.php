@@ -22,7 +22,7 @@ $time = date("h:i");
             <div class="col-sm-12">
                 <div class="card p-4">
 
-                    <form id="item_issue_list" action="{{route('admin.housekeeping.distribution.items.issue.room.ajax.list')}}" method="post">
+                    <form id="item_issue_list" action="{{route('admin.housekeeping.maintenance.distribution.items.department.wise.ajax.list')}}" method="post">
                         @csrf
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
@@ -37,16 +37,18 @@ $time = date("h:i");
                                 <small class="text-danger to_date"></small>
                             </div>
 
-                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Room:</b></label>
-                            <div class="col-sm-2">
-                                <select class="form-control form-control-sm" id="select_room_no" name="room_no">
-                                    <option disabled selected>---Select A Room-----</option>
-                                    @foreach($rooms as $row)
-                                    <option value="{{$row->id}}">{{$row->room_no}}</option>
-                                    @endforeach
+                            
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Department</b></label>
+                                <div class="col-sm-3">
+                                    <select class="form-control form-control-sm" required id="select_room_no" name="department_id">
 
-                                </select>
-                            </div>
+                                    <option value="1">HouseKeeping</option>
+                                    <option value="2">HR</option>
+                                    <option value="3">Accounts</option>
+                                       
+                                    </select>
+                                    <small class="text-danger room_no"></small>
+                                </div>
 
 
                             <div class="col-sm-2">
@@ -64,7 +66,7 @@ $time = date("h:i");
                 <div class="card printableAreasaveprint">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Item Issue Room Wise List</h4>
+                            <h4 class="card-title">Item Issue Department Wise List</h4>
                         </div>
                         <!-- <span class="float-right mr-2">
                             <a href="#" class="btn btn-sm bg-primary">
@@ -77,7 +79,7 @@ $time = date("h:i");
                             <table class="table table-bordered" id="old_data">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Room No</th>
+                                        <th scope="col">Department Name</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">User Name</th>
                                         <th scope="col">Remarks</th>
@@ -87,7 +89,7 @@ $time = date("h:i");
                                 
                                 <tbody>
                                     <tr>
-                                        <th scope="row" class="bg-light">{{$value->first()->room->room_no?? ''}}</th>
+                                        <th scope="row" class="bg-light">{{$value->first()->department_id}}</th>
                                         <td class="bg-light">{{$value->first()->issue_date}}</td>
                                         <td class="bg-light">{{$value->first()->issuedby->username?? ''}}</td>
                                         <td class="bg-light">{{$value->first()->remarks}}</td>
@@ -107,7 +109,7 @@ $time = date("h:i");
                                         <td>{{$row->qty}}</td>
                                         
 
-                                        <td>{{$row->unit->name?? ''}}</td>
+                                        <td>{{$row->unit->name ?? ''}}</td>
                                         @php
                                             $qtycount = $qtycount + (int)$row->qty;
                                         @endphp
@@ -141,6 +143,7 @@ $time = date("h:i");
                 </div>
             </div>
         </div>
+
         <div class="row text-center">
             <div class="col-md-12">
                 <button type="button" class="btn-sm btn-info savepritbtn">Print </button>

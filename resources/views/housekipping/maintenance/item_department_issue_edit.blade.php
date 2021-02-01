@@ -1,18 +1,8 @@
 @extends('housekipping.master')
-@section('title', 'All Room | '.$seo->meta_title)
+@section('title', 'Issue Item edit | '.$seo->meta_title)
 @section('content')
 
-@php
-date_default_timezone_set("Asia/Dhaka");
-$date = date("d/m/Y");
-$time = date("h:i");
-@endphp
 
-@php
-date_default_timezone_set("Asia/Dhaka");
-$current =date("d/m/Y");
-$time = date("h:i");
-@endphp
 
 <style>
     .deletebtn {
@@ -27,7 +17,7 @@ $time = date("h:i");
 </style>
 
 <div class="content-page">
-    <form id="get_issue_to_room_data" action="{{route('admin.housekeeping.item.store')}}" method="post">
+    <form id="get_issue_to_room_data" action="{{route('admin.housekeeping.maintenance.distribution.items.issue.update')}}" method="post">
         @csrf
         <div class="container-fluid">
 
@@ -48,16 +38,19 @@ $time = date("h:i");
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-1 col-form-label"><b>Issue Date:</b></label>
                                 <div class="col-sm-4">
-                                    <input class="form-control datepicker" name="issue_date" id="issuedate" type="text" required value="{{$date}}">
+                                    <input class="form-control datepicker" name="issue_date" id="issuedate" type="text" required value="{{$itemIssues->first()->issue_date}}">
                                     <small class="text-danger issue_date"></small>
                                 </div>
 
-                                <label for="inputPassword" class="col-sm-1 col-form-label"><b>Room No:</b></label>
+
+                                <label for="inputPassword" class="col-sm-1 col-form-label"><b>Department:</b></label>
                                 <div class="col-sm-4">
-                                    <select class="form-control form-control-sm" required id="select_room_no" name="room_id[]" multiple="multiple">
-                                        @foreach($rooms as $row)
-                                        <option value="{{$row->id}}">{{$row->room_no}}</option>
-                                        @endforeach
+                                    <select class="form-control form-control-sm" required id="select_room_no" name="department_id">
+
+                                    <option value="1">HouseKeeping</option>
+                                    <option value="2">HR</option>
+                                    <option value="3">Accounts</option>
+                                       
                                     </select>
                                     <small class="text-danger room_no"></small>
                                 </div>
@@ -79,7 +72,6 @@ $time = date("h:i");
                                     </div>
                                 </div>
                                 <div class="card border-righ border-bottom border-left p-5">
-
 
 
                                     <div class="form-group">
@@ -141,7 +133,20 @@ $time = date("h:i");
                                             <tr id="itemalert">
                                                 <td class="text-center border border-danger pt-4 text-danger" colspan="5">Please add some item!</td>
                                             </tr>
-
+                                            @foreach($itemIssues as $row)
+                                        @php
+                                            $order_id =$row->first()->order_id;
+                                        @endphp
+                                            <tr class="insertItem">
+                                                <th scope="row"><input type="hidden" name="order_id" value="{{$order_id}}"><input type="hidden" name="item_name[]" value="{{$row->item_id}}" /><input type="hidden" name="item_qty[]" value="{{$row->qty}}" /><input type="hidden" name="item_unit[]" value="{{$row->unit_id}}" />{{$order_id}}</th>
+                                                <td>{{$row->items->item_name?? ''}}</td>
+                                                <td>{{$row->qty}}</td>
+                                                <td>{{$row->unit->name ?? ''}}</td>
+                                             
+                                                <td><span onclick="deleteItem(this)" class="deletebtn"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
+                                            </tr>
+                                            @endforeach
+                                
                                         </tbody>
 
                                     </table>
@@ -152,10 +157,10 @@ $time = date("h:i");
 
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Narration</label>
-                                        <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" rows="2" name="remarks"></textarea>
+                                        <textarea class="form-control form-control-sm" id="exampleFormControlTextarea1" rows="2" name="remarks">{{$itemIssues->first()->remarks}}</textarea>
                                     </div>
                                     <div class="modal-footer text-center">
-                                        <button type="button" class="btn btn-primary mx-auto" id="itemsubmit">Save Items</button>
+                                        <button type="button" class="btn btn-primary mx-auto" id="itemsubmit">Update Items</button>
                                     </div>
 
                                 </div>
@@ -175,6 +180,7 @@ $time = date("h:i");
 
     $('#itemalert').hide();
 </script>
+
 
 <script>
     var items = document.querySelector('#item_name');
@@ -217,10 +223,12 @@ $time = date("h:i");
         }
     })();
 
+    
+
 
 
     document.querySelector('#add_to_grid').addEventListener('click', function(e) {
-
+        console.log(items.element);
         function getAllValue() {
             return {
                 itemname: items.element.itemname.selectedOptions[0].innerHTML,
@@ -238,7 +246,7 @@ $time = date("h:i");
                 position: 'topCenter'
             });
         } else {
-            var html = '<tr class="insertItem"><th scope="row"><input type="hidden" name="order_id" value="{{rand(100,999)}}"><input type="hidden" name="item_name[]" value="%itemnameval%"/><input type="hidden" name="item_qty[]" value="%itemqty%"/><input type="hidden" name="item_unit[]" value="%itemunitval%"/>{{rand(100,999)}}</th><td>%itemname%</td><td>%qty%</td><td>%unitname%</td><td><span onclick="deleteItem(this)" class="deletebtn"><i class="fa fa-trash" aria-hidden="true"></i></span></td></tr>';
+            var html = '<tr class="insertItem"><th scope="row"><input type="hidden" name="order_id" value="{{$order_id}}"><input type="hidden" name="item_name[]" value="%itemnameval%"/><input type="hidden" name="item_qty[]" value="%itemqty%"/><input type="hidden" name="item_unit[]" value="%itemunitval%"/>{{$order_id}}</th><td>%itemname%</td><td>%qty%</td><td>%unitname%</td><td><span onclick="deleteItem(this)" class="deletebtn"><i class="fa fa-trash" aria-hidden="true"></i></span></td></tr>';
 
             var newhtml = html.replace('%itemname%', getAllValue().itemname);
             var newhtml = newhtml.replace('%qty%', getAllValue().itmeqty);
@@ -265,6 +273,7 @@ $time = date("h:i");
         el.closest('.insertItem').remove();
     }
 </script>
+
 
 <script>
     var formdata = document.querySelector('#get_issue_to_room_data');

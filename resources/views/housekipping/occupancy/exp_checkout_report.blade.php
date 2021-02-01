@@ -24,6 +24,7 @@ $time = date("h:i");
 
                     <form id="clean_duration_search">
                         <div class="form-group row">
+                            <div class="col-sm-2"></div>
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
                             <div class="col-sm-2">
                                 <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
@@ -36,18 +37,6 @@ $time = date("h:i");
                                 <small class="text-danger to_date"></small>
                             </div>
 
-
-
-                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Room No:</b></label>
-                            <div class="col-sm-2">
-                                <select class="form-control form-control-sm" id="select_room_no" name="room_no">
-                                    <option selected disabled>---Select A Room---</option>
-                                    @foreach($rooms as $row)
-                                    <option value="{{$row->id}}">{{$row->room_no}}</option>
-                                    @endforeach
-                                </select>
-                                <small class="text-danger room_no"></small>
-                            </div>
 
                             <div class="col-sm-2">
                                 <button type="Submit" class="btn btn-primary btn-sm">Search</button>
@@ -64,7 +53,7 @@ $time = date("h:i");
                 <div class="card printableAreasaveprint">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Cleaning Duration Analysis</h4>
+                            <h4 class="card-title">Expected Checkout Report</h4>
                         </div>
                         <!-- <span class="float-right mr-2">
                             <a href="#" class="btn btn-sm bg-primary">
@@ -72,41 +61,66 @@ $time = date("h:i");
                             </a>
                         </span> -->
                     </div>
-                    <div class="card-body ">
+                    <div class="card-body">
                         <div class="table-responsive room_ajax_data">
+                            <table id="datatable" class="table data-table table-striped table-bordered">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Booking No</th>
+                                        <th>Room no</th>
+                                        <th>Guest</th>
+                                        <th>City</th>
+                                        <th>Total Person</th>
+                                        <th>In Date</th>
+                                        <th>In Time</th>
+                                        <th>Exp.Out Date</th>
+                                        <th>Exp.Out Time</th>
+                                        <th>Room Type</th>
+                                        <th>Tariff</th>
+                                        <th>Checkin By</th>
+
+                                    </tr>
+                                </thead>
+                             
+                                <tbody class="text-center">
+                                @foreach($checkins as $row)
+                                    <tr>
+                                        <td>{{$row->booking_no}}</td>
+                                        <td>{{$row->room_no}}</td>
+                                        <td>{{$row->guest_name}}</td>
+                                        <td>{{$row->city}}</td>
+                                        <td>{{$row->number_of_person}}</td>
+                                        <td>{{$row->checkin_date}}</td>
+                                        <td>{{$row->checkin_time}}</td>
+                                        <td>{{$row->exp_checkin_date}}</td>
+                                        <td>{{$row->exp_checkin_time}}</td>
+                                        <td>{{$row->roomtype->room_type?? ''}}</td>
+                                        <td>{{$row->tarif}}</td>
+                                        <td>{{$row->user->username}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
 
 
+
+
+                            </table>
 
 
 
 
                         </div>
-
-                        <!-- preloader area start -->
-                        <section id="preloader">
-                            <div class="preloader">
-                                <!-- <div></div>
-                                <div></div>
-                                <div></div> -->
-                                <h3 class="text-center">Loading</h3>
-                            </div>
-
-                        </section>
-                        <!-- preloader area end -->
-
-
-
                     </div>
                 </div>
             </div>
         </div>
-
 
         <div class="row text-center">
             <div class="col-md-12">
                 <button type="button" class="btn-sm btn-info savepritbtn">Print</button>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -136,16 +150,13 @@ $time = date("h:i");
         $(document).on('submit', '#clean_duration_search', function(e) {
 
             e.preventDefault();
-
-            $('.preloader').show();
-            $('.room_simple_data').hide();
+            $('#datatable').remove();
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/admin/housekepping/clean/duration/ajax/list') }}",
+                url: "{{ url('/admin/housekepping/occupancy/exp/report/ajax/list') }}",
                 data: $('#clean_duration_search').serializeArray(),
                 success: function(data) {
-                    console.log(data);
-                    $('.preloader').hide();
+                    
                     $('.room_ajax_data').append(data);
 
                 },

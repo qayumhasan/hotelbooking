@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/backend.css?v=1.0.1">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datepiker.css">
+    <link rel='stylesheet' href="{{asset('public/backend')}}/assets/vendor/fullcalendar/core/main.css" />
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/remixicon/fonts/remixicon.css">
@@ -23,6 +24,8 @@
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/izitost.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/Bootstrap-4-Tag-Input-Plugin-jQuery/tagsinput.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datatables.css">
+
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/fullcalender.css">
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -310,6 +313,9 @@
     <script src="{{asset('public/backend')}}/assets/js/izitost.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/datatables.js"></script>
 
+    <script src="{{asset('public/backend')}}/assets/js/fullcalender.js"></script>
+
+    <script src="{{asset('public/backend')}}/assets/jquery.PrintArea.js"></script>
     <script>
         @if(Session::has('messege'))
         var type = "{{Session::get('alert-type','info')}}"
@@ -372,6 +378,21 @@
             }
         );
     </script>
+
+<script>
+        $(function () {
+            $(".savepritbtn").on('click', function () {
+                
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printableAreasaveprint").printArea(options);
+            });
+        });
+   </script>
 
   
 
