@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\Banquet\BanquetController;
 use App\Http\Controllers\Admin\Banquet\HallController;
 use App\Http\Controllers\Admin\Banquet\BookingforController;
 use App\Http\Controllers\Admin\Banquet\MenutypeController;
+use App\Http\Controllers\Admin\Banquet\BanquetBookingController;
 
 
 use App\Http\Controllers\Admin\AddonManagerController;
@@ -301,6 +302,27 @@ Route::get('/get/doublehistory/invoice/{kot_id}', [FoodAndBeverageController::cl
 
 // -----------------------------------------------------------Banquet-------------------------------------------------------------------------------------------------------------
 Route::get('admin/banquet/index', [BanquetController::class, 'index'])->name('admin.banquet.index');
+// BanquetBookingController
+Route::get('admin/banquet/booking/create', [BanquetBookingController::class, 'create'])->name('admin.banquet.create');
+Route::get('get/menutype/price', [BanquetBookingController::class, 'getmenutypeprice'])->name('get.menutype.price');
+Route::get('get/geusttype/price', [BanquetBookingController::class, 'getgeusttypeprice'])->name('get.geust_type.price');
+
+Route::get('get/banquet/item/insert', [BanquetBookingController::class, 'bunquetinsert'])->name('bunquet.insertitem.data');
+Route::post('get/banquetitem/all/{booking_no}', [BanquetBookingController::class, 'allbunquetitem']);
+Route::post('get/banquetitem/delete/', [BanquetBookingController::class, 'bunquetitemdelete'])->name("get.banquetitem.delete");
+Route::post('get/banquetitem/edit/', [BanquetBookingController::class, 'bunquetitemedit'])->name("get.banquetitem.edit");
+
+Route::get('get/taxinsert/insert/', [BanquetBookingController::class, 'banquettaxinsert'])->name("bunquet.inserttax.data");
+Route::get('get/banquet/taxitem/', [BanquetBookingController::class, 'banquettaxall'])->name("get.banquettax.all");
+
+Route::post('get/banquettax/all/{booking_no}', [BanquetBookingController::class, 'gettaxbanquet']);
+Route::post('get/banquettax/delete', [BanquetBookingController::class, 'gettaxbanquetdelete'])->name('get.banquettax.delete');
+
+
+
+
+
+
 
 // hallcontroller
 Route::get(md5('admin/hall/create'), [HallController::class, 'create'])->name('admin.hall.create');

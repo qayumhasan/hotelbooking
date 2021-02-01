@@ -43,7 +43,7 @@
 
         <div class="iq-sidebar  sidebar-default ">
             <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="{{route('admin.inventory.home')}}" class="header-logo">
+                <a href="{{route('admin.banquet.index')}}" class="header-logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal darkmode-logo" alt="logo">
                 </a>
@@ -54,8 +54,8 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="{{ request()->routeIs('admin.inventory.home*') ? 'active' : '' }}">
-                            <a href="{{route('admin.hotel')}}">
+                        <li class="{{ request()->routeIs('admin.banquet.index*') ? 'active' : '' }}">
+                            <a href="{{route('admin.banquet.index')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>
@@ -66,8 +66,8 @@
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
                             <ul id="reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="">
-                                    <a href="">
+                                <li class="{{ request()->routeIs('admin.banquet.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.banquet.create')}}">
                                         <i class="las la-list-alt"></i><span>New Booking</span>
                                     </a>
                                 </li>

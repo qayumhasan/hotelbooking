@@ -728,6 +728,8 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
         'App\\Models\\AdminRole' => __DIR__ . '/../..' . '/app/Models/AdminRole.php',
         'App\\Models\\AdvanceBooking' => __DIR__ . '/../..' . '/app/Models/AdvanceBooking.php',
+        'App\\Models\\BanquetItem' => __DIR__ . '/../..' . '/app/Models/BanquetItem.php',
+        'App\\Models\\BanquetTax' => __DIR__ . '/../..' . '/app/Models/BanquetTax.php',
         'App\\Models\\BookingFor' => __DIR__ . '/../..' . '/app/Models/BookingFor.php',
         'App\\Models\\Branch' => __DIR__ . '/../..' . '/app/Models/Branch.php',
         'App\\Models\\BulkSms' => __DIR__ . '/../..' . '/app/Models/BulkSms.php',
