@@ -74,6 +74,8 @@ return array(
     'App\\Models\\Admin' => $baseDir . '/app/Models/Admin.php',
     'App\\Models\\AdminRole' => $baseDir . '/app/Models/AdminRole.php',
     'App\\Models\\AdvanceBooking' => $baseDir . '/app/Models/AdvanceBooking.php',
+    'App\\Models\\BanquetItem' => $baseDir . '/app/Models/BanquetItem.php',
+    'App\\Models\\BanquetTax' => $baseDir . '/app/Models/BanquetTax.php',
     'App\\Models\\BookingFor' => $baseDir . '/app/Models/BookingFor.php',
     'App\\Models\\Branch' => $baseDir . '/app/Models/Branch.php',
     'App\\Models\\BulkSms' => $baseDir . '/app/Models/BulkSms.php',
