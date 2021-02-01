@@ -15,20 +15,19 @@ $time = date("h:i");
 @endphp
 
 <style>
-    .deletebtn {
+    .deletebtn{
         cursor: pointer;
         padding: 5%;
     }
-
-    .tbodyborder {
+    .tbodyborder{
         border: 2px solid red;
         padding: 150px;
     }
 </style>
 
 <div class="content-page">
-    <form id="get_issue_to_room_data" action="{{route('admin.housekeeping.item.store')}}" method="post">
-        @csrf
+    <form id="get_issue_to_room_data" action="{{route('admin.housekeeping.department.item.store')}}" method="post">
+    @csrf
         <div class="container-fluid">
 
             <div class="row">
@@ -52,12 +51,14 @@ $time = date("h:i");
                                     <small class="text-danger issue_date"></small>
                                 </div>
 
-                                <label for="inputPassword" class="col-sm-1 col-form-label"><b>Room No:</b></label>
+                                <label for="inputPassword" class="col-sm-1 col-form-label"><b>Department:</b></label>
                                 <div class="col-sm-4">
-                                    <select class="form-control form-control-sm" required id="select_room_no" name="room_id[]" multiple="multiple">
-                                        @foreach($rooms as $row)
-                                        <option value="{{$row->id}}">{{$row->room_no}}</option>
-                                        @endforeach
+                                    <select class="form-control form-control-sm" required id="select_room_no" name="department_id">
+
+                                    <option value="1">HouseKeeping</option>
+                                    <option value="2">HR</option>
+                                    <option value="3">Accounts</option>
+                                       
                                     </select>
                                     <small class="text-danger room_no"></small>
                                 </div>
@@ -79,7 +80,6 @@ $time = date("h:i");
                                     </div>
                                 </div>
                                 <div class="card border-righ border-bottom border-left p-5">
-
 
 
                                     <div class="form-group">
@@ -138,12 +138,12 @@ $time = date("h:i");
                                             </tr>
                                         </thead>
                                         <tbody id="add_item_issue">
-                                            <tr id="itemalert">
+                                           <tr id="itemalert">
                                                 <td class="text-center border border-danger pt-4 text-danger" colspan="5">Please add some item!</td>
-                                            </tr>
+                                           </tr>
 
                                         </tbody>
-
+                                        
                                     </table>
 
                                 </div>
@@ -164,6 +164,8 @@ $time = date("h:i");
                     </div>
                 </div>
             </div>
+
+          
         </div>
     </form>
 </div>
@@ -235,7 +237,7 @@ $time = date("h:i");
             iziToast.success({
                 title: 'Sorry',
                 message: 'Quantity Field Must Not be empty!',
-                position: 'topCenter'
+                position:'topCenter'
             });
         } else {
             var html = '<tr class="insertItem"><th scope="row"><input type="hidden" name="order_id" value="{{rand(100,999)}}"><input type="hidden" name="item_name[]" value="%itemnameval%"/><input type="hidden" name="item_qty[]" value="%itemqty%"/><input type="hidden" name="item_unit[]" value="%itemunitval%"/>{{rand(100,999)}}</th><td>%itemname%</td><td>%qty%</td><td>%unitname%</td><td><span onclick="deleteItem(this)" class="deletebtn"><i class="fa fa-trash" aria-hidden="true"></i></span></td></tr>';
@@ -261,38 +263,41 @@ $time = date("h:i");
     });
 
 
-    function deleteItem(el) {
-        el.closest('.insertItem').remove();
-    }
+ function deleteItem(el){
+    el.closest('.insertItem').remove();
+ }
+
 </script>
 
 <script>
     var formdata = document.querySelector('#get_issue_to_room_data');
     var itemsubmit = document.querySelector('#itemsubmit');
-
-    itemsubmit.addEventListener('click', function(e) {
+    
+    itemsubmit.addEventListener('click',function(e){
         var insertItem = document.querySelector('.insertItem');
         var issuedate = document.querySelector('#issuedate');
         var select_room_no = document.querySelector('#select_room_no');
 
-
-        if (insertItem == null) {
-
+        
+            if(insertItem == null){
+            
             $('#itemalert').show();
+            
+            }else if(issuedate.value == ''){
+                issuedate.focus();
+                document.querySelector('.issue_date').innerHTML = 'Issue Date Can not be null!'
 
-        } else if (issuedate.value == '') {
-            issuedate.focus();
-            document.querySelector('.issue_date').innerHTML = 'Issue Date Can not be null!'
-
-        } else if (select_room_no.value == '') {
-            select_room_no.focus();
-            document.querySelector('.room_no').innerHTML = 'Please select a Room!'
-        } else {
-            formdata.submit();
-        }
-
-
+            }else if(select_room_no.value == ''){
+                select_room_no.focus();
+                document.querySelector('.room_no').innerHTML = 'Please select a Room!'
+            }
+            else{
+                formdata.submit();
+            }
+        
+        
     })
+    
 </script>
 
 

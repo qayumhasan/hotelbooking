@@ -99,8 +99,11 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Item Unit</label>
                                         <select class="form-control form-control-sm" id="item_unit">
-                                            <option value="1">Num.</option>
-                                            <option value="2">Pic</option>
+
+                                            <option disabled selected>--Select Unit---</option>
+                                            @foreach($units as $row)
+                                            <option value="{{$row->id}}">{{$row->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="modal-footer text-center">
@@ -147,11 +150,12 @@
                                                 <th scope="row"><input type="hidden" name="order_id" value="{{$orderid}}"><input type="hidden" name="item_name[]" value="{{$row->first()->item_id}}" /><input type="hidden" name="item_qty[]" value="{{$row->first()->qty}}" /><input type="hidden" name="item_unit[]" value="{{$row->first()->unit_id}}" />{{$orderid}}</th>
                                                 <td>{{$row->first()->items->item_name??''}}</td>
                                                 <td>{{$row->first()->qty}}</td>
-                                                @if($row->first()->unit_id == 1)
-                                                <td>num</td>
-                                                @elseif($row->first()->unit_id == 2)
-                                                <td>pic</td>
-                                                @endif
+
+
+                                                <td>{{$row->first()->unit->name?? ''}}</td>
+
+
+
                                                 <td><span onclick="deleteItem(this)" class="deletebtn"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
                                             </tr>
                                             @endforeach
@@ -192,6 +196,25 @@
     $('#itemalert').hide();
 </script>
 
+
+<script>
+    var items = document.querySelector('#item_name');
+    items.addEventListener('change', (event) => {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'get',
+            url: "{{ url('/admin/get/item/section') }}/"+event.target.value,
+            
+            success: function(data) {
+                $('#item_unit').val(data).selected;
+            }
+        });
+    });
+</script>
 
 
 

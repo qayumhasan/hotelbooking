@@ -189,7 +189,7 @@ class AdvanceBookingController extends Controller
     public function showAdvanceBookingReportPage()
     {
         
-        $advances = AdvanceBooking::where('is_active',1)->where('is_deleted',0)->orderBy('id', 'DESC')->get();
+        $advances = AdvanceBooking::where('is_deleted',0)->orderBy('id', 'DESC')->get();
         return view('hotelbooking.advancebooking.report.report', compact('advances'));
     }
 

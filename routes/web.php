@@ -392,8 +392,12 @@ Route::middleware(['admin'])->prefix('admin/advance/booking')->group(function ()
     Route::get('/check/{id}', [AdvanceBookingController::class, 'advanceBookingCheck']);
 
 });
+
+
+
 Route::middleware(['admin'])->prefix('admin/advance/report')->group(function () {
     Route::get('/', [AdvanceBookingController::class, 'showAdvanceBookingReportPage'])->name('admin.advance.booking.report');
+    
     Route::get('/edit/{id}', [AdvanceBookingController::class, 'showAdvanceBookingReportEdit'])->name('admin.advance.booking.report.edit');
     Route::post('/update/{id}', [AdvanceBookingController::class, 'showAdvanceBookingReportUpdate'])->name('admin.advance.booking.update');
     Route::get('/delete/{id}', [AdvanceBookingController::class, 'deleteAdvanceBookingReport'])->name('admin.advance.booking.delete');

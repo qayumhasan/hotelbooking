@@ -3,6 +3,10 @@ use App\Http\Controllers\Admin\HouseKipping\HouseKippingController;
 use App\Http\Controllers\Admin\HouseKipping\HousekeepingReportController;
 use App\Http\Controllers\Admin\HouseKipping\HousekeepingGuestEntryController;
 use App\Http\Controllers\Admin\HouseKipping\ItemEntryController;
+use App\Http\Controllers\Admin\HouseKipping\MaintenanceDistributionController;
+use App\Http\Controllers\Admin\HouseKipping\AcquisitionController;
+use App\Http\Controllers\Admin\HouseKipping\OccupancyController;
+use App\Http\Controllers\Admin\HouseKipping\AdvanceBookingHouseKeepingController;
 // housekipping manage controller
 Route::middleware(['admin'])->prefix(md5('admin/house/keeping'))->group(function () {
     Route::get('/', [HouseKippingController::class, 'index'])->name('admin.housekipping.home');
@@ -36,8 +40,87 @@ Route::middleware(['admin'])->prefix(md5('admin/housekeeping/distribution/items'
 
 Route::middleware(['admin'])->prefix(md5('admin/housekeeping/room/wise/items'))->group(function () {
     Route::get('/list', [ItemEntryController::class, 'issueToRoomWiseList'])->name('admin.housekeeping.distribution.items.issue.room.list');   
+    Route::post('/ajax/list', [ItemEntryController::class, 'issueToRoomWiseAjaxList'])->name('admin.housekeeping.distribution.items.issue.room.ajax.list');   
    
 });
+
+Route::middleware(['admin'])->prefix(md5('admin/housekeeping/date/wise/items'))->group(function () {
+    Route::get('/list', [ItemEntryController::class, 'issueToDateWiseList'])->name('admin.housekeeping.distribution.items.issue.date.list');   
+    Route::post('/ajax/list', [ItemEntryController::class, 'issueToRoomWiseAjaxList'])->name('admin.housekeeping.distribution.items.issue.room.ajax.list');   
+    Route::post('/list', [ItemEntryController::class, 'issueToDateWiseAjaxList'])->name('admin.housekeeping.distribution.items.issue.date.ajax.list');   
+   
+});
+
+
+Route::middleware(['admin'])->prefix(md5('admin/housekeeping/maintenance/distribution/items'))->group(function () {
+
+    Route::get('/issue', [MaintenanceDistributionController::class, 'issueDepartmentWiseDistribution'])->name('admin.housekeeping.maintenance.distribution.items.issue');    
+    Route::post('/store', [MaintenanceDistributionController::class, 'issueDepartmentWiseDistributionStore'])->name('admin.housekeeping.department.item.store');  
+    
+    Route::get('/list', [MaintenanceDistributionController::class, 'issueDepartmentWiseDistributionList'])->name('admin.housekeeping.maintenance.distribution.items.issue.list'); 
+
+    Route::get('/edit/{id}', [MaintenanceDistributionController::class, 'issueDepartmentWiseDistributionedit'])->name('admin.housekeeping.maintenance.distribution.items.issue.edit');  
+    Route::post('/update', [MaintenanceDistributionController::class, 'issueDepartmentWiseDistributionUpdate'])->name('admin.housekeeping.maintenance.distribution.items.issue.update');  
+    
+    Route::get('/department/list', [MaintenanceDistributionController::class, 'departmentWiseDistributionlist'])->name('admin.housekeeping.maintenance.distribution.items.department.list');  
+
+    Route::post('/department/ajax/list', [MaintenanceDistributionController::class, 'departmentWiseDistributionAjaxlist'])->name('admin.housekeeping.maintenance.distribution.items.issue.ajax.list');  
+
+    Route::post('/department/wise/ajax/list', [MaintenanceDistributionController::class, 'departmentwiseDistrubutionAjaxList'])->name('admin.housekeeping.maintenance.distribution.items.department.wise.ajax.list');  
+
+    Route::get('/date/wise/list', [MaintenanceDistributionController::class, 'dateWiseDistributionlist'])->name('admin.housekeeping.maintenance.distribution.date.wise.list'); 
+
+    Route::post('/list', [MaintenanceDistributionController::class, 'issueToDateWiseAjaxList'])->name('admin.housekeeping.distribution.items.issue.date.wise.ajax.list'); 
+});
+
+// occupancy report area start
+
+Route::middleware(['admin'])->prefix(md5('admin/housekeeping/occupancey'))->group(function () {
+    Route::get('/report', [OccupancyController::class, 'inhouseGuestReport'])->name('admin.housekeeping.occupancey.report');
+    Route::get('/expected/checkout/report', [OccupancyController::class, 'expCheckoutReport'])->name('admin.housekeeping.expected.checkout.report');
+});
+
+
+
+
+Route::middleware(['admin'])->prefix('admin/housekeeping/advance/report')->group(function () {
+    Route::get('/', [AdvanceBookingHouseKeepingController::class, 'showAdvanceBookingReportPage'])->name('admin.housekeeping.advance.booking.report.list');
+
+    
+    Route::get('/edit/{id}', [AdvanceBookingHouseKeepingController::class, 'showAdvanceBookingReportEdit'])->name('admin.housekeeping.advance.booking.report.edit');
+    Route::post('/update/{id}', [AdvanceBookingHouseKeepingController::class, 'showAdvanceBookingReportUpdate'])->name('admin.housekeeping.advance.booking.update');
+    Route::get('/delete/{id}', [AdvanceBookingHouseKeepingController::class, 'deleteAdvanceBookingReport'])->name('admin.housekeeping.advance.booking.delete');
+    Route::get('/status/{id}', [AdvanceBookingHouseKeepingController::class, 'statusAdvanceBookingReport'])->name('admin.housekeeping.advance.booking.status');
+
+    
+    Route::get('/calender', [AdvanceBookingHouseKeepingController::class, 'advanceBookingCalender'])->name('admin.housekeeping.advance.booking.calender');
+    Route::get('/get', [AdvanceBookingHouseKeepingController::class, 'getadvanceBookingReport']);
+    Route::get('/daybyday', [AdvanceBookingHouseKeepingController::class, 'getadvanceBookingReportDayByDay']);
+    Route::get('/get/room/{id}', [AdvanceBookingHouseKeepingController::class, 'advanceBookingRoom'])->name('admin.housekeeping.advance.booking.room');
+    Route::get('/day/by/day', [AdvanceBookingHouseKeepingController::class, 'advanceBookingCalenderDaybyDay'])->name('admin.housekeeping.advance.booking.calender.daybyday');
+    
+
+});
+
+
+
+// Order Acquisition area start from here
+
+Route::get(md5('admin/acquisition/create'), [AcquisitionController::class, 'create'])->name('admin.acquisition.create');
+Route::get(md5('admin/acquisition/index'), [AcquisitionController::class, 'index'])->name('admin.acquisition.index');
+Route::get('/get/item/all/{item_name}', [AcquisitionController::class, 'getitem']);
+Route::post('/get/item/show/{invoice}', [AcquisitionController::class, 'allrecuitem'])->name('get.item.show');
+Route::post('/get/item/delete/', [AcquisitionController::class, 'itemdelete'])->name('get.item.delete');
+Route::get('/get/item/insert/', [AcquisitionController::class, 'iteminsert'])->name('item.insert.data');
+Route::post('/get/item/order/submit/', [AcquisitionController::class, 'ordersubmit'])->name('orderhead.submit');
+Route::post('/get/oderrecusition/edit/', [AcquisitionController::class, 'orderedit'])->name('get.item.edit');
+Route::get('admin/acquisition/edit/{id}', [AcquisitionController::class, 'edit']);
+Route::post('admin/acquisition/update/', [AcquisitionController::class, 'orderupdate'])->name('orderhead.update');
+Route::get('admin/acquisition/delete/{id}', [AcquisitionController::class, 'orderdelete']);
+Route::get('admin/acquisition/deactive/{id}', [AcquisitionController::class, 'acquistionStatus']);
+
+Route::get('admin/acquisition/pending/order', [AcquisitionController::class, 'pendingOrderList'])->name('admin.acquisiton.pending.order.list');
+Route::get('admin/acquisition/close/order', [AcquisitionController::class, 'closeOrderList'])->name('admin.acquisiton.close.order.list');
 
 
 // Ajax route start from here
@@ -49,3 +132,8 @@ Route::get('/admin/housekepping/employee/wise/ajax/list', [HousekeepingReportCon
 Route::get('/admin/housekeeping/guest/entry/pax/store', [HousekeepingGuestEntryController::class, 'getEntrypaxStore']);
 Route::get('/admin/housekepping/guest/entry/report/ajax/list', [HousekeepingGuestEntryController::class, 'guestEntryReportAjaxData']);
 Route::get('/admin/housekepping/guest/entry/report/check/ajax/list', [HousekeepingGuestEntryController::class, 'guestEntryReportCheckAjaxData']);
+Route::get('admin/get/item/section/{id}', [ItemEntryController::class, 'getItemSection']);
+Route::get('admin/housekepping/occupancy/exp/report/ajax/list', [OccupancyController::class, 'expCheckoutReportAjaxData']);
+
+
+

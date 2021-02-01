@@ -61,7 +61,7 @@ $time = date("h:i");
 
         <div class="row">
             <div class="col-sm-12">
-                <div class="card">
+                <div class="card printableAreasaveprint">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
                             <h4 class="card-title">Room Wise House Keeping</h4>
@@ -72,7 +72,7 @@ $time = date("h:i");
                             </a>
                         </span> -->
                     </div>
-                    <div class="card-body">
+                    <div class="card-body ">
                         <div class="table-responsive room_ajax_data">
                             
 
@@ -98,6 +98,11 @@ $time = date("h:i");
 
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-12">
+                <button type="button" class="btn-sm btn-info savepritbtn">Print</button>
             </div>
         </div>
     </div>

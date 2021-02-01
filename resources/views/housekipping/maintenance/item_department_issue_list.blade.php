@@ -22,7 +22,7 @@ $time = date("h:i");
             <div class="col-sm-12">
                 <div class="card p-4">
 
-                    <form id="item_issue_list" action="{{route('admin.housekeeping.distribution.items.issue.ajax.list')}}" method="post">
+                    <form id="item_issue_list" action="{{route('admin.housekeeping.maintenance.distribution.items.issue.ajax.list')}}" method="post">
                     @csrf
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
@@ -82,7 +82,7 @@ $time = date("h:i");
                                         <td>{{$row->first()->remarks?? ''}}</td>
 
                                         <td>
-                                        <a href="{{route('admin.housekeeping.distribution.items.issue.list.edit',$key)}}" class="badge bg-primary-light mx-auto editmodal"><i class="lar la-edit"></i></a>
+                                        <a href="{{route('admin.housekeeping.maintenance.distribution.items.issue.edit',$key)}}" class="badge bg-primary-light mx-auto editmodal"><i class="lar la-edit"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -104,6 +104,7 @@ $time = date("h:i");
                 </div>
             </div>
         </div>
+
         <div class="row text-center">
             <div class="col-md-12">
                 <button type="button" class="btn-sm btn-info savepritbtn">Print </button>

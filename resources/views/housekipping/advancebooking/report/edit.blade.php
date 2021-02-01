@@ -1,4 +1,4 @@
-@extends('hotelbooking.master')
+@extends('housekipping.master')
 @section('content')
 
 @php
@@ -22,7 +22,7 @@ $current =date("d/m/Y");
                         <a href=""><button class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">Edit Advance Booking</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.advance.booking.update',$advancebooking->id)}}" method="POST">
+                <form action="{{route('admin.housekeeping.advance.booking.update',$advancebooking->id)}}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-9">
@@ -254,11 +254,15 @@ $current =date("d/m/Y");
                                                     <div class="col-md-12">
                                                         <div class="custom-control custom-radio custom-radio-color-checked custom-control">
                                                             <input {{$advancebooking->is_active == 1?'checked':''}} type="radio" name="is_active" id="customRadio-1" class="custom-control-input bg-primary" value="1">
-                                                            <label class="custom-control-label"  for="customRadio-1"> Publish </label>
+                                                            <label class="custom-control-label" for="customRadio-1"> Publish </label>
                                                         </div>
                                                         <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">
                                                             <input type="radio" name="is_active" id="customRadio-2"
-                                                            {{$advancebooking->is_active == 0?'checked':''}} name="customRadio-10" class="custom-control-input bg-warning" value="0">
+                                                             name="customRadio-10" 
+                                                             {{$advancebooking->is_active == 0?'checked':''}} 
+                                                             class="custom-control-input bg-warning" value="0">
+
+
                                                             <label class="custom-control-label" for="customRadio-2"> Draft </label>
                                                         </div>
                                                     </div>
@@ -394,7 +398,6 @@ $current =date("d/m/Y");
 
 
 <script>
- 
     var rooms = (function() {
 
         var roomtype = document.querySelector('#room_type');
@@ -455,7 +458,11 @@ $current =date("d/m/Y");
 
     })();
 
-    var total = {{$advancebooking->tariff}};
+    var total = {
+        {
+            $advancebooking - > tariff
+        }
+    };
 
     function selectedRoom(el) {
 
@@ -550,7 +557,7 @@ $current =date("d/m/Y");
 
 
         var roomelement = document.querySelector('#selectedroom');
-        
+
         var html = '<tr class="deletedelement" id="deletedelement%deletedid%"><td>%room% (%room_type%)</td><td>$ %tariff% <input type="hidden" class="counttotal" value="%price%"/></td><td><span class="text-center" onclick="deleteroom(this)"><i class="fa fa-trash" aria-hidden="true"></i><input type="hidden" class="deducttotal" value="%detuctprice%"/> <input type="hidden" name="room[]" value="%room_id%" </span></td></tr>';
 
 
@@ -570,7 +577,7 @@ $current =date("d/m/Y");
         document.querySelector('#totaltariff').innerHTML = total;
 
 
-       
+
 
 
     }

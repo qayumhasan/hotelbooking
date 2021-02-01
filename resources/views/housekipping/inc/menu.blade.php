@@ -50,6 +50,63 @@
                             </ul>
                         </li>
 
+                        <li class="">
+                            <a href="#advancebooking" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Advance Booking</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="advancebooking" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.housekeeping.advance.booking.report.list*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.advance.booking.report.list')}}">
+                                        <i class="las la-list-alt"></i><span>Booking Report</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.housekeeping.advance.booking.calender*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.advance.booking.calender')}}">
+                                        <i class="las la-list-alt"></i><span>Booking Calender</span>
+                                    </a>
+                                </li>
+
+
+                                <li class="{{ request()->routeIs('admin.housekeeping.advance.booking.calender.daybyday*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.advance.booking.calender.daybyday')}}">
+                                        <i class="las la-list-alt"></i><span>Day By Day Calender</span>
+                                    </a>
+                                </li>
+
+                               
+
+                            
+                            </ul>
+                        </li>
+
+                        <li class="">
+                            <a href="#occupancy" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Occupancy Report</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="occupancy" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.housekeeping.occupancey.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.occupancey.report')}}">
+                                        <i class="las la-list-alt"></i><span>In-House Guest</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.housekeeping.expected.checkout.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.expected.checkout.report')}}">
+                                        <i class="las la-list-alt"></i><span>Expected Checkout Report</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
 
                         
                         <li class="">
@@ -78,9 +135,92 @@
                                     </a>
                                 </li>
 
+                                <li class="{{ request()->routeIs('admin.housekeeping.distribution.items.issue.date.list*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.distribution.items.issue.date.list')}}">
+                                        <i class="las la-list-alt"></i><span>Date Wise Issue</span>
+                                    </a>
+                                </li>
+
                             
                             </ul>
                         </li>
+
+                        <li class="">
+                            <a href="#distributionandmantenance" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Mantinance &Distribution Items</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="distributionandmantenance" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.housekeeping.maintenance.distribution.items.issue*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.maintenance.distribution.items.issue')}}">
+                                        <i class="las la-list-alt"></i><span>Issue To Department</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.housekeeping.maintenance.distribution.items.issue.list*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.maintenance.distribution.items.issue.list')}}">
+                                        <i class="las la-list-alt"></i><span>Issue List</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.housekeeping.maintenance.distribution.items.department.list*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.maintenance.distribution.items.department.list')}}">
+                                        <i class="las la-list-alt"></i><span>Department Wise List</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.housekeeping.maintenance.distribution.date.wise.list*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.maintenance.distribution.date.wise.list')}}">
+                                        <i class="las la-list-alt"></i><span>Date Wise List</span>
+                                    </a>
+                                </li>
+                            
+                            </ul>
+                        </li>
+
+
+
+
+
+                        <li class="">
+                            <a href="#acquisition" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Order Acquisition</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="acquisition" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.acquisition.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.acquisition.create')}}">
+                                        <i class="las la-list-alt"></i><span>New Order</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.acquisition.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.acquisition.index')}}">
+                                        <i class="las la-list-alt"></i><span>Order List</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.acquisiton.pending.order.list*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.acquisiton.pending.order.list')}}">
+                                        <i class="las la-list-alt"></i><span>Pending Order List</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.acquisiton.close.order.list*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.acquisiton.close.order.list')}}">
+                                        <i class="las la-list-alt"></i><span>Close Order List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+
+
 
                         
                         <li class="">
