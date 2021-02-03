@@ -55,9 +55,9 @@ $time = date("h:i");
                                 <div class="col-sm-4">
                                     <select class="form-control form-control-sm" required id="select_room_no" name="department_id">
 
-                                    <option value="1">HouseKeeping</option>
-                                    <option value="2">HR</option>
-                                    <option value="3">Accounts</option>
+                                    @foreach($departments as $row)
+                                    <option value="{{$row->id}}">{{$row->name}}</option>
+                                    @endforeach
                                        
                                     </select>
                                     <small class="text-danger room_no"></small>

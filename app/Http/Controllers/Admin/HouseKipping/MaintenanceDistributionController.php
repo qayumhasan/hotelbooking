@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\HouseKipping;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use App\Models\ItemEntry;
 use App\Models\MaintenanceDistribution;
 use App\Models\Room;
@@ -19,7 +20,9 @@ class MaintenanceDistributionController extends Controller
         
 
         $units = UnitMaster::where('is_active', 1)->where('is_deleted', 0)->get();
-        return view('housekipping.maintenance.item_department_issue', compact('items','units'));
+
+        $departments = Department::where('is_active', 1)->where('is_deleted', 0)->get();
+        return view('housekipping.maintenance.item_department_issue', compact('items','units','departments'));
     }
 
     public function issueDepartmentWiseDistributionStore(Request $request)
@@ -70,7 +73,9 @@ class MaintenanceDistributionController extends Controller
         $units = UnitMaster::where('is_active', 1)->where('is_deleted', 0)->get();
 
         $items = ItemEntry::where('is_active', 1)->where('is_deleted', 0)->get();
-        return view('housekipping.maintenance.item_department_issue_edit', compact('items', 'itemIssues','units'));
+
+        $departments = Department::where('is_active', 1)->where('is_deleted', 0)->get();
+        return view('housekipping.maintenance.item_department_issue_edit', compact('items', 'itemIssues','units','departments'));
     }
 
     public function departmentWiseDistributionAjaxlist(Request $request)
@@ -132,7 +137,8 @@ class MaintenanceDistributionController extends Controller
 
         $itemslist = $itemIssues->groupBy('department_id');
         $itemslists = $itemslist->all();
-        return view('housekipping.maintenance.item_department_wise_list', compact( 'itemslists'));
+        $departments = Department::where('is_active', 1)->where('is_deleted', 0)->get();
+        return view('housekipping.maintenance.item_department_wise_list', compact( 'itemslists','departments'));
     }
 
     public function departmentwiseDistrubutionAjaxList(Request $request)
@@ -154,7 +160,7 @@ class MaintenanceDistributionController extends Controller
         $itemslist = $itemIssues->groupBy(['issue_date',function($item){
             return $item['department_id'];
         }], $preserveKeys = true);
-        $itemslists = $itemslist->all();
+       $itemslists = $itemslist->all();
         return view('housekipping.maintenance.item_date_wise_list', compact( 'itemslists'));
     }
 
@@ -168,10 +174,10 @@ class MaintenanceDistributionController extends Controller
         $itemIssues = MaintenanceDistribution::whereBetween('issue_date', [$request->from_date, $request->to_date])->where('is_active', 1)->where('is_deleted', 0)->get();
 
         $itemslist = $itemIssues->groupBy(['issue_date',function($item){
-            return $item['room_id'];
+            return $item['department_id'];
         }], $preserveKeys = true);
-        $itemslists = $itemslist->all();
-        return view('housekipping.items.ajax.issue_date_wise_ajax_list', compact( 'itemslists'));
+       $itemslists = $itemslist->all();
+        return view('housekipping.maintenance.ajax.issue_date_wise_ajax_list', compact( 'itemslists'));
 
 
     }

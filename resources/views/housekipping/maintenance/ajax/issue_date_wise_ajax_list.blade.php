@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th scope="col">Date</th>
-            <th scope="col">Room No</th>
+            <th scope="col">Department</th>
             <th scope="col">User Name</th>
             <th scope="col">Remarks</th>
         </tr>
@@ -10,10 +10,14 @@
     <tbody>
 
         @foreach($itemslists as $key=>$value)
-        @foreach($value as $room_id=>$row )
+        @foreach($value as $department_id=>$row )
         @php
-        $room_no = App\Models\Room::where('id',$room_id)->first();
+        $department = App\Models\Department::where('id',$department_id)->first();
+        
         @endphp
+
+     
+        
         <tr @if($loop->first) class="bg-secondary" @else '' @endif>
             @if($loop->first)
             <th scope="row">{{$key}}</th>
@@ -21,10 +25,10 @@
             <th></th>
             @endif
 
-            <th @if($loop->first) ''@else class="bg-light" @endif>{{$room_no->room_no?? ''}}</th>
+            <th @if($loop->first) ''@else class="bg-light" @endif>{{$department->name?? ''}}</th>
 
-            <td @if($loop->first) ''@else class="bg-light" @endif>Admin</td>
-            <td @if($loop->first) ''@else class="bg-light" @endif>@mdo</td>
+            <td @if($loop->first) ''@else class="bg-light" @endif>{{$row->first()->issuedby->username?? ''}}</td>
+            <td @if($loop->first) ''@else class="bg-light" @endif>{{$row->first()->remarks}}</td>
         </tr>
 
         @php

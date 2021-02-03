@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\HouseKipping\MaintenanceDistributionController;
 use App\Http\Controllers\Admin\HouseKipping\AcquisitionController;
 use App\Http\Controllers\Admin\HouseKipping\OccupancyController;
 use App\Http\Controllers\Admin\HouseKipping\AdvanceBookingHouseKeepingController;
+use App\Http\Controllers\Admin\HouseKipping\OccupancyReportController;
 // housekipping manage controller
 Route::middleware(['admin'])->prefix(md5('admin/house/keeping'))->group(function () {
     Route::get('/', [HouseKippingController::class, 'index'])->name('admin.housekipping.home');
@@ -98,9 +99,14 @@ Route::middleware(['admin'])->prefix('admin/housekeeping/advance/report')->group
     Route::get('/daybyday', [AdvanceBookingHouseKeepingController::class, 'getadvanceBookingReportDayByDay']);
     Route::get('/get/room/{id}', [AdvanceBookingHouseKeepingController::class, 'advanceBookingRoom'])->name('admin.housekeeping.advance.booking.room');
     Route::get('/day/by/day', [AdvanceBookingHouseKeepingController::class, 'advanceBookingCalenderDaybyDay'])->name('admin.housekeeping.advance.booking.calender.daybyday');
-    
-
 });
+
+Route::middleware(['admin'])->prefix('admin/housekeeping/advance/report')->group(function () {
+    Route::get('/occupancy/report', [OccupancyReportController::class, 'occupancyReport'])->name('admin.housekeeping.expected.occupancy.report');
+    Route::get('/occupancy/report/icon', [OccupancyReportController::class, 'occupancyReportIcon'])->name('admin.housekeeping.expected.occupancy.report.icon');
+});
+
+
 
 
 

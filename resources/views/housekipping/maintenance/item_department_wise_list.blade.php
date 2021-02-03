@@ -38,13 +38,13 @@ $time = date("h:i");
                             </div>
 
                             
-                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Department</b></label>
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Department:</b></label>
                                 <div class="col-sm-3">
                                     <select class="form-control form-control-sm" required id="select_room_no" name="department_id">
 
-                                    <option value="1">HouseKeeping</option>
-                                    <option value="2">HR</option>
-                                    <option value="3">Accounts</option>
+                                    @foreach($departments as $row)
+                                    <option value="{{$row->id}}">{{$row->name}}</option>
+                                    @endforeach
                                        
                                     </select>
                                     <small class="text-danger room_no"></small>
@@ -89,7 +89,7 @@ $time = date("h:i");
                                 
                                 <tbody>
                                     <tr>
-                                        <th scope="row" class="bg-light">{{$value->first()->department_id}}</th>
+                                        <th scope="row" class="bg-light">{{$value->first()->department->name?? ''}}</th>
                                         <td class="bg-light">{{$value->first()->issue_date}}</td>
                                         <td class="bg-light">{{$value->first()->issuedby->username?? ''}}</td>
                                         <td class="bg-light">{{$value->first()->remarks}}</td>

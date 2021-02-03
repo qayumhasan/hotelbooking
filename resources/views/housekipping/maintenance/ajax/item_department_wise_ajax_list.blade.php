@@ -11,7 +11,7 @@
 
     <tbody>
         <tr>
-            <th scope="row" class="bg-light">{{$value->first()->department_id}}</th>
+            <th scope="row" class="bg-light">{{$value->first()->department->name?? ''}}</th>
             <td class="bg-light">{{$value->first()->issue_date}}</td>
             <td class="bg-light">{{$value->first()->issuedby->username?? ''}}</td>
             <td class="bg-light">{{$value->first()->remarks}}</td>

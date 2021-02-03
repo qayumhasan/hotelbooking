@@ -41,6 +41,7 @@ use App\Http\Controllers\Admin\Payroll\EmployeeSelaryController;
 use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Admin\MediaManagerController;
+use App\Http\Controllers\Admin\DepartmentController;
 
 
 
@@ -461,6 +462,16 @@ Route::middleware(['admin'])->prefix('admin/advance/report')->group(function () 
     Route::get('/day/by/day', [AdvanceBookingController::class, 'advanceBookingCalenderDaybyDay'])->name('admin.advance.booking.calender.daybyday');
     
 
+});
+
+
+Route::middleware(['admin'])->prefix('admin/department')->group(function () {
+
+    Route::get('/list', [DepartmentController::class, 'departmentList'])->name('admin.department.list');
+    Route::post('/store', [DepartmentController::class, 'departmentStore'])->name('admin.department.store');
+    Route::get('/status/{id}', [DepartmentController::class, 'departmentStatus'])->name('admin.department.status');
+    Route::get('/delete/{id}', [DepartmentController::class, 'departmentDelete'])->name('admin.department.delete');
+    Route::post('/update', [DepartmentController::class, 'departmentUpdate'])->name('admin.department.update');
 });
 
 
