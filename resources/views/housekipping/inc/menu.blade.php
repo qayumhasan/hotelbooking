@@ -12,7 +12,7 @@
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
                         <li class="{{ request()->routeIs('admin.inventory.home*') ? 'active' : '' }}">
-                            <a href="{{route('admin.hotel')}}">
+                            <a href="{{route('admin.housekipping.person.entry.report')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>
@@ -101,6 +101,16 @@
                                 <li class="{{ request()->routeIs('admin.housekeeping.expected.checkout.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.housekeeping.expected.checkout.report')}}">
                                         <i class="las la-list-alt"></i><span>Expected Checkout Report</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.housekeeping.expected.occupancy.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.expected.occupancy.report')}}">
+                                        <i class="las la-list-alt"></i><span>Occupancy Report</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.housekeeping.expected.occupancy.report.icon*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.housekeeping.expected.occupancy.report.icon')}}">
+                                        <i class="las la-list-alt"></i><span>Occ. Report(Icon)</span>
                                     </a>
                                 </li>
 

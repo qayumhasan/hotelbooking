@@ -27,6 +27,7 @@ class CreateRoomsTable extends Migration
             $table->text('room_details')->nullable();
             $table->text('image')->nullable();
             $table->integer('is_active')->default(1);
+            $table->string('is_occupy')->nullable();
             $table->string('entry_by',30)->nullable();
             $table->string('entry_date',30)->nullable();
             $table->string('updated_by',30)->nullable();

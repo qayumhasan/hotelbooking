@@ -77,9 +77,9 @@ $time = date("h:i");
                                 <tbody>
 
                                     @foreach($itemslists as $key=>$value)
-                                    @foreach($value as $room_id=>$row )
+                                    @foreach($value as $department_id=>$row )
                                     @php
-                                    $room_no = App\Models\Room::where('id',$room_id)->first();
+                                    $department = App\Models\Department::where('id',$department_id)->first();
                                     @endphp
                                     <tr @if($loop->first) class="bg-secondary" @else '' @endif>
                                         @if($loop->first)
@@ -88,7 +88,7 @@ $time = date("h:i");
                                         <th></th>
                                         @endif
 
-                                        <th @if($loop->first) ''@else class="bg-light" @endif>{{$room_no->room_no?? ''}}</th>
+                                        <th @if($loop->first) ''@else class="bg-light" @endif>{{$department->name?? ''}}</th>
                                         
                                         <td @if($loop->first) ''@else class="bg-light" @endif>{{$row->first()->issuedby->username?? ''}}</td>
                                         <td @if($loop->first) ''@else class="bg-light" @endif>{{$row->first()->remarks}}</td>

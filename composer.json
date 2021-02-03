@@ -19,7 +19,6 @@
         "laravel/jetstream": "^1.6",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.0",
         "qoraiche/laravel-mail-editor": "^3.2",
         "unisharp/laravel-filemanager": "^2.2"
     },

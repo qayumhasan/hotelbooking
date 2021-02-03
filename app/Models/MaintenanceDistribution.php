@@ -19,6 +19,10 @@ class MaintenanceDistribution extends Model
     {
         return $this->hasOne('App\Models\ItemEntry','id','item_id');
     }
+    public function department()
+    {
+        return $this->hasOne('App\Models\Department','id','department_id');
+    }
 
     public function unit()
     {

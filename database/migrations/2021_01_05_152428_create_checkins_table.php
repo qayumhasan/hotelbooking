@@ -64,6 +64,7 @@ class CreateCheckinsTable extends Migration
             $table->string('id_proof_imag');
             $table->string('client_img');
             $table->text('additional_room')->nullable();
+            $table->string('is_occupy')->nullable();
 
             $table->integer('is_active')->default(1);
             $table->string('entry_by',30)->nullable();

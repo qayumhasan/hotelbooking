@@ -106,6 +106,16 @@
                         @endif
                         <!-- Employee addon section end from here -->
 
+                        <!-- Department start from here -->
+
+                        <li class=" ">
+                            <a href="{{route('admin.department.list')}}">
+                                <i class="las la-wrench aiz-side-nav-icon"></i><span>Department</span>
+                            </a>
+                        </li>
+                        <!-- Department end from here -->
+
+
                         <!-- addon manager start from here -->
 
                         <li class=" ">
