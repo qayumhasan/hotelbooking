@@ -56,9 +56,9 @@
                                         <i class="lar la-hand-pointer"></i>
                                     </div>
                                 </div>
-                                <h4>Clicked</h4>
+                              
                                 <div class="mt-1">
-                                <p class="mb-0">Unclicked 352,735</p>
+                              
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-danger" data-percent="55"></span>
@@ -75,9 +75,9 @@
                                     <i class="lar la-folder-open"></i>
                                 </div>
                                 </div>
-                                <h4>Opened 8,7678</h4>
+                             
                                 <div class="mt-1">
-                                <p class="mb-0">Unopened 126,035</p>
+                               
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-primary" data-percent="67"></span>
@@ -94,9 +94,9 @@
                                     <i class="lar la-envelope"></i>
                                 </div>
                                 </div>
-                                <h4>Sent 272,2824</h4>
+                                
                                 <div class="mt-1">
-                                <p class="mb-0">Unsent 682,735</p>
+                              
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-info" data-percent="85"></span>
@@ -113,9 +113,9 @@
                                     <i class="las la-desktop"></i>
                                 </div>
                                 </div>
-                                <h4>Subscribes 8,376</h4>
+                               
                                 <div class="mt-1">
-                                <p class="mb-0">Unclicked 352,735</p>
+                               
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-orange" data-percent="55" ></span>
@@ -136,9 +136,9 @@
                                     <i class="las la-exclamation-triangle"></i>
                                 </div>
                                 </div>
-                                <h4>18 Complains</h4>
+                              
                                 <div class="mt-1">
-                                    <p class="mb-0">Unclicked 457,735</p>
+                                   
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-skyblue" data-percent="33"></span>
@@ -158,9 +158,9 @@
                                     <i class="las la-circle-notch"></i>
                                 </div>
                                 </div>
-                                <h4>Total CTR</h4>
+                            
                                 <div class="mt-1">
-                                    <p class="mb-0">Unclicked 652,735</p>
+                                
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-success" data-percent="33"></span>
@@ -173,15 +173,19 @@
                             <div class="card-body">
                                 <div class="top-block d-flex align-items-center justify-content-between mb-3">
 
+
                                 <a href="{{route('admin.restaurant.index')}}"><h3 class="text-info">Restaurant</h3></a>
+
+                               <a href="{{route('admin.payroll.index')}}"><h3 class="text-info">Payroll</h3></a>
+
                                 <div class="bg-info icon iq-icon-box-2 mr-2 rounded">
                                 <i class="las la-cocktail"></i>
                                     
                                 </div>
                                 </div>
-                                <h4>Sent 272,2824</h4>
+                               
                                 <div class="mt-1">
-                                <p class="mb-0">Unsent 682,735</p>
+                               
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-info" data-percent="85"></span>
@@ -199,9 +203,9 @@
                                     <i class="lar la-envelope"></i>
                                 </div>
                                 </div>
-                                <h4>Sent 272,2824</h4>
+                              
                                 <div class="mt-1">
-                                <p class="mb-0">Unsent 682,735</p>
+                               
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-info" data-percent="85"></span>
@@ -218,9 +222,9 @@
                                     <i class="lar la-envelope"></i>
                                 </div>
                                 </div>
-                                <h4>Sent 272,2824</h4>
+                                
                                 <div class="mt-1">
-                                <p class="mb-0">Unsent 682,735</p>
+                               
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-info" data-percent="85"></span>
@@ -237,9 +241,9 @@
                                     <i class="lar la-envelope"></i>
                                 </div>
                                 </div>
-                                <h4>Sent 272,2824</h4>
+                              
                                 <div class="mt-1">
-                                <p class="mb-0">Unsent 682,735</p>
+                                
                                 </div>
                                 <div class="iq-progress-bar mt-3">
                                 <span class="bg-info" data-percent="85"></span>

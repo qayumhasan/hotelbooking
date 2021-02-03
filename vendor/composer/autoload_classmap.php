@@ -51,7 +51,9 @@ return array(
     'App\\Http\\Controllers\\Admin\\HouseKipping\\ItemEntryController' => $baseDir . '/app/Http/Controllers/Admin/HouseKipping/ItemEntryController.php',
     'App\\Http\\Controllers\\Admin\\HouseKipping\\MaintenanceDistributionController' => $baseDir . '/app/Http/Controllers/Admin/HouseKipping/MaintenanceDistributionController.php',
     'App\\Http\\Controllers\\Admin\\HouseKipping\\OccupancyController' => $baseDir . '/app/Http/Controllers/Admin/HouseKipping/OccupancyController.php',
+
     'App\\Http\\Controllers\\Admin\\HouseKipping\\OccupancyReportController' => $baseDir . '/app/Http/Controllers/Admin/HouseKipping/OccupancyReportController.php',
+
     'App\\Http\\Controllers\\Admin\\Inventory\\InventoryManageController' => $baseDir . '/app/Http/Controllers/Admin/Inventory/InventoryManageController.php',
     'App\\Http\\Controllers\\Admin\\Inventory\\ReportController' => $baseDir . '/app/Http/Controllers/Admin/Inventory/ReportController.php',
     'App\\Http\\Controllers\\Admin\\LoginController' => $baseDir . '/app/Http/Controllers/Admin/LoginController.php',
@@ -84,6 +86,8 @@ return array(
     'App\\Models\\Admin' => $baseDir . '/app/Models/Admin.php',
     'App\\Models\\AdminRole' => $baseDir . '/app/Models/AdminRole.php',
     'App\\Models\\AdvanceBooking' => $baseDir . '/app/Models/AdvanceBooking.php',
+    'App\\Models\\Banquet' => $baseDir . '/app/Models/Banquet.php',
+    'App\\Models\\BanquetCategoryItem' => $baseDir . '/app/Models/BanquetCategoryItem.php',
     'App\\Models\\BanquetItem' => $baseDir . '/app/Models/BanquetItem.php',
     'App\\Models\\BanquetTax' => $baseDir . '/app/Models/BanquetTax.php',
     'App\\Models\\BookingFor' => $baseDir . '/app/Models/BookingFor.php',

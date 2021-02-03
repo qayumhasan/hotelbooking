@@ -698,7 +698,9 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Http\\Controllers\\Admin\\HouseKipping\\ItemEntryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HouseKipping/ItemEntryController.php',
         'App\\Http\\Controllers\\Admin\\HouseKipping\\MaintenanceDistributionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HouseKipping/MaintenanceDistributionController.php',
         'App\\Http\\Controllers\\Admin\\HouseKipping\\OccupancyController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HouseKipping/OccupancyController.php',
+
         'App\\Http\\Controllers\\Admin\\HouseKipping\\OccupancyReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/HouseKipping/OccupancyReportController.php',
+
         'App\\Http\\Controllers\\Admin\\Inventory\\InventoryManageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Inventory/InventoryManageController.php',
         'App\\Http\\Controllers\\Admin\\Inventory\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Inventory/ReportController.php',
         'App\\Http\\Controllers\\Admin\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/LoginController.php',
@@ -731,6 +733,8 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
         'App\\Models\\AdminRole' => __DIR__ . '/../..' . '/app/Models/AdminRole.php',
         'App\\Models\\AdvanceBooking' => __DIR__ . '/../..' . '/app/Models/AdvanceBooking.php',
+        'App\\Models\\Banquet' => __DIR__ . '/../..' . '/app/Models/Banquet.php',
+        'App\\Models\\BanquetCategoryItem' => __DIR__ . '/../..' . '/app/Models/BanquetCategoryItem.php',
         'App\\Models\\BanquetItem' => __DIR__ . '/../..' . '/app/Models/BanquetItem.php',
         'App\\Models\\BanquetTax' => __DIR__ . '/../..' . '/app/Models/BanquetTax.php',
         'App\\Models\\BookingFor' => __DIR__ . '/../..' . '/app/Models/BookingFor.php',

@@ -22,12 +22,12 @@ $time = date("h:i");
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Booking Create</h4>
+                            <h4 class="card-title">Booking Update</h4>
                         </div>
-                       <a href="{{route('admin.itementry.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Item</span></i></button></a>
+                       <a href="{{route('admin.banquet.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Item</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.banquet.store')}}" method="POST" enctype='multipart/form-data'>
+                <form action="{{route('admin.banquet.update',$edit->id)}}" method="POST" enctype='multipart/form-data'>
                     @csrf
                     <div class="row">
                         <div class="col-md-10">
@@ -43,19 +43,20 @@ $time = date("h:i");
                                             <div class="form-group">
                                                 <label for="fname">Title:<span style="color:red">*</span></label>
                                                 <select name="title" class="form-control" id="">
-                                                    <option value="Mr.">Mr.</option>
-                                                    <option value="Miss.">Miss.</option>
-                                                    <option value="M/S.">M/S.</option>
-                                                    <option value="MS.">Ms.</option>
-                                                    <option value="Mrs.">Mrs.</option>
-                                                    <option value="Dr.">Dr.</option>
+                                                    <option value="Mr." @if($edit->title =='Mr.') selected @endif>Mr.</option>
+                                                    <option value="Miss." @if($edit->title =='Miss.') selected @endif>Miss.</option>
+                                                    <option value="M/S." @if($edit->title =='M/S.') selected @endif>M/S.</option>
+                                                    <option value="MS." @if($edit->title =='MS.') selected @endif>Ms.</option>
+                                                    <option value="Mrs." @if($edit->title =='Mrs.') selected @endif>Mrs.</option>
+                                                    <option value="Dr." @if($edit->title =='Dr.') selected @endif>Dr.</option>
                                                 </select>
+                                                <input type="hidden" name="id" value="{{$edit->id}}">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Guest Name: <span style="color:red">*</span></label>
-                                                <input type="text" class="form-control guest_name"  name="guest_name" placeholder="Guest Name"/>
+                                                <input type="text" class="form-control guest_name"  name="guest_name" placeholder="Guest Name" value="{{$edit->guest_name}}"/>
                                                 @error('guest_name')
                                                     <div style="color:red">{{ $message }}</div>
                                                 @enderror
@@ -65,7 +66,7 @@ $time = date("h:i");
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Print Name: <span style="color:red">*</span></label>
-                                                <input type="text" class="form-control short_name"  name="print_name" placeholder="Print Name"/>
+                                                <input type="text" class="form-control short_name"  name="print_name" placeholder="Print Name" value="{{$edit->print_name}}"/>
                                                 @error('print_name')
                                                     <div style="color:red">{{ $message }}</div>
                                                 @enderror
@@ -75,14 +76,14 @@ $time = date("h:i");
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Company Name: </label>
-                                                <input type="text" class="form-control"  name="company_name" placeholder="Company Name"/>
+                                                <input type="text" class="form-control"  name="company_name" placeholder="Company Name" value="{{$edit->company_name}}"/>
                                                 
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Address: </label>
-                                                <input type="text" class="form-control"  name="address" placeholder="Address"/>
+                                                <input type="text" class="form-control"  name="address" placeholder="Address" value="{{$edit->address}}"/>
                                                 @error('address')
                                                     <div style="color:red">{{ $message }}</div>
                                                 @enderror
@@ -92,13 +93,13 @@ $time = date("h:i");
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">City:</label>
-                                                <input type="text" class="form-control" name="city" placeholder="City"/>
+                                                <input type="text" class="form-control" name="city" placeholder="City" value="{{$edit->city}}"/>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Mobile:<span style="color:red">*</span></label>
-                                            <Input type="text" name="mobile" class="form-control"  placeholder="Mobile">
+                                            <Input type="text" name="mobile" class="form-control"  placeholder="Mobile" value="{{$edit->mobile}}">
                                                 @error('mobile')
                                                     <div style="color:red">{{ $message }}</div>
                                                 @enderror
@@ -107,7 +108,7 @@ $time = date("h:i");
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">email:</label>
-                                                <Input type="text" name="email" class="form-control"  placeholder="email">
+                                                <Input type="text" name="email" class="form-control"  placeholder="email" value="{{$edit->email}}">
                                             
                                             </div>
                                         </div>
@@ -124,8 +125,8 @@ $time = date("h:i");
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Booking No: *</label>
-                                                <h5>{{$booking_no}}</h5>
-                                                <input type="hidden" value="{{$booking_no}}" id="booking_no" name="booking_no">
+                                                <h5>{{$edit->booking_no}}</h5>
+                                                <input type="hidden" value="{{$edit->booking_no}}" id="booking_no" name="booking_no">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -133,7 +134,7 @@ $time = date("h:i");
                                                 <label for="fname">Venue Name:</label>
                                                 <select name="veneue_id" id="" class="form-control">
                                                     @foreach($allvanue as $newvenue)
-                                                    <option value="{{$newvenue->id}}">{{ $newvenue->venue_name }}</option>
+                                                    <option value="{{$newvenue->id}}" @if($edit->veneue_id == $newvenue->id) selected @endif>{{ $newvenue->venue_name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('veneue_name')
@@ -147,7 +148,7 @@ $time = date("h:i");
                                                 <label for="fname">Booking For: *</label>
                                                 <select name="booking_for" id="" class="form-control">
                                                     @foreach($bookingfor as $booking)
-                                                    <option value="{{ $booking->booking_for }}">{{ $booking->booking_for }}</option>
+                                                    <option value="{{ $booking->booking_for }}" @if($edit->booking_for == $booking->booking_for) selected @endif>{{ $booking->booking_for }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('booking_for')
@@ -160,21 +161,21 @@ $time = date("h:i");
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Booking Date: </label>
-                                                <input type="text" class="form-control datepicker"  name="booking_date"  value="{{$current}}"/>
+                                                <input type="text" class="form-control datepicker"  name="booking_date"  value="{{$edit->booking_date}}"/>
                                                 
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Date of Function From : </label>
-                                                <input type="text" class="form-control datepicker"  name="date_of_function_form" value="{{$current}}"/>
+                                                <input type="text" class="form-control datepicker"  name="date_of_function_form" value="{{$edit->date_of_function_form}}"/>
                                             
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Function Date To:</label>
-                                            <Input type="text" name="date_of_function_to" class="form-control datepicker" value="{{$current}}">
+                                            <Input type="text" name="date_of_function_to" class="form-control datepicker" value="{{$edit->date_of_function_to}}">
                                             @error('mobile')
                                                     <div style="color:red">{{ $message }}</div>
                                                 @enderror
@@ -183,14 +184,14 @@ $time = date("h:i");
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Type of Function:</label>
-                                                <Input type="text" name="type_of_function" class="form-control"  placeholder="Type of Function">
+                                                <Input type="text" name="type_of_function" class="form-control"  placeholder="Type of Function" value="{{$edit->type_of_function}}">
                                                 
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Any ReMarks:</label>
-                                                <Input type="text" name="remarks" class="form-control"  placeholder="Marks">
+                                                <Input type="text" name="remarks" class="form-control"  placeholder="Marks" value="{{$edit->remarks}}">
                                             <!-- <textarea name="remarks" id="" class="form-control"></textarea> -->
                                             </div>
                                         </div>
@@ -210,7 +211,7 @@ $time = date("h:i");
                                                 <select name="menu_type" class="form-control" id="menu_type">
                                                     <option value="">--select--</option>
                                                     @foreach($allmenutype as $menutype)
-                                                        <option value="{{$menutype->id}}">{{$menutype->menutype_name}}</option>
+                                                        <option value="{{$menutype->id}}" @if($edit->menutype == $menutype->id) selected @endif>{{$menutype->menutype_name}}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('menu_type')
@@ -222,16 +223,16 @@ $time = date("h:i");
                                             <div class="form-group">
                                                 <label for="fname">Guest Type:</label>
                                                 <select name="guest_type" id="guest_type" class="form-control">
-                                                    <option value="1">Individual</option>
-                                                    <option value="2">Corporate</option>
-                                                    <option value="3">NGO</option>
+                                                    <option value="1" @if($edit->menu_type == 1) selected @endif>Individual</option>
+                                                    <option value="2" @if($edit->menu_type == 2) selected @endif>Corporate</option>
+                                                    <option value="3" @if($edit->menu_type == 3) selected @endif>NGO</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Price Per Pax: </label>
-                                                <input type="text" class="form-control price_per_pax"  name="price_per_pax" id="price_per_pax" placeholder="Price Per Pax"/>
+                                                <input type="text" class="form-control price_per_pax"  name="price_per_pax" id="price_per_pax" placeholder="Price Per Pax" value="{{$edit->price_per_pax}}"/>
                                                 @error('price_per_pax')
                                                     <div style="color:red">{{ $message }}</div>
                                                 @enderror
@@ -240,21 +241,21 @@ $time = date("h:i");
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Guarantee Pax: </label>
-                                                <input type="text" class="form-control guarantee_pax"  name="guarantee_pax" placeholder="Guarantee Pax"/>
+                                                <input type="text" class="form-control guarantee_pax"  name="guarantee_pax" placeholder="Guarantee Pax" value="{{$edit->guarantee_pax}}"/>
                                                 
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Welcome Board : </label>
-                                                <input type="text" class="form-control"  name="welcome_board" placeholder="Welcome Board"/>
+                                                <input type="text" class="form-control"  name="welcome_board" placeholder="Welcome Board" value="{{$edit->welcome_board}}"/>
                                             
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">No of Rooms:</label>
-                                                <input type="text" name="no_of_rooms" class="form-control" placeholder="No of Rooms">
+                                                <input type="text" name="no_of_rooms" class="form-control" placeholder="No of Rooms" value="{{$edit->no_of_rooms}}">
                                             
                                             </div>
                                         </div>
@@ -503,11 +504,11 @@ $time = date("h:i");
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="custom-control custom-radio custom-radio-color-checked custom-control">
-                                                <input type="radio" name="is_active" id="customRadio-8" class="custom-control-input bg-primary" value="1" checked>
+                                                <input type="radio" name="is_active" id="customRadio-8" class="custom-control-input bg-primary" value="1" @if($edit->is_active == 1) checked @endif>
                                                 <label class="custom-control-label" for="customRadio-8"> Active </label>
                                             </div>
                                             <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">
-                                                <input type="radio" name="is_active" id="customRadio-9" name="customRadio-10" class="custom-control-input bg-warning" value="0">
+                                                <input type="radio" name="is_active" id="customRadio-9" name="customRadio-10" class="custom-control-input bg-warning" value="0" @if($edit->is_active == 0) checked @endif>
                                                 <label class="custom-control-label" for="customRadio-9"> Deactive </label>
                                             </div>
                                         </div>
@@ -515,13 +516,13 @@ $time = date("h:i");
                                 </div>
 
                             </div>
-                            <input type="hidden" class="total_pax_amount" value="0">
+                            <input type="hidden" class="total_pax_amount" value="{{$edit->total_pax_amount}}">
                             <div class="card shadow-sm shadow-showcase">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div id="file-upload-form" class="uploader-file">
-                                                <button type="submit" class="btn btn-success">Submit</button>
+                                                <button type="submit" class="btn btn-success">Update</button>
                                             </div>
                                         </div>
                                     </div>
