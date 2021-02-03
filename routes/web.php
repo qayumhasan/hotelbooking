@@ -34,7 +34,9 @@ use App\Http\Controllers\Admin\Banquet\HallController;
 use App\Http\Controllers\Admin\Banquet\BookingforController;
 use App\Http\Controllers\Admin\Banquet\MenutypeController;
 use App\Http\Controllers\Admin\Banquet\BanquetBookingController;
-
+// payroll
+use App\Http\Controllers\Admin\Payroll\PayrollController;
+use App\Http\Controllers\Admin\Payroll\EmployeeSelaryController;
 
 use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -304,6 +306,23 @@ Route::get('/get/doublehistory/invoice/{kot_id}', [FoodAndBeverageController::cl
 Route::get('admin/banquet/index', [BanquetController::class, 'index'])->name('admin.banquet.index');
 // BanquetBookingController
 Route::get('admin/banquet/booking/create', [BanquetBookingController::class, 'create'])->name('admin.banquet.create');
+Route::post('admin/banquet/booking/update/{id}', [BanquetBookingController::class, 'update'])->name('admin.banquet.update');
+Route::get('admin/banquet/booking/index', [BanquetBookingController::class, 'index'])->name('admin.banquet.index');
+Route::get('admin/banquet/active/{id}', [BanquetBookingController::class, 'active']);
+Route::get('admin/banquet/deactive/{id}', [BanquetBookingController::class, 'deactive']);
+Route::get('admin/banquet/delete/{id}', [BanquetBookingController::class, 'delete']);
+Route::get('admin/banquet/edit/{id}', [BanquetBookingController::class, 'edit']);
+
+// payroll controller ----------------------------------------------------------------------------------------------------------------------------
+Route::get('admin/payroll/index', [PayrollController::class, 'index'])->name('admin.payroll.index');
+Route::get('admin/payroll/allemployee', [PayrollController::class, 'allemployee'])->name('admin.payroll.allemployee');
+
+Route::get('admin/payroll/employee/selary', [EmployeeSelaryController::class, 'index'])->name('admin.payroll.employee.selary');
+
+
+
+
+
 Route::get('get/menutype/price', [BanquetBookingController::class, 'getmenutypeprice'])->name('get.menutype.price');
 Route::get('get/geusttype/price', [BanquetBookingController::class, 'getgeusttypeprice'])->name('get.geust_type.price');
 
@@ -317,6 +336,17 @@ Route::get('get/banquet/taxitem/', [BanquetBookingController::class, 'banquettax
 
 Route::post('get/banquettax/all/{booking_no}', [BanquetBookingController::class, 'gettaxbanquet']);
 Route::post('get/banquettax/delete', [BanquetBookingController::class, 'gettaxbanquetdelete'])->name('get.banquettax.delete');
+Route::post('get/banquettax/edit', [BanquetBookingController::class, 'gettaxbanquetedit'])->name('get.banquettax.edit');
+
+Route::get('get/banquettax/categorywise/item', [BanquetBookingController::class, 'getcategoryitem'])->name('get.banquet.categorytype');
+Route::get('get/banquettax/categorywise/item/insert', [BanquetBookingController::class, 'cateiteminsert'])->name('bunquet.cateiteminsert.data');
+
+Route::post('get/allcateitem/all/{booking_no}', [BanquetBookingController::class, 'getallcateitembanquet']);
+Route::post('get/allcateitem/delete', [BanquetBookingController::class, 'getallcateitemdelete'])->name('get.categoryitemdelete.delete');
+
+Route::post('admin/banquet/insert', [BanquetBookingController::class, 'banquetinsert'])->name('admin.banquet.store');
+
+Route::post('get/allamount/banquet/', [BanquetBookingController::class, 'getallamountsection'])->name('get.banquet.allamount');
 
 
 

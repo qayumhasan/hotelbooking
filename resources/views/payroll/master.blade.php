@@ -40,10 +40,9 @@
     <!-- loader END -->
     <!-- Wrapper Start -->
     <div class="wrapper">
-
         <div class="iq-sidebar  sidebar-default ">
             <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="{{route('admin.banquet.index')}}" class="header-logo">
+                <a href="{{route('admin.payroll.index')}}" class="header-logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal darkmode-logo" alt="logo">
                 </a>
@@ -54,74 +53,27 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="{{ request()->routeIs('admin.banquet.index*') ? 'active' : '' }}">
-                            <a href="{{route('admin.banquet.index')}}">
+                        <li class="{{ request()->routeIs('admin.payroll.index*') ? 'active' : '' }}">
+                            <a href="{{route('admin.payroll.index')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>
-                        <li class="">
-                            <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Booking</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.banquet.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.banquet.create')}}">
-                                        <i class="las la-list-alt"></i><span>New Booking</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.banquet.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.banquet.index')}}">
-                                        <i class="las la-list-alt"></i><span>Booking List</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#hall" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Venue</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="hall" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.hall.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.hall.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Venue</span>
-                                    </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.hall.index*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.hall.index')}}">
-                                        <i class="las la-list-alt"></i><span>All Venue</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#bookingfor" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Booking For</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
-                            </a>
-                            <ul id="bookingfor" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.bookingfor.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.bookingfor.create')}}">
-                                        <i class="las la-list-alt"></i><span>All Booking For</span>
-                                    </a>
-                                </li>
-                               
-                            </ul>
-                        </li>
+                      
                         <li class="">
                             <a href="#menutype" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Menu Type</span>
+                                <i class="far fa-user"></i><span>Employee</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
                             <ul id="menutype" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="{{ request()->routeIs('admin.menutype.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.menutype.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Menu Type</span>
+                                <li class="{{ request()->routeIs('admin.payroll.allemployee*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.payroll.allemployee')}}">
+                                        <i class="las la-list-alt"></i><span>All Employee</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.payroll.employee.selary*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.payroll.employee.selary')}}">
+                                        <i class="las la-list-alt"></i><span>Selary</span>
                                     </a>
                                 </li>
                                
