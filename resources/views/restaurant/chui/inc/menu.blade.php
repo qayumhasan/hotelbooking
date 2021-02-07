@@ -25,28 +25,28 @@
                             <ul id="guest_entry" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
 
 
-                                <li class="{{ request()->routeIs('admin.housekipping.person.entry*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.housekipping.person.entry')}}">
-                                        <i class="las la-list-alt"></i><span>Person Entry</span>
+                                <li class="{{ request()->routeIs('admin.restaurant.menu.category*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.menu.category')}}">
+                                        <i class="las la-list-alt"></i><span>Menu Category</span>
                                     </a>
                                 </li>
 
-                                
-                                <li class="{{ request()->routeIs('admin.housekipping.person.entry.report*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.housekipping.person.entry.report')}}">
-                                        <i class="las la-list-alt"></i><span>Person Entry Report</span>
+                                <li class="{{ request()->routeIs('admin.chui.restaurant.menu.config*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.chui.menu.config')}}">
+                                        <i class="las la-list-alt"></i><span>Menu Config</span>
                                     </a>
                                 </li>
 
-                                <li class="{{ request()->routeIs('admin.housekipping.person.entry.cross.check*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.housekipping.person.entry.cross.check')}}">
-                                        <i class="las la-list-alt"></i><span>Cross Check</span>
+                                <li class="{{ request()->routeIs('admin.restaurant.chui.menu.inventory*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.chui.menu.inventory')}}">
+                                        <i class="las la-list-alt"></i><span>Menu Inventory</span>
                                     </a>
                                 </li>
 
 
+                              
 
-
+                            
                             </ul>
                         </li>
 
