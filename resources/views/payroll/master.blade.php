@@ -71,9 +71,56 @@
                                         <i class="las la-list-alt"></i><span>All Employee</span>
                                     </a>
                                 </li>
+                                
+                              
+                               
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#salary" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Salary</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="salary" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.payroll.employee.selary*') ? 'active' : '' }}">
                                     <a href="{{route('admin.payroll.employee.selary')}}">
-                                        <i class="las la-list-alt"></i><span>Selary</span>
+                                        <i class="las la-list-alt"></i><span>Generate Selary</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('payroll.employee.allcreateselary*') ? 'active' : '' }}">
+                                    <a href="{{route('payroll.employee.allcreateselary')}}">
+                                        <i class="las la-list-alt"></i><span>Selary Report</span>
+                                    </a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Reports</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('payroll.monthwiseselary.reports*') ? 'active' : '' }}">
+                                    <a href="{{route('payroll.monthwiseselary.reports')}}">
+                                        <i class="las la-list-alt"></i><span>Month Wise Salary Reports</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="">
+                                        <i class="las la-list-alt"></i><span>Employee Wise Salary Report</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="">
+                                        <i class="las la-list-alt"></i><span>Attendance Report</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="">
+                                        <i class="las la-list-alt"></i><span>Month Wise Attendance Report</span>
                                     </a>
                                 </li>
                                

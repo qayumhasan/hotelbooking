@@ -109,7 +109,7 @@ Route::get('admin/employee/edit/{id}', [EmployeeController::class, 'edit']);
 Route::post('admin/employee/store', [EmployeeController::class, 'store'])->name('admin.employee.store');
 Route::post('admin/employee/update', [EmployeeController::class, 'update'])->name('admin.employee.update');
 Route::get('admin/employee/delete/{id}', [EmployeeController::class, 'delete']);
-Route::get('/get/policestation/all/{district}', [EmployeeController::class, 'getpolicestation'])->name('get.employee.getpolicestation');
+Route::get('/get/policestation/all/{district}', [EmployeeController::class, 'getpolicestation']);
 // bulk sms Controller
 Route::get('admin/bulksms/create', [BulkSmsController::class, 'create'])->name('admin.bulksms.create');
 Route::post('admin/bulksms/send', [BulkSmsController::class, 'store'])->name('admin.bulksms.send');
@@ -317,8 +317,15 @@ Route::get('admin/banquet/edit/{id}', [BanquetBookingController::class, 'edit'])
 // payroll controller ----------------------------------------------------------------------------------------------------------------------------
 Route::get('admin/payroll/index', [PayrollController::class, 'index'])->name('admin.payroll.index');
 Route::get('admin/payroll/allemployee', [PayrollController::class, 'allemployee'])->name('admin.payroll.allemployee');
-
 Route::get('admin/payroll/employee/selary', [EmployeeSelaryController::class, 'index'])->name('admin.payroll.employee.selary');
+Route::post('admin/payroll/employee/selary/create', [EmployeeSelaryController::class, 'store'])->name('payroll.employee.selary.create');
+Route::post('admin/payroll/employee/selary/update', [EmployeeSelaryController::class, 'update'])->name('payroll.employee.selary.update');
+
+Route::get('admin/payroll/employee/allcreateselary/', [EmployeeSelaryController::class, 'allcreateselary'])->name('payroll.employee.allcreateselary');
+Route::get('admin/allemployee/selary/edit/{month}/{year}', [EmployeeSelaryController::class, 'allemplyesalaryedit']);
+// month wise selary 
+Route::get('admin/payroll/monthwise/employeesalary', [EmployeeSelaryController::class, 'monthwiseselary'])->name('payroll.monthwiseselary.reports');
+Route::post('admin/payroll/monthwise/employeesalary', [EmployeeSelaryController::class, 'monthwiseselarygenerate'])->name('payroll.monthwiseselary.reports');
 
 
 
