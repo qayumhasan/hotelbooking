@@ -28,87 +28,16 @@
                   <div class="iq-card-body">
                      <form action="{{route('admin.employee.update')}}" method="post" id="form-wizard1" class="text-center mt-4" enctype="multipart/form-data">
                       @csrf
-                        <ul id="top-tab-list" class="p-0">
-                           @if(Session::has('success'))
-                           <li class="active done" id="account">
-                              <a href="javascript:void();">
-                              <i class="ri-lock-unlock-line"></i><span>Account</span>
-                              </a>
-                           </li>
-                           <li id="personal" class="active done">
-                              <a href="javascript:void();">
-                              <i class="ri-user-fill"></i><span>Personal</span>
-                              </a>
-                           </li>
-                           <li id="payment" class="active done">
-                              <a href="javascript:void();">
-                              <i class="ri-camera-fill"></i><span>Experience & Salary Information</span>
-                              </a>
-                           </li>
-                           <li id="confirm" class="active done">
-                              <a href="javascript:void();">
-                              <i class="ri-check-fill"></i><span>Finish</span>
-                              </a>
-                           </li>
-                           @else
-                           <li class="active" id="account">
-                              <a href="javascript:void();">
-                              <i class="ri-lock-unlock-line"></i><span>Account</span>
-                              </a>
-                           </li>
-                           <li id="personal">
-                              <a href="javascript:void();">
-                              <i class="ri-user-fill"></i><span>Personal</span>
-                              </a>
-                           </li>
-                           <li id="payment">
-                              <a href="javascript:void();">
-                              <i class="ri-camera-fill"></i><span>Experience & Salary Information</span>
-                              </a>
-                           </li>
-                           <li id="confirm">
-                              <a href="javascript:void();">
-                              <i class="ri-check-fill"></i><span>Finish</span>
-                              </a>
-                           </li>
-                           @endif
-                        </ul>
-                        <!-- fieldsets -->
-                        @if(Session::has('success'))
-                          <fieldset>
-                           <div class="form-card">
-                              <div class="row">
-                                 <div class="col-7">
-                                    <h3 class="mb-4 text-left">Finish:</h3>
-                                 </div>
-                                 <div class="col-5">
-                                    <h2 class="steps">Step 4 - 4</h2>
-                                 </div>
-                              </div>
-
-                              <br><br>
-                              <h2 class="text-success text-center"><strong>SUCCESS !</strong></h2>
-                              <br>
-                              <div class="row justify-content-center">
-                                 <div class="col-3"> <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="fit-image" alt="fit-image"> </div>
-                              </div>
-                              <br><br>
-                              <div class="row justify-content-center">
-                                 <div class="col-7 text-center">
-                                    <h5 class="purple-text text-center">You Have Successfully Employe Update</h5>
-                                 </div>
-                              </div>
-                           </div>
-                        </fieldset>
-                        @else
-                        <fieldset class="active">
+                     
+                      
+                       
                            <div class="form-card text-left">
                               <div class="row">
                                  <div class="col-7">
                                     <h3 class="mb-4">Account Information:</h3>
                                  </div>
                                  <div class="col-5">
-                                    <h2 class="steps">Step 1 - 4</h2>
+                                  
                                  </div>
                               </div>
                         
@@ -155,48 +84,47 @@
                                       @enderror
                                     </div>
                                  </div>
-                                 <div class="col-md-6">
+                                 <!-- <div class="col-md-6">
                                     <div class="form-group">
                                         <label>District: *</label>
                                         <input type="text" name="district" class="form-control" list="district" placeholder="--select--" value="{{$data->district}}" />
                                        <datalist id="district">
-                                            @foreach($district as $dis)
-                                            <option value="{{$dis->name}}"></option>
+                                       @php
+                                          $alldistrict=DB::table('District_tbl')->get();
+                                       @endphp
+                                            @foreach($alldistrict as $dis)
+                                            <option value="{{$dis->District}}"></option>
                                             @endforeach
                                        </datalist>
                                        @error('district')
                                           <div class="alert-danger">{{ $message }}</div>
                                       @enderror
                                     </div>
-                                 </div>
-                                 <div class="col-md-6">
+                                 </div> -->
+                                 <!-- <div class="col-md-6">
                                     <div class="form-group">
                                        <label>Police-Station: </label>
                                        <select class="form-control" name="police_station" id="police_station">
-                                          @php
-                                             $dis=DB::table('districts')->where('name',$data->district)->first();
-                                             $police=DB::table('upazilas')->where('district_id',$dis->id)->get();
-                                          @endphp
-                                          @foreach($police as $station)
-                                          <option value="{{$station->id}}" @if($data->police_station == $station->id) selected @endif>{{$station->name}}</option>
+                                       @php
+                                          $allthana=DB::table('Thana_tbl')->get();
+                                       @endphp
+                                          @foreach($allthana as $thana)
+                                          <option value="{{$thana->Thana}}">{{$thana->Thana}}</option>
                                           @endforeach
                                        </select>
                                     </div>
-                                 </div>
+                                 </div> -->
                                 
                               </div>
                            </div>
-                           <button type="button" name="next" class="btn btn-primary next action-button float-right" value="Next" >Next</button>
-                        </fieldset>
-                       
-                        <fieldset>
+                  
                            <div class="form-card text-left">
                               <div class="row">
                                  <div class="col-7">
                                     <h3 class="mb-4">Personal Information:</h3>
                                  </div>
                                  <div class="col-5">
-                                    <h2 class="steps">Step 2 - 4</h2>
+                                  
                                  </div>
                               </div>
                               <div class="row">
@@ -343,18 +271,14 @@
                               
                               </div>
                            </div>
-                           <button type="button" name="next" class="btn btn-primary next action-button float-right" value="Next" >Next</button>
-                           <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-right mr-3" value="Previous" >Previous</button>
-                        </fieldset>
                         
-                        <fieldset>
                            <div class="form-card text-left">
                               <div class="row">
                                  <div class="col-7">
                                     <h3 class="mb-4">Experience & Salary Information:</h3>
                                  </div>
                                  <div class="col-5">
-                                    <h2 class="steps">Step 3 - 4</h2>
+                                  
                                  </div>
                               </div>
                                   <div class="row">
@@ -449,9 +373,8 @@
                               </div>
                            </div>
                            <button type="submit" class="btn btn-primary float-right" value="Submit">Submit</button>
-                           <button type="button" name="previous" class="btn btn-dark previous action-button-previous float-right mr-3" value="Previous" >Previous</button>
-                        </fieldset>
-                        @endif
+                           
+                       
 
                      </form>
                   </div>

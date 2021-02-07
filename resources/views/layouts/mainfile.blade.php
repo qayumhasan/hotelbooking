@@ -176,7 +176,7 @@
 
                                 <a href="{{route('admin.restaurant.index')}}"><h3 class="text-info">Restaurant</h3></a>
 
-                               <a href="{{route('admin.payroll.index')}}"><h3 class="text-info">Payroll</h3></a>
+                               
 
                                 <div class="bg-info icon iq-icon-box-2 mr-2 rounded">
                                 <i class="las la-cocktail"></i>
@@ -198,7 +198,7 @@
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-info">Stock</h3>
+                                <a href="{{route('admin.payroll.index')}}"><h3 class="text-info">Payroll</h3></a>
                                 <div class="bg-info icon iq-icon-box-2 mr-2 rounded">
                                     <i class="lar la-envelope"></i>
                                 </div>

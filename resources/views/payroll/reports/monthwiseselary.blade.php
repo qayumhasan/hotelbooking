@@ -35,15 +35,28 @@ $current = date("m/d/Y");
                         </a> -->
                      </span>
                   </div>
-                  <form action="{{route('payroll.employee.selary.create')}}" method="post">
-                  @csrf
+                  <form action="{{route('payroll.monthwiseselary.reports')}}" method="post">
+                    @csrf
                   <div class="card-header">
-            
                         <div class="row">
-                           <div class="col-md-4">
+                            <div class="col-md-3">
+                               <div class="form-group">
+                                 <label for="exampleInputEmail1">Employee Name:</label>
+                                 <select name="employee_id" class="form-control">
+                                    <option value="">--select--</option>
+                                    @foreach($allemployee as $employee)
+                                       <option value="{{$employee->id}}"> {{ $employee->employee_name }} </option>     
+                                    @endforeach
+                                 </select>
+                                 @error('employee_id')
+                                    <div style="color:red">{{ $message }}</div>
+                                 @enderror
+                                 
+                               </div>
+                           </div>
+                           <div class="col-md-3">
                                <div class="form-group">
                                  <label for="exampleInputEmail1">Month:</label>
-                                 {{date('F')}}
                                  <select name="month" class="form-control">
                                     <option value="January" @if(date('F')=='January') selected @endif>January</option>
                                     <option value="February" @if(date('F')=='February') selected @endif>February</option>
@@ -62,7 +75,7 @@ $current = date("m/d/Y");
                                  
                                </div>
                            </div>
-                           <div class="col-md-4">
+                           <div class="col-md-3">
                                <div class="form-group">
                                  <label for="exampleInputEmail1">Year:</label>
                                  <select name="year" class="form-control">
@@ -73,85 +86,48 @@ $current = date("m/d/Y");
                                  
                                </div>
                            </div>
-                           <div class="col-md-4">
-                               <div class="form-group">
-                                 <label for="exampleInputEmail1">Generate Date:</label>
-                                 <input type="text" name="date" class="form-control datepicker" id="exampleInputEmail1" value="{{$current}}">
-                                 
+                           <div class="col-md-3">
+                               <div class="form-group mt-4">
+                                 <label for=""></label>
+                                 <button class="btn btn-success" type="submit">view</button>
                                </div>
                            </div>
                         </div>
                   </div>
+                  </form>
                   <div class="card-body">
                      <div class="table-responsive">
                         <table id="datatable" class="table data-table table-striped table-bordered" style="font-size:11px;" >
                            <thead class="text-center">
                               <tr>
                                  
-                                 <th>Profile</th>
+                                 
                                  <th>Employee Id</th>
                                  <th>Name</th>
-                                 <th>Department</th>
                                  <th>Designation</th>
                                  <th>Mode Of Payment</th>
-                                 <th>Total Days</th>
                                  <th>No.of Working Days</th>
                                  <th>Guaranteed Leave</th>
                                  <th>Over-Time(Days)</th>
                                  <th>Leave</th>
+                                 <th>Deduct Leave Salary</th>
+                                 <th>Net Salary</th>
                                 
                               </tr>
                            </thead>
                            <tbody class="text-center">
-                              @foreach($allemployee as $key => $data)
-                              <tr>
-                                <input type="hidden" name="id[]" value="{{$data->id}}">
-                                <td>
-                                   <img src="{{asset('public/uploads/employee/'.$data->image)}}" height="35px">
-                                </td>
-                                 <td>{{$data->employee_id}}
-                                    <input type="hidden" name="employee_user_id[]" value="{{$data->employee_id}}">
-                                    <input type="hidden" name="name[]" value="{{$data->employee_name}}">
-                                    <input type="hidden" name="designation[]" value="{{$data->present_designation}}">
-                                 </td>
-                                 <td>{{$data->employee_name}}</td>
-                                 <td>{{$data->employee_type}}</td>
-                                 <td>{{$data->present_designation}}</td>
-                                 <td>
-                                    <select class="form-control" name="mode_of_payment[]" style="margin:0 auto;">
-                                       <option value="Bank">Bank</option>
-                                       <option value="kash">kash</option>
-                                       <option value="NGo">NGo</option>
-                                    </select>
-                                 </td>
-                                 <td><input type="hidden" id="totaldays{{$data->id}}" value="30">
-                                 30
-                                 </td>
-                                    <input type="hidden" name="salary[]" value="{{$data->present_salary}}">
-                                 <td><input type="text" name="working_days[]" class="form-control wdays working_days{{$data->id}}" id="{{$data->id}}" style="margin:0 auto;"></td>
-                                 <td><input type="text" name="guaranteed_leave[]" class="form-control guaranteed guaranteed_leave{{$data->id}}" id="{{$data->id}}" style="margin:0 auto;"></td>
-                                 <td><input type="text" name="overtime[]" class="form-control overtime over_time{{$data->id}}" id="{{$data->id}}" style="margin:0 auto;"></td>
-                                 <td>
-                                    <span id="leave{{$data->id}}" class="leave"> </span>
-                                    <input type="hidden" name="leave_days[]" class="leavval{{$data->id}}" id="leavval{{$data->id}}">
-                                 </td>
-                              </tr>
-                              @endforeach
+
                            </tbody>
                         </table>
                      </div>
                   </div>
                   <div class="card-header">
                   <div class="row">
-                           <div class="col-md-12">
-                               <div class="form-group">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                               </div>
-                           </div>
-                        </div>
+                          
+                  </div>
 
                   </div>
-                  </form>
+                 
                </div>
             </div>
          </div>
