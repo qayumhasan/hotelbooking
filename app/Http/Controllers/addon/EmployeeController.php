@@ -30,9 +30,10 @@ class EmployeeController extends Controller
     }
     // ajax get police station
     public function getpolicestation($district){
-    	$dis = DB::table('districts')->where('name',$district)->first();
-    	$data = DB::table('upazilas')->where('district_id',$dis->id)->get();
-    	return response()->json($data);
+      
+        $data = DB::table('Thana_tbl')->where('District',$district)->get();
+        //dd($data);
+    	return json_encode($data);
 
     }
     // store
@@ -135,9 +136,9 @@ class EmployeeController extends Controller
     // edit
     public function edit($id){
         $data=Employee::where('id',$id)->first();
-        $district = DB::table('districts')->get();
+      
         $designation=Employee::select(['present_designation'])->pluck('present_designation')->unique();
-        return view('addon.employee.edit',compact('data','district','designation'));
+        return view('addon.employee.edit',compact('data','designation'));
     }
     //update
     public function update(Request $request){
