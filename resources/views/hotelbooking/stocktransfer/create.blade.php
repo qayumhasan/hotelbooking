@@ -166,9 +166,7 @@ $current = date("m/d/Y");
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="fname">Naration: *</label>
-                                                <textarea class="form-control" name="narration">
-                                                
-                                                </textarea>
+                                                <textarea class="form-control" name="narration"></textarea>
                                             </div>
                                         </div>
                                         </div>
@@ -420,6 +418,24 @@ $(document).ready(function() {
 	cartheaderdelete();
 
 </script>
-
+<script>
+    $('body').on('keydown','input,select,textarea',function(e){
+    var self=$(this)
+    ,form=self.parents('form:eq(0)')
+    ,focusable
+    ,next
+    ;
+    if(e.keyCode==13){
+    focusable=form.find('input,a,select,button,textarea').filter(':visible');
+    next=focusable.eq(focusable.index(this)+1);
+    if (next.length){
+    next.focus();
+    } else{
+    form.submit();
+    }
+    return false;
+    }
+    });
+</script>
 
 @endsection

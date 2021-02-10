@@ -1,7 +1,11 @@
 @extends('hotelbooking.master')
-@section('title', 'Add Room | '.$seo->meta_title)
+@section('title', 'update Item | '.$seo->meta_title)
 @section('content')
-
+<style>
+.form-control {
+    height: 32px;
+}
+</style>
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
@@ -176,5 +180,37 @@
 <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
 <script>
    CKEDITOR.replace('editor3');
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+     $('input[name="item_name"]').on('change', function(){
+         var newname = $(this).val();
+         //alert(newname);
+         if(newname) {
+            $('.short_name').val(newname);
+         } 
+
+
+     });
+ });
+</script>
+<script>
+    $('body').on('keydown','input,select,textarea',function(e){
+    var self=$(this)
+    ,form=self.parents('form:eq(0)')
+    ,focusable
+    ,next
+    ;
+    if(e.keyCode==13){
+    focusable=form.find('input,a,select,button,textarea').filter(':visible');
+    next=focusable.eq(focusable.index(this)+1);
+    if (next.length){
+    next.focus();
+    } else{
+    form.submit();
+    }
+    return false;
+    }
+    });
 </script>
 @endsection

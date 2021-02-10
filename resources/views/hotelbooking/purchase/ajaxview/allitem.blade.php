@@ -34,7 +34,7 @@
                                                                 <td>{{$data->amount}}</td>
                                                                 <td>
                                                                 <!-- <a id="edit" data-id="{{$data->id}}"  class="editcat badge bg-primary-light mr-2"  data-toggle="tooltip" data-placement="top"  data-original-title="Edit"><i class="lar la-edit"></i></a> -->
-                                                                <button type="button" onclick="cartdata(this)" data-toggle="tooltip" title="" class="editcat badge bg-primary-light" value="{{$data->id}}" data-original-title="Remove"><i class="lar la-edit"></i></button>
+                                                                 <button type="button" onclick="cartdata(this)" data-toggle="tooltip" title="" class="editcat badge bg-primary-light" value="{{$data->id}}" data-original-title="Remove"><i class="lar la-edit"></i></button>
                                                                  <button type="button" onclick="cartDatadelete(this)" data-toggle="tooltip" title="" class="badge bg-danger-light" value="{{$data->id}}" data-original-title="Remove"><i class="la la-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -57,7 +57,6 @@
                                     <div class="col-md-12">
                                          <div class="card-body">
                                             <div class="row">
-                                                
                                                 <!-- <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="fname">Number Of Item: </label>

@@ -1,5 +1,5 @@
 @extends('hotelbooking.master')
-@section('title', 'All StockTransfer | '.$seo->meta_title)
+@section('title', 'All Purchase Order| '.$seo->meta_title)
 @section('content')
  <div class="content-page">
       <div class="container-fluid">

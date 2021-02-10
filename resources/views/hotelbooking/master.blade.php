@@ -313,7 +313,6 @@
                                 </li>
                             </ul>
                         </li>
-                        
 
                         <li class="">
                             <a href="#setting" class="collapsed" data-toggle="collapse" aria-expanded="false">

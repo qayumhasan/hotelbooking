@@ -108,18 +108,23 @@
                                         <i class="las la-list-alt"></i><span>Month Wise Salary Reports</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="">
+                                <li class="{{ request()->routeIs('payroll.emloyeemonthwiseselary.reports*') ? 'active' : '' }}">
+                                    <a href="{{route('payroll.emloyeemonthwiseselary.reports')}}">
                                         <i class="las la-list-alt"></i><span>Employee Wise Salary Report</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="">
-                                        <i class="las la-list-alt"></i><span>Attendance Report</span>
+                                <li class="{{ request()->routeIs('payroll.salarydetails.reports*') ? 'active' : '' }}">
+                                    <a href="{{route('payroll.salarydetails.reports')}}">
+                                        <i class="las la-list-alt"></i><span>Salary Details</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="">
+                                <li class="{{ request()->routeIs('payroll.employeewise.attendence*') ? 'active' : '' }}">
+                                    <a href="{{route('payroll.employeewise.attendence')}}">
+                                        <i class="las la-list-alt"></i><span>EmployeeWise Attendance</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('payroll.monthly.attendence*') ? 'active' : '' }}">
+                                    <a href="{{route('payroll.monthly.attendence')}}">
                                         <i class="las la-list-alt"></i><span>Month Wise Attendance Report</span>
                                     </a>
                                 </li>
@@ -449,6 +454,21 @@
     <script>
         $('.datepicker').datepicker();
     </script>
+    <script src="{{asset('public/backend')}}/assets/jquery.PrintArea.js"></script>
+   <script>
+        $(document).ready(function() {
+            $("#newmonthsel").on('click', function () {
+                //alert("ok");
+                var mode = 'iframe'; 
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printaprint").printArea(options);
+            });
+        });
+   </script>
      
   
 

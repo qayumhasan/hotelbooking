@@ -1,5 +1,5 @@
 @extends('banquet.master')
-@section('title', 'Booking Create | '.$seo->meta_title)
+@section('title', 'Banquet Booking Create | '.$seo->meta_title)
 @section('content')
 @php
 date_default_timezone_set("asia/dhaka");
@@ -539,6 +539,23 @@ $time = date("h:i");
 </div>
 
 <script>
+  $(document).ready(function() {
+        $('.guest_name').on('keyup', function() {
+                
+            var guest_name=$(this).val();
+            $(".short_name").val(guest_name);
+                
+
+        });
+});
+</script>
+
+
+
+
+
+
+<script>
     $(document).ready(function() {
         $('.itemrate').on('change', function() {
             var itemrate=$(this).val();
@@ -1053,5 +1070,25 @@ $time = date("h:i");
         });
     });
 
+</script>
+
+<script>
+    $('body').on('keydown','input,select,textarea',function(e){
+    var self=$(this)
+    ,form=self.parents('form:eq(0)')
+    ,focusable
+    ,next
+    ;
+    if(e.keyCode==13){
+    focusable=form.find('input,a,select,button,textarea').filter(':visible');
+    next=focusable.eq(focusable.index(this)+1);
+    if (next.length){
+    next.focus();
+    } else{
+    form.submit();
+    }
+    return false;
+    }
+    });
 </script>
 @endsection

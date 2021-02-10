@@ -1,6 +1,11 @@
 @extends('hotelbooking.master')
-@section('title', 'All Room | '.$seo->meta_title)
+@section('title', 'All Order Recusition | '.$seo->meta_title)
 @section('content')
+<style>
+.form-control {
+    height: 32px;
+}
+</style>
  <div class="content-page">
       <div class="container-fluid">
          <div class="row">
