@@ -3,6 +3,7 @@ use App\Http\Controllers\Admin\Restaurant\RestaurantController;
 use App\Http\Controllers\Admin\Restaurant\Chui\ChuiController;
 use App\Http\Controllers\Admin\Restaurant\Chui\MenuController;
 
+
 Route::get('/restaurant',[RestaurantController::class, 'index'])->name('admin.restaurant.index');
 
 Route::middleware('admin')->prefix(md5('admin/chui'))->group(function(){
@@ -29,9 +30,37 @@ Route::middleware('admin')->prefix(md5('admin/chui'))->group(function(){
         Route::prefix(md5('menu/inventory'))->group(function(){
 
             Route::get('/',[MenuController::class,'menuInventory'])->name('admin.restaurant.chui.menu.inventory');
+            Route::post('/store',[MenuController::class,'menuInventoryStore'])->name('admin.restaurant.chui.menu.inventory.store');
+            Route::get('/edit/{id}',[MenuController::class,'menuInventoryEdit'])->name('admin.restaurant.chui.menu.inventory.edit');
+            Route::post('/update',[MenuController::class,'menuInventoryUpdate'])->name('admin.restaurant.chui.menu.inventory.update');
+            Route::get('/delete/{id}',[MenuController::class,'menuInventoryDelete'])->name('admin.restaurant.chui.menu.inventory.delete');
         });
+
+        Route::prefix(md5('side/menu'))->group(function(){
+            Route::get('/',[MenuController::class,'SideMenu'])->name('admin.restaurant.chui.menu.side');
+            Route::get('/store',[MenuController::class,'SideMenuStore'])->name('admin.restaurant.chui.menu.side.store');
+        });
+
+        Route::prefix(md5('restaurant/kot'))->group(function(){
+            Route::post('/',[ChuiController::class,'storeKotDetails'])->name('admin.restaurant.chui.menu.kot.details.store');
+        });
+
+
+  
     
     
 
 
 });
+
+// Ajax route start from here
+
+Route::get('/admin/restaurant/chui/menu/inventory/get/items/{id}',[MenuController::class,'menuInventoryGetItem']);
+Route::get('/admin/restaurant/chui/menu/side/menu/items/{id}',[MenuController::class,'menuSideMenuItem']);
+Route::get('/admin/restaurant/chui/menu/get/free/item/{id}',[ChuiController::class,'getFreemenuSideMenuItem']);
+
+
+Route::get('/admin/restaurant/chui/menu/kot/details/store{id}',[ChuiController::class,'getFreemenuSideMenuItem']);
+Route::get('/admin/restaurant/chui/menu/get/kot/item/{id}',[ChuiController::class,'getKotStatusByTableID']);
+Route::get('/admin/restaurant/chui/menu/delete/kot/item/{id}',[ChuiController::class,'deleteKotStatusByTableID']);
+Route::get('/admin/restaurant/chui/menu/edit/kot/item/{id}',[ChuiController::class,'editKotStatusByTableID']);

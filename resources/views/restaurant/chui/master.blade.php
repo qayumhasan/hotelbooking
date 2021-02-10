@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title',$seo->meta_title)</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{asset('public/uploads/logo/'.$logos->favicon)}}" />
@@ -30,11 +31,11 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
- 
 
-    
-<script src="{{asset('public/backend')}}/assets/js/select2.js"></script>
-<link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/select2.css">
+
+
+    <script src="{{asset('public/backend')}}/assets/js/select2.js"></script>
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/select2.css">
 </head>
 
 <body class="  ">
@@ -52,7 +53,7 @@
     <!-- Wrapper Start -->
     <div class="wrapper">
 
-       @include('restaurant.chui.inc.menu')
+        @include('restaurant.chui.inc.menu')
         <div class="iq-top-navbar">
             <div class="iq-navbar-custom">
                 <nav class="navbar navbar-expand-lg navbar-light p-0">
@@ -264,8 +265,8 @@
         </div>
     </footer>
 
-        
-    
+
+
 
 
 
@@ -330,19 +331,22 @@
                 brack;
             case 'info':
                 iziToast.info({
-                    message: '{{ Session::get('messege') }}',
+                    message: '{{ Session::get('
+                    messege ') }}',
                     'position': 'topRight'
                 });
                 brack;
             case 'warning':
                 iziToast.warning({
-                    message: '{{ Session::get('messege')}}',
+                    message: '{{ Session::get('
+                    messege ')}}',
                     'position': 'topRight'
                 });
                 break;
             case 'error':
                 iziToast.error({
-                    message: '{{ Session::get('messege')}}',
+                    message: '{{ Session::get('
+                    messege ')}}',
                     'position': 'topRight'
                 });
                 break;
@@ -370,20 +374,29 @@
                 });
         });
     </script>
+
+
     <!-- app JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script>
-        $('.datepicker').datepicker(
-            {
-                format: 'dd/mm/yyyy',
-            }
-        );
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+        });
     </script>
+    <script>
+        $(".select_item").select2({
 
-<script>
-        $(function () {
-            $(".savepritbtn").on('click', function () {
-                
+        });
+    </script>
+    <script>
+        $("#select_item").select2({
+
+        });
+    </script>
+    <script>
+        $(function() {
+            $(".savepritbtn").on('click', function() {
+
                 var mode = 'iframe'; //popup
                 var close = mode == "popup";
                 var options = {
@@ -393,9 +406,9 @@
                 $("div.printableAreasaveprint").printArea(options);
             });
         });
-   </script>
+    </script>
 
-  
+
 
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>
 </body>
