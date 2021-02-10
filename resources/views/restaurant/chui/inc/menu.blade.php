@@ -43,6 +43,12 @@
                                     </a>
                                 </li>
 
+                                <li class="{{ request()->routeIs('admin.restaurant.chui.menu.inventory*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.chui.menu.side')}}">
+                                        <i class="las la-list-alt"></i><span>Side Menu</span>
+                                    </a>
+                                </li>
+
 
                               
 
