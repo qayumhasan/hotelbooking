@@ -43,7 +43,7 @@
 
         <div class="iq-sidebar  sidebar-default ">
             <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="{{route('admin.banquet.index')}}" class="header-logo">
+                <a href="{{route('admin.banquet.dashboard')}}" class="header-logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal darkmode-logo" alt="logo">
                 </a>
@@ -54,8 +54,8 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="{{ request()->routeIs('admin.banquet.index*') ? 'active' : '' }}">
-                            <a href="{{route('admin.banquet.index')}}">
+                        <li class="{{ request()->routeIs('admin.banquet.dashboard*') ? 'active' : '' }}">
+                            <a href="{{route('admin.banquet.dashboard')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>

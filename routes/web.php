@@ -28,6 +28,11 @@ use App\Http\Controllers\Admin\Inventory\ReportController;
 use App\Http\Controllers\Admin\Hotel\VoucherController;
 use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
 use App\Http\Controllers\Admin\Hotel\AdvanceBookingController;
+use App\Http\Controllers\Admin\Stock\PhysicalStockController;
+
+
+
+
 use App\Http\Controllers\Admin\FoodAndBeverage\FoodAndBeverageController;
 use App\Http\Controllers\Admin\Banquet\BanquetController;
 use App\Http\Controllers\Admin\Banquet\HallController;
@@ -304,7 +309,7 @@ Route::get('/get/singlehistory/invoice/{checkin_id}', [FoodAndBeverageController
 Route::get('/get/doublehistory/invoice/{kot_id}', [FoodAndBeverageController::class, 'getdoublehistoryprint']);
 
 // -----------------------------------------------------------Banquet-------------------------------------------------------------------------------------------------------------
-Route::get('admin/banquet/index', [BanquetController::class, 'index'])->name('admin.banquet.index');
+Route::get('admin/banquet/index', [BanquetController::class, 'index'])->name('admin.banquet.dashboard');
 // BanquetBookingController
 Route::get('admin/banquet/booking/create', [BanquetBookingController::class, 'create'])->name('admin.banquet.create');
 Route::post('admin/banquet/booking/update/{id}', [BanquetBookingController::class, 'update'])->name('admin.banquet.update');
@@ -326,6 +331,35 @@ Route::get('admin/allemployee/selary/edit/{month}/{year}', [EmployeeSelaryContro
 // month wise selary 
 Route::get('admin/payroll/monthwise/employeesalary', [EmployeeSelaryController::class, 'monthwiseselary'])->name('payroll.monthwiseselary.reports');
 Route::post('admin/payroll/monthwise/employeesalary', [EmployeeSelaryController::class, 'monthwiseselarygenerate'])->name('payroll.monthwiseselary.reports');
+//employee wise report
+Route::get('admin/payroll/employeewise/monthlysalary', [EmployeeSelaryController::class, 'employeetotalmonthselary'])->name('payroll.emloyeemonthwiseselary.reports');
+Route::post('admin/payroll/employeewise/monthlysalary', [EmployeeSelaryController::class, 'employeetotalmonthselarygenerate'])->name('payroll.emloyeemonthwiseselary.reports');
+// salary details
+Route::get('admin/payroll/salary/details', [EmployeeSelaryController::class, 'selarydetails'])->name('payroll.salarydetails.reports');
+Route::post('admin/payroll/salary/details', [EmployeeSelaryController::class, 'selarydetailsresult'])->name('payroll.salarydetails.reports');
+// employee attendence 
+Route::get('admin/payroll/employeewise/attendence/report', [EmployeeSelaryController::class, 'employeewiseattendence'])->name('payroll.employeewise.attendence');
+Route::post('admin/payroll/employeewise/attendence/report', [EmployeeSelaryController::class, 'employeewiseattendenceresult'])->name('payroll.employeewise.attendence');
+// monthly attendence report
+Route::get('admin/payroll/monthy/attendence/report', [EmployeeSelaryController::class, 'monthlyattendence'])->name('payroll.monthly.attendence');
+Route::post('admin/payroll/monthy/attendence/report', [EmployeeSelaryController::class, 'monthlyattendenceresult'])->name('payroll.monthly.attendence');
+Route::get('/get/monthwise/salary/print/{id}', [EmployeeSelaryController::class, 'monthwiseselaryprint']);
+
+
+
+// physical stock center
+Route::get('admin/physicalstock/dashboard', [PhysicalStockController::class, 'dashboard'])->name('admin.physicalstock.dashboard');
+Route::get('admin/physicalstock/create', [PhysicalStockController::class, 'create'])->name('admin.physicalstock.create');
+// physical details insert
+Route::get('get/physical/stock/details/insert', [PhysicalStockController::class, 'physicaldetailsinsert'])->name('physicalstock.details.insert');
+Route::get('/get/physicalitem/stock/all/{id}', [PhysicalStockController::class, 'getphysicalitem']);
+Route::post('/get/physicalstckitem/all/{invoice_no}', [PhysicalStockController::class, 'getallphysicalitem']);
+Route::post('/get/physicalstckitem/delete', [PhysicalStockController::class, 'getallphysicalitemdelete'])->name('get.phycalstock.delete');
+
+
+
+
+
 
 
 
@@ -333,27 +367,20 @@ Route::post('admin/payroll/monthwise/employeesalary', [EmployeeSelaryController:
 
 Route::get('get/menutype/price', [BanquetBookingController::class, 'getmenutypeprice'])->name('get.menutype.price');
 Route::get('get/geusttype/price', [BanquetBookingController::class, 'getgeusttypeprice'])->name('get.geust_type.price');
-
 Route::get('get/banquet/item/insert', [BanquetBookingController::class, 'bunquetinsert'])->name('bunquet.insertitem.data');
 Route::post('get/banquetitem/all/{booking_no}', [BanquetBookingController::class, 'allbunquetitem']);
 Route::post('get/banquetitem/delete/', [BanquetBookingController::class, 'bunquetitemdelete'])->name("get.banquetitem.delete");
 Route::post('get/banquetitem/edit/', [BanquetBookingController::class, 'bunquetitemedit'])->name("get.banquetitem.edit");
-
 Route::get('get/taxinsert/insert/', [BanquetBookingController::class, 'banquettaxinsert'])->name("bunquet.inserttax.data");
 Route::get('get/banquet/taxitem/', [BanquetBookingController::class, 'banquettaxall'])->name("get.banquettax.all");
-
 Route::post('get/banquettax/all/{booking_no}', [BanquetBookingController::class, 'gettaxbanquet']);
 Route::post('get/banquettax/delete', [BanquetBookingController::class, 'gettaxbanquetdelete'])->name('get.banquettax.delete');
 Route::post('get/banquettax/edit', [BanquetBookingController::class, 'gettaxbanquetedit'])->name('get.banquettax.edit');
-
 Route::get('get/banquettax/categorywise/item', [BanquetBookingController::class, 'getcategoryitem'])->name('get.banquet.categorytype');
 Route::get('get/banquettax/categorywise/item/insert', [BanquetBookingController::class, 'cateiteminsert'])->name('bunquet.cateiteminsert.data');
-
 Route::post('get/allcateitem/all/{booking_no}', [BanquetBookingController::class, 'getallcateitembanquet']);
 Route::post('get/allcateitem/delete', [BanquetBookingController::class, 'getallcateitemdelete'])->name('get.categoryitemdelete.delete');
-
 Route::post('admin/banquet/insert', [BanquetBookingController::class, 'banquetinsert'])->name('admin.banquet.store');
-
 Route::post('get/allamount/banquet/', [BanquetBookingController::class, 'getallamountsection'])->name('get.banquet.allamount');
 
 

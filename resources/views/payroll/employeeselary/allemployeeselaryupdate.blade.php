@@ -124,10 +124,10 @@ $current = date("m/d/Y");
                                  <td><input type="hidden" id="totaldays{{$data->id}}" value="30">
                                  30
                                  </td>
-                                    <input type="hidden" name="salary[]" value="{{$data->present_salary}}">
-                                 <td><input type="text" name="working_days[]" class="form-control wdays working_days{{$data->id}}" id="{{$data->id}}" style="margin:0 auto;" value="{{$data->number_of_working_days}}"></td>
-                                 <td><input type="text" name="guaranteed_leave[]" class="form-control guaranteed guaranteed_leave{{$data->id}}" id="{{$data->id}}" style="margin:0 auto;" value="{{$data->guaranteed_leave}}"></td>
-                                 <td><input type="text" name="overtime[]" class="form-control overtime over_time{{$data->id}}" id="{{$data->id}}" style="margin:0 auto;" value="{{$data->overtime}}"></td>
+                                    <input type="hidden" name="salary[]" value="{{$data->salary}}">
+                                 <td><input type="number" name="working_days[]" class="form-control wdays working_days{{$data->id}}" id="{{$data->id}}" style="margin:0 auto;" value="{{$data->number_of_working_days}}"></td>
+                                 <td><input type="number" name="guaranteed_leave[]" class="form-control guaranteed guaranteed_leave{{$data->id}}" id="{{$data->id}}" style="margin:0 auto;" value="{{$data->guaranteed_leave}}"></td>
+                                 <td><input type="number" name="overtime[]" class="form-control overtime over_time{{$data->id}}" id="{{$data->id}}" style="margin:0 auto;" value="{{$data->overtime}}"></td>
                                  <td>
                                     <span id="leave{{$data->id}}" class="leave">{{$data->leave}}</span>
                                     <input type="hidden" name="leave_days[]" class="leavval{{$data->id}}" id="leavval{{$data->id}}" value="{{$data->leave}}">
@@ -156,7 +156,7 @@ $current = date("m/d/Y");
       </div>
    </div>
 
-<script type="text/javascript">
+   <script type="text/javascript">
   $(document).ready(function() {
      $('.wdays').on('keyup', function(e){
 
@@ -174,8 +174,11 @@ $current = date("m/d/Y");
          //alert("ok");
             var id = e.target.id;
             var granted_val=$(this).val();
-            var leavval=$('#leavval'+id).val();
-            var newleaveval= leavval - granted_val;
+            var workingdays=$('.working_days'+id).val();
+            var totaldays=$('#totaldays'+id).val();
+            var mainleaeve=totaldays - workingdays;
+            var newleaveval =mainleaeve - granted_val;
+
             $('#leave'+id).html(newleaveval);
             $('#leavval'+id).val(newleaveval);
 
@@ -184,12 +187,18 @@ $current = date("m/d/Y");
          $('.overtime').on('keyup', function(e){
         
             var id = e.target.id;
+            var workingdays=$('.working_days'+id).val();
+            var totaldays=$('#totaldays'+id).val();
+            var granted_val=$('.guaranteed_leave'+id).val();
+            var present= parseInt(workingdays) + parseInt(granted_val);
+            var mainovertime = parseInt(totaldays) - parseInt(present);
+            
             var over_time=$(this).val();
-            var leavval=$('#leavval'+id).val();
-           
-            var alu= leavval - over_time;
-            $('#leave'+id).html(alu);
-            $('#leavval'+id).val(alu);
+            var mainov=parseInt(mainovertime) - parseInt(over_time);
+            //alert(mainov);
+          
+            $('#leave'+id).html(mainov);
+            $('#leavval'+id).val(mainov);
 
          });
  });

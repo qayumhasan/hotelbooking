@@ -243,9 +243,7 @@ $current = date("m/d/Y");
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="fname">Naration: *</label>
-                                                <textarea class="form-control" name="narration">
-                                                
-                                                </textarea>
+                                                <textarea class="form-control" name="narration"></textarea>
                                             </div>
                                         </div>
                                         </div>
@@ -688,7 +686,35 @@ $current = date("m/d/Y");
         </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- endmodal -->
+<script type="text/javascript">
+  $(document).ready(function() {
+     $("#item_name").on('change', function(){
+         var item_name = $(this).val();
+         //alert(item_name);
+         if(item_name) {
+             $.ajax({
+                 url: "{{  url('/get/item/all/') }}/"+item_name,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+
+                        $('#unit').val(data.unit_name);
+                        $('#unit_name').val(data.name);
+                        $('#Qty').val(1);
+                        $('.rate').val(data.rate);
+                        $('.amount').val(data.rate);
+
+                    }
+             });
+         } else {
+             //alert('danger');
+         }
+
+     });
+ });
+</script>
 <script>
 $(document).ready(function() {
         $('#additemajax').click(function (e) {
@@ -920,34 +946,7 @@ $(document).ready(function() {
 
 <!-- tax include script end -->
 
-<script type="text/javascript">
-  $(document).ready(function() {
-     $('input[name="item_name"]').on('change', function(){
-         var item_name = $(this).val();
-         //alert(item_name);
 
-         if(item_name) {
-             $.ajax({
-                 url: "{{  url('/get/item/all/') }}/"+item_name,
-                 type:"GET",
-                 dataType:"json",
-                 success:function(data) {
-
-                        $('#unit').val(data.unit_name);
-                        $('#unit_name').val(data.name);
-                        $('#Qty').val(1);
-                        $('.rate').val(data.rate);
-                        $('.amount').val(data.rate);
-
-                    }
-             });
-         } else {
-             //alert('danger');
-         }
-
-     });
- });
-</script>
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -1221,9 +1220,10 @@ function taxedit(el) {
         $.get('{{ url('get/allitem/item/') }}', {_token: '{{ csrf_token() }}'},
             function(data) {
                        // console.log("ok");
+                      
                        var html = '<div class="form-group" id="allnewitem">';
                          html += '<label for="fname">Item Name: *</label>';
-                         html += '<input type="text" id="item_name" name="item_name" class="form-control" list="allitem" placeholder="Item" />';
+                         html += '<input type="text" id="item_name" name="item_name" class="form-control item_name" list="allitem" placeholder="Item" />';
                          html += '<input type="hidden" id="i_id" name="i_id"/>';
                          html += '<datalist id="allitem">';
 
@@ -1233,7 +1233,7 @@ function taxedit(el) {
                            
                         });
                         html += '</datalist>';
-                         html += '<div style="color:red" id="item_err"></div>';
+                        html += '<div style="color:red" id="item_err"></div>';
                         $('#allnewitem').remove();
                         $('#allitempurchase').append(html);
             
@@ -1243,5 +1243,24 @@ function taxedit(el) {
     getallitem();
 
 </script>
-                                        
+<script>
+    $('body').on('keydown','input,select,textarea',function(e){
+    var self=$(this)
+    ,form=self.parents('form:eq(0)')
+    ,focusable
+    ,next
+    ;
+    if(e.keyCode==13){
+    focusable=form.find('input,a,select,button,textarea').filter(':visible');
+    next=focusable.eq(focusable.index(this)+1);
+    if (next.length){
+    next.focus();
+    } else{
+    form.submit();
+    }
+    return false;
+    }
+    });
+</script>
+                                      
 @endsection

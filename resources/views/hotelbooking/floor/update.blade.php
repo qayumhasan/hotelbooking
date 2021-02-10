@@ -1,6 +1,14 @@
 @extends('hotelbooking.master')
 @section('title', 'Update Floor | '.$seo->meta_title)
 @section('content')
+<style>
+.form-control {
+    height: 32px;
+}
+.card-header.d-flex.justify-content-between.asif {
+    background-color: #c1b8b8;
+}
+</style>
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
@@ -17,7 +25,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card shadow-sm shadow-showcase">
-                            <div class="card-header d-flex justify-content-between">
+                            <div class="card-header d-flex justify-content-between asif">
                                 <div class="header-title">
                                     <h4 class="card-title">Floor Content</h4>
                                 </div>
@@ -52,8 +60,8 @@
                                             <div class="form-group">
                                                 <label for="fname">Status: *</label>
                                                 <select class="form-control" name="is_active">
-                                                    <option value="1" @if($edit->is_active==1) selected @endif>publish</option>
-                                                    <option value="0" @if($edit->is_active==0) selected @endif>Draft</option>
+                                                    <option value="1" @if($edit->is_active==1) selected @endif>Active</option>
+                                                    <option value="0" @if($edit->is_active==0) selected @endif>Deactive</option>
                                                 </select>
                                             </div>
                                         </div>

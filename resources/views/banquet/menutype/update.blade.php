@@ -2,6 +2,15 @@
 @section('title', 'Update MenuType | '.$seo->meta_title)
 @section('content')
 
+<style>
+.form-control {
+    height: 32px;
+
+}
+.card-header.d-flex.justify-content-between.asif {
+    background-color: #c1b8b8;
+}
+</style>
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
@@ -18,7 +27,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card shadow-sm shadow-showcase">
-                            <div class="card-header d-flex justify-content-between">
+                            <div class="card-header d-flex justify-content-between asif">
                                 <div class="header-title">
                                     <h4 class="card-title">Update For Content</h4>
                                 </div>
@@ -154,4 +163,23 @@
         </div>
     </div>
 </div>
+<script>
+    $('body').on('keydown','input,select,textarea',function(e){
+    var self=$(this)
+    ,form=self.parents('form:eq(0)')
+    ,focusable
+    ,next
+    ;
+    if(e.keyCode==13){
+    focusable=form.find('input,a,select,button,textarea').filter(':visible');
+    next=focusable.eq(focusable.index(this)+1);
+    if (next.length){
+    next.focus();
+    } else{
+    form.submit();
+    }
+    return false;
+    }
+    });
+</script>
 @endsection

@@ -1,7 +1,14 @@
 @extends('hotelbooking.master')
-@section('title', 'Create Floor | '.$seo->meta_title)
+@section('title', 'Update Unit | '.$seo->meta_title)
 @section('content')
-
+<style>
+.form-control {
+    height: 32px;
+}
+.card-header.d-flex.justify-content-between.asif {
+    background-color: #c1b8b8;
+}
+</style>
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
@@ -18,7 +25,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card shadow-sm shadow-showcase">
-                            <div class="card-header d-flex justify-content-between">
+                            <div class="card-header d-flex justify-content-between asif">
                                 <div class="header-title">
                                     <h4 class="card-title">Unit Content</h4>
                                 </div>

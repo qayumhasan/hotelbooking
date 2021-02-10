@@ -1,6 +1,11 @@
 @extends('hotelbooking.master')
-@section('title', 'Order Recusition | '.$seo->meta_title)
+@section('title', 'Update Order Recusition | '.$seo->meta_title)
 @section('content')
+<style>
+.form-control {
+    height: 32px;
+}
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="content-page">
     <div class="container-fluid">
@@ -27,7 +32,7 @@
                                 </div>
                                 <div class="header-title">
                                     <h6 class="card-title">
-                                        <input type="date" class="form-control" name="date" value="">
+                                        <input type="text" class="form-control datepicker" name="date" value="{{$edit->date}}">
                                     </h6>
                                 </div>
                             </div>
@@ -62,7 +67,7 @@
                                     </div>
                                     <div class="col-md-12 text-right">
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-primary" id="addnow">Add</button>
+                                            <button type="button" class="btn-sm btn-primary" id="addnow">Add</button>
                                         </div>
                                     </div>
                                 </div>

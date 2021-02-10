@@ -53,8 +53,9 @@ class OrderRequisitionController extends Controller
     }
     // order recuinser
     public function iteminsert(Request $request){
-        //return $request;
+       
        if($request->i_id == ''){
+     
            $validated = $request->validate([
             'item_name' => 'required',
         ]);
@@ -92,7 +93,7 @@ class OrderRequisitionController extends Controller
             }
         }
        }else{
-
+     
             $validated = $request->validate([
                 'item_name' => 'required',
             ]);

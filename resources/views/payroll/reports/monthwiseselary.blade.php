@@ -27,7 +27,7 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between asif">
                      <div class="header-title">
-                        <h4 class="card-title">All Employee</h4>
+                        <h4 class="card-title">Month Wise Employee Salary</h4>
                      </div>
                      <span class="float-right mr-2">
                         <!-- <a href="{{route('admin.employee.create')}}" class="btn btn-sm bg-primary">
@@ -112,6 +112,8 @@ $current = date("m/d/Y");
                                  <th>Leave</th>
                                  <th>Deduct Leave Salary</th>
                                  <th>Net Salary</th>
+                                 <th>Print</th>
+                                 
                                 
                               </tr>
                            </thead>

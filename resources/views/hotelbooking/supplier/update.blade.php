@@ -1,7 +1,11 @@
 @extends('hotelbooking.master')
 @section('title', 'Update Supplier | '.$seo->meta_title)
 @section('content')
-
+<style>
+.form-control {
+    height: 32px;
+}
+</style>
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
@@ -29,7 +33,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Date: </label>
-                                            <input type="date" class="form-control" name="date" placeholder="" value="{{$edit->date}}"/>
+                                            <input type="text" class="form-control datepicker" name="date" placeholder="" value="{{$edit->date}}"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -221,5 +225,24 @@
 
      });
  });
+</script>
+<script>
+    $('body').on('keydown','input,select,textarea',function(e){
+    var self=$(this)
+    ,form=self.parents('form:eq(0)')
+    ,focusable
+    ,next
+    ;
+    if(e.keyCode==13){
+    focusable=form.find('input,a,select,button,textarea').filter(':visible');
+    next=focusable.eq(focusable.index(this)+1);
+    if (next.length){
+    next.focus();
+    } else{
+    form.submit();
+    }
+    return false;
+    }
+    });
 </script>
 @endsection

@@ -20,6 +20,7 @@ select.form-control {
 date_default_timezone_set("asia/dhaka");
 $current = date("m/d/Y");
 @endphp
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="content-page">
       <div class="container-fluid">
          <div class="row">
@@ -27,7 +28,7 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between asif">
                      <div class="header-title">
-                        <h4 class="card-title">All Employee</h4>
+                        <h4 class="card-title">Month Wise Employee Salary</h4>
                      </div>
                      <span class="float-right mr-2">
                         <!-- <a href="{{route('admin.employee.create')}}" class="btn btn-sm bg-primary">
@@ -44,9 +45,15 @@ $current = date("m/d/Y");
                                  <label for="exampleInputEmail1">Employee Name:</label>
                                  <select name="employee_id" class="form-control">
                                     <option value="">--select--</option>
+                                    @if($employee_id)
                                     @foreach($allemployee as $employee)
                                        <option value="{{$employee->id}}" @if($employee->id==$employee_id) selected @endif> {{ $employee->employee_name }} </option>     
                                     @endforeach
+                                    @else
+                                    @foreach($allemployee as $employee)
+                                       <option value="{{$employee->id}}" @if($employee->id==$employee_id) selected @endif> {{ $employee->employee_name }} </option>     
+                                    @endforeach
+                                    @endif
                                  </select>
                                  
                                </div>
@@ -108,11 +115,15 @@ $current = date("m/d/Y");
                                  <th>Over-Time(Days)</th>
                                  <th>Leave</th>
                                  <th>Deduct Leave Salary</th>
+                                 <th>Gross Salary</th>
                                  <th>Net Salary</th>
+                                 <th>print</th>
+                                 
                                 
                               </tr>
                            </thead>
                            <tbody class="text-center">
+                              @if($data)
                                  <tr>
                                     <td>{{$data->employee_id}}</td>
                                     <td>{{$data->name}}</td>
@@ -122,11 +133,16 @@ $current = date("m/d/Y");
                                     <td>{{$data->guaranteed_leave}}</td>
                                     <td>{{$data->overtime}}</td>
                                     <td>{{$data->leave}}</td>
-                                    <td></td>
+                                    <td>{{round($data->salary - $data->gross_salary ,2)}}</td>
+                                    <td>{{round($data->gross_salary ,2)}}</td>
                                     <td>{{$data->salary}}</td>
-                                   
-                                 
+                                    <td>
+                                    <a type="button"  class="btn-sm singleinvoiceprint" data-id="{{$data->id}}"><i class="la la-print"></i></a>
+                                    </td>
                                  </tr>
+                              @else
+                                  <p>No Data Found</p>
+                              @endif
                            </tbody>
                         </table>
                      </div>
@@ -143,7 +159,54 @@ $current = date("m/d/Y");
          </div>
       </div>
    </div>
+<!-- modal start-->
+<!-- invoice modal -->
+<div class="modal fade" id="singleprint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content printaprint">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Invoice</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+               <div class="container" id="singleprintsection">
+                                         
+               </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn btn-primary" id="newmonthsel">Print</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+
+<script>
+$(document).ready(function() {
+    $('.singleinvoiceprint').on('click', function() {
+      var id = $(this).data('id');
+      //$('#singleprintsection').html(data);
+      if(id) {
+             $.ajax({
+                 url: "{{  url('/get/monthwise/salary/print') }}/"+id,
+                 type:"GET",
+                 success:function(data) {
+                   $('#singleprintsection').html(data);
+                    $('#singleprint').modal('toggle');
+                    
+                  } 
+             });
+         } 
+
+    });
+});
+</script>
+
+
+<!-- modal end -->
 <script type="text/javascript">
   $(document).ready(function() {
      $('.wdays').on('keyup', function(e){
