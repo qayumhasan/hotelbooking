@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\Hotel\VoucherController;
 use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
 use App\Http\Controllers\Admin\Hotel\AdvanceBookingController;
 use App\Http\Controllers\Admin\Stock\PhysicalStockController;
+use App\Http\Controllers\Admin\Stock\StockReportController;
 
 
 
@@ -352,13 +353,24 @@ Route::get('admin/physicalstock/dashboard', [PhysicalStockController::class, 'da
 Route::get('admin/physicalstock/create', [PhysicalStockController::class, 'create'])->name('admin.physicalstock.create');
 // physical details insert
 Route::get('get/physical/stock/details/insert', [PhysicalStockController::class, 'physicaldetailsinsert'])->name('physicalstock.details.insert');
+Route::post('admin/physicalstock/store', [PhysicalStockController::class, 'physicalstore'])->name('admin.physicalstock.store');
 Route::get('/get/physicalitem/stock/all/{id}', [PhysicalStockController::class, 'getphysicalitem']);
 Route::post('/get/physicalstckitem/all/{invoice_no}', [PhysicalStockController::class, 'getallphysicalitem']);
 Route::post('/get/physicalstckitem/delete', [PhysicalStockController::class, 'getallphysicalitemdelete'])->name('get.phycalstock.delete');
+Route::post('/get/physicalstckitem/edit', [PhysicalStockController::class, 'getallphysicalitemedit'])->name('get.physicalstockitem.edit');
+Route::post('get/physicalstckitem/qty/{invoice_no}', [PhysicalStockController::class, 'getallphysicalitemeqty']);
+Route::get('admin/physicalstock/index', [PhysicalStockController::class, 'allphysicalstore'])->name('admin.physicalstock.index');
+Route::get('admin/physicalstock/active/{id}', [PhysicalStockController::class, 'active']);
+Route::get('admin/physicalstock/deactive/{id}', [PhysicalStockController::class, 'deactive']);
+Route::get('admin/physicalstock/delete/{id}', [PhysicalStockController::class, 'delete']);
+Route::get('admin/physicalstock/edit/{id}', [PhysicalStockController::class, 'edit']);
+Route::post('admin/physicalstock/update', [PhysicalStockController::class, 'update'])->name('admin.physicalstock.update');
+// reports
+Route::get('admin/stock/dailytransfer/reports', [StockReportController::class, 'dailytransfer'])->name('admin.stock.daillytransfer.report');
+Route::get('admin/stock/dailytransfer/reports/submit', [StockReportController::class, 'dailytransferresult'])->name('admin.stock.daillytransfer.reportresult');
 
-
-
-
+Route::get('admin/stock/itemwise/report', [StockReportController::class, 'itemwisestock'])->name('admin.stock.itemwise');
+Route::get('admin/stock/itemwise/reportresult', [StockReportController::class, 'itemwisestockresult'])->name('admin.stock.itemwiseresult');
 
 
 

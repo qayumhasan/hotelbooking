@@ -24,10 +24,10 @@ $current = date("m/d/Y");
                         <div class="header-title">
                             <h4 class="card-title">Physical Stock Input</h4>
                         </div>
-                       <a href="{{route('admin.itementry.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Item</span></i></button></a>
+                       <a href="{{route('admin.physicalstock.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Item</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.banquet.store')}}" method="POST" enctype='multipart/form-data'>
+                <form action="{{route('admin.physicalstock.store')}}" method="POST" enctype='multipart/form-data'>
                     @csrf
                     <div class="row">
                         <div class="col-md-10">
@@ -48,10 +48,16 @@ $current = date("m/d/Y");
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="fname">Stock Center: <span style="color:red">*</span></label>
-                                                <select name="stock_id" id="" class="form-control">
+                                                <select name="stock_center" id="" class="form-control">
                                                     <option value="">--select--</option>
-                                                   
+                                                    @foreach($allstock as $stock)
+                                                    <option value="{{$stock->id}}">{{$stock->name}}</option>
+                                                   @endforeach
                                                 </select>
+                                                
+                                                @error('stock_center')
+                                                    <div style="color:red">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                       
@@ -71,7 +77,7 @@ $current = date("m/d/Y");
                                             <div class="form-group">
                                                 <label for="fname">Item Name: </label>
                                                 <input type="text" class="form-control itemname"  name="itemname" list="brow" id="itemname"/>
-                                                <input type="hidden" class="item_id"  name="item_id" id="item_id"/>
+                                                <input type="hidden" class="i_id"  name="i_id" id="i_id"/>
                                                 <input type="hidden" class="invoice_no"  name="invoice_no" id="invoice_no" value="{{ $invoice_id }}"/>
                                                 <datalist id="brow">
                                                     @foreach($allitem as $item)
@@ -112,12 +118,39 @@ $current = date("m/d/Y");
                                                 </div>
                                             </div>
                                         </div>
+                                        <br>
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="fname">Remarks:</label>
+                                                                <textarea name="narration" class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="fname">Number Of Item:</label>
+                                                                <input type="text" class="form-control number_of_item" disabled>
+                                                                <input type="hidden"  name="num_of_item" class="form-control number_of_item">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="fname">Number Of Qty:</label>
+                                                                <input type="text" class="form-control number_of_qty" disabled>
+                                                                <input type="hidden" name="num_of_qty" class="form-control number_of_qty">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    
-
                         <div class="col-md-2">
                             <div class="card shadow-sm shadow-showcase">
                                 <div class="card-header d-flex justify-content-between asif">
@@ -199,7 +232,7 @@ $current = date("m/d/Y");
         var qty=$("#qty").val();
         var unit_id=$("#unit").val();
         var unit_name=$("#unit_name").val();
-        var item_id=$("#item_id").val();
+        var i_id=$("#i_id").val();
         // alert(invoice_no);
         //alert(itemname);
             $.ajax({
@@ -211,16 +244,18 @@ $current = date("m/d/Y");
                     qty:qty,
                     unit_id:unit_id,
                     unit_name:unit_name,
-                    item_id:item_id,
+                    i_id:i_id,
                 },
 
                 success: function(data) {
                     $('#allitemdata').empty();
                     getphysicalitem();
+                    getphysicalitemqty();
                     $(".itemname").val("");
                     $("#qty").val("");
                     $("#unit").val("");
                     $("#unit_name").val("");
+                    $("#i_id").val("");
                     //$('.alldataitem').append(data);
                 
                 },
@@ -348,6 +383,26 @@ $current = date("m/d/Y");
 
 	getphysicalitem();
 </script>
+<!-- get quantity -->
+<script>
+    function getphysicalitemqty() {
+      //alert("ok");
+        var invoice_no = $("#invoice_no").val();
+        //alert(invoice_no);
+        $.post('{{ url('get/physicalstckitem/qty/') }}/'+invoice_no, {_token: '{{ csrf_token() }}'},
+            function(data) {
+              $(".number_of_item").val(data.total_item);
+              $(".number_of_qty").val(data.total_qty);
+
+            });
+            
+	}
+
+	getphysicalitemqty();
+</script>
+
+
+
 <!-- delete item data -->
 <script>
     function cartDatadelete(el) {
@@ -357,6 +412,7 @@ $current = date("m/d/Y");
             function(data) {
                 //$('#addtocartshow').html(data);
                 $('#allitemdata').empty();
+                getphysicalitemqty();
                 getphysicalitem();
 
 
@@ -371,15 +427,15 @@ $current = date("m/d/Y");
     function cartdata(el) {
         
        //alert(el.value)
-        $.post('{{route('get.banquetitem.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
+        $.post('{{route('get.physicalstockitem.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
             function(data) {
                 //$('#addtocartshow').html(data);
                             $(".itemname").val(data.item_name);
-                            $(".itemqty").val(data.qty);
-                            $(".itemrate").val(data.rate);
-                            $(".itemamount").val(data.amount);
-                            $(".itemtax").val(data.tax).selected;
-                            $(".bit_id").val(data.id);
+                            $("#i_id").val(data.id);
+                            $(".qty").val(data.qty);
+                            $("#unit_name").val(data.unit_name);
+                            $("#unit").val(data.unit_id);
+                            
 
             });
      
@@ -389,296 +445,18 @@ $current = date("m/d/Y");
 
 </script>
 <!-- tax create -->
-<script>
-    $(document).ready(function() {
-        $('#addtax').on('click', function() {
-       //alert("ok");
-      var booking_no=$("#booking_no").val();
-      var tax_calculation=$(".tax_calculation").val();
-      var based_on=$(".based_on").val();
-      var tax_description=$(".tax_description").val();
-      var taxrate=$(".taxrate").val();
-      var tax_effect=$(".tax_effect").val();
-      var tax_amount=$(".tax_amount").val();
-      var btax_id=$(".btax_id").val();
-      //alert(itemname);
-        $.ajax({
-            type: 'GET',
-            url: "{{route('bunquet.inserttax.data')}}",
-            data: {
-
-                booking_no:booking_no,
-                tax_calculation:tax_calculation,
-                based_on:based_on,
-                tax_description:tax_description,
-                taxrate:taxrate,
-                tax_amount:tax_amount,
-                tax_effect:tax_effect,
-                btax_id:btax_id,
-               
-               
-            },
-
-            success: function(data) {
-            
-                  $('#alltaxsection').empty();
-                     alltax();
-                     $('#allamountsection').empty();
-                    allamount();
-                  $(".tax_calculation").val("");
-                  $(".tax_rate").val("");
-                  $(".tax_amount").val("");
-                  $(".tax_effect").val("");
-                  $(".btax_id").val("");
-                  //$('#taxsection').append(data);
-               
-            },
-
-            error: function (err) {
-               //console.log(err);
-             
-               $('#tax_rate_err').html(err.responseJSON.errors.taxrate[0]);
-              
-            }
-          
-        });
-       
-
-        });
-    });
-</script>
-
-<script>
-
-    function carttax(el) {
-        //alert(el.value);
-        $.post('{{route('get.banquettax.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
-            function(data) {
-                //$('#addtocartshow').html(data);
-                            $(".tax_calculation").val(data.tax_calculation).selected;
-                            $(".based_on").val(data.based_on);
-                            $(".tax_description").val(data.tax_id).selected;
-                            $(".taxrate").val(data.tax_rate);
-                            $(".tax_amount").val(data.tax_amount);
-                            $(".tax_effect").val(data.tax_effect);
-                            $(".btax_id").val(data.id);
-               
-
-
-            });
-     
-   
-	}
-	carttax();
-</script>
-<script>
-    function alltax() {
-      //alert("ok");
-        var booking_no = $("#booking_no").val();
-        //alert(invoice);
-        $.post('{{ url('get/banquettax/all/') }}/'+booking_no, {_token: '{{ csrf_token() }}'},
-            function(data) {
-               // console.log(data);
-			   $('#alltaxsection').append(data);
-              // $('.dueamount').val(data.data);
-
-            });
-            
-	}
-
-	alltax();
-</script>
-
-<script>
-    function carttaxdelete(el) {
-        
-        //alert("ok");
-        $.post('{{route('get.banquettax.delete')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
-            function(data) {
-                //$('#addtocartshow').html(data);
-                $('#alltaxsection').empty();
-                alltax();
-                $('#allamountsection').empty();
-                 allamount();
-               
-
-
-            });
-     
-   
-	}
-	carttaxdelete();
-</script>
-<script>
- $(document).ready(function() {
-    $('#taxsec').on('keyup', function() {
-      
-      var based_on=$(".based_on").val();
-      var rate=$("#taxsec").val();
-      if(based_on=='amount'){
-          $('.tax_amount').val(rate);
-      }else{
-        $('.tax_amount').val("");
-      }
-        });
-    });
-</script>
-
-<script>
-
-  $(document).ready(function() {
-     $('select[name="category_id"]').on('change', function(){
-         var cate_id= $(this).val();
-        // var geust_type= $("#guest_type").val();
-         //alert(cate_id);
-         if(cate_id) {
-             $.ajax({
-                 url: "{{  route('get.banquet.categorytype') }}",
-                 type:"GET",
-                 data: {
-                    cate_id:cate_id,
-                    },
-                 success:function(data) {
-                        //console.log(data);
-                        $("#caegoryitem").empty();
-                        $("#caegoryitem").append(data);
-                     }
-             });
-         } else {
-            // alert('danger');
-         }
-
-     });
-
-   
 
 
 
- });
-</script>
-<script>
-      $(document).ready(function() {
-        $('#addcateitem').on('click', function() {
-        //alert("ok");
-        var category_id=$("#category_id").val();
-        var booking_no=$("#booking_no").val();
-        var item_id = [];
-        $("input[name='cate_item']:checked").each(function(){
-            item_id.push(this.value);
-        });
-
-            $.ajax({
-                type: 'GET',
-                url: "{{route('bunquet.cateiteminsert.data')}}",
-                data: {
-                    category_id:category_id,
-                    item_id:item_id,
-                    booking_no:booking_no,
-                },
-               
-
-                success: function(data) {
-                    
-                    $('#allcategoryitemsection').empty();
-                    allcateitem();
-                    $("#category_id").val("");
-                    $("#item_id").val("");
-                   
-                
-                },
-
-                error: function (err) {
-                //console.log(err.responseJSON.errors.itemname[0]);
-                
-                // $('#item_err').html(err.responseJSON.errors.itemname[0]);
-                // $('#item_rate_err').html(err.responseJSON.errors.itemname[0]);
-                // $('#item_qty_err').html(err.responseJSON.errors.itemname[0]);
-                }
-            
-            });
-        
-
-        });
-    });
-
-</script>
-<script>
-    function allcateitem() {
-      //alert("ok");
-        var booking_no = $("#booking_no").val();
-        //alert(invoice);
-        $.post('{{ url('get/allcateitem/all/') }}/'+booking_no, {_token: '{{ csrf_token() }}'},
-            function(data) {
-               // console.log(data);
-			   $('#allcategoryitemsection').append(data);
-              // $('.dueamount').val(data.data);
-
-            });
-            
-	}
-
-	allcateitem();
-</script>
-<script>
-    function categoryitemdelete(el) {
-        
-       // alert("ok");
-        $.post('{{route('get.categoryitemdelete.delete')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
-            function(data) {
-                //$('#addtocartshow').html(data);
-                $('#allcategoryitemsection').empty();
-                allcateitem();
-
-               
-
-
-            });
-     
-   
-	}
-	//carttaxdelete();
-</script>
 
 
 
-<script>
-    function allamount() {
-      //alert("ok");
-        var booking_no = $("#booking_no").val();
-        var total_pax_amount = $(".total_pax_amount").val();
-         
-         //alert(total_pax_amount);
-        $.post('{{ route('get.banquet.allamount') }}', {_token: '{{ csrf_token() }}',booking_no:booking_no,total_pax_amount:total_pax_amount},
-            function(data) {
-               // console.log(data);
-			   $('#allamountsection').append(data);
-              // $('.dueamount').val(data.data);
-
-            });
-            
-	}
-
-	allamount();
-</script>
 
 
-<script>
-    $(document).ready(function() {
-        $('.guarantee_pax').on('keyup', function() {
-         var pax_price =$(".price_per_pax").val();
-         var guarentee_price =$(this).val();
-         //alert(pax_price);
-            $(".total_pax_amount").val(pax_price * guarentee_price);
-            $(".span_total_pax_amount").html("<p>"+ pax_price * guarentee_price +"</p>");
-            $('#allamountsection').empty();
-            allamount();
-    
-        
 
-        });
-    });
 
-</script>
+
+
 
 <script>
     $('body').on('keydown','input,select,textarea',function(e){
