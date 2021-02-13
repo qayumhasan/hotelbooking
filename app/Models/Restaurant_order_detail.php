@@ -9,7 +9,9 @@ class Restaurant_order_detail extends Model
 {
     use HasFactory;
 
-    protected $with = ['waiter','item','freemenu'];
+    protected $guarded = [];
+
+    protected $with = ['waiter','item','freemenu','complementitem'];
 
     public function waiter()
     {
@@ -22,5 +24,9 @@ class Restaurant_order_detail extends Model
     public function freemenu()
     {
         return $this->belongsTo(SideMenu::class,'item_id','main_id');
+    }
+    public function complementitem()
+    {
+        return $this->belongsTo(ItemEntry::class,'complement');
     }
 }
