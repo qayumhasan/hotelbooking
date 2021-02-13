@@ -11,7 +11,7 @@
     @foreach($allitem as $item)
     <tr>
         <th scope="row">
-        <button type="button" onclick="cartdata(this)" data-toggle="tooltip" title="" class="editcat badge bg-primary-light" value="{{$item->id}}" data-original-title=""><i class="lar la-edit"></i></button>
+         <button type="button" onclick="cartdata(this)" data-toggle="tooltip" title="" class="editcat badge bg-primary-light" value="{{$item->id}}" data-original-title=""><i class="lar la-edit"></i></button>
          <button type="button" onclick="cartDatadelete(this)" data-toggle="tooltip" title="" class="badge bg-danger-light" value="{{$item->id}}" data-original-title=""><i class="la la-trash"></i></button>
         </th>
         <td>{{$item->item_name}}</td>

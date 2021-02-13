@@ -21,6 +21,7 @@ class CreatePhysicalStockHeadsTable extends Migration
             $table->integer('num_of_item')->nullable();
             $table->text('narration')->nullable();
             $table->integer('is_active')->default(1);
+            $table->integer('is_deleted')->default(0);
 
             $table->string('date',30)->nullable();
             $table->string('entry_by',30)->nullable();
