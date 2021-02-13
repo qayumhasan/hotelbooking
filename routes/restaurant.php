@@ -43,6 +43,8 @@ Route::middleware('admin')->prefix(md5('admin/chui'))->group(function(){
 
         Route::prefix(md5('restaurant/kot'))->group(function(){
             Route::post('/',[ChuiController::class,'storeKotDetails'])->name('admin.restaurant.chui.menu.kot.details.store');
+            Route::post('/store',[ChuiController::class,'storeKot'])->name('admin.restaurant.chui.menu.kot.store');
+            Route::get('/delete/{id}',[ChuiController::class,'kothistorydelete'])->name('admin.restaurant.chui.menu.kot.history.delete');
         });
 
 
@@ -64,3 +66,6 @@ Route::get('/admin/restaurant/chui/menu/kot/details/store{id}',[ChuiController::
 Route::get('/admin/restaurant/chui/menu/get/kot/item/{id}',[ChuiController::class,'getKotStatusByTableID']);
 Route::get('/admin/restaurant/chui/menu/delete/kot/item/{id}',[ChuiController::class,'deleteKotStatusByTableID']);
 Route::get('/admin/restaurant/chui/menu/edit/kot/item/{id}',[ChuiController::class,'editKotStatusByTableID']);
+Route::get('/admin/restaurant/chui/menu/history/kot/item/{id}',[ChuiController::class,'getKotItemHistoryByTableID']);
+Route::get('/admin/restaurant/chui/menu/history/kot/store/{id}',[ChuiController::class,'storeKotItemHistoryByTableID']);
+Route::get('/admin/restaurant/chui/menu/get/at/glance/item/{id}',[ChuiController::class,'getKotItematglanceByTableID']);
