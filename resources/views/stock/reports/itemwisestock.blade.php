@@ -3,7 +3,7 @@
 @section('content')
 <style>
 .form-control{
-   height:27px;
+   height:30px;
 }
 
 </style>
@@ -29,16 +29,22 @@ $current = date("m/d/Y");
                   <form action="{{route('admin.stock.itemwiseresult')}}" method="get">
                      @csrf
                     <div class="row">
-                      <div class="col-md-4">
+                       
+                        <div class="col-md-4">
                            <div class="form-group">
-                              <label for="fname">Form Date:</label>
-                              <input type="text" class="form-control datepicker"  name="formdate" value="{{$current}}"/>
+                              <label for="fname">To Date:</label>
+                              <input type="text" class="form-control datepicker" name="todate" value="{{$current}}"/>
                            </div>
                         </div>
                         <div class="col-md-4">
                            <div class="form-group">
-                              <label for="fname">To Date:</label>
-                              <input type="text" class="form-control datepicker"  name="todate" value="{{$current}}"/>
+                              <label for="fname">All Item:</label>
+                              <select name="item_id" class="form-control" id="">
+                                 <option value="">--select--</option>
+                                 @foreach($allitem as $item)
+                                 <option value="{{$item->id}}">{{$item->item_name}}</option>
+                                 @endforeach
+                              </select>
                            </div>
                         </div>
                         <div class="col-md-4 mt-4">
@@ -51,31 +57,71 @@ $current = date("m/d/Y");
                   </div>
                   <div class="card-body">
                      <div class="table-responsive">
-                        <table id="datatable" class="table data-table table-striped table-bordered" >
+                        <table class="table table-striped table-bordered" >
                            <thead class="text-center">
                               <tr>
-                                 <th>#</th>
-                                 <th>Item Name</th>
-                                 <th>Number of Qty</th>
+                                 <th>Date</th>
+                                 <th>Invoice</th>
                                  <th>Created By</th>
                                  
                               </tr>
                            </thead>
                            <tbody class="text-center">
                               @if(isset($alldata))
-
-                                 @foreach($alldata as $key => $data)
-                                   
+                                 @if($item_id != '')
+                                 @foreach($alldata as $key => $rdata)
+                                       @php
+                                          $allitem=App\Models\PhysicalStockDetails::where('invoice_no',$rdata->invoice_no)->OrderBy('id','DESC')->get();
+                                       @endphp
                                      
                                        <tr style="font-size:12px">
-                                          <td></td>
-                                          <td>{{$rdata->item_name}}</td>
-                                         
-                                          <td></td>
+                                          <td>{{$rdata->date}}</td>
+                                          <td>{{$rdata->invoice_no}}</td>
                                           <td></td>
                                        </tr>
                                       
+                                       <tr style="font-size:12px">
+                                          <th></th>
+                                          <th>Item Name</th>
+                                          <th>Qty</th>
+                                       </tr>
+                                       @foreach($allitem as $datqqa)
+                                          @if($item_id == $datqqa->item_id)
+                                          <tr style="font-size:10px">
+                                             <td></td>
+                                             <td>{{$datqqa->item_name}}</td>
+                                             <td>{{$datqqa->qty}}</td>
+                                          </tr>
+                                      
+                                          @endif
+                                       @endforeach
+                                      
                                  @endforeach
+                                 @else
+                                          @foreach($alldata as $key => $rdata)
+                                          <tr style="font-size:12px">
+                                             <td>{{$rdata->date}}</td>
+                                             <td></td>
+                                             <td></td>
+                                          </tr>
+                                          @php
+                                             $allitem=App\Models\PhysicalStockDetails::where('invoice_no',$rdata->invoice_no)->OrderBy('id','DESC')->get();
+                                          @endphp
+                                          <tr style="font-size:12px">
+                                             <th></th>
+                                             <th>Item Name</th>
+                                             <th>Qty</th>
+                                          </tr>
+                                          @foreach($allitem as $datqqa)
+                                          <tr style="font-size:10px">
+                                             <td></td>
+                                             <td>{{$datqqa->item_name}}</td>
+                                             <td>{{$datqqa->qty}}</td>
+                                          </tr>
+                                          @endforeach
+                                          
+                                    @endforeach
+                                 @endif
                               @endif
                            </tbody>
                         </table>

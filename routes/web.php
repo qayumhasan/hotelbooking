@@ -372,6 +372,8 @@ Route::get('admin/stock/dailytransfer/reports/submit', [StockReportController::c
 
 Route::get('admin/stock/itemwise/report', [StockReportController::class, 'itemwisestock'])->name('admin.stock.itemwise');
 Route::get('admin/stock/itemwise/reportresult', [StockReportController::class, 'itemwisestockresult'])->name('admin.stock.itemwiseresult');
+Route::get('admin/stock/stockcenter/report', [StockReportController::class, 'stockcentersreport'])->name('admin.stock.stockcentersreport');
+Route::post('admin/stock/stockcenter/report', [StockReportController::class, 'stockcenterreportresult'])->name('admin.stock.stockcentersreport');
 
 
 
