@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\ItemEntry;
 use App\Models\Restaurant_order_detail;
+use App\Models\Restaurant_Order_head;
 use App\Models\RestaurantTable;
 use App\Models\SideMenu;
 use Carbon\Carbon;
@@ -43,7 +44,6 @@ class ChuiController extends Controller
 
         $request->validate([
             'Waiter_name' => 'required',
-            'free_items' => 'required',
             'items' => 'required',
             'quantity' => 'required',
             'remarks' => 'required',
@@ -131,16 +131,37 @@ class ChuiController extends Controller
 
     public function storeKot(Request $request)
     {
+     
+
         $kotdetails = Restaurant_order_detail::where('table_no',$request->tbl_no)->where('booking_no',$request->book_no)->get();
 
+
+
         if(count($kotdetails) > 0){
+
+            $qtysum =$kotdetails->sum(function($item){
+                return $item->qty;
+            });
+            $amountsum =$kotdetails->sum(function($item){
+                return $item->amount;
+            });
+
+            $head = new Restaurant_Order_head();
+            $head->invoice_no =Restaurant_order_detail::where('table_no',$request->tbl_no)->where('booking_no',$request->book_no)->first()->invoice_id;
+            $head->number_of_item = count($kotdetails);
+            $head->number_of_qty = $qtysum;
+            $head->total_amount = $amountsum;
+            $head->save();
+
             $kotdetails = Restaurant_order_detail::where('table_no',$request->tbl_no)->where('booking_no',$request->book_no)->update([
                 'kot_status'=>1,
             ]);
+
             $notification = array(
                 'messege' => 'Kot store Successfully',
                 'alert-type' => 'success'
             );
+
             return Redirect()->back()->with($notification);
 
         }else{
@@ -159,7 +180,9 @@ class ChuiController extends Controller
     {
         $kotdetails = Restaurant_order_detail::where('table_no',$id)->where('kot_status',1)->where('is_active',0)->get();
 
-        return response()->json($kotdetails);
+        $kotdetailamounts = Restaurant_order_detail::where('table_no',$id)->where('kot_status',1)->where('is_active',0)->first();
+        return view('restaurant.chui.home.ajax.history_ajax',compact('kotdetails','kotdetailamounts'));
+        // return response()->json($kotdetails);
     }
 
 

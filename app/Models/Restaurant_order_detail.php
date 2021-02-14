@@ -11,7 +11,7 @@ class Restaurant_order_detail extends Model
 
     protected $guarded = [];
 
-    protected $with = ['waiter','item','freemenu','complementitem'];
+    protected $with = ['waiter','item','freemenu','complementitem','orderHead'];
 
     public function waiter()
     {
@@ -28,5 +28,14 @@ class Restaurant_order_detail extends Model
     public function complementitem()
     {
         return $this->belongsTo(ItemEntry::class,'complement');
+    }
+
+    public function orderHead()
+    {
+        return $this->hasOne(Restaurant_Order_head::class,'invoice_no','invoice_id');
+    }
+    public function tableName()
+    {
+        return $this->belongsTo(RestaurantTable::class,'table_no');
     }
 }
