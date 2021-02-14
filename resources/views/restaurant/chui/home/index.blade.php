@@ -87,6 +87,8 @@ $time = date("h:i");
       </div>
       <div class="row">
 
+   @if(count($tables) >0)
+      @foreach($tables as $row)
          <div class="col-md-6 col-lg-4">
             <div class="cardoverflow-hidden card-min-height">
 
@@ -95,7 +97,7 @@ $time = date("h:i");
                   <div class="status text-center 
                  bg-green
                   ">
-                     <span class="status-heading">105</span>
+                     <span class="status-heading">{{ $row->table_no}}</span>
 
                   </div>
 
@@ -107,23 +109,23 @@ $time = date("h:i");
                         <div class="service">
                            <ul>
                               <li class="text-color-service">Available</li>
-                              <li> sdafsdafsd</li>
-                              <li>fdsafdsf</li>
+                              <li> Available</li>
+                              <li>Available</li>
                            </ul>
                         </div>
                      </div>
                      <div class="col-6">
                         <ul class="list-group pt-1 bg-menu">
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu getkotitem" data-toggle="modal" data-target=".addkotitems" data-whatever="2"><i class="fa fa-history" aria-hidden="true"></i> KOT</a>
+                              <a class="bg-menu getkotitem" data-toggle="modal" data-target=".addkotitems" data-whatever="{{$row->id}}"><i class="fa fa-history" aria-hidden="true"></i> KOT</a>
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu getkothistory" class="btn btn-primary" data-toggle="modal" data-target=".historymodal" data-whatever="2"><i class="fa fa-globe" aria-hidden="true"></i> History</a>
+                              <a class="bg-menu getkothistory" class="btn btn-primary" data-toggle="modal" data-target=".historymodal" data-whatever="{{$row->id}}"><i class="fa fa-globe" aria-hidden="true"></i> History</a>
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a data-toggle="modal" data-target=".ataglance" data-whatever="2" class="bg-menu ataglancebtn"><i class="fa fa-calendar-check" aria-hidden="true"></i> At a Glance
+                              <a data-toggle="modal" data-target=".ataglance" data-whatever="{{$row->id}}" class="bg-menu ataglancebtn"><i class="fa fa-calendar-check" aria-hidden="true"></i> At a Glance
                               </a>
                            </li>
 
@@ -138,6 +140,8 @@ $time = date("h:i");
 
             </div>
          </div>
+      @endforeach
+   @endif
 
 
 
@@ -401,11 +405,18 @@ $time = date("h:i");
 
 <script>
    randomnumber = Math.random();
-   var getkotitem = document.querySelector('.getkotitem');
+   var getkotitem = document.querySelectorAll('.getkotitem');
 
-   getkotitem.addEventListener('click', function() {
+   getkotitem.forEach(function(e){
+      e.addEventListener('click', function() {
+         $('#kot_materails').empty();
+         document.querySelectorAll('.deleteddata').forEach(function(e) {
+                  e.remove();
+               });
+      
       var modal = $(this);
       var data = modal.data('whatever');
+      
       $('#tbl_no').val(data)
 
 
@@ -422,7 +433,11 @@ $time = date("h:i");
                document.querySelectorAll('.deleteddata').forEach(function(e) {
                   e.remove();
                });
+               
+               
                data.forEach(function(item, index) {
+
+                  console.log(item);
 
                   var html = '<tr class="deleteddata"><th scope="row">' + item.item.item_name + '</th><td>' + item.qty + '</td><td>' + item.rate + '</td><td>' + item.amount + '</td><td><a data-whatever="' + item.id + '" onclick="edititem(this)" class="badge bg-primary-light mr-2"><i class="la la-edit"></i></a><a data-whatever="' + item.id + '"  class="badge bg-danger-light mr-2" onclick="deletitem(this)"><i class="la la-trash"></i></a></td></tr>'
                   document.querySelector('#kot_materails').insertAdjacentHTML('afterend', html);
@@ -436,6 +451,8 @@ $time = date("h:i");
 
 
    })
+   });
+   
 </script>
 
 
