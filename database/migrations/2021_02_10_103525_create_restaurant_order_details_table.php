@@ -28,7 +28,6 @@ class CreateRestaurantOrderDetailsTable extends Migration
             $table->string('invoice_id');
             $table->string('kot_status')->default(0);
             $table->string('kot_remarks')->nullable();
-            
             $table->integer('is_active')->default(0);
             $table->string('entry_by',30)->nullable();
             $table->string('entry_date',30)->nullable();
