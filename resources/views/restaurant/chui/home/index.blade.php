@@ -117,7 +117,7 @@ $time = date("h:i");
                      <div class="col-6">
                         <ul class="list-group pt-1 bg-menu">
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu getkotitem" data-toggle="modal" data-target=".addkotitems" data-whatever="{{$row->id}}"><i class="fa fa-history" aria-hidden="true"></i> KOT</a>
+                              <a class="bg-menu getkotitem" data-toggle="modal" data-target=".addkotitems" data-whatever="{{{$row->id}}}"><i class="fa fa-history" aria-hidden="true"></i> KOT</a>
                            </li>
 
                            <li class="list-group-item bg-menu">
@@ -290,51 +290,8 @@ $time = date("h:i");
 
 
 <div class="modal fade historymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">History Of Table No <b><span id="table_no"></span></b></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body printableAreasaveprint">
-            <table class="table table-bordered">
-               <thead>
-                  <tr>
-                     <th scope="col">KOT Date</th>
-                     <th scope="col">Item Name</th>
-                     <th scope="col">QTY</th>
-                     <th scope="col">Rate</th>
-                     <th scope="col">Amount</th>
-                     <th scope="col">Complementary</th>
-                  </tr>
-               </thead>
-               <tbody id="kothistorytable">
-
-
-
-
-               </tbody>
-               <tbody>
-                  <tr class="totalqtyarea">
-                     <th scope="row"></th>
-                     <th>Total Quentity</th>
-                     <td><span class="totalqty"></span></td>
-                     <th>Total Amount</th>
-                     <td><span class="totalamount"></span></td>
-                     <td>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-         <div class="modal-footer text-center mx-auto">
-            <input type="hidden" id="history_table_no" />
-            <button type="button" id="historysave" class="btn btn-info">Save</button>
-            <button type="button" id="historysaveandprint" class="btn btn-primary savepritbtn">Save & Print</button>
-         </div>
-      </div>
+   <div class="modal-dialog modal-dialog-centered modal-xl" id="kothistorytable" role="document">
+      
    </div>
 </div>
 
@@ -605,6 +562,7 @@ $time = date("h:i");
 <script>
    $(document).ready(function() {
       $('.getkothistory').click(function() {
+         $('#kothistorytable').empty();
          var modal = $(this);
          var data = modal.data('whatever');
          $('#table_no').html(data);
@@ -619,31 +577,8 @@ $time = date("h:i");
             type: 'get',
             url: "{{ url('/admin/restaurant/chui/menu/history/kot/item') }}/" + data,
             success: function(data) {
-               var deletehistory = document.querySelectorAll('.deletehistory');
-               deletehistory.forEach(function(e) {
-                  e.remove();
-               });
-               var totalqty = parseInt(0);
-               var totalamount = parseInt(0);
-               if (data.length > 0) {
 
-                  data.forEach(function(item) {
-
-                     var html = `<tr class="deletehistory"><th scope="row">${item.kot_date}</th><td>${item.item.item_name}</td><td>${item.qty}</td><td>${item.rate}</td><td>${item.amount}</td><td>${item.complementitem.item_name}</td>`;
-
-                     document.querySelector('#kothistorytable').insertAdjacentHTML('afterend', html)
-                     totalqty += parseInt(item.qty);
-                     totalamount += parseInt(item.amount);
-                  })
-
-
-                  $('.totalqty').html(totalqty);
-                  $('.totalamount').html('$ ' + totalamount);
-
-               } else {
-                  $('#historynodatafound').empty();
-                  document.querySelector('#kothistorytable').insertAdjacentHTML('afterend', '<tr id="historynodatafound"><td>No Data Found!</td></tr>');
-               }
+               $('#kothistorytable').append(data);
 
 
             }

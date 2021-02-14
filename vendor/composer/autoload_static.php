@@ -776,6 +776,7 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\PurchaseOrderHead' => __DIR__ . '/../..' . '/app/Models/PurchaseOrderHead.php',
         'App\\Models\\RestaurantTable' => __DIR__ . '/../..' . '/app/Models/RestaurantTable.php',
         'App\\Models\\RestaurantTableType' => __DIR__ . '/../..' . '/app/Models/RestaurantTableType.php',
+        'App\\Models\\Restaurant_Order_head' => __DIR__ . '/../..' . '/app/Models/Restaurant_Order_head.php',
         'App\\Models\\Restaurant_order_detail' => __DIR__ . '/../..' . '/app/Models/Restaurant_order_detail.php',
         'App\\Models\\Room' => __DIR__ . '/../..' . '/app/Models/Room.php',
         'App\\Models\\RoomType' => __DIR__ . '/../..' . '/app/Models/RoomType.php',

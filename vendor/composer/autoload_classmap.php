@@ -129,6 +129,7 @@ return array(
     'App\\Models\\PurchaseOrderHead' => $baseDir . '/app/Models/PurchaseOrderHead.php',
     'App\\Models\\RestaurantTable' => $baseDir . '/app/Models/RestaurantTable.php',
     'App\\Models\\RestaurantTableType' => $baseDir . '/app/Models/RestaurantTableType.php',
+    'App\\Models\\Restaurant_Order_head' => $baseDir . '/app/Models/Restaurant_Order_head.php',
     'App\\Models\\Restaurant_order_detail' => $baseDir . '/app/Models/Restaurant_order_detail.php',
     'App\\Models\\Room' => $baseDir . '/app/Models/Room.php',
     'App\\Models\\RoomType' => $baseDir . '/app/Models/RoomType.php',
