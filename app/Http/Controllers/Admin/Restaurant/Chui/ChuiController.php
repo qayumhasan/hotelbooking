@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\ItemEntry;
 use App\Models\Restaurant_order_detail;
+use App\Models\RestaurantTable;
 use App\Models\SideMenu;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,8 +24,8 @@ class ChuiController extends Controller
         $allwaiter = Employee::get();
 
         $allitem = ItemEntry::where('is_deleted', 0)->where('is_active', 1)->orderBy('id', 'DESC')->get();
-
-        return view('restaurant.chui.home.index', compact('allwaiter', 'allitem'));
+        $tables = RestaurantTable::where('is_deleted', 0)->where('is_active', 1)->orderBy('id', 'DESC')->get();
+        return view('restaurant.chui.home.index', compact('allwaiter', 'allitem','tables'));
     }
 
     public function getFreemenuSideMenuItem($id)

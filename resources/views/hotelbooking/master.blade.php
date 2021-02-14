@@ -236,6 +236,49 @@
                                 </li>
                             </ul>
                         </li>
+
+
+
+
+                        <!-- table area start from here -->
+                        <li class="">
+                            <a href="#restaurant_table" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Restaurant Table</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="restaurant_table" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+                                <li class="{{ request()->routeIs('admin.restaurnat.table*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurnat.table')}}">
+                                        <i class="las la-list-alt"></i><span>All Table</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.restaurnat.table.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurnat.table.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Table</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.restaurnat.table.type.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurnat.table.type.create')}}">
+                                        <i class="las la-list-alt"></i><span>Table Type</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!-- table area end from here -->
+
+
+
+
+
+
+
+
+
                         <li class="">
                             <a href="#supplier" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <i class="far fa-user"></i><span>Supplier</span>

@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\Inventory\ReportController;
 use App\Http\Controllers\Admin\Hotel\VoucherController;
 use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
 use App\Http\Controllers\Admin\Hotel\AdvanceBookingController;
+use App\Http\Controllers\Admin\Hotel\RestaurantTableController;
 use App\Http\Controllers\Admin\Stock\PhysicalStockController;
 use App\Http\Controllers\Admin\Stock\StockReportController;
 
@@ -548,6 +549,26 @@ Route::post('/addon/status',[AddonManagerController::class, 'status'])->name('ad
 Route::get('/addon/delete/{id}',[AddonManagerController::class, 'delete'])->name('admin.addon.delete');
 
 // Pages area start
+
+
+Route::prefix(md5('restaurant/type'))->group(function(){
+    Route::get('/',[RestaurantTableController::class,'create'])->name('admin.restaurnat.table.type.create');
+    Route::post('/store',[RestaurantTableController::class,'store'])->name('admin.restaurnat.table.type.store');
+    Route::get('/status/{id}',[RestaurantTableController::class,'statusChange'])->name('admin.restaurnat.table.type.status');
+    Route::get('/delete/{id}',[RestaurantTableController::class,'tableTypeDelete'])->name('admin.restaurnat.table.type.delete');
+    Route::get('/edit/{id}',[RestaurantTableController::class,'tableTypeEdit'])->name('admin.restaurnat.table.type.edit');
+    Route::post('/update/{id}',[RestaurantTableController::class,'tableTypeUpdate'])->name('admin.restaurnat.table.type.update');
+});
+
+
+Route::prefix(md5('restaurant/table'))->group(function(){
+    Route::get('/create',[RestaurantTableController::class,'tableCreate'])->name('admin.restaurnat.table.create');
+    Route::post('/store',[RestaurantTableController::class,'tableStore'])->name('admin.restaurnat.table.store');
+    Route::get('/',[RestaurantTableController::class,'tableList'])->name('admin.restaurnat.table');
+    Route::get('/status/{id}',[RestaurantTableController::class,'tableStatusChange'])->name('admin.restaurnat.table.status');
+    Route::get('/edit/{id}',[RestaurantTableController::class,'tableEdit'])->name('admin.restaurnat.table.edit');
+    Route::post('/update/{id}',[RestaurantTableController::class,'tableUpdate'])->name('admin.restaurnat.table.update');
+});
 
 
 
