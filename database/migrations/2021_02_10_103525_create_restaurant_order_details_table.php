@@ -16,16 +16,16 @@ class CreateRestaurantOrderDetailsTable extends Migration
         Schema::create('restaurant_order_details', function (Blueprint $table) {
             $table->id();
             $table->string('table_no');
-            $table->string('booking_no');
+            $table->string('booking_no')->nullable();
             $table->string('kot_date');
             $table->string('kot_time');
             $table->string('waiter_id');
             $table->string('item_id');
-            $table->string('qty');
-            $table->string('rate');
-            $table->string('amount');
-            $table->string('complement');
-            $table->string('invoice_id');
+            $table->integer('qty');
+            $table->float('rate');
+            $table->float('amount');
+            $table->string('complement')->nullable();
+            $table->string('invoice_id')->nullable();
             $table->string('kot_status')->default(0);
             $table->string('kot_remarks')->nullable();
             $table->integer('is_active')->default(0);

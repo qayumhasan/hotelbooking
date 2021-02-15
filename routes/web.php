@@ -570,6 +570,7 @@ Route::prefix(md5('restaurant/table'))->group(function(){
     Route::get('/status/{id}',[RestaurantTableController::class,'tableStatusChange'])->name('admin.restaurnat.table.status');
     Route::get('/edit/{id}',[RestaurantTableController::class,'tableEdit'])->name('admin.restaurnat.table.edit');
     Route::post('/update/{id}',[RestaurantTableController::class,'tableUpdate'])->name('admin.restaurnat.table.update');
+    Route::get('/delete/{id}',[RestaurantTableController::class,'tableDelete'])->name('admin.restaurnat.table.delete');
 });
 
 

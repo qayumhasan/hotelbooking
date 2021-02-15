@@ -73,6 +73,30 @@
                             </ul>
                         </li>
 
+
+
+
+
+                        <li class="">
+                            <a href="#otherinfo" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-info-circle"></i><span>Other Info</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="otherinfo" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.restaurant.menu.Kot.history*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.menu.Kot.history')}}">
+                                        <i class="las la-list-alt"></i><span>KOT History</span>
+                                    </a>
+                                </li>
+                            
+                            </ul>
+                        </li>
+
+
+
                     </ul>
                 </nav>
                 <div class="p-3"></div>

@@ -1,7 +1,9 @@
-<div class="modal-content">
+
+<div class="modal-content" id="deleteprehistory">
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">KOT Details</h5>
-    <h5 class="modal-title mx-auto" id="atglance_room_no">Room No :</h5>
+    <h5 class="modal-title mx-auto" id="atglance_room_no">Room No : {{$kotdetailamounts->tableName->table_no ?? ''}}</h5>
+
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -29,7 +31,9 @@
           <td colspan="2" class="bg-secondary">{{$row->first()->kot_date}}</td>
           <td class="bg-secondary text-center">
             <a class="badge bg-danger-light mr-2 historydeletebtn" href="{{route('admin.restaurant.chui.menu.kot.history.delete',$key)}}"><i class="la la-trash"></i></a>
-            <a data-toggle="modal" data-target=".printmodal" data-whatever="@getbootstrap" class="badge bg-info-light mr-2"><i class="las la-print"></i></a>
+
+            <a data-toggle="modal" data-target="#atglanceprintmodal" data-whatever="{{$key}}"  class="badge bg-info-light mr-2 invoiceshow"><i class="las la-print"></i></a>
+
           </td>
         </tr>
         @foreach($row as $data)
@@ -53,42 +57,32 @@
 
 
 
-<div class="modal fade printmodal" id="printmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+<div class="modal fade" id="atglanceprintmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Invoice</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+      <div id="printdata">
+        
       </div>
     </div>
   </div>
 </div>
 
-
-
 <script>
   $(document).ready(function() {
-    $('.historydeletebtn').click(function(e) {
-      e.preventDefault();
-      var href = $(this).attr('href');
+    $('.invoiceshow').click(function() {
+      var modal = $(this);
+      var data = modal.data('whatever');
+
+
 
       $.ajaxSetup({
         headers: {
@@ -97,15 +91,13 @@
       });
       $.ajax({
         type: 'get',
-        url: href,
+        url: "{{ url('/admin/restaurant/chui/menu/get/print/invoice/item') }}/" + data,
         success: function(data) {
-          document.querySelector('#atglance_room_no').innerHTML = 'Table No : ' + table_no;
-          $('.detete_at_aglance').remove();
-          $('#kotatglancedetails').append(data);
 
+          $('#printdata').append(data);
         }
       });
+    })
+  });
 
-    });
-  })
 </script>

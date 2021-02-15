@@ -52,7 +52,7 @@
                                  <a class="badge bg-danger-light mr-2" data-toggle="tooltip" data-placement="top" href="{{route('admin.restaurnat.table.status',$data->id)}}" data-original-title="Deactive"><i class="la la-thumbs-down"></i></a>
                                  @endif
                                  <a class="badge bg-primary-light mr-2" data-toggle="tooltip" data-placement="top" href="{{route('admin.restaurnat.table.edit',$data->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
-                                 <a id="delete" class="badge bg-danger-light mr-2" data-toggle="tooltip" data-placement="top" href="{{url('admin/room/delete/'.$data->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
+                                 <a id="delete" class="badge bg-danger-light mr-2" data-toggle="tooltip" data-placement="top" href="{{route('admin.restaurnat.table.delete',$data->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
                               </td>
                            </tr>
                            @endforeach
