@@ -273,4 +273,18 @@ class RestaurantTableController extends Controller
             return redirect()->route('admin.restaurnat.table')->with($notification);
         }
     }
+
+
+    public function tableDelete($id)
+    {
+        RestaurantTable::findOrFail($id)->update([
+            'is_deleted'=> 1,
+        ]);
+
+        $notification=array(
+            'messege'=>'Restaurant Table Deleted success',
+            'alert-type'=>'success'
+            );
+        return redirect()->back()->with($notification);
+    }
 }

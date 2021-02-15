@@ -1,11 +1,11 @@
-<div class="modal-content">
+<div class="modal-content printableAreasaveprint">
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">History Of Table No <b><span id="table_no">{{$kotdetailamounts->tableName->table_no ?? ''}}</span></b></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body printableAreasaveprint">
+    <div class="modal-body">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -42,7 +42,7 @@
                 </tr>
             @else
                 <tr>
-                    <th colspan="5" class="text-center">No Data Found!</th>
+                    <th colspan="6" class="text-center">No Data Found!</th>
                 </tr>
             @endif
 
@@ -54,8 +54,40 @@
         </table>
     </div>
     <div class="modal-footer text-center mx-auto">
-        <input type="hidden" id="history_table_no" />
+        <input type="hidden" id="history_table_no" value="{{$kotdetailamounts->table_no ?? ''}}" />
         <button type="button" id="historysave" class="btn btn-info">Save</button>
         <button type="button" id="historysaveandprint" class="btn btn-primary savepritbtn">Save & Print</button>
     </div>
 </div>
+
+<script>
+      $(document).ready(function() {
+      $('#historysaveandprint').click(function() {
+         savehistory();
+
+      
+
+      });
+   });
+
+
+
+   $(document).ready(function() {
+      $('#historysave').click(function() {
+         savehistory();
+      });
+   });
+
+   $(function() {
+            $(".savepritbtn").on('click', function() {
+
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printableAreasaveprint").printArea(options);
+            });
+        });
+</script>

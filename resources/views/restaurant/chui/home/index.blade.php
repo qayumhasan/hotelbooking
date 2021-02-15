@@ -297,35 +297,8 @@ $time = date("h:i");
 
 
 <div class="modal fade ataglance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">KOT Details</h5>
-            <h5 class="modal-title mx-auto" id="atglance_room_no">Room No :</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body">
-            <table class="table table-bordered">
-               <thead>
-                  <tr>
-                     <th scope="col">Kot Details</th>
-                     <th scope="col">Item Name</th>
-                     <th scope="col">Qty</th>
-                     <th scope="col">Rate</th>
-                     <th scope="col">Amount</th>
-                     <th scope="col">Complementary</th>
-                     <th scope="col">Action</th>
-                  </tr>
-               </thead>
-               <tbody id="kotatglancedetails">
-
-               </tbody>
-            </table>
-         </div>
-
-      </div>
+   <div class="modal-dialog modal-dialog-centered modal-xl" id="kotatglancedetails" role="document">
+     
    </div>
 </div>
 
@@ -366,6 +339,7 @@ $time = date("h:i");
 
    getkotitem.forEach(function(e){
       e.addEventListener('click', function() {
+         
          $('#kot_materails').empty();
          document.querySelectorAll('.deleteddata').forEach(function(e) {
                   e.remove();
@@ -386,6 +360,7 @@ $time = date("h:i");
          type: 'get',
          url: "{{ url('/admin/restaurant/chui/menu/get/kot/item') }}/" + data,
          success: function(data) {
+            
             if (data.length > 0) {
                document.querySelectorAll('.deleteddata').forEach(function(e) {
                   e.remove();
@@ -394,7 +369,7 @@ $time = date("h:i");
                
                data.forEach(function(item, index) {
 
-                  console.log(item);
+                  
 
                   var html = '<tr class="deleteddata"><th scope="row">' + item.item.item_name + '</th><td>' + item.qty + '</td><td>' + item.rate + '</td><td>' + item.amount + '</td><td><a data-whatever="' + item.id + '" onclick="edititem(this)" class="badge bg-primary-light mr-2"><i class="la la-edit"></i></a><a data-whatever="' + item.id + '"  class="badge bg-danger-light mr-2" onclick="deletitem(this)"><i class="la la-trash"></i></a></td></tr>'
                   document.querySelector('#kot_materails').insertAdjacentHTML('afterend', html);
@@ -448,6 +423,7 @@ $time = date("h:i");
          data: elements.items,
          url: "{{ route('admin.restaurant.chui.menu.kot.details.store') }}",
          success: function(data) {
+            console.log(data);
 
             document.querySelectorAll('.deleteddata').forEach(function(e) {
                e.remove();
@@ -563,6 +539,7 @@ $time = date("h:i");
    $(document).ready(function() {
       $('.getkothistory').click(function() {
          $('#kothistorytable').empty();
+         
          var modal = $(this);
          var data = modal.data('whatever');
          $('#table_no').html(data);
@@ -577,7 +554,7 @@ $time = date("h:i");
             type: 'get',
             url: "{{ url('/admin/restaurant/chui/menu/history/kot/item') }}/" + data,
             success: function(data) {
-
+            
                $('#kothistorytable').append(data);
 
 
@@ -588,18 +565,9 @@ $time = date("h:i");
 </script>
 
 <script>
-   $(document).ready(function() {
-      $('#historysave').click(function() {
-         savehistory();
-      });
-   });
+  
 
-   $(document).ready(function() {
-      $('#historysaveandprint').click(function() {
-         savehistory();
-
-      });
-   });
+ 
 
    function savehistory() {
       var table_id = document.querySelector('#history_table_no').value;
@@ -635,6 +603,7 @@ $time = date("h:i");
       $('.ataglancebtn').click(function(){
          var modal = $(this);
          var table_no = modal.data('whatever');
+         $('#kotatglancedetails').empty();
          
          $.ajaxSetup({
             headers: {
@@ -645,8 +614,7 @@ $time = date("h:i");
             type: 'get',
             url: "{{ url('/admin/restaurant/chui/menu/get/at/glance/item') }}/" + table_no,
             success: function(data) {
-               // $('#atglance_room_no').html(data);
-               document.querySelector('#atglance_room_no').innerHTML = 'Table No : '+table_no;
+               
                $('.detete_at_aglance').remove();
                $('#kotatglancedetails').append(data);
                
@@ -655,13 +623,5 @@ $time = date("h:i");
       })
    })
 </script>
-
-
-
-
-
-
-
-
 
 @endsection
