@@ -297,35 +297,8 @@ $time = date("h:i");
 
 
 <div class="modal fade ataglance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">KOT Details</h5>
-            <h5 class="modal-title mx-auto" id="atglance_room_no">Room No :</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body">
-            <table class="table table-bordered">
-               <thead>
-                  <tr>
-                     <th scope="col">Kot Details</th>
-                     <th scope="col">Item Name</th>
-                     <th scope="col">Qty</th>
-                     <th scope="col">Rate</th>
-                     <th scope="col">Amount</th>
-                     <th scope="col">Complementary</th>
-                     <th scope="col">Action</th>
-                  </tr>
-               </thead>
-               <tbody id="kotatglancedetails">
-
-               </tbody>
-            </table>
-         </div>
-
-      </div>
+   <div class="modal-dialog modal-dialog-centered modal-xl" id="kotatglancedetails" role="document">
+     
    </div>
 </div>
 
@@ -588,18 +561,9 @@ $time = date("h:i");
 </script>
 
 <script>
-   $(document).ready(function() {
-      $('#historysave').click(function() {
-         savehistory();
-      });
-   });
+  
 
-   $(document).ready(function() {
-      $('#historysaveandprint').click(function() {
-         savehistory();
-
-      });
-   });
+ 
 
    function savehistory() {
       var table_id = document.querySelector('#history_table_no').value;
@@ -645,8 +609,7 @@ $time = date("h:i");
             type: 'get',
             url: "{{ url('/admin/restaurant/chui/menu/get/at/glance/item') }}/" + table_no,
             success: function(data) {
-               // $('#atglance_room_no').html(data);
-               document.querySelector('#atglance_room_no').innerHTML = 'Table No : '+table_no;
+               
                $('.detete_at_aglance').remove();
                $('#kotatglancedetails').append(data);
                
