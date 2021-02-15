@@ -1,7 +1,9 @@
+
 <div class="modal-content" id="deleteprehistory">
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">KOT Details</h5>
     <h5 class="modal-title mx-auto" id="atglance_room_no">Room No : {{$kotdetailamounts->tableName->table_no ?? ''}}</h5>
+
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -29,7 +31,9 @@
           <td colspan="2" class="bg-secondary">{{$row->first()->kot_date}}</td>
           <td class="bg-secondary text-center">
             <a class="badge bg-danger-light mr-2 historydeletebtn" href="{{route('admin.restaurant.chui.menu.kot.history.delete',$key)}}"><i class="la la-trash"></i></a>
+
             <a data-toggle="modal" data-target="#atglanceprintmodal" data-whatever="{{$key}}"  class="badge bg-info-light mr-2 invoiceshow"><i class="las la-print"></i></a>
+
           </td>
         </tr>
         @foreach($row as $data)
@@ -50,8 +54,6 @@
   </div>
 
 </div>
-
-
 
 
 
@@ -81,6 +83,7 @@
       var data = modal.data('whatever');
 
 
+
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -96,4 +99,5 @@
       });
     })
   });
+
 </script>

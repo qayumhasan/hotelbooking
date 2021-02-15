@@ -2,7 +2,11 @@
 use App\Http\Controllers\Admin\Restaurant\RestaurantController;
 use App\Http\Controllers\Admin\Restaurant\Chui\ChuiController;
 use App\Http\Controllers\Admin\Restaurant\Chui\MenuController;
+
+use App\Http\Controllers\Admin\Restaurant\ReportsController;
+
 use App\Http\Controllers\Admin\Restaurant\Chui\OtherInfoController;
+
 
 
 Route::get('/restaurant',[RestaurantController::class, 'index'])->name('admin.restaurant.index');
@@ -77,5 +81,17 @@ Route::get('/admin/restaurant/chui/menu/history/kot/item/{id}',[ChuiController::
 Route::get('/admin/restaurant/chui/menu/history/kot/store/{id}',[ChuiController::class,'storeKotItemHistoryByTableID']);
 
 Route::get('/admin/restaurant/chui/menu/get/at/glance/item/{id}',[ChuiController::class,'getKotItematglanceByTableID']);
+//reports controller by asif
+Route::get('/admin/restaurant/itemwisesell/reports',[ReportsController::class,'itemwisesell'])->name('admin.restaurant.itemwisesell.report');
+Route::post('/admin/restaurant/itemwisesell/reports',[ReportsController::class,'itemwisesellreports'])->name('admin.restaurant.itemwisesell.report');
+
+Route::get('/admin/restaurant/item/view/{id}',[ReportsController::class,'viewdata']);
+
+Route::get('/admin/restaurant/categorywisesell/reports',[ReportsController::class,'categorysell'])->name('admin.restaurant.categorywise.report');
+Route::post('/admin/restaurant/categorywisesell/reports',[ReportsController::class,'categorysellreports'])->name('admin.restaurant.categorywise.report');
+
+
+Route::get('/admin/restaurant/chui/menu/get/at/glance/item/{id}',[ChuiController::class,'getKotItematglanceByTableID']);
 
 Route::get('/admin/restaurant/chui/menu/get/print/invoice/item/{id}',[ChuiController::class,'getKotItematglanceByInvoiceID']);
+

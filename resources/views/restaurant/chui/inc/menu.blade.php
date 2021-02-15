@@ -48,13 +48,31 @@
                                         <i class="las la-list-alt"></i><span>Side Menu</span>
                                     </a>
                                 </li>
-
-
-                              
-
-                            
                             </ul>
                         </li>
+                    <!-- reports -->
+                    <li class="">
+                            <a href="#Reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Reports</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="Reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.restaurant.itemwisesell.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.itemwisesell.report')}}">
+                                        <i class="las la-list-alt"></i><span>Item-Wise Sell Reports</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.restaurant.categorywise.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.categorywise.report')}}">
+                                        <i class="las la-list-alt"></i><span>Category-Wise Sell Reports</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
 
 
 
@@ -76,6 +94,7 @@
                             
                             </ul>
                         </li>
+
 
 
                     </ul>
