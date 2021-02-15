@@ -519,4 +519,23 @@ class MenuController extends Controller
         $sidemenus = SideMenu::where('main_id',$id)->where('is_deleted', 0)->get();
         return view('restaurant.chui.menu.ajax.side_menu_ajax',compact('sidemenus'));
     }
+
+
+    public function SideMenuDelete($main,$side)
+    {
+        $side = SideMenu::where('id',$main)->first();
+
+        // foreach (json_decode($side->items) as $row) {
+        //     if($row->item_id != $side){
+        //         $side->update([
+        //             'items'=>json_encode($row),
+        //         ]);
+        //     }
+        // }
+
+        
+
+        return back();
+
+    }
 }

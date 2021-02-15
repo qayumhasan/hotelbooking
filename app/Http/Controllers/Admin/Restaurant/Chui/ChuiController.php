@@ -40,8 +40,6 @@ class ChuiController extends Controller
 
     public function storeKotDetails(Request $request)
     {
-
-
         $request->validate([
             'Waiter_name' => 'required',
             'items' => 'required',
@@ -51,11 +49,9 @@ class ChuiController extends Controller
             'res_hour' => 'required',
         ]);
 
-        $year = Carbon::now()->format('Y');
-        $date = Carbon::now()->format('d');
-        $sec = Carbon::now()->format('s');
-
-       $kotdetails = Restaurant_order_detail::where('booking_no', $request->book_no)->where('waiter_id', $request->Waiter_name)->where('item_id', $request->items)->where('complement', $request->free_items)->first();
+       
+        
+       $kotdetails = Restaurant_order_detail::where('table_no',$request->table_no)->where('waiter_id', $request->Waiter_name)->where('item_id', $request->items)->where('complement', $request->free_items)->where('kot_status',0)->where('is_active',0)->first();
 
         if ($kotdetails) {
             $kotdetails->table_no = $request->table_no;
@@ -68,9 +64,6 @@ class ChuiController extends Controller
             $kotdetails->kot_remarks = $request->remarks;
             $kotdetails->updated_by = Auth::user()->id;
             $kotdetails->updated_date = Carbon::now();
-            $kotdetails->invoice_id = 'KOT' . $date . '_B_' . $year. round($request->book_no,4);
-            $kotdetails->booking_no = $request->book_no;
-
             $item = ItemEntry::findOrFail($request->items);
             if ($item) {
                 $kotdetails->rate = $item->rate;
@@ -91,8 +84,6 @@ class ChuiController extends Controller
             $kotdetails->kot_remarks = $request->remarks;
             $kotdetails->entry_by = Auth::user()->id;
             $kotdetails->entry_date = Carbon::now();
-            $kotdetails->invoice_id = 'KOT' . $date . '_B_' . $year .round($request->book_no,4);
-            $kotdetails->booking_no = $request->book_no;
 
             $item = ItemEntry::findOrFail($request->items);
             if ($item) {
@@ -103,7 +94,7 @@ class ChuiController extends Controller
             $kotdetails->save();
         }
 
-        $kotdetails = Restaurant_order_detail::where('booking_no', $request->book_no)->where('table_no',$request->table_no)->get();
+        $kotdetails = Restaurant_order_detail::where('kot_status',0)->where('is_active',0)->where('table_no',$request->table_no)->get();
 
         return response()->json($kotdetails);
     }
@@ -133,8 +124,18 @@ class ChuiController extends Controller
     {
      
 
-        $kotdetails = Restaurant_order_detail::where('table_no',$request->tbl_no)->where('booking_no',$request->book_no)->get();
+        $kotdetails = Restaurant_order_detail::where('table_no',$request->tbl_no)->where('kot_status',0)->where('is_active',0)->get();
 
+        $year = Carbon::now()->format('Y');
+        $date = Carbon::now()->format('d');
+        $sec = Carbon::now()->format('s');
+
+        $book_no = rand(111111,99999);
+
+        Restaurant_order_detail::where('table_no',$request->tbl_no)->where('kot_status',0)->where('is_active',0)->update([
+            'booking_no'=>$book_no.$request->tbl_no,
+            'invoice_id'=>'KOT'.$date.'T'.$year.$book_no.$request->tbl_no,
+        ]);
 
 
         if(count($kotdetails) > 0){
@@ -147,13 +148,15 @@ class ChuiController extends Controller
             });
 
             $head = new Restaurant_Order_head();
-            $head->invoice_no =Restaurant_order_detail::where('table_no',$request->tbl_no)->where('booking_no',$request->book_no)->first()->invoice_id;
+
+            $head->invoice_no ='KOT'.$date.'T'.$year.$book_no.$request->tbl_no;
+
             $head->number_of_item = count($kotdetails);
             $head->number_of_qty = $qtysum;
             $head->total_amount = $amountsum;
             $head->save();
 
-            $kotdetails = Restaurant_order_detail::where('table_no',$request->tbl_no)->where('booking_no',$request->book_no)->update([
+            $kotdetails = Restaurant_order_detail::where('table_no',$request->tbl_no)->where('kot_status',0)->where('is_active',0)->update([
                 'kot_status'=>1,
             ]);
 
@@ -208,19 +211,39 @@ class ChuiController extends Controller
         $kotdetails = Restaurant_order_detail::where('table_no',$id)->where('is_active',1)->where('kot_status',1)->get();
         $kotdetails = $kotdetails->groupBy('invoice_id');
         $kotdetails=$kotdetails->all();
-        return view('restaurant.chui.home.ajax.at_a_glance',compact('kotdetails'));
+        $kotdetailamounts = Restaurant_order_detail::where('table_no',$id)->where('kot_status',1)->where('is_active',1)->first();
+        return view('restaurant.chui.home.ajax.at_a_glance',compact('kotdetails','kotdetailamounts'));
     }
 
 
     public function kothistorydelete($id)
     {
-
+        
         Restaurant_order_detail::where('invoice_id',$id)->delete();
-        $kotdetails =Restaurant_order_detail::where('invoice_id',$id)->get();
-        $kotdetails = $kotdetails->groupBy('invoice_id');
-        $kotdetails=$kotdetails->all();
+        Restaurant_Order_head::where('invoice_no',$id)->delete();
+        // $kotdetails =Restaurant_order_detail::where('invoice_id',$id)->where('is_active',1)->where('kot_status',1)->get();
+        // $kotdetails = $kotdetails->groupBy('invoice_id');
+        // $kotdetails=$kotdetails->all();
+        // $kotdetailamounts = Restaurant_order_detail::where('invoice_id',$id)->where('kot_status',1)->where('is_active',1)->first();
 
-        return view('restaurant.chui.home.ajax.at_a_glance',compact('kotdetails'));
+        $notification = array(
+            'messege' => ' Item Deleted Successfully!',
+            'alert-type' => 'error'
+        );
+        return Redirect()->back()->with($notification);
+
+        // return view('restaurant.chui.home.ajax.at_a_glance',compact('kotdetails','kotdetailamounts'));
+
+    }
+
+
+    public function getKotItematglanceByInvoiceID($id)
+    {
+        $orderdetails =Restaurant_order_detail::where('invoice_id',$id)->where('is_active',1)->where('kot_status',1)->get();
+        $orderhead =Restaurant_Order_head::where('invoice_no',$id)->first();
+
+        return view('restaurant.chui.home.ajax.invoice_print',compact('orderdetails','orderhead'));
+
 
     }
 }
