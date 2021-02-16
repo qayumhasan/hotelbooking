@@ -65,7 +65,11 @@ return array(
     'App\\Http\\Controllers\\Admin\\Payroll\\PayrollController' => $baseDir . '/app/Http/Controllers/Admin/Payroll/PayrollController.php',
     'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\ChuiController' => $baseDir . '/app/Http/Controllers/Admin/Restaurant/Chui/ChuiController.php',
     'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\MenuController' => $baseDir . '/app/Http/Controllers/Admin/Restaurant/Chui/MenuController.php',
+
+    'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\MovingReportController' => $baseDir . '/app/Http/Controllers/Admin/Restaurant/Chui/MovingReportController.php',
     'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\OtherInfoController' => $baseDir . '/app/Http/Controllers/Admin/Restaurant/Chui/OtherInfoController.php',
+    'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\WaiterReportController' => $baseDir . '/app/Http/Controllers/Admin/Restaurant/Chui/WaiterReportController.php',
+
     'App\\Http\\Controllers\\Admin\\Restaurant\\ReportsController' => $baseDir . '/app/Http/Controllers/Admin/Restaurant/ReportsController.php',
     'App\\Http\\Controllers\\Admin\\Restaurant\\RestaurantController' => $baseDir . '/app/Http/Controllers/Admin/Restaurant/RestaurantController.php',
     'App\\Http\\Controllers\\Admin\\SettingsController' => $baseDir . '/app/Http/Controllers/Admin/SettingsController.php',
@@ -109,6 +113,7 @@ return array(
     'App\\Models\\CompanyInformation' => $baseDir . '/app/Models/CompanyInformation.php',
     'App\\Models\\ContactMessage' => $baseDir . '/app/Models/ContactMessage.php',
     'App\\Models\\Department' => $baseDir . '/app/Models/Department.php',
+    'App\\Models\\Emploayee_Sales_Report' => $baseDir . '/app/Models/Emploayee_Sales_Report.php',
     'App\\Models\\Employee' => $baseDir . '/app/Models/Employee.php',
     'App\\Models\\EmployeeSelaryGenerate' => $baseDir . '/app/Models/EmployeeSelaryGenerate.php',
     'App\\Models\\Floor' => $baseDir . '/app/Models/Floor.php',

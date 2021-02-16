@@ -712,7 +712,11 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Http\\Controllers\\Admin\\Payroll\\PayrollController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Payroll/PayrollController.php',
         'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\ChuiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Restaurant/Chui/ChuiController.php',
         'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\MenuController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Restaurant/Chui/MenuController.php',
+
+        'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\MovingReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Restaurant/Chui/MovingReportController.php',
         'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\OtherInfoController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Restaurant/Chui/OtherInfoController.php',
+        'App\\Http\\Controllers\\Admin\\Restaurant\\Chui\\WaiterReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Restaurant/Chui/WaiterReportController.php',
+
         'App\\Http\\Controllers\\Admin\\Restaurant\\ReportsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Restaurant/ReportsController.php',
         'App\\Http\\Controllers\\Admin\\Restaurant\\RestaurantController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Restaurant/RestaurantController.php',
         'App\\Http\\Controllers\\Admin\\SettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/SettingsController.php',
@@ -756,6 +760,7 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\CompanyInformation' => __DIR__ . '/../..' . '/app/Models/CompanyInformation.php',
         'App\\Models\\ContactMessage' => __DIR__ . '/../..' . '/app/Models/ContactMessage.php',
         'App\\Models\\Department' => __DIR__ . '/../..' . '/app/Models/Department.php',
+        'App\\Models\\Emploayee_Sales_Report' => __DIR__ . '/../..' . '/app/Models/Emploayee_Sales_Report.php',
         'App\\Models\\Employee' => __DIR__ . '/../..' . '/app/Models/Employee.php',
         'App\\Models\\EmployeeSelaryGenerate' => __DIR__ . '/../..' . '/app/Models/EmployeeSelaryGenerate.php',
         'App\\Models\\Floor' => __DIR__ . '/../..' . '/app/Models/Floor.php',

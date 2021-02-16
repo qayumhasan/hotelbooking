@@ -38,4 +38,9 @@ class Restaurant_order_detail extends Model
     {
         return $this->belongsTo(RestaurantTable::class,'table_no');
     }
+
+    public function cashier()
+    {
+        return $this->belongsTo(Admin::class,'entry_by');
+    }
 }
