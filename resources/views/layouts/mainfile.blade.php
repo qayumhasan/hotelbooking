@@ -233,7 +233,7 @@
                         <div class="card card-block card-stretch card-height">
                             <div class="card-body">
                                 <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-info">Edocuments</h3>
+                                <a href="{{route('admin.account.home')}}"><h3 class="text-info">Accounts</h3></a> 
                                 <div class="bg-info icon iq-icon-box-2 mr-2 rounded">
                                     <i class="lar la-envelope"></i>
                                 </div>
