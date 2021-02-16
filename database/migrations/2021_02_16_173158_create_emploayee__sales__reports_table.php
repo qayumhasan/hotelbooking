@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemEntriesTable extends Migration
+class CreateEmploayeeSalesReportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateItemEntriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('item_entries', function (Blueprint $table) {
+        Schema::create('emploayee__sales__reports', function (Blueprint $table) {
             $table->id();
-            $table->text('item_name')->nullable();
-            $table->string('short_name',50)->nullable();
-            $table->foreignId('category_name')->nullable();
-            $table->foreignId('unit_name')->nullable();
-            $table->float('rate')->nullable();
-            $table->integer('min_level')->nullable();
-            $table->string('menu_item',50)->nullable();
-            $table->integer('no_of_sale')->nullable();
-            $table->string('date',50)->nullable();
+            $table->string('waiter_id');
+            $table->float('slae_amount')->default(0);
+            $table->integer('month_no')->nullable();
+            $table->string('month_name')->nullable();
+            $table->string('year')->nullable();
+            $table->string('kot_id')->nullable();
+
+
             $table->integer('is_active')->default(1);
             $table->string('entry_by',30)->nullable();
             $table->string('entry_date',30)->nullable();
@@ -44,6 +43,6 @@ class CreateItemEntriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_entries');
+        Schema::dropIfExists('emploayee__sales__reports');
     }
 }

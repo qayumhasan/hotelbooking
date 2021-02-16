@@ -6,7 +6,8 @@ use App\Http\Controllers\Admin\Restaurant\Chui\MenuController;
 use App\Http\Controllers\Admin\Restaurant\ReportsController;
 
 use App\Http\Controllers\Admin\Restaurant\Chui\OtherInfoController;
-
+use App\Http\Controllers\Admin\Restaurant\Chui\MovingReportController;
+use App\Http\Controllers\Admin\Restaurant\Chui\WaiterReportController;
 
 
 Route::get('/restaurant',[RestaurantController::class, 'index'])->name('admin.restaurant.index');
@@ -55,8 +56,35 @@ Route::middleware('admin')->prefix(md5('admin/chui'))->group(function(){
             // other info menu
 
             Route::get('/history',[OtherInfoController::class,'OtherInfo'])->name('admin.restaurant.menu.Kot.history');
+            Route::post('/history/search',[OtherInfoController::class,'KotHistorySearch'])->name('admin.restaurant.chui.menu.kot.history.search');
             
         });
+
+        
+
+        Route::prefix(md5('/admin/restaurant/moving/item'))->group(function(){
+
+            Route::get('/fast',[MovingReportController::class,'fastMovingItemPage'])->name('admin.restaurant.chui.menu.Kot.fast.moving.page');
+
+            Route::post('/fast/search',[MovingReportController::class,'fastMovingItemSearch'])->name('admin.restaurant.chui.menu.fast.moving.item.search');
+
+            Route::post('/slow/search',[MovingReportController::class,'slowMovingItemSearch'])->name('admin.restaurant.chui.menu.Kot.slow.moving.search');
+
+            
+            Route::get('/slow',[MovingReportController::class,'slowMovingItemPage'])->name('admin.restaurant.chui.menu.Kot.slow.moving.page');
+
+            Route::post('/non/moving/search',[MovingReportController::class,'nonMovingItemSearch'])->name('admin.restaurant.chui.menu.Kot.non.moving.search');
+
+            
+            Route::get('/non/moving',[MovingReportController::class,'nonMovingItemPage'])->name('admin.restaurant.chui.menu.Kot.non.moving.page');
+
+        });
+
+
+        Route::prefix(md5('/admin/restaurant/waiter/performance'))->group(function(){
+            Route::get('/qtr',[WaiterReportController::class,'qtrWaiterPerformance'])->name('admin.restaurant.chui.menu.Kot.waiter.qtr.sale.performance');
+        }); 
+
 
 
   
