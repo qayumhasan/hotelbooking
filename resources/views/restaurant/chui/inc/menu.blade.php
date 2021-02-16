@@ -95,6 +95,62 @@
                             </ul>
                         </li>
 
+                        <li class="">
+                            <a href="#movingreport" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-user"></i><span>Moving Reports</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="movingreport" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.restaurant.chui.menu.Kot.fast.moving.page*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.chui.menu.Kot.fast.moving.page')}}">
+                                        <i class="las la-list-alt"></i><span>Fast Moving</span>
+                                    </a>
+                                </li>
+
+
+                                <li class="{{ request()->routeIs('admin.restaurant.chui.menu.Kot.slow.moving.page*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.chui.menu.Kot.slow.moving.page')}}">
+                                        <i class="las la-list-alt"></i><span>Slow Moving</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.restaurant.chui.menu.Kot.non.moving.page*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.chui.menu.Kot.non.moving.page')}}">
+                                        <i class="las la-list-alt"></i><span>Non Moving</span>
+                                    </a>
+                                </li>
+                            
+                            </ul>
+
+
+                            
+                        </li>
+
+
+
+
+                        <li class="">
+                            <a href="#waiterreport" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-utensils"></i><span>Waiter Reports</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="waiterreport" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.restaurant.chui.menu.Kot.waiter.qtr.sale.performance*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.chui.menu.Kot.waiter.qtr.sale.performance')}}">
+                                        <i class="las la-list-alt"></i><span>Qtr. Sale Performance</span>
+                                    </a>
+                                </li>
+
+
+                            
+                            </ul>
+                        </li>
+
 
 
                     </ul>

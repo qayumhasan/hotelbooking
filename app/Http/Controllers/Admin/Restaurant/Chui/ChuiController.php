@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Restaurant\Chui;
 
 use App\Http\Controllers\Controller;
+use App\Models\Emploayee_Sales_Report;
 use App\Models\Employee;
 use App\Models\ItemEntry;
 use App\Models\Restaurant_order_detail;
@@ -54,6 +55,21 @@ class ChuiController extends Controller
        $kotdetails = Restaurant_order_detail::where('table_no',$request->table_no)->where('waiter_id', $request->Waiter_name)->where('item_id', $request->items)->where('complement', $request->free_items)->where('kot_status',0)->where('is_active',0)->first();
 
         if ($kotdetails) {
+
+
+
+            $item = ItemEntry::where('id',$request->items)->decrement('no_of_sale',$kotdetails->qty);
+            $item = ItemEntry::where('id',$request->items)->increment('no_of_sale',$request->quantity);
+
+           
+
+
+
+            Emploayee_Sales_Report::where('kot_id',$kotdetails->id)->decrement('slae_amount',$kotdetails->amount);
+
+
+
+
             $kotdetails->table_no = $request->table_no;
             $kotdetails->kot_date = $request->res_date;
             $kotdetails->kot_time = $request->res_hour;
@@ -66,13 +82,27 @@ class ChuiController extends Controller
             $kotdetails->updated_date = Carbon::now();
             $item = ItemEntry::findOrFail($request->items);
             if ($item) {
+                $amount = $item->rate * $request->quantity;
                 $kotdetails->rate = $item->rate;
                 $kotdetails->amount = $item->rate * $request->quantity;
+                 Emploayee_Sales_Report::where('kot_id',$kotdetails->id)->increment('slae_amount',$amount);
             }
 
             $kotdetails->save();
 
+            $employeesales =  Emploayee_Sales_Report::where('kot_id',$kotdetails->id)->first();
+            $employeesales->waiter_id=$request->Waiter_name;
+            $employeesales->save();
+
+            
+
         } else {
+            
+
+            
+
+
+
             $kotdetails = new Restaurant_order_detail();
             $kotdetails->table_no = $request->table_no;
             $kotdetails->kot_date = $request->res_date;
@@ -92,6 +122,21 @@ class ChuiController extends Controller
             }
 
             $kotdetails->save();
+
+            date_default_timezone_set("Asia/Dhaka");
+           
+
+            $item = ItemEntry::where('id',$request->items)->increment('no_of_sale',$request->quantity);
+
+
+            $employeesales = new Emploayee_Sales_Report();
+            $employeesales->waiter_id=$request->Waiter_name;
+            $employeesales->slae_amount=$kotdetails->amount;
+            $employeesales->month_no=date('n');
+            $employeesales->month_name=date('F');
+            $employeesales->year=date('Y');
+            $employeesales->kot_id=$kotdetails->id;
+            $employeesales->save();
         }
 
         $kotdetails = Restaurant_order_detail::where('kot_status',0)->where('is_active',0)->where('table_no',$request->table_no)->get();
@@ -109,12 +154,21 @@ class ChuiController extends Controller
 
     public function deleteKotStatusByTableID($id)
     {
-        Restaurant_order_detail::findOrFail($id)->delete();
+        
+        $kotdelete =Restaurant_order_detail::findOrFail($id);
+
+        $item = ItemEntry::where('id',$kotdelete->item_id)->decrement('no_of_sale',$kotdelete->qty);
+
+        Emploayee_Sales_Report::where('kot_id',$kotdelete->id)->delete();
+
+        $kotdelete->delete();
+
     }
 
     public function editKotStatusByTableID($id)
     {
-        $items = Restaurant_order_detail::findOrFail($id);
+         $items = Restaurant_order_detail::findOrFail($id);
+        
         $sidemenus = json_decode($items->freemenu->items);
 
         return response()->json([$items, $sidemenus]);
