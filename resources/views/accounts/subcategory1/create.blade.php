@@ -31,14 +31,14 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                            <form action="{{route('admin.account.category.create')}}" method="POST">
+                            <form action="{{route('admin.account.subcategoryone.create')}}" method="POST">
                                  @csrf
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="fname">SubCategory Name:*</label>
-                                                <input type="text" class="form-control" name="subcategory_name" placeholder="SubCategory Name"/>
-                                                @error('subcategory_name')
+                                                <input type="text" class="form-control" name="subcategory_nameone" placeholder="SubCategory Name"/>
+                                                @error('subcategory_nameone')
                                                     <div style="color:red">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -46,12 +46,15 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="fname">Main Category Name: *</label>
-                                                <select class="form-control" name="is_active">
+                                                <select class="form-control" name="maincategory">
                                                     <option value="">--select--</option>
                                                     @foreach($allmaincategory as $category)
-                                                    <option value="0">Deactive</option>
+                                                    <option value="{{$category->id}}">{{$category->maincategory_name}}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('maincategory')
+                                                    <div style="color:red">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -95,8 +98,8 @@
                                                 <table id="datatable" class="table data-table table-striped table-bordered" >
                                                 <thead class="text-center">
                                                     <tr>
-                                                        <th>SubCategory Code</th>
                                                         <th>SubCategory Name</th>
+                                                        <th>SubCategory Code</th>
                                                         <th>MainCategory Code</th>
                                                         <th>MainCategory Name</th>
                                                         <th>Status</th>
@@ -104,7 +107,32 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-center">
-                                               
+                                                    @foreach($allsubcategory as $data)
+                                                        <tr>
+                                                            <td>{{$data->subcategory_nameone}}</td>
+                                                            <td>{{$data->subcategory_codeone}}</td>
+                                                            <td>{{$data->maincategory_code}}</td>
+                                                            <td>{{$data->maincategory_name}}</td>
+                                                        
+                                                            <td>
+                                                            @if($data->is_active==1)
+                                                            <span class="btn btn-success btn-sm">Active<span>
+                                                            @else
+                                                            <span class="btn btn-danger btn-sm">Deactive<span>
+                                                            @endif
+                                                            </td>
+                                                            <td>
+                                                            @if($data->is_active==1)
+                                                            <a class="badge bg-success-light mr-2"  data-toggle="tooltip" data-placement="top"  href="{{url('admin/account/subcategoryone/deactive/'.$data->id)}}" data-original-title="Active"><i class="la la-thumbs-up"></i></a>
+                                                            @else
+                                                                <a class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/account/subcategoryone/active/'.$data->id)}}" data-original-title="Deactive"><i class="la la-thumbs-down"></i></a>
+                                                            @endif
+                                                            <a class="badge bg-primary-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/account/subcategoryone/edit/'.$data->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
+                                                            <a id="delete" class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/accounts/subcategoryone/delete/'.$data->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
+                                                            
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                                 </table>
                                             </div>

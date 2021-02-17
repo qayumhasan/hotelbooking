@@ -98,10 +98,33 @@
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
                             <ul id="subcategoryaccounts" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                             
                                 <li class="{{ request()->routeIs('admin.account.subcategoryone.create*') ? 'active' : '' }}">
                                     <a href="{{route('admin.account.subcategoryone.create')}}">
                                         <i class="las la-list-alt"></i><span>All SubCategoryOne</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.account.subcategorytwo.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.subcategorytwo.create')}}">
+                                        <i class="las la-list-alt"></i><span>All SubCategoryTwo</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#chartofaccount" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Chart Of Account</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="chartofaccount" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.chartofaccount.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.chartofaccount.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Chart Of Account</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.chartofaccount.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.chartofaccount.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Chart Of Account</span>
                                     </a>
                                 </li>
                             </ul>
