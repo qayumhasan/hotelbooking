@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Restaurant\Chui;
 
 use App\Http\Controllers\Controller;
+use App\Models\Checkin;
 use App\Models\Restaurant_order_detail;
 use App\Models\Restaurant_Order_head;
 use App\Models\RestaurantTable;
@@ -40,5 +41,13 @@ class OtherInfoController extends Controller
             return view('restaurant.chui.otherinfo.ajax.kot_history_ajax',compact('kothistores'));
         }
       
+    }
+
+
+    public function inHouseGuest()
+    {
+        
+        $checkins = Checkin::where('is_deleted',0)->orderBy('id', 'DESC')->get();
+        return view('restaurant.chui.otherinfo.in_house_guest', compact('checkins'));
     }
 }

@@ -91,6 +91,11 @@
                                         <i class="las la-list-alt"></i><span>KOT History</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.restaurant.chui.menu.kot.inhouse.guest*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.chui.menu.kot.inhouse.guest')}}">
+                                        <i class="las la-list-alt"></i><span>In House Guest</span>
+                                    </a>
+                                </li>
                             
                             </ul>
                         </li>
@@ -143,6 +148,12 @@
                                 <li class="{{ request()->routeIs('admin.restaurant.chui.menu.Kot.waiter.qtr.sale.performance*') ? 'active' : '' }}">
                                     <a href="{{route('admin.restaurant.chui.menu.Kot.waiter.qtr.sale.performance')}}">
                                         <i class="las la-list-alt"></i><span>Qtr. Sale Performance</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.restaurant.chui.menu.Kot.waiter.total.sale*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.restaurant.chui.menu.Kot.waiter.total.sale')}}">
+                                        <i class="las la-list-alt"></i><span>Total Sale</span>
                                     </a>
                                 </li>
 

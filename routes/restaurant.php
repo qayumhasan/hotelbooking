@@ -57,6 +57,7 @@ Route::middleware('admin')->prefix(md5('admin/chui'))->group(function(){
 
             Route::get('/history',[OtherInfoController::class,'OtherInfo'])->name('admin.restaurant.menu.Kot.history');
             Route::post('/history/search',[OtherInfoController::class,'KotHistorySearch'])->name('admin.restaurant.chui.menu.kot.history.search');
+            Route::get('/in/house/geust',[OtherInfoController::class,'inHouseGuest'])->name('admin.restaurant.chui.menu.kot.inhouse.guest');
             
         });
 
@@ -83,6 +84,8 @@ Route::middleware('admin')->prefix(md5('admin/chui'))->group(function(){
 
         Route::prefix(md5('/admin/restaurant/waiter/performance'))->group(function(){
             Route::get('/qtr',[WaiterReportController::class,'qtrWaiterPerformance'])->name('admin.restaurant.chui.menu.Kot.waiter.qtr.sale.performance');
+            Route::get('/total/sale',[WaiterReportController::class,'totalWaiterSale'])->name('admin.restaurant.chui.menu.Kot.waiter.total.sale');
+            Route::post('/search',[WaiterReportController::class,'totalWaiterSaleSearch'])->name('admin.restaurant.chui.menu.Kot.waiter.sale.serarch');
         }); 
 
 
