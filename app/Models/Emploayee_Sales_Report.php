@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Emploayee_Sales_Report extends Model
 {
     use HasFactory;
+
+    public function waiter()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }
