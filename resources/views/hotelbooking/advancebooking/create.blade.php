@@ -317,7 +317,7 @@ $time = date("h:i");
                             <span id="title" class="text-danger" style="font-size: 12px;"></span>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-sm" name="guest_name">
+                            <input type="text" class="form-control form-control-sm" name="guest_name" id="guest_name_data">
                             <span id="guest_name" class="text-danger" style="font-size: 12px;"></span>
                         </div>
                     </div>
@@ -326,7 +326,7 @@ $time = date("h:i");
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-2 col-form-label col-form-label-sm">Print Name:</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control form-control-sm" name="print_name">
+                            <input type="text" class="form-control form-control-sm" name="print_name" id="print_name_data">
                             <span id="print_name" class="text-danger" style="font-size: 12px;"></span>
                         </div>
                         <label for="inputPassword" class="col-sm-1 col-form-label col-form-label-sm">Gender:</label>
@@ -379,7 +379,7 @@ $time = date("h:i");
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
 
@@ -392,6 +392,13 @@ $time = date("h:i");
 
 
 <script>
+
+    $(document).ready(function(){
+        $('#guest_name_data').keypress(function(e){
+            console.log(e.target.value);
+            $('#print_name_data').val(e.target.value);
+        });
+    });
     $(document).ready(function() {
         $('#room_section').hide();
     });
@@ -602,9 +609,18 @@ $time = date("h:i");
                 type: type,
                 data: request,
                 success: function(data) {
-                    console.log(data);
+                  
                     $('#addguest').modal('hide');
-                    toastr.success(data.message);
+
+                    $('#select_guest_name').empty();
+                    $('#select_guest_name').append(' <option value="0">--Please Guest Name--</option>');
+                    $.each(data,function(index,divisionobj){
+                        
+                        $('#select_guest_name').append('<option value="' + divisionobj.id + '">'+divisionobj.guest_name+'</option>');
+                    });
+
+                    // toastr.success('Guest Insert Succssfully!');
+                    
                     //log(data);
 
                     //     $('.loading_button').hide();

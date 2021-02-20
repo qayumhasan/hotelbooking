@@ -490,6 +490,7 @@ Route::middleware(['admin'])->prefix('admin/advance/booking')->group(function ()
     Route::get('/', [AdvanceBookingController::class, 'showAdvanceBookingForm'])->name('admin.advance.booking');
     Route::get('/get/room/{id}', [AdvanceBookingController::class, 'advanceBookingGetRoom']);
     Route::post('/guest/name/store', [AdvanceBookingController::class, 'guestNameStore'])->name('admin.guest.name.store');
+    
     Route::post('/advance/booking/store', [AdvanceBookingController::class, 'advanceBookingStore'])->name('admin.advance.booking.store');
     Route::get('/check/{id}', [AdvanceBookingController::class, 'advanceBookingCheck']);
 
