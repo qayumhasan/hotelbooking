@@ -11,6 +11,7 @@ use App\Models\Guest;
 use App\Models\Room;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AdvanceBookingController extends Controller
@@ -36,6 +37,7 @@ class AdvanceBookingController extends Controller
 
     public function guestNameStore(Request $request)
     {
+        
         $request->validate([
             'title' => 'required',
             'print_name' => 'required',
@@ -54,12 +56,19 @@ class AdvanceBookingController extends Controller
         $guest->company_name = $request->company_name;
         $guest->mobile = $request->mobile;
         $guest->email = $request->email;
-
+        $guest->entry_by = Auth::user()->id;
+  
+        
         if ($guest->save()) {
-            return response()->json([
-                'message' => 'Guest Store Successfully!',
-            ]);
+            $guests = Guest::where('is_active',1)->where('is_deleted',0)->get();
+            return response()->json($guests);
         }
+
+        // if ($guest->save()) {
+        //     return response()->json([
+        //         'message' => 'Guest Store Successfully!',
+        //     ]);
+        // }
     }
 
     public function advanceBookingStore(Request $request)
