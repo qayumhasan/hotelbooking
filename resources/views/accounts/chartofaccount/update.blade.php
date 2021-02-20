@@ -21,7 +21,7 @@
                        <a href="{{route('admin.chartofaccount.create')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Chart Of Account</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.chartofaccount.create')}}" method="POST">
+                <form action="{{route('admin.chartofaccount.update')}}" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-9">
@@ -33,15 +33,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="fname">Description Of Account: *</label>
-                                            <input type="text" class="form-control"  name="desription_of_account" placeholder="Item Name" value="{{$edit->desription_of_account}}"/>
-                                            @error('desription_of_account')
-                                                <div style="color:red">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                    
                                      <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Category Name: *</label>
@@ -66,7 +58,7 @@
                                             @endphp
                                                 <option value="">--Select--</option>
                                                @foreach($allmaincategory as $maincate)
-                                                <option value="{{$maincate->id}}">{{$maincate->maincategory_name}}</option>
+                                                <option value="{{$maincate->id}}" @if($edit->maincategory_id == $maincate->id) selected @endif>{{$maincate->maincategory_name}}</option>
                                                 @endforeach   
                                                
                                             </select>
@@ -85,7 +77,7 @@
                                             @endphp
                                                 <option value="">--Select--</option>
                                                @foreach($allsubcategoryone as $subone)
-                                                <option value="{{$subone->id}}">{{$subone->subcategory_nameone}}</option>
+                                                <option value="{{$subone->id}}" @if($edit->subcategoryone_id == $subone->id) selected @endif>{{$subone->subcategory_nameone}}</option>
                                                 @endforeach    
                                                
                                             </select>
@@ -98,8 +90,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">SubCategory Name Two: </label>
+                                            @php
+                                                $allsubcategorytwo=App\Models\AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->where('subcategoryone_id',$edit->subcategoryone_id)->get();
+                                            @endphp
                                             <select name="subcate_two" class="form-control" id="subcate_two">
-                                                <option value="">--Select--</option>
+                                                @foreach($allsubcategorytwo as $sucatetwo)
+                                                <option value="{{$sucatetwo->id}}" @if($edit->subcategorytwo_id == $sucatetwo->id) selected @endif>{{$sucatetwo->subcategory_nametwo}}</option>
+                                                @endforeach
                                                 
                                                
                                             </select>
@@ -107,6 +104,16 @@
                                                 <div style="color:red">{{ $message }}</div>
                                             @enderror
                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="fname">Description Of Account: *</label>
+                                            <input type="text" class="form-control"  name="desription_of_account" placeholder="Description Of Account" value="{{$edit->desription_of_account}}"/>
+                                            <input type="hidden" name="id" value="{{$edit->id}}"/>
+                                            @error('desription_of_account')
+                                                <div style="color:red">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>

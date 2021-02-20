@@ -23,7 +23,7 @@
                 </div>
                
                 <div class="row">
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-header d-flex justify-content-between asif">
                                 <div class="header-title">
@@ -63,8 +63,8 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
-                    <div class="col-md-8">
+                    </div> -->
+                    <div class="col-md-12">
                         <div class="card shadow-sm shadow-showcase">
                         
                             <div class="card-body">
@@ -89,7 +89,7 @@
                                                         <th>Category Code</th>
                                                         <th>Category Name</th>
                                                         <th>Status</th>
-                                                        <th>Action</th>
+                                                        <!-- <th>Action</th> -->
                                                     </tr>
                                                 </thead>
                                                 <tbody class="text-center">
@@ -105,12 +105,12 @@
                                                         @endif
                                                         </td>
                                                         <td>
-                                                        @if($data->is_active==1)
+                                                        <!-- @if($data->is_active==1)
                                                         <a class="badge bg-success-light mr-2"  data-toggle="tooltip" data-placement="top"  href="{{url('admin/account/category/deactive/'.$data->id)}}" data-original-title="Active"><i class="la la-thumbs-up"></i></a>
                                                         @else
                                                             <a class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/account/category/active/'.$data->id)}}" data-original-title="Deactive"><i class="la la-thumbs-down"></i></a>
                                                         @endif
-                                                        <a class="badge bg-primary-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/account/category/edit/'.$data->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
+                                                        <a class="badge bg-primary-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/account/category/edit/'.$data->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a> -->
                                                         <!-- <a id="delete" class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/accounts/category/delete/'.$data->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a> -->
                                                         
                                                         </td>

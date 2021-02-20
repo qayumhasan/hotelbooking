@@ -33,15 +33,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="fname">Description Of Account: *</label>
-                                            <input type="text" class="form-control"  name="desription_of_account" placeholder="Item Name"/>
-                                            @error('desription_of_account')
-                                                <div style="color:red">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                  
                                      <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Category Name: *</label>
@@ -102,6 +94,15 @@
                                                 <div style="color:red">{{ $message }}</div>
                                             @enderror
                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="fname">Description Of Account: *</label>
+                                            <input type="text" class="form-control"  name="desription_of_account" placeholder="Description Of Account"/>
+                                            @error('desription_of_account')
+                                                <div style="color:red">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
