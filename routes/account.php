@@ -54,3 +54,4 @@ Route::get('admin/chartofaccount/active/{id}', [ChartOfAccountController::class,
 Route::get('admin/chartofaccount/deactive/{id}', [ChartOfAccountController::class, 'deactive']);
 Route::get('admin/chartofaccount/edit/{id}', [ChartOfAccountController::class, 'edit']);
 Route::get('admin/chartofaccount/delete/{id}', [ChartOfAccountController::class, 'delete']);
+Route::post('admin/chartofaccount/update', [ChartOfAccountController::class, 'update'])->name('admin.chartofaccount.update');

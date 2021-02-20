@@ -688,6 +688,36 @@ $current = date("m/d/Y");
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- endmodal -->
+<script>
+    function getallitem(){
+      
+        $.get('{{ url('get/allitem/item/') }}', {_token: '{{ csrf_token() }}'},
+            function(data) {
+                  
+                      
+                       var html = '<div class="form-group" id="allnewitem">';
+                         html += '<label for="fname">Item Name: *</label>';
+                         html += '<input type="text" id="item_name" name="item_name" class="form-control item_name" list="allitem" placeholder="Item" />';
+                         html += '<input type="hidden" id="i_id" name="i_id"/>';
+                         html += '<datalist id="allitem">';
+
+                        $.each(data,function(index,districtObj){
+                           
+                              html += '<option value="' + districtObj.item_name + '">'+districtObj.item_name+'</option>';
+                           
+                        });
+                        html += '</datalist>';
+                        html += '<div style="color:red" id="item_err"></div>';
+                        $('#allnewitem').remove();
+                        $('#allitempurchase').append(html);
+            
+                 });
+	}
+
+    getallitem();
+
+</script>
+
 <script type="text/javascript">
   $(document).ready(function() {
      $("#item_name").on('change', function(){
@@ -1214,35 +1244,7 @@ function taxedit(el) {
 	getallsuplier();
 </script>
 
-<script>
-    function getallitem(){
-      
-        $.get('{{ url('get/allitem/item/') }}', {_token: '{{ csrf_token() }}'},
-            function(data) {
-                       // console.log("ok");
-                      
-                       var html = '<div class="form-group" id="allnewitem">';
-                         html += '<label for="fname">Item Name: *</label>';
-                         html += '<input type="text" id="item_name" name="item_name" class="form-control item_name" list="allitem" placeholder="Item" />';
-                         html += '<input type="hidden" id="i_id" name="i_id"/>';
-                         html += '<datalist id="allitem">';
 
-                        $.each(data,function(index,districtObj){
-                           
-                              html += '<option value="' + districtObj.item_name + '">'+districtObj.item_name+'</option>';
-                           
-                        });
-                        html += '</datalist>';
-                        html += '<div style="color:red" id="item_err"></div>';
-                        $('#allnewitem').remove();
-                        $('#allitempurchase').append(html);
-            
-                 });
-	}
-
-    getallitem();
-
-</script>
 <script>
     $('body').on('keydown','input,select,textarea',function(e){
     var self=$(this)
