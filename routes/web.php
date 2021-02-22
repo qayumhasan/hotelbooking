@@ -200,10 +200,13 @@ Route::post(md5('admin/itementry/update'), [ItemEntryController::class, 'update'
 Route::get(md5('admin/ordercusition/create'), [OrderRequisitionController::class, 'create'])->name('admin.ordercusition.create');
 Route::get(md5('admin/ordercusition/index'), [OrderRequisitionController::class, 'index'])->name('admin.ordercusition.index');
 Route::get('/get/item/all/{item_name}', [OrderRequisitionController::class, 'getitem']);
-Route::post('/get/item/show/{invoice}', [OrderRequisitionController::class, 'allrecuitem'])->name('get.item.show');
+Route::post('/get/item/showlol/{invoice}', [OrderRequisitionController::class, 'allrecuitem']);
+Route::post('/get/totalqty/orderrequ/{invoice}', [OrderRequisitionController::class, 'allqtyorrequ']);
+
+
 Route::post('/get/item/delete/', [OrderRequisitionController::class, 'itemdelete'])->name('get.item.delete');
-Route::get('/get/item/insert/', [OrderRequisitionController::class, 'iteminsert'])->name('item.insert.data');
-Route::post('/get/item/order/submit/', [OrderRequisitionController::class, 'ordersubmit'])->name('orderhead.submit');
+Route::get('/get/item/insert/lol', [OrderRequisitionController::class, 'iteminsert']);
+Route::post('/get/item/order/submit/lol', [OrderRequisitionController::class, 'ordersubmit']);
 Route::post('/get/oderrecusition/edit/', [OrderRequisitionController::class, 'orderedit'])->name('get.item.edit');
 Route::get('admin/ordercusition/edit/{id}', [OrderRequisitionController::class, 'edit']);
 Route::post('admin/ordercusition/update/', [OrderRequisitionController::class, 'orderupdate'])->name('orderhead.update');

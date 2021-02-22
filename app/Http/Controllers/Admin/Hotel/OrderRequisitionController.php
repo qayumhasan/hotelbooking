@@ -53,7 +53,7 @@ class OrderRequisitionController extends Controller
     }
     // order recuinser
     public function iteminsert(Request $request){
-       
+       //return $request;
        if($request->i_id == ''){
      
            $validated = $request->validate([
@@ -120,14 +120,15 @@ class OrderRequisitionController extends Controller
 
     // 
     public function ordersubmit(Request $request){
-        
+       // return $request;
+
         if($request->num_of_qty > 0){
                 $insert=OrderHead::insert([
                     'invoice_no'=>$request->invoice_no,
                     'remarks'=>$request->remarks,
                     'num_of_qty'=>$request->num_of_qty,
                     'num_of_item'=>$request->num_of_item,
-                    'date'=>Carbon::now()->toDateTimeString(),
+                    'date'=>$request->date,
                 ]);
                 if($insert){
                     $notification=array(
@@ -144,7 +145,7 @@ class OrderRequisitionController extends Controller
                 }
         }else{
             $notification=array(
-                'messege'=>'There Is no Item Found',
+                'messege'=>'There Is no Item Foundd',
                 'alert-type'=>'error'
                 );
             return redirect()->back()->with($notification);
@@ -225,6 +226,18 @@ class OrderRequisitionController extends Controller
                 );
             return redirect()->back()->with($notification);
         }
+    }
+
+
+    // 
+    public function allqtyorrequ($invoice){
+        $number_of_qty=OrderHeadDetails::where('invoice_no',$invoice)->sum('qty');
+        $number_of_item=OrderHeadDetails::where('invoice_no',$invoice)->count();
+
+        return response()->json([
+            'number_qty'=>$number_of_qty,
+            'number_item'=>$number_of_item,
+        ]);
     }
 
 

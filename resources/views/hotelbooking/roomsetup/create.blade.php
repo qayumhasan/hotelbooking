@@ -138,7 +138,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="custom-control custom-radio custom-radio-color-checked custom-control">
-                                            <input type="radio" name="is_active" id="customRadio-1" class="custom-control-input bg-primary" value="1">
+                                            <input type="radio" name="is_active" id="customRadio-1" class="custom-control-input bg-primary" value="1" checked>
                                             <label class="custom-control-label" for="customRadio-1"> Active </label>
                                         </div>
                                         <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">

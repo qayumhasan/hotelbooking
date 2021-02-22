@@ -9,6 +9,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="content-page">
     <div class="container-fluid">
+    <form action="{{route('orderhead.update')}}" method="post">
+            @csrf
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
@@ -23,8 +25,7 @@
                 <div class="row">
                     
                     <div class="col-md-12">
-                    <form action="#" method="get" id="option-choice-form">
-                        @csrf
+       
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-header d-flex justify-content-between">
                                 <div class="header-title">
@@ -74,10 +75,9 @@
                             </div>
 
                         </div>
-                    </form>
+                  
                     </div>
-        <form action="{{route('orderhead.update')}}" method="post">
-            @csrf
+
                     <div class="col-md-12">
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-header d-flex justify-content-between">
@@ -87,8 +87,46 @@
                             </div>
                             <div class="card-body">
                                 <div class="row" id="showallitem">
-                                 
+
+
+
                                  </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+
+                                <div class="col-md-12">
+                                         <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="fname">Remarks: *</label>
+                                                        <textarea class="form-control" name="remarks"/>{{$edit->remarks}}</textarea>
+                                                        @error('branch_id')
+                                                            <div style="color:red">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="fname">Number Of Item: </label>
+                                                        <input type="text" class="form-control num_of_item" placeholder="" disabled/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="fname">Number Of Quantity: </label>
+                                                        <input type="text" class="form-control num_of_qty" value="" disabled/>
+                                                        <input type="hidden" name="num_of_item"  value=""/>
+                                                        <input type="hidden" name="num_of_qty"  value=""/>
+                                                      
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,18 +138,12 @@
                             <div class="card shadow-sm shadow-showcase">
                                 <div class="card-header d-flex justify-content-between">
                                     <div class="header-title">
-                                        <h4 class="card-title">Item Name</h4>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <ul>
-                                                @foreach($allitem as $item)
-                                                <li>{{$item->item_name}}</li>
-                                                @endforeach
-                                              
-                                            </ul>
+                                         
                                         </div>
                                     </div>
                                 </div>
@@ -121,9 +153,9 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div id="file-upload-form" class="uploader-file">
+                                          
                                                 <button type="submit" class="btn btn-success">Update</button>
-                                            </div>
+                                          
                                         </div>
                                     </div>
                                 </div>
@@ -136,6 +168,7 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
   $(document).ready(function() {
      $('input[name="item_name"]').on('change', function(){
@@ -167,25 +200,42 @@
 <script>
 $(document).ready(function() {
     $('#addnow').on('click', function() {
-      // alert('ok');
+         var i_id = $("#i_id").val();
+         var item_name = $("#item_name").val();
+         var unit = $("#unit").val();
+         var qty = $("#Qty").val();
+         var invoice_no = $("#invoice_no").val();
+         var date = $("#date").val();
+     
         $.ajax({
             type: 'GET',
-            url: "{{route('item.insert.data')}}",
-            data: $('#option-choice-form').serializeArray(),
+            url: "{{url('/get/item/insert/lol')}}",
+           
+            data: {
+                i_id:i_id,
+                item_name:item_name,
+                unit:unit,
+                qty:qty,
+                i_id:i_id,
+                invoice_no:invoice_no,
+                date:date,
+            },
 
             success: function(data) {
                 $('#item_err').html('');
+                totalqty();
                 iziToast.success({  message: 'success ',
                                         'position':'topCenter'
                                     });
-                //  document.getElementById('cartdatacount').innerHTML = data.count;
-                //  document.getElementById('checkoutid').innerHTML = data.count;
+               
                 $('#item_name').val("");
                 $('#unit').val("");
                 $('#unit_name').val("");
                 $('#Qty').val("");
+                $("#i_id").val("");
 
                 alldatashow();
+                mainshow();
             },
 
             error: function (err) {
@@ -202,27 +252,26 @@ $(document).ready(function() {
 
 <script>
     function alldatashow() {
-      //alert("ok");
         var invoice = $("#invoice_no").val();
-        //alert(invoice);
-        $.post('{{ url('/get/item/show/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
+        $.post('{{ url('/get/item/showlol/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
             function(data) {
 			   $('#showallitem').html(data);
 
             });
+            
 	}
 
 	alldatashow();
 </script>
+
 <script>
     function cartDatadelete(el) {
         
-        
-       //alert(el.value);
+       
         $.post('{{route('get.item.delete')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
             function(data) {
                 $('#addtocartshow').html(data);
-
+                totalqty();
                 if (data) {
                   iziToast.success({  message: 'Delete success ',
                                           'position':'topCenter'
@@ -232,10 +281,10 @@ $(document).ready(function() {
 
             });
      alldatashow();
+   
 	}
 	cartheaderdelete();
 </script>
-
 <script>
     function cartdata(el) {
         
@@ -254,8 +303,25 @@ $(document).ready(function() {
      alldatashow();
    
 	}
-	cartheaderdelete();
+
 
 </script>
 
+<script>
+    function totalqty() {
+      //alert("ok");
+        var invoice = $("#invoice_no").val();
+       // alert(invoice);
+        $.post('{{ url('get/totalqty/orderrequ/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
+            function(data) {
+                //console.log(data);
+			   $('.num_of_qty').val(data.number_qty);
+               $('.num_of_item').val(data.number_item);
+
+            });
+            
+	}
+
+	totalqty();
+</script>
 @endsection

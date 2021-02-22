@@ -47,12 +47,11 @@ $current = date("m/d/Y");
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="fname">From Center : *</label>
-                                            <input  type="text" class="form-control" name="from_center"  list="allstock" placeholder="--select--"  value="{{$edit->from_center}}"/>
-                                            <datalist id="allstock">
+                                            <select name="from_center" class="form-control" placeholder="--select--">
                                                 @foreach($allstock as $stock)
-                                                <option value="{{$stock->name}}">{{$stock->name}}</option>
+                                                <option value="{{$stock->id}}" @if($edit->from_center == $stock->id) selected @endif>{{$stock->name}}</option>
                                                 @endforeach
-                                            </datalist>
+                                            </select>
                                             @error('from_center')
                                                 <div style="color:red">{{ $message }}</div>
                                             @enderror
@@ -61,12 +60,11 @@ $current = date("m/d/Y");
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="fname">To Center : *</label>
-                                            <input  type="text" class="form-control" name="to_center" list="alltostock" placeholder="--select--" value="{{$edit->to_center}}"/>
-                                            <datalist id="alltostock">
+                                            <select name="to_center" class="form-control" placeholder="--select--">
                                                 @foreach($allstock as $stock)
-                                                <option value="{{$stock->name}}">{{$stock->name}}</option>
+                                                <option value="{{$stock->id}}" @if($edit->to_center == $stock->id) selected @endif>{{$stock->name}}</option>
                                                 @endforeach
-                                            </datalist>
+                                            </select>
                                             @error('to_center')
                                                 <div style="color:red">{{ $message }}</div>
                                             @enderror
