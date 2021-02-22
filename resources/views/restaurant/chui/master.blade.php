@@ -318,6 +318,7 @@
     <script src="{{asset('public/backend')}}/assets/js/fullcalender.js"></script>
 
     <script src="{{asset('public/backend')}}/assets/jquery.PrintArea.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/datepiker.js"></script>
     <script>
         @if(Session::has('messege'))
         var type = "{{Session::get('alert-type','info')}}"
@@ -402,6 +403,14 @@
                 $("div.printableAreasaveprint").printArea(options);
             });
         });
+    </script>
+
+<script>
+        $('.datepicker').datepicker(
+            {
+                format: 'dd/mm/yyyy',
+            }
+        );
     </script>
 
 

@@ -87,22 +87,58 @@ $time = date("h:i");
       </div>
       <div class="row">
 
-   @if(count($tables) >0)
-      @foreach($tables as $row)
+         @if(count($tables) >0)
+         @foreach($tables as $row)
          <div class="col-md-6 col-lg-4">
             <div class="cardoverflow-hidden card-min-height">
 
 
                <div class="card-item">
                   <div class="status text-center 
-                 bg-green
+                 {{$row->is_booked == 1 ?'bg-red':'bg-green'}}
                   ">
-                     <span class="status-heading">{{ $row->table_no}}</span>
+                     <span  class="status-heading">{{ $row->table_no}}</span>
 
                   </div>
 
 
-                  <!-- room status Available area start -->
+                  <!-- room status booked -->
+
+                  @if($row->is_booked == 1)
+                  <div class="row p-0">
+                     <div class="col-6 p-0">
+                        <div class="service">
+                           <ul>
+                              <li class="text-color-service">{{$row->waiter->employee_name ?? ''}}</li>
+                              <li><b>BDT</b> {{round($row->total_amounnt,2)}}</li>
+                              <li>{{ \Carbon\Carbon::parse($row->data)->diffForHumans()}}</li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="col-6">
+
+                        <ul class="list-group pt-1 bg-menu">
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu getkotitem" data-toggle="modal" data-target=".addkotitems" data-whatever="{{{$row->id}}}"><i class="fa fa-history" aria-hidden="true"></i> KOT</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a class="bg-menu getkothistory" class="btn btn-primary" data-toggle="modal" data-target=".historymodal" data-whatever="{{$row->id}}"><i class="fa fa-globe" aria-hidden="true"></i> Billing</a>
+                           </li>
+
+                           <li class="list-group-item bg-menu">
+                              <a data-toggle="modal" data-target=".ataglance" data-whatever="{{$row->id}}" class="bg-menu ataglancebtn"><i class="fa fa-calendar-check" aria-hidden="true"></i> At a Glance
+                              </a>
+                           </li>
+
+                        </ul>
+
+                     </div>
+                  </div>
+
+                  <!-- room status booked end-->
+                  @else
+                  <!-- room status available -->
 
                   <div class="row p-0">
                      <div class="col-6 p-0">
@@ -115,23 +151,30 @@ $time = date("h:i");
                         </div>
                      </div>
                      <div class="col-6">
+
                         <ul class="list-group pt-1 bg-menu">
                            <li class="list-group-item bg-menu">
                               <a class="bg-menu getkotitem" data-toggle="modal" data-target=".addkotitems" data-whatever="{{{$row->id}}}"><i class="fa fa-history" aria-hidden="true"></i> KOT</a>
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu getkothistory" class="btn btn-primary" data-toggle="modal" data-target=".historymodal" data-whatever="{{$row->id}}"><i class="fa fa-globe" aria-hidden="true"></i> History</a>
+                              <a class="bg-menu getkothistory" class="btn btn-primary"><i class="fa fa-globe" aria-hidden="true"></i> History</a>
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a data-toggle="modal" data-target=".ataglance" data-whatever="{{$row->id}}" class="bg-menu ataglancebtn"><i class="fa fa-calendar-check" aria-hidden="true"></i> At a Glance
+                              <a data-toggle="modal" class="bg-menu ataglancebtn"><i class="fa fa-calendar-check" aria-hidden="true"></i> At a Glance
                               </a>
                            </li>
 
                         </ul>
+
                      </div>
                   </div>
+
+
+
+                  <!-- room status available end -->
+                  @endif
 
 
 
@@ -140,8 +183,8 @@ $time = date("h:i");
 
             </div>
          </div>
-      @endforeach
-   @endif
+         @endforeach
+         @endif
 
 
 
@@ -290,15 +333,15 @@ $time = date("h:i");
 
 
 <div class="modal fade historymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered modal-xl" id="kothistorytable" role="document">
-      
+   <div class="modal-dialog modal-xl" id="kothistorytable" role="document">
+
    </div>
 </div>
 
 
 <div class="modal fade ataglance" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog modal-dialog-centered modal-xl" id="kotatglancedetails" role="document">
-     
+
    </div>
 </div>
 
@@ -337,54 +380,56 @@ $time = date("h:i");
    randomnumber = Math.random();
    var getkotitem = document.querySelectorAll('.getkotitem');
 
-   getkotitem.forEach(function(e){
+   getkotitem.forEach(function(e) {
       e.addEventListener('click', function() {
-         
+
          $('#kot_materails').empty();
          document.querySelectorAll('.deleteddata').forEach(function(e) {
-                  e.remove();
-               });
-      
-      var modal = $(this);
-      var data = modal.data('whatever');
-      
-      $('#tbl_no').val(data)
+            e.remove();
+         });
+
+         var modal = $(this);
+         var data = modal.data('whatever');
+
+         $('#tbl_no').val(data)
 
 
-      $.ajaxSetup({
-         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-         }
-      });
-      $.ajax({
-         type: 'get',
-         url: "{{ url('/admin/restaurant/chui/menu/get/kot/item') }}/" + data,
-         success: function(data) {
-            
-            if (data.length > 0) {
-               document.querySelectorAll('.deleteddata').forEach(function(e) {
-                  e.remove();
-               });
-               
-               
-               data.forEach(function(item, index) {
-
-                  
-
-                  var html = '<tr class="deleteddata"><th scope="row">' + item.item.item_name + '</th><td>' + item.qty + '</td><td>' + item.rate + '</td><td>' + item.amount + '</td><td><a data-whatever="' + item.id + '" onclick="edititem(this)" class="badge bg-primary-light mr-2"><i class="la la-edit"></i></a><a data-whatever="' + item.id + '"  class="badge bg-danger-light mr-2" onclick="deletitem(this)"><i class="la la-trash"></i></a></td></tr>'
-                  document.querySelector('#kot_materails').insertAdjacentHTML('afterend', html);
-                  document.querySelector('#book_no').value = item.booking_no;
-
-               });
+         $.ajaxSetup({
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+         });
+         $.ajax({
+            type: 'get',
+            url: "{{ url('/admin/restaurant/chui/menu/get/kot/item') }}/" + data,
+            success: function(data) {
 
-         }
-      });
+               $('#kot_materails').empty();
+               $('#kot_materails').append(data);
+
+               // if (data.length > 0) {
+               //    document.querySelectorAll('.deleteddata').forEach(function(e) {
+               //       e.remove();
+               //    });
 
 
-   })
+               //    data.forEach(function(item, index) {
+
+
+
+               //       var html = '<tr class="deleteddata"><th scope="row">' + item.item.item_name + '</th><td>' + item.qty + '</td><td>' + item.rate + '</td><td>' + item.amount + '</td><td><a data-whatever="' + item.id + '" onclick="edititem(this)" class="badge bg-primary-light mr-2"><i class="la la-edit"></i></a><a data-whatever="' + item.id + '"  class="badge bg-danger-light mr-2" onclick="deletitem(this)"><i class="la la-trash"></i></a></td></tr>'
+               //       document.querySelector('#kot_materails').insertAdjacentHTML('afterend', html);
+               //       document.querySelector('#book_no').value = item.booking_no;
+
+               //    });
+               // }
+
+            }
+         });
+
+
+      })
    });
-   
 </script>
 
 
@@ -423,21 +468,22 @@ $time = date("h:i");
          data: elements.items,
          url: "{{ route('admin.restaurant.chui.menu.kot.details.store') }}",
          success: function(data) {
-            console.log(data);
-
-            document.querySelectorAll('.deleteddata').forEach(function(e) {
-               e.remove();
-            });
-            data.forEach(function(item, index) {
-
-               var html = '<tr class="deleteddata"><th scope="row">' + item.item.item_name + '</th><td>' + item.qty + '</td><td>' + item.rate + '</td><td>' + item.amount + '</td><td><a data-whatever="' + item.id + '" onclick="edititem(this)" class="badge bg-primary-light mr-2"><i class="la la-edit"></i></a><a data-whatever="' + item.id + '"  class="badge bg-danger-light mr-2" onclick="deletitem(this)"><i class="la la-trash"></i></a></td></tr>'
-               document.querySelector('#kot_materails').insertAdjacentHTML('afterend', html);
-               document.querySelector('#book_no').value = item.booking_no;
-
-            });
+            $('#kot_materails').empty();
+            $('#kot_materails').append(data);
 
 
-            $('#Waiter_name').val('');
+
+            // document.querySelectorAll('.deleteddata').forEach(function(e) {
+            //    e.remove();
+            // });
+            // data.forEach(function(item, index) {
+
+            //    var html = '<tr class="deleteddata"><th scope="row">' + item.item.item_name + '</th><td>' + item.qty + '</td><td>' + item.rate + '</td><td>' + item.amount + '</td><td><a data-whatever="' + item.id + '" onclick="edititem(this)" class="badge bg-primary-light mr-2"><i class="la la-edit"></i></a><a data-whatever="' + item.id + '"  class="badge bg-danger-light mr-2" onclick="deletitem(this)"><i class="la la-trash"></i></a></td></tr>'
+            //    document.querySelector('#kot_materails').insertAdjacentHTML('afterend', html);
+            //    document.querySelector('#book_no').value = item.booking_no;
+
+            // });
+
             $('#items').val('');
             $('#free_side_menu').val('');
             $('#quantity').val('');
@@ -489,7 +535,7 @@ $time = date("h:i");
          type: 'get',
          url: "{{ url('/admin/restaurant/chui/menu/delete/kot/item') }}/" + id,
          success: function(data) {
-
+            console.log(data);
 
          }
       });
@@ -510,24 +556,35 @@ $time = date("h:i");
          type: 'get',
          url: "{{ url('/admin/restaurant/chui/menu/edit/kot/item') }}/" + id,
          success: function(data) {
-            // console.log(data);
+
+
+            console.log(data);
+
             $('#free_side_menu').empty();
             $('#Waiter_name').val(data[0].waiter_id).selected;
             $('#items').val(data[0].item_id).selected;
-            data[1].forEach(function(item) {
+            if (data[1] != null) {
 
-               if (data[0].complement == item.item_id) {
-                  $('#free_side_menu').append('<option selected value="' + item.item_id + '">' + item.item_name + '</option>');
-               } else {
-                  $('#free_side_menu').append('<option value="' + item.item_id + '">' + item.item_name + '</option>');
-               }
+               data[1].forEach(function(item) {
+
+                  if (data[0].complement == item.item_id) {
+                     $('#free_side_menu').append('<option selected value="' + item.item_id + '">' + item.item_name + '</option>');
+                  } else {
+                     $('#free_side_menu').append('<option value="' + item.item_id + '">' + item.item_name + '</option>');
+                  }
 
 
 
-            });
+               });
+
+            } else {
+               $('#free_side_menu').append('<option disabled selected>No item found!</option>')
+            }
+
 
             $('#quantity').val(data[0].qty);
             $('#remarks').val(data[0].kot_remarks);
+
          }
       });
 
@@ -539,7 +596,7 @@ $time = date("h:i");
    $(document).ready(function() {
       $('.getkothistory').click(function() {
          $('#kothistorytable').empty();
-         
+
          var modal = $(this);
          var data = modal.data('whatever');
          $('#table_no').html(data);
@@ -554,7 +611,7 @@ $time = date("h:i");
             type: 'get',
             url: "{{ url('/admin/restaurant/chui/menu/history/kot/item') }}/" + data,
             success: function(data) {
-            
+
                $('#kothistorytable').append(data);
 
 
@@ -565,10 +622,6 @@ $time = date("h:i");
 </script>
 
 <script>
-  
-
- 
-
    function savehistory() {
       var table_id = document.querySelector('#history_table_no').value;
       $.ajaxSetup({
@@ -599,12 +652,12 @@ $time = date("h:i");
 </script>
 
 <script>
-   $(document).ready(function(){
-      $('.ataglancebtn').click(function(){
+   $(document).ready(function() {
+      $('.ataglancebtn').click(function() {
          var modal = $(this);
          var table_no = modal.data('whatever');
          $('#kotatglancedetails').empty();
-         
+
          $.ajaxSetup({
             headers: {
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -614,10 +667,10 @@ $time = date("h:i");
             type: 'get',
             url: "{{ url('/admin/restaurant/chui/menu/get/at/glance/item') }}/" + table_no,
             success: function(data) {
-               
+
                $('.detete_at_aglance').remove();
                $('#kotatglancedetails').append(data);
-               
+
             }
          });
       })

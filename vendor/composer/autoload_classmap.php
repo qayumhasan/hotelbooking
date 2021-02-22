@@ -158,6 +158,7 @@ return array(
     'App\\Models\\Subscrive' => $baseDir . '/app/Models/Subscrive.php',
     'App\\Models\\Supplier' => $baseDir . '/app/Models/Supplier.php',
     'App\\Models\\TaxCalculation' => $baseDir . '/app/Models/TaxCalculation.php',
+    'App\\Models\\TaxHead' => $baseDir . '/app/Models/TaxHead.php',
     'App\\Models\\TaxSetting' => $baseDir . '/app/Models/TaxSetting.php',
     'App\\Models\\UnitMaster' => $baseDir . '/app/Models/UnitMaster.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',

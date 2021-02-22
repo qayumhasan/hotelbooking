@@ -10,9 +10,13 @@ use App\Models\Restaurant_order_detail;
 use App\Models\Restaurant_Order_head;
 use App\Models\RestaurantTable;
 use App\Models\SideMenu;
+use App\Models\TaxDetails;
+use App\Models\TaxHead;
+use App\Models\TaxSetting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\Null_;
 
 class ChuiController extends Controller
 {
@@ -42,11 +46,11 @@ class ChuiController extends Controller
 
     public function storeKotDetails(Request $request)
     {
+
         $request->validate([
             'Waiter_name' => 'required',
             'items' => 'required',
             'quantity' => 'required',
-            'remarks' => 'required',
             'res_date' => 'required',
             'res_hour' => 'required',
         ]);
@@ -61,6 +65,8 @@ class ChuiController extends Controller
         if ($kotdetails) {
 
 
+
+
             // decrement previous no_of_sale of this item
             $item = ItemEntry::where('id', $request->items)->decrement('no_of_sale', $kotdetails->qty);
 
@@ -70,6 +76,7 @@ class ChuiController extends Controller
 
 
 
+            
 
             // decrement current employee sales report amount
 
@@ -104,11 +111,13 @@ class ChuiController extends Controller
                 $kotdetails->rate = $item->rate;
                 $kotdetails->amount = $item->rate * $request->quantity;
 
+
+
                 // if waiter alreay exist than update sale_amount
 
                 if ($employecheck) {
                     Emploayee_Sales_Report::where('waiter_id', $request->Waiter_name)->increment('slae_amount', $amount);
-                }else{
+                } else {
 
                     // if waiter can not exist insert employee
 
@@ -123,8 +132,9 @@ class ChuiController extends Controller
             }
 
             $kotdetails->save();
-       
         } else {
+
+
 
             $kotdetails = new Restaurant_order_detail();
             $kotdetails->table_no = $request->table_no;
@@ -142,21 +152,19 @@ class ChuiController extends Controller
 
             $item = ItemEntry::findOrFail($request->items);
             if ($item) {
-                $amount =$item->rate * $request->quantity;
+                $amount = $item->rate * $request->quantity;
                 $kotdetails->rate = $item->rate;
                 $kotdetails->amount = $item->rate * $request->quantity;
 
-                 // if waiter alreay exist than update sale_amount
+                // if waiter alreay exist than update sale_amount
 
-                 if ($employecheck) {
+                if ($employecheck) {
 
                     // if empoyee month and year is same than increment
 
-                    if(date('n') == $employecheck->month_no && date('Y') == $employecheck->year){
+                    if (date('n') == $employecheck->month_no && date('Y') == $employecheck->year) {
                         Emploayee_Sales_Report::where('waiter_id', $request->Waiter_name)->increment('slae_amount', $amount);
-
-                        
-                    }else{
+                    } else {
                         $employeesales =  new Emploayee_Sales_Report();
                         $employeesales->waiter_id = $request->Waiter_name;
                         $employeesales->slae_amount = $amount;
@@ -164,11 +172,8 @@ class ChuiController extends Controller
                         $employeesales->month_name = date('F');
                         $employeesales->year = date('Y');
                         $employeesales->save();
-
                     }
-                    
-
-                }else{
+                } else {
 
                     // if waiter can not exist insert employee
 
@@ -185,17 +190,19 @@ class ChuiController extends Controller
             $item = ItemEntry::where('id', $request->items)->increment('no_of_sale', $request->quantity);
         }
 
-        $kotdetails = Restaurant_order_detail::where('kot_status', 0)->where('is_active', 0)->where('table_no', $request->table_no)->get();
+        $kotdetails = Restaurant_order_detail::where('kot_status', 0)->where('is_active', 0)->where('table_no', $request->table_no)->orderBy('id', 'DESC')->get();
 
-        return response()->json($kotdetails);
+        return view('restaurant.chui.home.ajax.kot_ajax', compact('kotdetails'));
+
+        // return response()->json($kotdetails);
     }
 
 
     public function getKotStatusByTableID($id)
     {
-        $itemdetails = Restaurant_order_detail::where('table_no', $id)->where('kot_status', 0)->get();
-
-        return response()->json($itemdetails);
+        $kotdetails = Restaurant_order_detail::where('table_no', $id)->where('kot_status', 0)->orderBy('id', 'DESC')->get();
+        return view('restaurant.chui.home.ajax.kot_ajax', compact('kotdetails'));
+        // return response()->json($itemdetails);
     }
 
     public function deleteKotStatusByTableID($id)
@@ -204,7 +211,10 @@ class ChuiController extends Controller
         $kotdelete = Restaurant_order_detail::findOrFail($id);
 
         $item = ItemEntry::where('id', $kotdelete->item_id)->decrement('no_of_sale', $kotdelete->qty);
+
+
         Emploayee_Sales_Report::where('waiter_id', $kotdelete->waiter_id)->decrement('slae_amount', $kotdelete->amount);
+
         $kotdelete->delete();
     }
 
@@ -212,26 +222,29 @@ class ChuiController extends Controller
     {
         $items = Restaurant_order_detail::findOrFail($id);
 
-        $sidemenus = json_decode($items->freemenu->items);
+        if (isset($items->freemenu)) {
+            $sidemenus = json_decode($items->freemenu->items);
+        } else {
+            $sidemenus = Null;
+        }
 
         return response()->json([$items, $sidemenus]);
     }
 
     public function storeKot(Request $request)
     {
-
-
         $kotdetails = Restaurant_order_detail::where('table_no', $request->tbl_no)->where('kot_status', 0)->where('is_active', 0)->get();
 
         $year = Carbon::now()->format('Y');
         $date = Carbon::now()->format('d');
         $sec = Carbon::now()->format('s');
 
+        
         $book_no = rand(111111, 99999);
 
         Restaurant_order_detail::where('table_no', $request->tbl_no)->where('kot_status', 0)->where('is_active', 0)->update([
             'booking_no' => $book_no . $request->tbl_no,
-            'invoice_id' => 'KOT' . $date . 'T' . $year . $book_no . $request->tbl_no,
+            'invoice_id' => 'KOT-' . $date . 'T-' . $year . $book_no . $request->tbl_no,
         ]);
 
 
@@ -246,16 +259,21 @@ class ChuiController extends Controller
 
             $head = new Restaurant_Order_head();
 
-            $head->invoice_no = 'KOT' . $date . 'T' . $year . $book_no . $request->tbl_no;
+            $head->invoice_no = 'KOT-' . $date . 'T-' . $year . $book_no . $request->tbl_no;
 
             $head->number_of_item = count($kotdetails);
             $head->number_of_qty = $qtysum;
             $head->total_amount = $amountsum;
             $head->save();
 
-            $kotdetails = Restaurant_order_detail::where('table_no', $request->tbl_no)->where('kot_status', 0)->where('is_active', 0)->update([
-                'kot_status' => 1,
-            ]);
+            $kotdetails = Restaurant_order_detail::where('table_no', $request->tbl_no)->where('kot_status', 0)->where('is_active', 0)->latest('id')->first();
+
+            $restable = RestaurantTable::findOrFail($request->tbl_no);
+            $restable->waiter_id = $kotdetails->waiter_id;
+            $restable->total_amounnt = $amountsum;
+            $restable->data = Carbon::now();
+            $restable->is_booked = 1;
+            $restable->save();
 
             $notification = array(
                 'messege' => 'Kot store Successfully',
@@ -276,13 +294,179 @@ class ChuiController extends Controller
 
     public function getKotItemHistoryByTableID($id)
     {
-        $kotdetails = Restaurant_order_detail::where('table_no', $id)->where('kot_status', 1)->where('is_active', 0)->get();
+        $kotdetails = Restaurant_order_detail::where('table_no', $id)->where('kot_status', 0)->where('is_active', 0)->get();
 
-        $kotdetailamounts = Restaurant_order_detail::where('table_no', $id)->where('kot_status', 1)->where('is_active', 0)->first();
-        return view('restaurant.chui.home.ajax.history_ajax', compact('kotdetails', 'kotdetailamounts'));
+        $kotdetailamounts = Restaurant_order_detail::where('table_no', $id)->where('kot_status', 0)->where('is_active', 0)->first();
+
+        $taxs =  TaxSetting::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        return view('restaurant.chui.home.ajax.history_ajax', compact('kotdetails', 'kotdetailamounts','taxs'));
+
+
         // return response()->json($kotdetails);
     }
 
+
+
+    public function getKotItemTaxValue($id)
+    {
+        $taxrate =TaxSetting::findOrFail($id);
+
+        return response()->json($taxrate);
+
+    }
+
+
+    public function getKotItemTaxCalculate(Request $request)
+    {        
+        $request->validate([
+            'rate'=>'required',
+        ]);
+
+        
+        
+        $resorderhead =Restaurant_Order_head::where('invoice_no',$request->invoice_no)->first();
+
+        if($resorderhead){
+            switch ($request->base_on) {
+                case 'percentage':
+                    $amount =$this->getTotalValue($request,$resorderhead);
+                    $totalpercent = ($amount * $request->rate)/100;
+                    return response()->json($totalpercent);
+                    break;
+                case 'amount':
+                    $totalpercent =$request->rate;
+                    return response()->json($totalpercent);
+                    break;
+            }
+             
+        }
+
+    }
+
+    public function addToGridKotBillingItem(Request $request)
+    {
+        
+        
+        $tax = TaxSetting::findOrFail($request->tax_id);
+        if($tax){
+            // if tax effect add in amount
+            if($tax->effect == 1){
+
+                $resorderhead =Restaurant_Order_head::where('invoice_no',$request->invoice_no)->first();
+
+                if($resorderhead){
+                    
+                $taxhead = new TaxHead();
+
+                if($request->base_on == 'percentage'){
+                    $amount =$this->getTotalValue($request,$resorderhead);
+                    $totalpercent = ($amount * $request->rate)/100;
+                    $taxhead->amount = $totalpercent;
+                    $resorderhead->increment('gross_amount',$totalpercent);
+                }
+
+                if($request->base_on == 'amount'){
+                    $amount =$this->getTotalValue($request,$resorderhead);
+                    $totalpercent =$request->rate;
+                    $taxhead->amount = $totalpercent;
+                    $resorderhead->increment('gross_amount',$totalpercent);
+                }
+                
+               
+
+                
+                $taxhead->tax_id = $request->tax_id;
+                $taxhead->calculation_id = $request->calculation_on;
+                $taxhead->base_on = $request->base_on;
+                $taxhead->rate = $request->rate;
+                $taxhead->effect = 1;
+                $taxhead->invoice_id = $request->invoice_no;
+                $taxhead->save();
+
+                }
+
+
+
+            }else{
+                // if tax effect deduct in amount
+
+                $resorderhead =Restaurant_Order_head::where('invoice_no',$request->invoice_no)->first();
+
+                if($resorderhead){
+                    
+                $taxhead = new TaxHead();
+
+                if($request->base_on == 'percentage'){
+                    $amount =$this->getTotalValue($request,$resorderhead);
+                    $totalpercent = ($amount * $request->rate)/100;
+                    $taxhead->amount =$totalpercent;
+
+                    $resorderhead->decrement('gross_amount',$totalpercent);
+                }
+
+                if($request->base_on == 'amount'){
+                    $amount =$this->getTotalValue($request,$resorderhead);
+                    $totalpercent =$request->rate;
+                    $taxhead->amount = $totalpercent;
+                    $resorderhead->decrement('gross_amount',$totalpercent);
+                }
+                
+               
+
+                
+                $taxhead->tax_id = $request->tax_id;
+                $taxhead->calculation_id = $request->calculation_on;
+                $taxhead->base_on = $request->base_on;
+                $taxhead->rate = $request->rate;
+                $taxhead->effect = 0;
+                $taxhead->invoice_id = $request->invoice_no;
+                $taxhead->save();
+
+                }
+            }
+        }
+        
+        return view('restaurant.chui.home.ajax.tax_amount_ajax');
+    }
+
+
+    public function getTotalValue($request,$head)
+    {
+        // if($request->calculation_on == 1){
+        //     return 'gross';
+        //     return $head->total_amount + $head->gross_amount;
+        // }elseif($request->calculation_on == 2){
+        //     return 'food';
+        //     return $head->total_amount;
+        // }elseif($request->calculation_on == 3){
+        //     return 'discount';
+        //     return (int)0;
+        // }elseif($request->calculation_on == 4){
+        //     return 'net';
+        //     return $head->total_amount;
+        // }
+
+        switch ($request->calculation_on) {
+            case '1':
+                return $head->total_amount + $head->gross_amount;
+                break;
+            case '2':
+                return $head->total_amount;
+                break;
+            
+            case '3':
+                return (int)0;
+                break;
+            case '4':
+                return $head->total_amount;
+                break;
+        }
+
+    }
+
+
+   
 
     public function storeKotItemHistoryByTableID($id)
     {

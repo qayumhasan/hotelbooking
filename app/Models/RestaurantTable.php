@@ -20,5 +20,10 @@ class RestaurantTable extends Model
         return $this->belongsTo(RestaurantTableType::class);
     }
 
+    public function waiter()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
 
 }
