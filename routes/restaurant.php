@@ -126,3 +126,7 @@ Route::get('/admin/restaurant/chui/menu/get/at/glance/item/{id}',[ChuiController
 
 Route::get('/admin/restaurant/chui/menu/get/print/invoice/item/{id}',[ChuiController::class,'getKotItematglanceByInvoiceID']);
 
+Route::get('/admin/restaurant/chui/menu/get/tax/value/{id}',[ChuiController::class,'getKotItemTaxValue']);
+Route::post('/admin/restaurant/chui/menu/get/tax/calculate',[ChuiController::class,'getKotItemTaxCalculate']);
+Route::post('/admin/restaurant/chui/menu/tax/add/to/grid',[ChuiController::class,'addToGridKotBillingItem']);
+

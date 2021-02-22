@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRestaurantTablesTable extends Migration
+class CreateTaxHeadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateRestaurantTablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('restaurant_tables', function (Blueprint $table) {
+        Schema::create('tax_heads', function (Blueprint $table) {
             $table->id();
-            $table->string('table_no');
-            $table->integer('branch_id');
-            $table->integer('table_type_id');
-            $table->text('details')->nullable();
+            $table->integer('tax_id');
+            $table->integer('calculation_id');
+            $table->string('base_on');
+            $table->integer('rate');
+            $table->float('amount');
+            $table->integer('effect');
+            $table->string('invoice_id');
 
-            $table->integer('waiter_id')->nullable();
-            $table->float('total_amounnt')->nullable();
-            $table->string('data')->nullable();
-            $table->string('is_booked')->default(0);
 
-            $table->integer('is_active')->default(0);
+            $table->integer('is_active')->default(1);
             $table->string('entry_by',30)->nullable();
             $table->string('entry_date',30)->nullable();
             $table->string('updated_by',30)->nullable();
@@ -45,6 +44,6 @@ class CreateRestaurantTablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('restaurant_tables');
+        Schema::dropIfExists('tax_heads');
     }
 }

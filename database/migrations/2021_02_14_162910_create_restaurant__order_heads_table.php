@@ -20,6 +20,7 @@ class CreateRestaurantOrderHeadsTable extends Migration
             $table->integer('number_of_item')->nullable();
             $table->integer('number_of_qty')->nullable();
             $table->float('total_amount')->nullable();
+            $table->float('gross_amount')->default(0);
             $table->timestamps();
         });
     }
