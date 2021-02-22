@@ -125,6 +125,13 @@ class StockTransferController extends Controller
         ]);
         $check=StockTransferDetails::where('invoice_no',$request->invoice_no)->first();
         if($check){
+            
+
+
+
+
+
+
 
             $insert=StockTransferHead::insert([
                 'invoice_no'=>$request->invoice_no,

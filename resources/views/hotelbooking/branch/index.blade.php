@@ -27,6 +27,7 @@
                                  <th>Phone</th>
                                  <th>Email</th>
                                  <th>Address</th>
+                                 <th>Status</th>
                                  <th>Action</th>
                               </tr>
                            </thead>
@@ -39,6 +40,13 @@
                                  <td>{{$data->mobile}}</td>
                                  <td>{{$data->email}}</td>
                                  <td>{!! $data->address !!}</td>
+                                 <td> 
+                                 @if($data->is_active==1)
+                                 <span class="btn-sm btn-success">Active</span>
+                                 @else
+                                 <span class="btn-sm btn-danger">Deactive</span>
+                                 @endif
+                                  </td>
                                  <td>
                                    @if($data->is_active==1)
                                    <a class="badge bg-success-light mr-2"  data-toggle="tooltip" data-placement="top"  href="{{url('admin/branch/deactive/'.$data->id)}}" data-original-title="Active"><i class="la la-thumbs-up"></i></a>

@@ -109,7 +109,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div id="file-upload-form" class="uploader-file">
-                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            <button type="submit" class="btn btn-success">Update</button>
                                         </div>
                                     </div>
                                 </div>

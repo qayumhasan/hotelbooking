@@ -141,7 +141,7 @@ $current = date("m/d/Y");
                                         <div class="card">
                                             <div class="card-header d-flex justify-content-between">
                                                 <div class="header-title">
-                                                    <h4 class="card-title">All Floor</h4>
+                                                    <h4 class="card-title">All Tax Information</h4>
                                                 </div>
                                                 <span class="float-right mr-2">
                                                     <!-- <a href="{{route('admin.branch.create')}}" class="btn btn-sm bg-primary">

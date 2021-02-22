@@ -39,7 +39,16 @@
                                  <td>{{$data->roomtype->room_type}}</td>
                                  <td>{{$data->flortype->name}}</td>
                                  <td>{{$data->tariff}}</td>
-                                 <td>    </td>
+                                 <td> 
+                                 @if($data->is_active==1)
+                                 <span class="btn-sm btn-success">Active</span>
+                                 @else
+                                 <span class="btn-sm btn-danger">Deactive</span>
+                                 @endif
+                                 
+                                 
+                                 
+                                  </td>
                                  <td>
                                    @if($data->is_active==1)
                                    <a class="badge bg-success-light mr-2"  data-toggle="tooltip" data-placement="top"  href="{{url('admin/room/deactive/'.$data->id)}}" data-original-title="Active"><i class="la la-thumbs-up"></i></a>
