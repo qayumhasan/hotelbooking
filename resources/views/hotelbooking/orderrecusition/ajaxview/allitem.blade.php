@@ -1,7 +1,7 @@
                                     <div class="col-md-12">
                                         <div class="card-body">
                                                 <div class="table-responsive">
-                                                    <table id="datatable" class="table data-table table-striped table-bordered" >
+                                                    <table class="table table-striped table-bordered" >
                                                     <thead class="text-center">
                                                         <tr>
                                                             <th>#</th>
