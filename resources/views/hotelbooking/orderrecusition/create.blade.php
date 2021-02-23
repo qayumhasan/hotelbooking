@@ -93,6 +93,9 @@ $current = date("m/d/Y");
                                 </div>
                             </div>
                             <div class="card-body">
+                            <div class="dots text-center" id="searchPreloader" style="display:none">
+                                <img src="{{asset('public/uploads/preloader/preloader.gif')}}" width="25%" height="100px" alt="preloader"/>
+                            </div>
                                 <div class="row" id="showallitem">
 
 
@@ -203,13 +206,15 @@ $current = date("m/d/Y");
 <script>
 $(document).ready(function() {
     $('#addnow').on('click', function() {
+        $('#searchPreloader').show();
+
          var i_id = $("#i_id").val();
          var item_name = $("#item_name").val();
          var unit = $("#unit").val();
          var qty = $("#Qty").val();
          var invoice_no = $("#invoice_no").val();
          var date = $("#date").val();
-     
+        
         $.ajax({
             type: 'GET',
             url: "{{url('/get/item/insert/lol')}}",
@@ -227,16 +232,13 @@ $(document).ready(function() {
             success: function(data) {
                 $('#item_err').html('');
                 totalqty();
-                iziToast.success({  message: 'success ',
-                                        'position':'topCenter'
-                                    });
-               
                 $('#item_name').val("");
                 $('#unit').val("");
                 $('#unit_name').val("");
                 $('#Qty').val("");
                 $("#i_id").val("");
 
+                $('#searchPreloader').hide();
                 alldatashow();
                 mainshow();
             },
@@ -270,15 +272,13 @@ $(document).ready(function() {
 <script>
     function cartDatadelete(el) {
         
-       
+        $('#searchPreloader').show();
         $.post('{{route('get.item.delete')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
             function(data) {
                 $('#addtocartshow').html(data);
                 totalqty();
                 if (data) {
-                  iziToast.success({  message: 'Delete success ',
-                                          'position':'topCenter'
-                                      });
+                    $('#searchPreloader').hide();
                 }
 
 

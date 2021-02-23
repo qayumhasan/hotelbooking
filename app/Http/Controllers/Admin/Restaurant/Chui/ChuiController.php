@@ -297,6 +297,8 @@ class ChuiController extends Controller
 
     public function getKotItemHistoryByTableID($id)
     {
+
+        
         $kotdetails = Restaurant_order_detail::where('table_no', $id)->where('kot_status', 0)->where('is_active', 0)->get();
 
         $kotdetailamounts = Restaurant_order_detail::where('table_no', $id)->where('kot_status', 0)->where('is_active', 0)->first();
@@ -552,4 +554,32 @@ class ChuiController extends Controller
 
         return view('restaurant.chui.home.ajax.invoice_print', compact('orderdetails', 'orderhead'));
     }
+    // history data
+    public function getHistory($t_id){
+
+        $to = Carbon::now()->format('Y-m-d');
+        $from = date('Y-m-d', strtotime('-7 days', strtotime($to)));
+        $alldata=Restaurant_order_detail::where('table_no',$t_id)->where('kot_status',1)->where('is_active',1)->OrderBy('id','DESC')->limit(10)->get();
+        $table_id=$t_id;
+        return view('restaurant.chui.home.ajax.mainhistory',compact('alldata','table_id'));
+       
+    }
+
+    // ata a glance 
+    public function getataglance($t_id){
+        $to = Carbon::now()->format('d/m/Y');
+        $alldata=Restaurant_order_detail::where('table_no',$t_id)->where('kot_status',1)->where('is_active',1)->where('kot_date',$to)->OrderBy('id','DESC')->get();
+        $table=Restaurant_order_detail::where('table_no',$t_id)->first();
+        return view('restaurant.chui.home.ajax.mainataglance',compact('alldata','to','table'));
+    }
+    // 
+    public function gethistorysearch(Request $request){
+        $table_id=$request->table_id;
+        $alldata=Restaurant_order_detail::where('table_no',$request->table_id)->where('kot_status',1)->where('is_active',1)->whereBetween('kot_date',[$request->formdate,$request->todate])->OrderBy('id','DESC')->get();
+       
+        return view('restaurant.chui.home.ajax.mainhistory',compact('alldata','table_id'));
+    }
+
+
+
 }

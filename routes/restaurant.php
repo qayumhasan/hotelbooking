@@ -129,6 +129,13 @@ Route::get('/admin/restaurant/chui/menu/get/print/invoice/item/{id}',[ChuiContro
 Route::get('/admin/restaurant/chui/menu/get/tax/value/{id}',[ChuiController::class,'getKotItemTaxValue']);
 Route::post('/admin/restaurant/chui/menu/get/tax/calculate',[ChuiController::class,'getKotItemTaxCalculate']);
 Route::post('/admin/restaurant/chui/menu/tax/add/to/grid',[ChuiController::class,'addToGridKotBillingItem']);
+
+// asif route history
+Route::get('/admin/restaurant/chui/gethistory/{t_id}',[ChuiController::class,'getHistory']);
+Route::get('/admin/restaurant/chui/getataglance/{t_id}',[ChuiController::class,'getataglance']);
+Route::get('/admin/restaurant/chui/getsearch/history/',[ChuiController::class,'gethistorysearch']);
+
 Route::get('/admin/restaurant/chui/menu/select/room',[ChuiController::class,'slectRoomForBilling']);
 Route::get('/admin/restaurant/chui/menu/select/room/data/get/{id}',[ChuiController::class,'slectRoomForBillingGet']);
+
 

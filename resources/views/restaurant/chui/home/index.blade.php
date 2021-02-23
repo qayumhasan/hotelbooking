@@ -65,6 +65,19 @@ $time = date("h:i");
       color: #1D627E;
       font-weight: bold;
    }
+
+
+   .datepicker {
+    padding: 0px; 
+     -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+  
+}
+
+
+/* preloader css start from here */
+ 
 </style>
 
 
@@ -159,11 +172,11 @@ $time = date("h:i");
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu getkothistory" class="btn btn-primary"><i class="fa fa-globe" aria-hidden="true"></i> History</a>
+                              <a class="bg-menu getkothistory_onlyhistory" class="btn btn-primary" data-id="{{$row->id}}"><i class="fa fa-globe" aria-hidden="true"></i> History</a>
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a data-toggle="modal" class="bg-menu ataglancebtn"><i class="fa fa-calendar-check" aria-hidden="true"></i> At a Glance
+                              <a data-toggle="modal " class="bg-menu ataglance_update" data-id="{{$row->id}}"><i class="fa fa-calendar-check" aria-hidden="true"></i> At a Glance
                               </a>
                            </li>
 
@@ -346,6 +359,173 @@ $time = date("h:i");
    </div>
 </div>
 
+
+<!-- at a glance -->
+
+<div class="modal fade ataglance_updatemodal" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+         <div class="modal-header">
+               <h5 class="modal-title">At a Glance</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+         </div>
+         <div class="modal-body">
+            <div class="row" id="mainataglance">
+                  
+            </div>
+         </div>
+         <div class="modal-footer">
+           
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+
+
+<!-- main history -->
+<div class="modal fade history_updatemodal" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+         <div class="modal-header">
+               <h5 class="modal-title">Kot History</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+         </div>
+         <div class="modal-body">
+         <div class="row">
+
+                  <div class="col-md-1"></div>
+                  <div class="col-md-4"> Form Date: <input type="text" name="formdate" class="datepicker formdate" value="{{$current}}"> </div>
+                  <div class="col-md-4">To Date: <input type="text" name="todate" class="datepicker todate" value="{{$current}}"></div>
+                  <div class="col-md-2 mt-3"><button class="btn-sm btn-success" id="kothistorysearch">search</button></div>
+
+
+                  <div class="col-md-12">
+                        <div class="card shadow-sm shadow-showcase">
+                            <div class="card-body">
+                            <div class="dots text-center" id="searchPreloader" style="display:none">
+                                 <img src="{{asset('public/uploads/preloader/spinnervlll.gif')}}" width="25%" height="100px" alt="preloader"/>
+                              
+                           
+                           </div>
+                                <div class="row asif allhistorydata">
+                                    
+                            </div>
+                        </div>
+                     </div>
+                  </div>
+            </div>
+         </div>
+         <div class="modal-footer">
+           
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+
+
+
+
+
+<!-- foysal script start -->
+<!--  ata a glance start-->
+<script>
+$(document).ready(function() {
+     $('#kothistorysearch').on('click', function(){
+            var todate=$(".todate").val();
+            var formdate=$(".formdate").val();
+            var table_id=$(".table_id").val();
+            //alert(table_id);
+            $(".allhistorydata").empty();
+            $('#searchPreloader').show();
+            
+            if(table_id) {
+                  $.ajax({
+                     url: "{{  url('/admin/restaurant/chui/getsearch/history/') }}",
+                     type:"GET",
+                     data:{
+                        todate:todate,
+                        formdate:formdate,
+                        table_id:table_id,
+                     },
+                     success:function(data) {
+
+                              $(".allhistorydata").append(data);
+                              $('#searchPreloader').hide();
+                           
+                        }
+
+                        
+                  });
+               } 
+
+           
+    });
+ });
+</script>
+
+
+
+
+
+<script>
+$(document).ready(function() {
+     $('.ataglance_update').on('click', function(){
+     
+               var t_id = $(this).data('id');
+               $("#mainataglance").empty();
+            if(t_id) {
+                  $.ajax({
+                     url: "{{  url('/admin/restaurant/chui/getataglance/') }}/"+t_id,
+                     type:"GET",
+                     success:function(data) {
+                              $("#mainataglance").append(data);
+                              $('.ataglance_updatemodal').modal('toggle');
+                           
+                        }
+
+                        
+                  });
+               } 
+
+     });
+ });
+</script>
+<!-- at a glance end-->
+<!-- main history -->
+<script>
+$(document).ready(function() {
+     $('.getkothistory_onlyhistory').on('click', function(){
+               var t_id = $(this).data('id');
+               //alert(ch_id);
+           
+            //$('.historydata').empty();
+            $(".allhistorydata").empty();
+            if(t_id) {
+                  $.ajax({
+                     url: "{{  url('/admin/restaurant/chui/gethistory/') }}/"+t_id,
+                     type:"GET",
+                     success:function(data) {
+                              $(".allhistorydata").append(data);
+                              $('.history_updatemodal').modal('toggle');
+                           
+                        }
+
+                        
+                  });
+               } 
+
+     });
+ });
+</script>
+
+
+<!-- foysal script end -->
 <script>
    $(document).ready(function() {
       $('.update').hide();
@@ -376,6 +556,12 @@ $time = date("h:i");
       });
    });
 </script>
+
+
+
+
+
+
 
 <script>
    randomnumber = Math.random();

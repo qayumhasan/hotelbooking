@@ -25,7 +25,7 @@
                                                       </tr>
                                                    </thead>
                                                    <tbody class="text-center">
-                                                   @foreach($alldatadetails as $key => $aldata)
+                                                    @foreach($alldatadetails as $key => $aldata)
                                                             <tr class="remove_data">
                                                                 <td>{{$aldata->id}}</td>
                                                                 <td>{{$aldata->item_name}}</td>
