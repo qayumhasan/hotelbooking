@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin\Restaurant\Chui;
 
 use App\Http\Controllers\Controller;
+use App\Models\Checkin;
 use App\Models\Emploayee_Sales_Report;
 use App\Models\Employee;
 use App\Models\ItemEntry;
 use App\Models\Restaurant_order_detail;
 use App\Models\Restaurant_Order_head;
 use App\Models\RestaurantTable;
+use App\Models\Room;
 use App\Models\SideMenu;
 use App\Models\TaxDetails;
 use App\Models\TaxHead;
@@ -264,6 +266,7 @@ class ChuiController extends Controller
             $head->number_of_item = count($kotdetails);
             $head->number_of_qty = $qtysum;
             $head->total_amount = $amountsum;
+            $head->gross_amount = $amountsum;
             $head->save();
 
             $kotdetails = Restaurant_order_detail::where('table_no', $request->tbl_no)->where('kot_status', 0)->where('is_active', 0)->latest('id')->first();
@@ -300,7 +303,7 @@ class ChuiController extends Controller
 
         $taxs =  TaxSetting::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        return view('restaurant.chui.home.ajax.history_ajax', compact('kotdetails', 'kotdetailamounts','taxs'));
+        return view('restaurant.chui.home.ajax.billing_ajax', compact('kotdetails', 'kotdetailamounts','taxs'));
 
 
         // return response()->json($kotdetails);
@@ -363,14 +366,16 @@ class ChuiController extends Controller
                     $amount =$this->getTotalValue($request,$resorderhead);
                     $totalpercent = ($amount * $request->rate)/100;
                     $taxhead->amount = $totalpercent;
-                    $resorderhead->increment('gross_amount',$totalpercent);
+                    $gross_amount = $amount + $totalpercent;
+                    $resorderhead->increment('gross_amount',$gross_amount);
                 }
 
                 if($request->base_on == 'amount'){
                     $amount =$this->getTotalValue($request,$resorderhead);
                     $totalpercent =$request->rate;
                     $taxhead->amount = $totalpercent;
-                    $resorderhead->increment('gross_amount',$totalpercent);
+                    $gross_amount = $amount + $totalpercent;
+                    $resorderhead->increment('gross_amount',$gross_amount);
                 }
                 
                
@@ -388,7 +393,7 @@ class ChuiController extends Controller
 
 
 
-            }else{
+            }elseif($tax->effect == 0){
                 // if tax effect deduct in amount
 
                 $resorderhead =Restaurant_Order_head::where('invoice_no',$request->invoice_no)->first();
@@ -401,15 +406,18 @@ class ChuiController extends Controller
                     $amount =$this->getTotalValue($request,$resorderhead);
                     $totalpercent = ($amount * $request->rate)/100;
                     $taxhead->amount =$totalpercent;
+                    $gross_amount = $amount - $totalpercent;
 
-                    $resorderhead->decrement('gross_amount',$totalpercent);
+                    $resorderhead->decrement('gross_amount',$gross_amount);
                 }
 
                 if($request->base_on == 'amount'){
                     $amount =$this->getTotalValue($request,$resorderhead);
                     $totalpercent =$request->rate;
                     $taxhead->amount = $totalpercent;
-                    $resorderhead->decrement('gross_amount',$totalpercent);
+                    $gross_amount = $amount - $totalpercent;
+
+                    $resorderhead->decrement('gross_amount',$gross_amount);
                 }
                 
                
@@ -426,8 +434,15 @@ class ChuiController extends Controller
                 }
             }
         }
+
+        $texdatas =TaxDetails::where('invoice_id',$request->invoice_no)->get();
+
+        $resgross= Restaurant_Order_head::where('invoice_no',$request->invoice_no)->first();
+    
+
         
-        return view('restaurant.chui.home.ajax.tax_amount_ajax');
+        
+        return view('restaurant.chui.home.ajax.tax_details_ajax',compact('texdatas','resgross'));
     }
 
 
@@ -466,20 +481,36 @@ class ChuiController extends Controller
     }
 
 
+    public function slectRoomForBilling()
+    {
+        $rooms = Room::where('room_status',3)->with('checkin')->get();
+        return response()->json($rooms);
+    }
+
+    public function slectRoomForBillingGet($id)
+    {
+        $roomdata = Checkin::where('room_id',$id)->first();
+        return response()->json($roomdata);
+    }
+
+
    
 
-    public function storeKotItemHistoryByTableID($id)
+    public function storeKotItemHistoryByTableID(Request $request)
     {
-        $kotdetails = Restaurant_order_detail::where('table_no', $id)->where('is_active', 0)->where('kot_status', 1)->get();
+        return $request;
+        // $kotdetails = Restaurant_order_detail::where('table_no', $id)->where('is_active', 0)->where('kot_status', 1)->get();
 
-        if (count($kotdetails) > 0) {
-            $kotdetails = Restaurant_order_detail::where('table_no', $id)->where('is_active', 0)->where('kot_status', 1)->update([
-                'is_active' => 1,
-            ]);
-            return response()->json(['msg' => 1]);
-        } else {
-            return response()->json(['msg' => 0]);
-        }
+        // if (count($kotdetails) > 0) {
+        //     $kotdetails = Restaurant_order_detail::where('table_no', $id)->where('is_active', 0)->where('kot_status', 1)->update([
+        //         'is_active' => 1,
+        //     ]);
+        //     return response()->json(['msg' => 1]);
+        // } else {
+        //     return response()->json(['msg' => 0]);
+        // }
+
+        
     }
 
 
