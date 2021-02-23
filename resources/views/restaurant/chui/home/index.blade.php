@@ -151,6 +151,7 @@ $time = date("h:i");
 
                   <!-- room status booked end-->
                   @else
+
                   <!-- room status available -->
 
                   <div class="row p-0">
@@ -797,7 +798,7 @@ $(document).ready(function() {
             type: 'get',
             url: "{{ url('/admin/restaurant/chui/menu/history/kot/item') }}/" + data,
             success: function(data) {
-
+               
                $('#kothistorytable').append(data);
 
 
@@ -807,35 +808,34 @@ $(document).ready(function() {
    })
 </script>
 
+
 <script>
-   function savehistory() {
-      var table_id = document.querySelector('#history_table_no').value;
-      $.ajaxSetup({
-         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-         }
-      });
-      $.ajax({
-         type: 'get',
-         url: "{{ url('/admin/restaurant/chui/menu/history/kot/store') }}/" + table_id,
-         success: function(data) {
-            console.log(data);
-            if (data.msg == 1) {
-               $('.historymodal').modal('hide')
-               iziToast.success({
-                  message: 'Kot Data Save Successfully!',
-                  position: 'topCenter',
-               });
-            } else {
-               iziToast.warning({
-                  message: 'Sorry, Something went wrong!',
-                  position: 'topCenter',
-               });
-            }
-         }
-      });
-   }
-</script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $(document).on('submit', '#billing_info_submit', function(e){
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var type = $(this).attr('method');
+                var request = $(this).serialize();
+                $.ajax({
+                    url:url,
+                    type:type,
+                    data: request,
+                    success:function(data){
+                     console.log(data);
+                        
+                    },
+                    error:function(err){
+                       
+                    }
+                });
+            });
+        });
+    </script> 
 
 <script>
    $(document).ready(function() {

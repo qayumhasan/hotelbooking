@@ -109,7 +109,7 @@ Route::get('/admin/restaurant/chui/menu/get/kot/item/{id}',[ChuiController::clas
 Route::get('/admin/restaurant/chui/menu/delete/kot/item/{id}',[ChuiController::class,'deleteKotStatusByTableID']);
 Route::get('/admin/restaurant/chui/menu/edit/kot/item/{id}',[ChuiController::class,'editKotStatusByTableID']);
 Route::get('/admin/restaurant/chui/menu/history/kot/item/{id}',[ChuiController::class,'getKotItemHistoryByTableID']);
-Route::get('/admin/restaurant/chui/menu/history/kot/store/{id}',[ChuiController::class,'storeKotItemHistoryByTableID']);
+Route::post('/admin/restaurant/chui/menu/history/kot/store',[ChuiController::class,'storeKotItemHistoryByTableID']);
 
 Route::get('/admin/restaurant/chui/menu/get/at/glance/item/{id}',[ChuiController::class,'getKotItematglanceByTableID']);
 //reports controller by asif
@@ -129,7 +129,13 @@ Route::get('/admin/restaurant/chui/menu/get/print/invoice/item/{id}',[ChuiContro
 Route::get('/admin/restaurant/chui/menu/get/tax/value/{id}',[ChuiController::class,'getKotItemTaxValue']);
 Route::post('/admin/restaurant/chui/menu/get/tax/calculate',[ChuiController::class,'getKotItemTaxCalculate']);
 Route::post('/admin/restaurant/chui/menu/tax/add/to/grid',[ChuiController::class,'addToGridKotBillingItem']);
+
 // asif route history
 Route::get('/admin/restaurant/chui/gethistory/{t_id}',[ChuiController::class,'getHistory']);
 Route::get('/admin/restaurant/chui/getataglance/{t_id}',[ChuiController::class,'getataglance']);
 Route::get('/admin/restaurant/chui/getsearch/history/',[ChuiController::class,'gethistorysearch']);
+
+Route::get('/admin/restaurant/chui/menu/select/room',[ChuiController::class,'slectRoomForBilling']);
+Route::get('/admin/restaurant/chui/menu/select/room/data/get/{id}',[ChuiController::class,'slectRoomForBillingGet']);
+
+

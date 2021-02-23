@@ -4,6 +4,7 @@ $current =date("d/m/Y");
 $time = date("h:i");
 @endphp
 
+<form id="billing_info_submit" action="{{url('admin/restaurant/chui/menu/history/kot/store')}}" method="post">
 <div class="modal-content printableAreasaveprint">
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">History Of Table No <b><span id="table_no">{{$kotdetailamounts->tableName->table_no ?? ''}}</span></b></h5>
@@ -89,7 +90,9 @@ $time = date("h:i");
 
 
     <!-- hidden field -->
-        <input type="hidden" id="invoice_no_area" value="{{$kotdetailamounts->invoice_id}}" name="invoice_no">
+    <input type="hidden" id="invoice_no_area" value="{{$kotdetailamounts->invoice_id}}" name="invoice_no">
+    <input type="hidden" id="table_no_data" value="{{$kotdetailamounts->table_no}}" name="table_no">
+    <input type="hidden" id="room_no_date"  name="room_no">
     <!-- hidden field -->
 
     <div class="container">
@@ -154,7 +157,8 @@ $time = date("h:i");
     </div>
 
     @php
-        $texdatas = App\Models\TaxDetails::where('invoice_id',$kotdetailamounts->invoice_id)->get();
+    $texdatas = App\Models\TaxDetails::where('invoice_id',$kotdetailamounts->invoice_id)->get();
+    $resgross= App\Models\Restaurant_Order_head::where('invoice_no',$kotdetailamounts->invoice_id)->first();
     @endphp
 
     <div class="container">
@@ -194,7 +198,18 @@ $time = date("h:i");
                         @endif
 
                         <tr>
-                            
+
+                            <th colspan="5" class="text-right">Discount Amount</th>
+                            <td>0</td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <th colspan="5" class="text-right">Gross Amount</th>
+                            <td>{{round($resgross->gross_amount,2)}}</td>
+
                         </tr>
 
 
@@ -224,27 +239,38 @@ $time = date("h:i");
 
                 <div class="form-group">
                     <label for="exampleInputPassword1">Payment Mode: </label>
-                    <select class="form-control form-control-sm" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                    <select class="form-control form-control-sm" name="payment_method" id="payment_mode">
+                        <option disabled selected>---Select Payment Mode----</option>
+                        <option value="1">Cash</option>
+                        <option value="2">Card</option>
+                        <option value="3">Mobile Money</option>
+                        <option value="4">Credit</option>
+                        <option value="5">Post To Room</option>
                     </select>
                 </div>
             </div>
 
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <tbody id="payment_mode_insert">
+                        
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
 
     <div class="modal-footer text-center mx-auto">
         <input type="hidden" id="history_table_no" value="{{$kotdetailamounts->table_no ?? ''}}" />
-        <button type="button" id="historysave" class="btn btn-info">Save</button>
-        <button type="button" id="historysaveandprint" class="btn btn-primary savepritbtn">Save & Print</button>
+        <button type="submit" id="historysave" class="btn btn-info">Save</button>
+        <button type="submit" id="historysaveandprint" class="btn btn-primary savepritbtn">Save & Print</button>
     </div>
 </div>
-
+</form>
+<!-- 
 <script>
     $(document).ready(function() {
         $('#historysaveandprint').click(function() {
@@ -275,7 +301,42 @@ $time = date("h:i");
             $("div.printableAreasaveprint").printArea(options);
         });
     });
+</script> -->
+
+
+
+
+<script>
+   function savehistory() {
+      var table_id = document.querySelector('#history_table_no').value;
+      $.ajaxSetup({
+         headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         }
+      });
+      $.ajax({
+         type: 'get',
+         url: "{{ url('/admin/restaurant/chui/menu/history/kot/store') }}/" + table_id,
+         success: function(data) {
+            console.log(data);
+            if (data.msg == 1) {
+               $('.historymodal').modal('hide')
+               iziToast.success({
+                  message: 'Kot Data Save Successfully!',
+                  position: 'topCenter',
+               });
+            } else {
+               iziToast.warning({
+                  message: 'Sorry, Something went wrong!',
+                  position: 'topCenter',
+               });
+            }
+         }
+      });
+   }
 </script>
+
+
 
 <script>
     $('.datepicker').datepicker({
@@ -311,14 +372,14 @@ $time = date("h:i");
 
 
         // calculation on tax
-        $('#calculation_on').change(function(e){
-            var calculation_on =e.target.value;
-            var tax_id =$('#tax_discription').find(":selected").val();
+        $('#calculation_on').change(function(e) {
+            var calculation_on = e.target.value;
+            var tax_id = $('#tax_discription').find(":selected").val();
             var base_on = $('#base_on').find(":selected").val();
             var rate = $('#rate').val();
             var invoice_no = $('#invoice_no_area').val();
 
-            
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -327,21 +388,21 @@ $time = date("h:i");
             $.ajax({
                 type: 'post',
                 url: "{{ url('/admin/restaurant/chui/menu/get/tax/calculate') }}",
-                data:{
-                    tax_id:tax_id,
-                    calculation_on:calculation_on,
-                    base_on:base_on,
-                    rate:rate,
-                    invoice_no:invoice_no
-                },  
+                data: {
+                    tax_id: tax_id,
+                    calculation_on: calculation_on,
+                    base_on: base_on,
+                    rate: rate,
+                    invoice_no: invoice_no
+                },
                 success: function(data) {
-                    $('#rate_alt').html('');  
+                    $('#rate_alt').html('');
                     $('#amounthidden').val(data);
                     $('#amountshow').val(data);
 
                 },
-                error:function(err){
-                    if(err.responseJSON.errors.rate){
+                error: function(err) {
+                    if (err.responseJSON.errors.rate) {
                         $('#rate_alt').html('Rate Fields must not be empty!');
                     }
                 }
@@ -355,51 +416,144 @@ $time = date("h:i");
 
     // add to grid
 
-    function addToGrid(e){
-                var calculation_on =$('#calculation_on').find(":selected").val();
-                var tax_id =$('#tax_discription').find(":selected").val();
-                var base_on = $('#base_on').find(":selected").val();
-                var rate = $('#rate').val();
-                var amount= $('#amountshow').val();
-                var invoice_no = $('#invoice_no_area').val();
+    function addToGrid(e) {
+        var calculation_on = $('#calculation_on').find(":selected").val();
+        var tax_id = $('#tax_discription').find(":selected").val();
+        var base_on = $('#base_on').find(":selected").val();
+        var rate = $('#rate').val();
+        var amount = $('#amountshow').val();
+        var invoice_no = $('#invoice_no_area').val();
+        var table_no = $('#table_no_data').val();
 
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'post',
+            url: "{{ url('/admin/restaurant/chui/menu/tax/add/to/grid') }}",
+            data: {
+                tax_id: tax_id,
+                amount: amount,
+                base_on: base_on,
+                rate: rate,
+                invoice_no: invoice_no,
+                calculation_on: calculation_on,
+                table_no: table_no
+            },
+            success: function(data) {
+                console.log(data);
+                $('#taxarea').empty();
+                $('#taxarea').append(data);
+
+                // remove previous field
+
+                var calculation_on = $('#calculation_on').val(' ');
+                var tax_id = $('#tax_discription').val(' ');
+                var base_on = $('#base_on').val(' ');
+                var rate = $('#rate').val(' ');
+                var amount = $('#amountshow').val(0);
+
+            },
+            error: function(err) {
+                if (err.responseJSON.errors.rate) {
+                    $('#rate_alt').html('Rate Fields must not be empty!');
+                }
+            }
+        });
+
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#payment_mode').change(function(e) {
+            var id = e.target.value;
+
+            $('#payment_mode_insert').empty();
+            // add card number
+            if (id == 2) {
+                $('#payment_mode_insert').append('<tr><th scope="row"><label for="exampleFormControlSelect1">Bank Name</label><select class="form-control form-control-sm" name="bank_name"><option value="1">AB Bank Limited</option><option value="2">Dhaka Bank Limited</option><option value="3">IFIC Bank Limited</option></select></th><td> <label for="exampleFormControlInput1">Card Number</label><input type="text" name="card_number" class="form-control form-control-sm" id="exampleFormControlInput1"></td></tr>');
+
+                //    mobile money
+            } else if (id == 3) {
+
+
+                $('#payment_mode_insert').append('<tr><th scope="row"><label for="exampleFormControlSelect1">Mobile Number</label><input type="text" name="mobile_number" class="form-control form-control-sm" id="exampleFormControlInput1"></th><td> <label for="exampleFormControlInput1">Transaction Number</label><input type="text" class="form-control form-control-sm" name="trans_number" id="exampleFormControlInput1"></td></tr>');
+                // credit balance
+            } else if (id == 4) {
+                $('#payment_mode_insert').append('<tr><th scope="row" class="text-right">Customar Name:</th><td><input type="text" class="form-control form-control-sm" name="customar_number" id="exampleFormControlInput1"></td></tr>');
+
+                // post to room
+            } else if (id == 5) {
 
                 $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/admin/restaurant/chui/menu/tax/add/to/grid') }}",
-                data:{
-                    tax_id:tax_id,
-                    amount:amount,
-                    base_on:base_on,
-                    rate:rate,
-                    invoice_no:invoice_no,
-                    calculation_on:calculation_on
-                },  
-                success: function(data) {
-                    console.log(data);
-                    $('#taxarea').empty();
-                    $('#taxarea').append(data);
-
-                    // remove previous field
-
-                    var calculation_on =$('#calculation_on').val(' ');
-                    var tax_id =$('#tax_discription').val(' ');
-                    var base_on = $('#base_on').val(' ');
-                    var rate = $('#rate').val(' ');
-                    var amount= $('#amountshow').val(0);
-
-                },
-                error:function(err){
-                    if(err.responseJSON.errors.rate){
-                        $('#rate_alt').html('Rate Fields must not be empty!');
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                }
-            });
-                
-    }
+                });
+                $.ajax({
+                    type: 'get',
+                    url: "{{ url('/admin/restaurant/chui/menu/select/room') }}",
+
+                    success: function(data) {
+                    
+
+
+
+                        if (data.length > 0) {
+
+                            var item = '<tr>';
+                            item +='<th scope = "col" >';
+                            item+='<label for="staticEmail" class="col-sm-2 col-form-label" > Rooms </label> <div class = "col-sm-10" > <select onchange="getSelectedRoom(this)" class = "form-control form-control-sm select_item selected_room_data" > <option> ---Select A Room---- </option>';
+
+                            data.forEach(ele => {
+                                   item +='<option value="'+ele.id+'"> '+ele.room_no+' </option>';
+                            });
+
+                            item +='</select> </div> </th><td scope ="col" id="getroomdata"></td> </tr>';
+                            $('#payment_mode_insert').append(item); 
+                            
+                        }
+
+
+                    }
+
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+function getSelectedRoom(e){
+    var id = e.value;
+    $('#room_no_date').val(id);
+
+
+    $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'get',
+                    url: "{{ url('/admin/restaurant/chui/menu/select/room/data/get') }}/"+id,
+
+                    success: function(data) {
+                    
+                        $('#getroomdata').append('<h6>Guest Information:</h6><h6>Bookin No: <span>'+data.booking_no+'</span></h6><h6>Guest Name: <span>'+data.guest_name+'</span></h6><h6>Mobile No: <span>'+data.mobile+'</span></h6><h6>Check-In Date: <span>'+data.checkin_date+'</span></h6>')
+
+
+
+
+                    }
+
+                });
+
+
+
+}
 </script>
