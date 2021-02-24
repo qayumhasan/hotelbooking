@@ -85,6 +85,13 @@
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
                             <ul id="reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+                                <li class="{{ request()->routeIs('admin.stockavailability.itemwise*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stockavailability.itemwise')}}">
+                                        <i class="las la-list-alt"></i><span>Stock Availabilty ItemWise</span>
+                                    </a>
+                                </li>
+
                                 <li class="{{ request()->routeIs('admin.stock.daillytransfer.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.stock.daillytransfer.report')}}">
                                         <i class="las la-list-alt"></i><span> Daily Stock Report</span>

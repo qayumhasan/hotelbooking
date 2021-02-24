@@ -75,4 +75,24 @@ class StockReportController extends Controller
         return view('stock.reports.stockcenterwise',compact('allstockcenter','alldata'));
 
     }
+
+    public function stockavailabilityitem(){
+        $allitem=ItemEntry::where('is_deleted',0)->select(['item_name','id'])->get();
+        return view('stock.reports.stockavailabilityitem',compact('allitem'));
+    }
+
+    // item wise report
+    public function stockavailabilityitemresult(Request $request){
+
+        return $request;
+
+        $item_id=$request->item_name;
+        $form=$request->formdate;
+        $to=$request->formdate;
+
+        $alldata=DB::table('ItemInOutLegderTbl')->where('ItemID',$item_id)->sget();
+
+        $allitem=ItemEntry::where('is_deleted',0)->select(['item_name','id'])->get();
+        return view('stock.reports.stockavailabilityitem',compact('allitem','alldata'));
+    }
 }

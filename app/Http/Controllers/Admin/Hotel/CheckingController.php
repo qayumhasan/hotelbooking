@@ -180,7 +180,7 @@ class CheckingController extends Controller
 
     public function serviceStore(Request $request)
     {
-       
+      // return $request;
         $request->validate([
             'service_date'=>'required',
             'service_time'=>'required',
@@ -189,6 +189,7 @@ class CheckingController extends Controller
             'rate'=>'required',
             'qty'=>'required',
         ]);
+        $item_name=ItemEntry::where('id',$request->services)->select(['item_name','id'])->first();
 
         $services = new CheckinService();
         $services->service_no =$request->service_no;
@@ -197,6 +198,8 @@ class CheckingController extends Controller
         $services->service_time =$request->service_time;
         $services->service_category =$request->service_category;
         $services->services =$request->services;
+        $services->item_name =$item_name->item_name;
+        $services->stock_center ='CheckinServices';
         $services->remarks =$request->remarks;
         $services->rate =$request->rate;
         $services->qty =$request->qty;
@@ -236,12 +239,14 @@ class CheckingController extends Controller
             'rate'=>'required',
             'qty'=>'required',
         ]);
+        $item_name=ItemEntry::where('id',$request->services)->select(['item_name','id'])->first();
 
         $services = CheckinService::findOrFail($request->service_id);
         $services->service_no =$request->service_no;
         $services->service_date =$request->service_date;
         $services->service_time =$request->service_time;
         $services->service_category =$request->service_category;
+        $services->item_name =$item_name->item_name;
         $services->services =$request->services;
         $services->remarks =$request->remarks;
         $services->rate =$request->rate;
