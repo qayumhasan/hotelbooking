@@ -140,8 +140,9 @@ $time = date("h:i");
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a data-toggle="modal" data-target=".ataglance" data-whatever="{{$row->id}}" class="bg-menu ataglancebtn"><i class="fa fa-calendar-check" aria-hidden="true"></i> At a Glance
-                              </a>
+                              
+
+                              <a class="bg-menu getkothistory" class="btn btn-primary" data-toggle="modal" data-target=".historymodal" data-whatever="{{$row->id}}"><i class="fa fa-globe" aria-hidden="true"></i> At a Glance</a>
                            </li>
 
                         </ul>
@@ -827,15 +828,73 @@ $(document).ready(function() {
                     data: request,
                     success:function(data){
                      console.log(data);
+
+                     if(data.msg == 1){
+                        
+                     
+                     }
+
                         
                     },
                     error:function(err){
-                       
+                       if(err.responseJSON.errors.card_number){
+                        iziToast.error({
+                           message: err.responseJSON.errors.card_number[0],
+                           position: 'topCenter',
+                        });
+                       }
+
+                       if(err.responseJSON.errors.mobile_number){
+                        iziToast.error({
+                           message: err.responseJSON.errors.mobile_number[0],
+                           position: 'topCenter',
+                        });
+                       }
+
+                       if(err.responseJSON.errors.trans_number){
+                        iziToast.error({
+                           message: err.responseJSON.errors.trans_number[0],
+                           position: 'topCenter',
+                        });
+                       }
+
+                       if(err.responseJSON.errors.bank_name){
+                        iziToast.error({
+                           message: err.responseJSON.errors.bank_name[0],
+                           position: 'topCenter',
+                        });
+                       }
+
+                       if(err.responseJSON.errors.bank_name){
+                        iziToast.error({
+                           message: err.responseJSON.errors.bank_name[0],
+                           position: 'topCenter',
+                        });
+                       }
+                       if(err.responseJSON.errors.room_no){
+                        iziToast.error({
+                           message: err.responseJSON.errors.room_no[0],
+                           position: 'topCenter',
+                        });
+                       }
+
+                       if(err.responseJSON.errors.customar_number){
+                        iziToast.error({
+                           message:'Customar Name Must Not be Empty!',
+                           position: 'topCenter',
+                        });
+                       }
+
+
+                        
                     }
                 });
             });
         });
     </script> 
+
+
+
 
 <script>
    $(document).ready(function() {

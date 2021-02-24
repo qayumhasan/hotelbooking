@@ -578,6 +578,11 @@ Route::prefix(md5('restaurant/table'))->group(function(){
 });
 
 
+Route::prefix(md5('admin/booking/checkout'))->group(function(){
+    Route::get('/{id}',[CheckingController::class,'bookingCheckout'])->name('admin.booking.checkout');
+});
+
+
 
 Route::get('/page',[MediaManagerController::class, 'insert'])->name('page');
 Route::post('/media',[MediaManagerController::class, 'mediaManager'])->name('admin.media.file.upload');
