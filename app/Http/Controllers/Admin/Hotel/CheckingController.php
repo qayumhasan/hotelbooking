@@ -314,4 +314,11 @@ class CheckingController extends Controller
         $itemscategore= ItemEntry::findOrFail($id);
         return response()->json($itemscategore);
     }
+
+    public function bookingCheckout($id)
+    {
+        $checkindata = Checkin::where('room_id',$id)->get();
+
+        return view('hotelbooking.home.checkout',compact('checkindata'));
+    }
 }

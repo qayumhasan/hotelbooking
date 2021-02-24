@@ -137,5 +137,6 @@ Route::get('/admin/restaurant/chui/getsearch/history/',[ChuiController::class,'g
 
 Route::get('/admin/restaurant/chui/menu/select/room',[ChuiController::class,'slectRoomForBilling']);
 Route::get('/admin/restaurant/chui/menu/select/room/data/get/{id}',[ChuiController::class,'slectRoomForBillingGet']);
+Route::get('/admin/restaurant/chui/menu/history/kot/print/{id}',[ChuiController::class,'billingInfoPrint']);
 
 

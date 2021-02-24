@@ -26,9 +26,19 @@ class CreateRestaurantOrderHeadsTable extends Migration
             $table->integer('payment_method')->nullable();
             $table->text('payment_details')->nullable();
             $table->integer('table_no')->nullable();
-            $table->integer('room_no')->nullable();
+            $table->string('room_no')->nullable();
             $table->text('remarks')->nullable();
             $table->float('gross_amount')->default(0);
+
+            $table->integer('is_active')->default(1);
+            $table->string('entry_by',30)->nullable();
+            $table->string('entry_date',30)->nullable();
+            $table->string('updated_by',30)->nullable();
+            $table->string('updated_date',30)->nullable();
+            $table->integer('is_approve')->default(0);
+            $table->string('approve_by',30)->nullable();
+            $table->string('approve_date',30)->nullable();
+            $table->integer('is_deleted')->default(0);
             $table->timestamps();
         });
     }

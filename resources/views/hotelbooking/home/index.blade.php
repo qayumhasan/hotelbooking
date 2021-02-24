@@ -183,7 +183,7 @@
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu" href=""><i class="fa fa-calendar-check" aria-hidden="true"></i> 
+                              <a href="{{route('admin.booking.checkout',$row->id)}}" class="bg-menu" href=""><i class="fa fa-calendar-check" aria-hidden="true"></i> 
                               Check Out
                               </a>
                            </li>
