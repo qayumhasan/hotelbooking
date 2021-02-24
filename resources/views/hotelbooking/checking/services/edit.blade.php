@@ -331,14 +331,11 @@ $time = date("h:i:sa");
                             <div class=" row">
                                 <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label">Services Category:</label>
                                 <div class="col-sm-8">
-                                    <select class="controll-from" id="service_category" name="service_category" required>
+                                    <select class="controll-from" name="service_category" required>
                                         <option disabled selected>---Select Category----</option>
-                                        @foreach($items as $row)
-                                            <option value="{{$row->id}}">{{$row->item_name}}</option>
+                                        @foreach($menucategores as $row)
+                                            <option value="{{$row->id}}">{{$row->name}}</option>
                                         @endforeach
-
-                                        
-                                        
                                     </select>
                                 </div>
                             </div>
@@ -346,10 +343,11 @@ $time = date("h:i:sa");
                             <div class=" row">
                                 <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label">Services:</label>
                                 <div class="col-sm-8">
-                                    <select class="controll-from" id="exampleFormControlSelect1" name="services" required>
+                                    <select class="controll-from" id="service_category" name="services" required>
                                     <option disabled selected>---Select service----</option>
-                                        @foreach($menucategores as $row)
-                                            <option value="{{$row->id}}">{{$row->name}}</option>
+                                      
+                                        @foreach($items as $row)
+                                            <option value="{{$row->id}}">{{$row->item_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -358,7 +356,7 @@ $time = date("h:i:sa");
                             <div class="row mt-2">
                                 <label for="inputEmail3" class="col-sm-4 col-form-label text-center control-label">Remarks:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" required name="remarks" class="controll-from" id="inputEmail3">
+                                    <input type="text" name="remarks" class="controll-from" id="inputEmail3">
                                 </div>
 
                             </div>

@@ -37,8 +37,8 @@
                     <div class="col-sm-8">
                         <select class="controll-from" id="service_category_area" name="service_category" required>
                             <option disabled selected>---Select Category----</option>
-                            @foreach($items as $row)
-                            <option value="{{$row->id}}">{{$row->item_name}}</option>
+                            @foreach($menucategores as $row)
+                            <option value="{{$row->id}}">{{$row->name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -49,8 +49,9 @@
                     <div class="col-sm-8">
                         <select class="controll-from" id="services" name="services" required>
                             <option disabled selected>---Select service----</option>
-                            @foreach($menucategores as $row)
-                            <option value="{{$row->id}}">{{$row->name}}</option>
+                           
+                            @foreach($items as $row)
+                            <option value="{{$row->id}}">{{$row->item_name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -59,7 +60,7 @@
                 <div class="row mt-2">
                     <label for="inputEmail3" class="col-sm-4 col-form-label text-center control-label">Remarks:</label>
                     <div class="col-sm-8">
-                        <input type="text" required name="remarks" class="controll-from" id="remarks">
+                        <input type="text" name="remarks" class="controll-from" id="remarks">
                     </div>
 
                 </div>
@@ -241,8 +242,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#service_category_area').change(function(params) {
-            alert('ok');
+        $('#services').change(function(params) {
             var id = params.target.value;
             
             $.ajaxSetup({
