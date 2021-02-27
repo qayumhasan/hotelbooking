@@ -490,7 +490,6 @@ class ChuiController extends Controller
 
     public function storeKotItemHistoryByTableID(Request $request)
     {
-        // return $request;
 
         $kothead = Restaurant_Order_head::where('invoice_no', $request->invoice_no)->first();
 
@@ -558,6 +557,7 @@ class ChuiController extends Controller
                         'room_no' => 'required',
                     ]);
                     $kothead->room_no = $request->room_no;
+                    $kothead->booking_no = $request->booking_no;
                 }
             }
 
@@ -574,6 +574,7 @@ class ChuiController extends Controller
             $kotdetails = Restaurant_order_detail::where('table_no', $request->table_no)->where('is_active', 0)->where('kot_status', 0)->update([
                 'is_active' => 1,
                 'kot_status' => 1,
+                'room_booking_no'=>$request->booking_no,
             ]);
         }
     }

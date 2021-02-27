@@ -582,6 +582,7 @@ Route::prefix(md5('restaurant/table'))->group(function(){
 
 Route::prefix(md5('admin/booking/checkout'))->group(function(){
     Route::get('/{id}',[CheckingController::class,'bookingCheckout'])->name('admin.booking.checkout');
+    Route::get('/at/aglance/{id}',[CheckingController::class,'bookingAtAGlance'])->name('admin.chickin.at.glance');
 });
 
 

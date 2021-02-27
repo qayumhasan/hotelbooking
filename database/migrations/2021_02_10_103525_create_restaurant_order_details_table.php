@@ -24,6 +24,7 @@ class CreateRestaurantOrderDetailsTable extends Migration
             $table->integer('qty');
             $table->float('rate');
             $table->float('amount');
+            $table->string('room_booking_no');
             $table->string('complement')->nullable();
             $table->string('invoice_id')->nullable();
             $table->string('kot_status')->default(0);

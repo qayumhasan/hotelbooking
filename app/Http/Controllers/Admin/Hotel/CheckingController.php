@@ -203,6 +203,7 @@ class CheckingController extends Controller
         $services->remarks =$request->remarks;
         $services->rate =$request->rate;
         $services->qty =$request->qty;
+        $services->amount =$request->qty * $request->rate;
         $services->is_third =$request->is_third;
         if($request->is_third == 1){
             $services->third_party =$request->third_party;
@@ -322,8 +323,13 @@ class CheckingController extends Controller
 
     public function bookingCheckout($id)
     {
-        $checkindata = Checkin::where('room_id',$id)->get();
+       $checkindata = Checkin::where('room_id',$id)->with('checkin','foodandbeverage','restaurant')->first();
 
         return view('hotelbooking.home.checkout',compact('checkindata'));
+    }
+
+    public function bookingAtAGlance($id)
+    {
+        
     }
 }
