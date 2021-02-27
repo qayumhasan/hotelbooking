@@ -107,6 +107,18 @@
                                         <i class="las la-list-alt"></i><span>Stock-Center Stock</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.stockledger.itemwise*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stockledger.itemwise')}}">
+                                        <i class="las la-list-alt"></i><span>Stock-Ledger</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.stockledger.categorywise*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stockledger.categorywise')}}">
+                                        <i class="las la-list-alt"></i><span>Category Wise Stock</span>
+                                    </a>
+                                </li>
+
+                                
                             </ul>
                         </li>
                    

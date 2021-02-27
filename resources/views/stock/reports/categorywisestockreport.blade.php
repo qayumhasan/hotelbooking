@@ -1,5 +1,5 @@
 @extends('stock.master')
-@section('title', 'Stock-Center Wise Report | '.$seo->meta_title)
+@section('title', 'Stock ladger| '.$seo->meta_title)
 @section('content')
 <style>
 .form-control{
@@ -9,7 +9,7 @@
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("m/d/Y");
+$current = date("d/m/Y");
 
 @endphp
  <div class="content-page">
@@ -19,27 +19,51 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Stock Availabilty ItemWise</h4>
+                        <h4 class="card-title">Category Wise Stock Report</h4>
                      </div>
                      <span class="float-right mr-2">
                         
                      </span>
                   </div>
                   <div class="card-body">
-                  <form action="{{route('admin.stockavailability.itemwise')}}" method="post">
+                  <form action="{{route('admin.stockledger.categorywise')}}" method="post">
                      @csrf
                     <div class="row">
                         <div class="col-md-3">
                            <div class="form-group">
-                              <label for="fname">Item Name:</label>
-                             <select name="item_name" class="form-control">
+                              <label for="fname">To Date:</label>
+                              <input type="text" class="form-control datepicker" name="todate" value="{{$current}}">
+                             @error('todate')
+                                <div style="color:red">{{ $message }}</div>
+                             @enderror
+                           </div>
+                        </div>
+                        <div class="col-md-3">
+                           <div class="form-group">
+                              <label for="fname">Select Category:</label>
+                             <select name="Catgeory" class="form-control">
                                 <option value="">--select--</option>
-                                @foreach($allitem as $item)
-                                <option value="{{$item->id}}" @if(isset($item_id)) @if($item_id==$item->id) selected @endif @endif>{{$item->item_name}}</option>
+                                @foreach($allcategory->unique('Category') as $category)
+                                <option value="{{$category->Category}}"> {{$category->Category}} </option>
                                 @endforeach
                            
                              </select>
-                             @error('stock_center')
+                             @error('Catgeory')
+                                <div style="color:red">{{ $message }}</div>
+                            @enderror
+                           </div>
+                        </div>
+                        <div class="col-md-3">
+                           <div class="form-group">
+                              <label for="fname">Stock Center:</label>
+                             <select name="stockcenter" class="form-control">
+                                <option value="">--select--</option>
+                                @foreach($allstockcenter->unique('Status') as $stockcenter)
+                                <option value="{{$stockcenter->Status}}" @if(isset($ssscenter)) @if($ssscenter == $stockcenter->Status) selected @endif @endif>{{$stockcenter->Status}}</option>
+                                @endforeach
+                           
+                             </select>
+                             @error('stockcenter')
                                 <div style="color:red">{{ $message }}</div>
                             @enderror
                            </div>
@@ -58,8 +82,6 @@ $current = date("m/d/Y");
                         <table id="datatable" class="table data-table table-striped table-bordered" >
                            <thead class="text-center">
                               <tr>
-                               
-                                 <th>Stock Center</th>
                                  <th>Item Name</th>
                                  <th>Rate</th>
                                  <th>In Qty</th>
@@ -68,17 +90,15 @@ $current = date("m/d/Y");
                               </tr>
                            </thead>
                            <tbody class="text-center">
-                              @if(isset($grouped))
+                              @if(isset($newdata))
 
-                                 @foreach($grouped as $rdata)
+                                 @foreach($newdata as $rdata)
                                    <tr>
-                                       <td>{{$rdata->first()->Status}}</td>
                                        <td>{{$rdata->first()->ItemName}}</td>
                                        <td>{{$rdata->first()->Rate}}</td>
                                        <td>{{$rdata->sum('inqty')}}</td>
                                        <td>{{$rdata->sum('outqty')}}</td>
                                        <td>{{$rdata->sum('StockQty')}}</td>
-                                   
                                    </tr>
                                  @endforeach
 

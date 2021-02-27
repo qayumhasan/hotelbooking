@@ -66,19 +66,12 @@ class ChuiController extends Controller
 
         if ($kotdetails) {
 
-
-
-
             // decrement previous no_of_sale of this item
             $item = ItemEntry::where('id', $request->items)->decrement('no_of_sale', $kotdetails->qty);
 
             // Increment Current Item
 
             $item = ItemEntry::where('id', $request->items)->increment('no_of_sale', $request->quantity);
-
-
-
-
 
             // decrement current employee sales report amount
 
@@ -97,7 +90,6 @@ class ChuiController extends Controller
             $kotdetails->kot_remarks = $request->remarks;
             $kotdetails->updated_by = Auth::user()->id;
             $kotdetails->updated_date = Carbon::now();
-
             // get item price
             $item = ItemEntry::findOrFail($request->items);
 
@@ -106,7 +98,6 @@ class ChuiController extends Controller
             $employecheck =  Emploayee_Sales_Report::where('waiter_id', $request->Waiter_name)->first();
 
             // chek it item already exist
-
             if ($item) {
 
                 $amount = $item->rate * $request->quantity;
@@ -135,8 +126,6 @@ class ChuiController extends Controller
 
             $kotdetails->save();
         } else {
-
-
 
             $kotdetails = new Restaurant_order_detail();
             $kotdetails->table_no = $request->table_no;
@@ -240,7 +229,6 @@ class ChuiController extends Controller
         $year = Carbon::now()->format('Y');
         $date = Carbon::now()->format('d');
         $sec = Carbon::now()->format('s');
-
 
         $book_no = rand(111111, 99999);
 
