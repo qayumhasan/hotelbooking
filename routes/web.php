@@ -380,6 +380,13 @@ Route::post('admin/stock/stockcenter/report', [StockReportController::class, 'st
 Route::get('admin/stock/stockavailability/item', [StockReportController::class, 'stockavailabilityitem'])->name('admin.stockavailability.itemwise');
 Route::post('admin/stock/stockavailability/item', [StockReportController::class, 'stockavailabilityitemresult'])->name('admin.stockavailability.itemwise');
 
+Route::get('admin/stock/stockledger/item', [StockReportController::class, 'stockledger'])->name('admin.stockledger.itemwise');
+Route::post('admin/stock/stockledger/item', [StockReportController::class, 'stockledgerresult'])->name('admin.stockledger.itemwise');
+
+Route::get('admin/stock/categorywise/report', [StockReportController::class, 'CategoryWiseStock'])->name('admin.stockledger.categorywise');
+Route::post('admin/stock/categorywise/report', [StockReportController::class, 'CategoryWiseStockReport'])->name('admin.stockledger.categorywise');
+
+
 
 
 
