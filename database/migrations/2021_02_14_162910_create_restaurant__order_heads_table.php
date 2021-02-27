@@ -27,6 +27,7 @@ class CreateRestaurantOrderHeadsTable extends Migration
             $table->text('payment_details')->nullable();
             $table->integer('table_no')->nullable();
             $table->string('room_no')->nullable();
+            $table->string('booking_no')->nullable();
             $table->text('remarks')->nullable();
             $table->float('gross_amount')->default(0);
 

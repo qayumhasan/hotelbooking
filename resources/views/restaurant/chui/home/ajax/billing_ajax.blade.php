@@ -630,7 +630,7 @@ $time = date("h:i");
 
             success: function(data) {
 
-                $('#getroomdata').append('<h6>Guest Information:</h6><h6>Bookin No: <span>' + data.booking_no + '</span></h6><h6>Guest Name: <span>' + data.guest_name + '</span></h6><h6>Mobile No: <span>' + data.mobile + '</span></h6><h6>Check-In Date: <span>' + data.checkin_date + '</span></h6>')
+                $('#getroomdata').append('<h6>Guest Information:</h6><h6>Bookin No: <span>' + data.booking_no + '</span></h6><h6>Guest Name: <span>' + data.guest_name + '</span></h6><h6>Mobile No: <span>' + data.mobile + '</span></h6><h6>Check-In Date: <span>' + data.checkin_date + '</span></h6> <input type="hidden" name="booking_no" value="'+data.booking_no+'"/>');
 
 
 

@@ -19,6 +19,8 @@ class CreateCheckinServicesTable extends Migration
             $table->string('service_no');
             $table->string('service_date');
             $table->string('service_time');
+            $table->string('item_name');
+            $table->string('amount')->nullable();
             $table->integer('service_category');
             $table->integer('services');
             $table->string('remarks');
