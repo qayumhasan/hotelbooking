@@ -166,7 +166,7 @@ $time = date("h:i");
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 printableAreasaveprint">
                         <style>
                            
 
@@ -217,7 +217,7 @@ $time = date("h:i");
                                 </tr>
                                 <tr>
                                     <td width="100%" style="text-align: center; font-size: 20px; font-weight: bold; padding: 0px;">
-                                        Voucher {{$voucher}}
+                                        Voucher
                                     </td>
                                 </tr>
                                 <tr>
@@ -260,7 +260,7 @@ $time = date("h:i");
                                             </tr>
                                             <tr>
                                                 <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Payment Method:</strong></td>
-                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">{{$voucher->date}}</td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">{{ucfirst($voucher->debit)}}</td>
                                             </tr>
 
                                         </table>
@@ -279,27 +279,36 @@ $time = date("h:i");
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @php
+                                    $totalamount = 0;
+                                @endphp
                                     <!-- ITEMS HERE -->
-
+                                @foreach($voucherdetails as $row)
                                     <tr>
-                                        <td style="padding: 0px 7px; line-height: 20px;">2</td>
-                                        <td style="padding: 0px 7px; line-height: 20px;">VIP cabin with Private Balcony</td>
-                                        <td style="padding: 0px 7px; line-height: 20px;">£1,295.00</td>
+                                        <td style="padding: 5px 7px;border: 1px #eee solid; line-height: 20px;">{{$row->date}}</td>
+                                        <td style="padding: 5px 7px;border: 1px #eee solid; line-height: 20px;">{{$row->remarks}}</td>
+                                        <td style="padding: 5px 7px;border: 1px #eee solid; line-height: 20px;">$ {{$row->amount}}</td>
 
-
+                                        @php
+                                            $totalamount = $totalamount + $row->amount;
+                                        @endphp
                                     </tr>
+                                @endforeach
                                     <tr>
                                         <td colspan="2" class="text-right" style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Total Amount</strong></td>
-                                        <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">£000.00</td>
+                                        <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">$ {{$totalamount}}</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="2" class="text-right"><strong>Assign By:</strong></td>
-                                        <td>Demo User</td>
+                                        <td colspan="2" class="text-right"><strong>In Word:</strong></td>
+                                        <td>{{$numToWord->numberTowords($totalamount)}}</td>
+                                        
                                     </tr>
                                 </tfoot>
                             </table>
+
+                            <span>Assign By:{{$guestname->user->username ?? ''}}</span>
 
                             <br>
                             <table width="100%" style="font-family: sans-serif; font-size: 14px;">
@@ -312,11 +321,11 @@ $time = date("h:i");
                                                 <td class="text-center" style="padding: 0px; line-height: 20px;">
                                                     <strong>Company Name</strong>
                                                     <br>
-                                                    ABC AREA
+                                                    {{$companyinformation->company_name}}
                                                     <br>
-                                                    Tel: +00 000 000 0000 | Email: info@companyname.com
+                                                    Tel: {{$companyinformation->mobile}} | Email: {{$companyinformation->email}}
                                                     <br>
-                                                    Company Registered in Country Name. Company Reg. 12121212.
+                                                    Company Registered in {{$companyinformation->address}}. Company Reg. 12121212.
                                                     <br>
                                                     VAT Registration No. 021021021 | ATOL No. 1234
                                                 </td>
@@ -331,7 +340,7 @@ $time = date("h:i");
                             
                     </div>
                     <br>
-                    <button type="button" class="btn btn-primary mx-auto" >Print</button>
+                    <button type="button" class="btn btn-primary mx-auto mt-5 savepritbtn" >Print</button>
                 </div>
             </div>
         </div>

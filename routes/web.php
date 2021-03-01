@@ -492,9 +492,16 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
 Route::get('/admin/service/categores/{id}', [CheckingController::class, 'ServiceCategores']);
 
 Route::middleware(['admin'])->prefix(md5('admin/voucher'))->group(function () {
-    Route::get('/create', [VoucherController::class, 'create'])->name('admin.voucher.create');
+    Route::get('/create/{booking_no}', [VoucherController::class, 'create'])->name('admin.voucher.create');
     Route::get('/show/voucher/{booking_no}', [VoucherController::class, 'showvoucher'])->name('admin.checkin.show.voucher');
+
+    Route::get('/list/voucher/{booking_no}', [VoucherController::class, 'listVoucher'])->name('admin.checkin.list.voucher');
+
+    Route::get('/edit/voucher/page/{id}', [VoucherController::class, 'editVoucherPage'])->name('admin.checkin.edit.voucher.page');
+
     Route::post('/voucher/{booking_no}', [VoucherController::class, 'submitVoucher'])->name('admin.checkin.voucher.submit');
+
+    Route::post('/voucher/update/{id}', [VoucherController::class, 'updateVoucher'])->name('admin.checkin.voucher.update');
 });
 
 Route::middleware(['admin'])->prefix('admin')->group(function () {

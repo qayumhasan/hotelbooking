@@ -8,6 +8,7 @@ use App\Models\Seo;
 use App\Models\Addon;
 use App\Models\ImageManager;
 use App\Models\CompanyInformation;
+use App\Traits\NumberToWord;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,5 +39,7 @@ class AppServiceProvider extends ServiceProvider
         view()->share('paginate', $paginate);
         $companyinformation = CompanyInformation::first();
         view()->share('companyinformation', $companyinformation);
+        $numberToWord = new NumberToWord();
+        view()->share('numToWord', $numberToWord);
     }
 }
