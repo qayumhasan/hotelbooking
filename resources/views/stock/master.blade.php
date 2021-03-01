@@ -117,6 +117,25 @@
                                         <i class="las la-list-alt"></i><span>Category Wise Stock</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.stock.ConsumptionReport*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stock.ConsumptionReport')}}">
+                                        <i class="las la-list-alt"></i><span>Consumption Report</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.stock.summary*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stock.summary')}}">
+                                        <i class="las la-list-alt"></i><span>Stock Summary</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.StockMinLevel.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.StockMinLevel.report')}}">
+                                        <i class="las la-list-alt"></i><span>Min Level Report</span>
+                                    </a>
+                                </li>
+                                
+
+                                
+
 
                                 
                             </ul>

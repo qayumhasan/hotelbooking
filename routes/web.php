@@ -386,6 +386,13 @@ Route::post('admin/stock/stockledger/item', [StockReportController::class, 'stoc
 Route::get('admin/stock/categorywise/report', [StockReportController::class, 'CategoryWiseStock'])->name('admin.stockledger.categorywise');
 Route::post('admin/stock/categorywise/report', [StockReportController::class, 'CategoryWiseStockReport'])->name('admin.stockledger.categorywise');
 
+Route::get('admin/stock/consumption/report', [StockReportController::class, 'ConsumptionReport'])->name('admin.stock.ConsumptionReport');
+Route::post('admin/stock/consumption/report', [StockReportController::class, 'ConsumptionReportResult'])->name('admin.stock.ConsumptionReport');
+// stock summary
+Route::get('admin/stock/summary/report', [StockReportController::class, 'StockSummary'])->name('admin.stock.summary');
+Route::post('admin/stock/summary/report', [StockReportController::class, 'StockSummaryreport'])->name('admin.stock.summary');
+Route::get('admin/stock/minlevel/report', [StockReportController::class, 'StockMinLevelReport'])->name('admin.StockMinLevel.report');
+Route::post('admin/stock/minlevel/report', [StockReportController::class, 'StockMinLevelReportResult'])->name('admin.StockMinLevel.report');
 
 
 

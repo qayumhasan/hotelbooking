@@ -140,7 +140,86 @@ class StockReportController extends Controller
 
         return view('stock.reports.categorywisestockreport',compact('allcategory','allstockcenter','newdata'));
 
-
-
     }
+
+    // consumtion report
+    public function ConsumptionReport(){
+        $allcategory=DB::table('ItemInOutLegderTbl')->select(['Category'])->get();
+        $allstockcenter=DB::table('ItemInOutLegderTbl')->select(['Status'])->get();
+        $allitem=ItemEntry::where('is_deleted',0)->select(['item_name','id'])->get();
+        return view('stock.reports.consumptionreport',compact('allcategory','allstockcenter','allitem'));
+    }
+    public function ConsumptionReportResult(Request $request){
+        //return $request;
+        $validated = $request->validate([
+            'item_name' => 'required',
+            
+        ]);
+        $allcategory=DB::table('ItemInOutLegderTbl')->select(['Category'])->get();
+        $allitem=ItemEntry::where('is_deleted',0)->select(['item_name','id'])->get();
+        $itema=$request->item_name;
+        $alldata=DB::table('ItemInOutLegderTbl')->whereBetween('Date', [$request->formdate,$request->todate])->where('ItemID',$itema)->get();
+        $newdata =$alldata->groupBy('Status');
+       
+
+        return view('stock.reports.consumptionreport',compact('allcategory','allitem','newdata','itema'));
+    }
+    public function StockSummary(){
+
+        $allcategory=DB::table('ItemInOutLegderTbl')->select(['Category'])->get();
+        $allstockcenter=DB::table('ItemInOutLegderTbl')->select(['Status'])->get();
+        $allitem=ItemEntry::where('is_deleted',0)->select(['item_name','id'])->get();
+
+        return view('stock.reports.stocksummary',compact('allcategory','allstockcenter','allitem'));
+    }
+    public function StockSummaryreport(Request $request){
+       
+        $validated = $request->validate([
+            'Stock_center' => 'required',
+        ]);
+        if($request->qty == NULL){
+            $sstock=$request->Stock_center;
+            $allstockcenter=DB::table('ItemInOutLegderTbl')->get();
+            $alldata=DB::table('ItemInOutLegderTbl')->where('Status',$request->Stock_center)->get();
+            $newdata =$alldata->groupBy('ItemID');
+            return view('stock.reports.stocksummary',compact('allstockcenter','newdata','sstock'));
+
+        }else{
+
+            
+            $mainqty=$request->qty;
+            $oparation=$request->oparation;
+            $sstock=$request->Stock_center;
+            $allstockcenter=DB::table('ItemInOutLegderTbl')->get();
+            $alldata=DB::table('ItemInOutLegderTbl')->where('Status',$request->Stock_center)->get();
+            $newdata = $alldata->groupBy('ItemID');
+            return view('stock.reports.stocksummaryresult',compact('allstockcenter','newdata','mainqty','oparation','sstock'));
+
+        }
+
+      
+    }
+
+    // minimum lavel
+    public function StockMinLevelReport(){
+        $allstockcenter=DB::table('ItemInOutLegderTbl')->select(['Status'])->get();
+       
+        return view('stock.reports.minlevelreport',compact('allstockcenter'));
+    }
+    // report result 
+    public function StockMinLevelReportResult(Request $request){
+        if($request->Stock_center==NULL){
+            $allstockcenter=DB::table('ItemInOutLegderTbl')->select(['Status'])->get();
+            $alldata=DB::table('ItemInOutLegderTbl')->get();
+            $newdata = $alldata->groupBy('ItemID');
+            return view('stock.reports.minlevelreport',compact('allstockcenter','newdata'));
+        }else{
+            $allstockcenter=DB::table('ItemInOutLegderTbl')->select(['Status'])->get();
+            $alldata=DB::table('ItemInOutLegderTbl')->where('Status',$request->Stock_center)->get();
+            $newdata = $alldata->groupBy('ItemID');
+            return view('stock.reports.minlevelreport',compact('allstockcenter','newdata'));
+        }
+       
+    }
+    
 }
