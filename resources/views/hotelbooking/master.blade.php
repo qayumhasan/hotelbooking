@@ -646,6 +646,7 @@
     <script src="{{asset('public/backend')}}/assets/js/select2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/datatables.js"></script>
+    <script src="{{asset('public/backend')}}/assets/jquery.PrintArea.js"></script>
 
     <script>
         @if(Session::has('messege'))
@@ -712,6 +713,21 @@
             }
         );
     </script>
+
+<script>
+        $(function () {
+            $(".savepritbtn").on('click', function () {
+                
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printableAreasaveprint").printArea(options);
+            });
+        });
+   </script>
 
   
 
