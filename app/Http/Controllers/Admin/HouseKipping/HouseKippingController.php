@@ -19,7 +19,7 @@ class HouseKippingController extends Controller
     public function reportList()
     {
         $roomtypes = RoomType::where('is_active',1)->where('is_deleted',0)->get();
-        $rooms = Room::with('housekeeping')->where('is_active',1)->where('is_deleted',0)->paginate(10);
+        $rooms = Room::with('housekeeping')->where('is_active',1)->where('is_deleted',0)->where('room_status','!=',3)->get();
         return view('housekipping.report.list',compact('rooms','roomtypes'));
     }
 
@@ -36,9 +36,27 @@ class HouseKippingController extends Controller
         
        
 
-        $housekeeping = HouseKeeping::where('room_id',$request->room_id)->first();
+        $housekeeping = HouseKeeping::where('room_id',$request->room_id)->where('is_active',1)->first();
 
         if($housekeeping){
+
+            $roomstatus = Room::findOrFail($request->room_id);
+            if($request->kepping_status == 'Dirty'){
+                $roomstatus->room_status = 2;
+                $roomstatus->save();
+            }
+
+            if($request->kepping_status == 'Repair'){
+                $roomstatus->room_status = 4;
+                $roomstatus->save();
+            }
+
+            if($request->kepping_status == 'Cleanded'){
+                $roomstatus->room_status = 1;
+                $roomstatus->save();
+            }
+
+            
             $housekeeping->room_id=$request->room_id;
             $housekeeping->log_date=$request->keeping_date;
             $housekeeping->log_time=$request->keeping_time;
@@ -54,6 +72,23 @@ class HouseKippingController extends Controller
             return redirect()->back()->with($notification);
 
         }else{
+
+            $roomstatus = Room::findOrFail($request->room_id);
+            if($request->kepping_status == 'Dirty'){
+                $roomstatus->room_status = 2;
+                $roomstatus->save();
+            }
+
+            if($request->kepping_status == 'Repair'){
+                $roomstatus->room_status = 4;
+                $roomstatus->save();
+            }
+            
+            if($request->kepping_status == 'Cleanded'){
+                $roomstatus->room_status = 1;
+                $roomstatus->save();
+            }
+
             $housekeeping = new HouseKeeping();
             $housekeeping->room_id=$request->room_id;
             $housekeeping->log_date=$request->keeping_date;
@@ -72,5 +107,26 @@ class HouseKippingController extends Controller
         }
         
 
+    }
+
+
+    public function getHousekeepingHistory($id)
+    {
+        $housekeepings = HouseKeeping::where('room_id',$id)->get();
+
+        return view('hotelbooking.home.ajax.housekeeping_history',compact('housekeepings'));
+    }
+
+    public function houseKeepingSearch($id,Request $request)
+    {
+
+
+        $from_date = strtotime($request->from_date);
+        $to_date = strtotime($request->to_date);
+        
+        
+        $housekeepings = HouseKeeping::where('room_id',$id)->where('keeping_name',$request->employee_name)->get();
+
+        return view('hotelbooking.home.ajax.housekeeping_history',compact('housekeepings'));
     }
 }

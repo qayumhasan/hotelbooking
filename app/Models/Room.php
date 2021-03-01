@@ -31,7 +31,7 @@ class Room extends Model
     }
     public function housekeeping()
     {
-        return $this->hasOne('App\Models\HouseKeeping','room_id','id');
+        return $this->hasOne('App\Models\HouseKeeping','room_id','id')->where('is_active',1);
     }
 
     public function updatedby()
