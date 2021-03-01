@@ -19,7 +19,7 @@ class HousekeepingGuestEntryController extends Controller
     public function guestEntryPage()
     {
         
-        $rooms=Room::where('is_active',1)->where('is_deleted',0)->get();
+        $rooms=Room::where('is_active',1)->where('room_status',3)->where('is_deleted',0)->get();
         return view('housekipping.guest_entry.person_entry',compact('rooms'));  
     }
 

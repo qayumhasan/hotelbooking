@@ -13,6 +13,7 @@ Route::middleware(['admin'])->prefix(md5('admin/house/keeping'))->group(function
     Route::get('/', [HouseKippingController::class, 'index'])->name('admin.housekipping.home');
     Route::get('/report', [HouseKippingController::class, 'reportList'])->name('admin.housekipping.report.list');
     Route::post('/update', [HouseKippingController::class, 'reportUpdate'])->name('admin.housekepping.update');
+    Route::get('/history/{id}', [HouseKippingController::class, 'getHousekeepingHistory'])->name('admin.housekeeping.history');
 });
 
 Route::middleware(['admin'])->prefix(md5('admin/house/keeping/report'))->group(function () {
@@ -140,6 +141,7 @@ Route::get('/admin/housekepping/guest/entry/report/ajax/list', [HousekeepingGues
 Route::get('/admin/housekepping/guest/entry/report/check/ajax/list', [HousekeepingGuestEntryController::class, 'guestEntryReportCheckAjaxData']);
 Route::get('admin/get/item/section/{id}', [ItemEntryController::class, 'getItemSection']);
 Route::get('admin/housekepping/occupancy/exp/report/ajax/list', [OccupancyController::class, 'expCheckoutReportAjaxData']);
+Route::post('admin/house/keeping/search/{id}', [HouseKippingController::class, 'houseKeepingSearch']);
 
 
 

@@ -1,5 +1,5 @@
 @extends('housekipping.master')
-@section('title', 'All Room | '.$seo->meta_title)
+@section('title', 'House Keeping Report | '.$seo->meta_title)
 @section('content')
 
 @php
@@ -186,7 +186,7 @@ $time = date("h:i");
                 <div class="card printableAreasaveprint">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">All Advance Booking</h4>
+                            <h4 class="card-title">All House Keeping Report</h4>
                         </div>
                         <!-- <span class="float-right mr-2">
                             <a href="#" class="btn btn-sm bg-primary">
@@ -251,7 +251,7 @@ $time = date("h:i");
 
                             </table>
 
-                            {{$rooms->links()}}
+                           
 
 
 

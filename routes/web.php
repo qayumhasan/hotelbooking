@@ -483,8 +483,11 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
 });
 
 Route::get('/admin/service/categores/{id}', [CheckingController::class, 'ServiceCategores']);
+
 Route::middleware(['admin'])->prefix(md5('admin/voucher'))->group(function () {
     Route::get('/create', [VoucherController::class, 'create'])->name('admin.voucher.create');
+    Route::get('/show/voucher/{booking_no}', [VoucherController::class, 'showvoucher'])->name('admin.checkin.show.voucher');
+    Route::post('/voucher/{booking_no}', [VoucherController::class, 'submitVoucher'])->name('admin.checkin.voucher.submit');
 });
 
 Route::middleware(['admin'])->prefix('admin')->group(function () {
