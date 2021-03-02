@@ -50,7 +50,7 @@ $time = date("h:i A");
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Single Check-Out in Group Booking</h4>
+                            <h4 class="card-title">Add Room In Existing Booking</h4>
                         </div>
 
 
@@ -110,30 +110,53 @@ $time = date("h:i A");
                             <div class="card shadow-sm shadow-showcase">
                                 <div class="card-header d-flex justify-content-between">
                                     <div class="header-title">
-                                        <h4 class="card-title">CheckOut</h4>
+                                        <h4 class="card-title">Booking Details</h4>
                                     </div>
                                 </div>
 
 
-                                <form action="{{url('admin/singlecheckout/ingroupbooking/request')}}" method="post">
+                                <form action="{{url('admin/change/room/groupbooking/submit')}}" method="post">
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
+
                                         <div class="col-md-8">
                                             <div class="form-group row">
-                                                <label class="control-label col-sm-3 align-self-center" for="email">Select Room No. for Check-Out:</label>
+                                                <label class="control-label col-sm-3 align-self-center" for="email">Old Rooom:</label>
+                                               
+                                                @php
+                                                   $singleroom=App\Models\Room::where('id',$checkin->room_id)->first();
+                                                @endphp
+                                           
+                                                <div class="col-sm-3">
+                                                    <p>{{ $singleroom->room_no}} ({{ $singleroom->roomtype->room_type }})</p>
+                                                </div>
+                                             
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group row">
+                                                <label class="control-label col-sm-3 align-self-center" for="email">Old Tariff:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" value="{{$checkin->tarif}}" disabled>
+                                                </div>
+                                             
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="form-group row">
+                                                <label class="control-label col-sm-3 align-self-center" for="email">Select New Room:</label>
                                                 <div class="col-sm-6">
                                                     <input type="hidden" name="booking_no" value="{{ $checkin->booking_no }}">
+                                                    <input type="hidden" name="id" value="{{ $checkin->id }}">
                                                     <select name="room_id"  class="form-control form-control-sm">
                                                         @php
-                                                          $allroom=App\Models\Checkin::where('booking_no',$checkin->booking_no)->where('is_occupy',1)->get();
+                                                          $allroom=App\Models\Room::where('room_status',1)->where('is_active',1)->get();
                                                         @endphp
                                                         <option value="">--Select--</option>
                                                         @foreach($allroom as $room)
-                                                            @php
-                                                                $singleroom=App\Models\Room::where('id',$room->room_id)->first();
-                                                            @endphp
-                                                        <option value="{{$singleroom->id}}">{{ $singleroom->room_no }}({{ $singleroom->roomtype->room_type }})</option>
+                                                        <option value="{{$room->id}}">{{ $room->room_no }}({{ $room->roomtype->room_type }} - {{ $room->tariff}})</option>
                                                         @endforeach
                                                  
                                                     </select>
@@ -143,9 +166,18 @@ $time = date("h:i A");
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <div class="form-group row">
-                                                <label class="control-label col-sm-3 align-self-center" for="email">CheckOut Date And Time:</label>
+                                                <label class="control-label col-sm-3 align-self-center" for="email">Tarrif:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" name="tarrif" id="tarrif" class="form-control form-control-sm" value="">
+                                                </div>
+                                             
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group row">
+                                                <label class="control-label col-sm-3 align-self-center" for="email">Change Romm Date And Time:</label>
                                                 <div class="col-sm-4">
                                                     <input type="text" name="date" class="form-control form-control-sm datepicker" value="{{$current}}">
                                                 </div>
@@ -158,15 +190,6 @@ $time = date("h:i A");
 
                                     
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class=" text-center">
-                                            <span id="start-one">
-                                                <button id="file-upload-btn" type="submit" class="btn btn-lg btn-primary">Check Before Submit</button>
-                                            </span>
-
-                                        </div>
-                                    </div>
-
                                     <div class="col-md-6">
                                         <div class=" text-center">
                                             <span id="start-one">
@@ -175,10 +198,6 @@ $time = date("h:i A");
 
                                         </div>
                                     </div>
-
-
-
-
 
                                     </div>
                                   
@@ -201,6 +220,31 @@ $time = date("h:i A");
         </div>
     </div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+     $('select[name="room_id"]').on('change', function(){
+        var room_id=$(this).val();
+        
 
+
+         if(room_id) {
+             $.ajax({
+                 url: "{{  url('/get/addroom/tariff') }}/"+room_id,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+                     //console.log(data);
+                        $('#tarrif').val(data.tariff);
+                      
+
+                    }
+             });
+         } else {
+             //alert('danger');
+         }
+
+     });
+ });
+</script>
 
 @endsection

@@ -274,18 +274,18 @@ $time = date("h:i:sa");
 
                                     <tr class="item">
                                         <td class=" d-block">
-                                            <a class="buttoncss add" href="{{ url('admin/singlecheckout/ingroupbooking',$checkin->id) }}"><i class="fa fa-plus" aria-hidden="true"></i>{{$checkin->id}} Single Checkout In GroupBooking</a>
+                                            <a class="buttoncss add" href="{{ url('admin/singlecheckout/ingroupbooking',$checkin->id) }}"><i class="fa fa-plus" aria-hidden="true"></i>Single Checkout In GroupBooking</a>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" data-toggle="modal" data-target="#guest_info_update"><i class="fas fa-edit"></i>Add Booking In Existing Booking</a>
+                                            <a class="buttoncss add" href="{{url('admin/addroom/existingbooking',$checkin->id)}}"><i class="fas fa-edit"></i>Add Booking In Existing Booking</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" href="{{route('admin.edit.booking',$checkin->id)}}"><i class="fa fa-times" aria-hidden="true"></i>Change Room In Group Booking</a>
+                                            <a class="buttoncss add" href="{{url('admin/change/room/groupbooking',$checkin->id)}}"><i class="fa fa-times" aria-hidden="true"></i>Change Room In Group Booking</a>
                                         </td>
                                     </tr>
                                     <tr>
