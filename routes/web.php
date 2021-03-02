@@ -495,6 +495,14 @@ Route::get('/admin/service/categores/{id}', [CheckingController::class, 'Service
 
 
 
+Route::get('/get/addroom/tariff/{room_id}', [HotelServiceController::class, 'getprice']);
+
+Route::get('admin/change/room/groupbooking/{id}', [HotelServiceController::class, 'ChangeRoomGroupBooking']);
+Route::post('admin/change/room/groupbooking/submit', [HotelServiceController::class, 'ChangeRoomGroupBookingSubmit']);
+
+Route::get('admin/addroom/existingbooking/{id}', [HotelServiceController::class, 'addroom']);
+Route::post('admin/addroom/existingbooking/submit', [HotelServiceController::class, 'addroomsubmit']);
+
 Route::get('admin/singlecheckout/ingroupbooking/{id}', [HotelServiceController::class, 'SingleCheckoutGroupbooking']);
 Route::post('admin/singlecheckout/ingroupbooking/request', [HotelServiceController::class, 'SingleCheckoutRequest']);
 
