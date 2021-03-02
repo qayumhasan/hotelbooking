@@ -49,6 +49,14 @@ class Checkin extends Model
     {
         return $this->hasMany(Restaurant_order_detail::class,'room_booking_no','booking_no');
     }
+
+     /**
+     * Get the user that owns the phone.
+     */
+    public function vouchers()
+    {
+        return $this->hasMany(Voucher::class,'booking_no','booking_no');
+    }
    
 
 }

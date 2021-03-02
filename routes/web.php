@@ -512,6 +512,12 @@ Route::middleware(['admin'])->prefix(md5('admin/voucher'))->group(function () {
     Route::post('/voucher/{booking_no}', [VoucherController::class, 'submitVoucher'])->name('admin.checkin.voucher.submit');
 
     Route::post('/voucher/update/{id}', [VoucherController::class, 'updateVoucher'])->name('admin.checkin.voucher.update');
+
+    Route::get('/delete/voucher/list/{booking_no}', [VoucherController::class, 'deleteVoucherList'])->name('admin.checkin.delete.voucher.list');
+
+    Route::get('/delete/voucher/{id}', [VoucherController::class, 'deleteVoucher'])->name('admin.checkin.delete.voucher');
+
+    Route::get('/list/view/{booking_no}', [VoucherController::class, 'listVoucherView'])->name('admin.checkin.list.voucher.view');
 });
 
 Route::middleware(['admin'])->prefix('admin')->group(function () {
@@ -616,6 +622,9 @@ Route::prefix(md5('restaurant/table'))->group(function(){
 
 Route::prefix(md5('admin/booking/checkout'))->group(function(){
     Route::get('/{id}',[CheckingController::class,'bookingCheckout'])->name('admin.booking.checkout');
+    Route::post('/get/data',[CheckingController::class,'bookingCheckoutGetData'])->name('admin.checkout.get.data');
+    Route::post('/checkout/store',[CheckingController::class,'bookingCheckoutStore'])->name('admin.checkout.store');
+
     Route::get('/at/aglance/{id}',[CheckingController::class,'bookingAtAGlance'])->name('admin.chickin.at.glance');
 });
 

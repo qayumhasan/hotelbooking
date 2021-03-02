@@ -65,7 +65,7 @@ class VoucherController extends Controller
 
     public function listVoucher($booking_no)
     {
-        $voucherdetails = Voucher::where('booking_no',$booking_no)->get();
+        $voucherdetails = Voucher::where('booking_no',$booking_no)->where('is_deleted',0)->get();
         return view('hotelbooking.checking.voucher.list',compact('voucherdetails'));
     }
 
@@ -99,5 +99,34 @@ class VoucherController extends Controller
                 );
             return redirect()->route('admin.checkin.list.voucher',$voucher->booking_no)->with($notification);
         }
+    }
+
+
+    public function deleteVoucherList($booking_no)
+    {
+        $voucherdetails = Voucher::where('booking_no',$booking_no)->where('is_deleted',0)->get();
+        return view('hotelbooking.checking.voucher.delete_list',compact('voucherdetails'));
+    }
+
+    public function deleteVoucher($id)
+    {
+        Voucher::findOrFail($id)->update([
+            'is_deleted'=>1,
+        ]);
+
+        $notification=array(
+            'messege'=>'Voucer Deleted Succesfully!!',
+            'alert-type'=>'success'
+            );
+
+        return redirect()->back()->with($notification);
+    }
+
+
+    public function listVoucherView($booking_no)
+    {
+        $voucherdetails = Voucher::where('booking_no',$booking_no)->where('is_deleted',0)->get();
+        return view('hotelbooking.checking.voucher.view_list',compact('voucherdetails'));
+        
     }
 }

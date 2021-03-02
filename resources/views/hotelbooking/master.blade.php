@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title',$seo->meta_title)</title>
     <!-- Favicon -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{asset('public/uploads/logo/'.$logos->favicon)}}" />
 
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/backend.css?v=1.0.1">
@@ -710,6 +711,13 @@
         $('.datepicker').datepicker(
             {
                 format: 'dd/mm/yyyy',
+            }
+        );
+    </script>
+    <script>
+        $('.datepickernew').datepicker(
+            {
+                format: 'dd-mm-yyyy',
             }
         );
     </script>

@@ -183,12 +183,12 @@ $time = date("h:i:sa");
                                     </tr>
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" href="#"><i class="fa fa-times" aria-hidden="true"></i> Delete Voucher</a>
+                                            <a class="buttoncss add" href="{{route('admin.checkin.delete.voucher.list',$checkin->booking_no)}}"><i class="fa fa-times" aria-hidden="true"></i> Delete Voucher</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" href="#"><i class="fa fa-star" aria-hidden="true"></i> view Voucher</a>
+                                            <a class="buttoncss add" href="{{route('admin.checkin.list.voucher.view',$checkin->booking_no)}}"><i class="fa fa-star" aria-hidden="true"></i> view Voucher</a>
                                         </td>
                                     </tr>
                                 </tbody>

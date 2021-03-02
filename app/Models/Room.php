@@ -27,7 +27,7 @@ class Room extends Model
 
     public function checkin()
     {
-        return $this->hasOne('App\Models\Checkin','room_id','id');
+        return $this->hasOne('App\Models\Checkin','room_id','id')->where('is_occupy',1);
     }
     public function housekeeping()
     {
