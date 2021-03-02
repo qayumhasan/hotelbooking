@@ -258,6 +258,58 @@ $time = date("h:i:sa");
             </div>
             <!-- other service area end -->
 
+                <!-- other service area start -->
+                <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-body">
+                        <fieldset class="mainitem">
+                            <legend>Group Booking Edition</legend>
+
+                            <table class="tableclass">
+                                <tbody>
+
+
+
+
+
+                                    <tr class="item">
+                                        <td class=" d-block">
+                                            <a class="buttoncss add" href="{{ url('admin/singlecheckout/ingroupbooking',$checkin->id) }}"><i class="fa fa-plus" aria-hidden="true"></i>{{$checkin->id}} Single Checkout In GroupBooking</a>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class=" d-block">
+                                            <a class="buttoncss add" data-toggle="modal" data-target="#guest_info_update"><i class="fas fa-edit"></i>Add Booking In Existing Booking</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class=" d-block">
+                                            <a class="buttoncss add" href="{{route('admin.edit.booking',$checkin->id)}}"><i class="fa fa-times" aria-hidden="true"></i>Change Room In Group Booking</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class=" d-block">
+                                            <a class="buttoncss add" data-toggle="modal" data-target="#changetarif"><i class="fa fa-star" aria-hidden="true"></i>Master Room In Group Booking</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class=" d-block">
+                                            <a class="buttoncss add" id="delete" href="{{route('admin.delete.booking',$checkin->id)}}"><i class="fa fa-star" aria-hidden="true"></i>Change Tariff For New Day</a>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+
+                        </fieldset>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Checkout service area end -->
+
+
 
         </div>
     </div>
