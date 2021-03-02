@@ -419,7 +419,7 @@ class CheckingController extends Controller
 
     public function bookingCheckout($id)
     {
-       $checkindata = Checkin::where('room_id',$id)->with('checkin','foodandbeverage','restaurant')->first();
+      $checkindata = Checkin::where('room_id',$id)->where('is_occupy',1)->with('checkin','foodandbeverage','restaurant','vouchers')->first();
 
         return view('hotelbooking.home.checkout',compact('checkindata'));
     }
@@ -430,6 +430,24 @@ class CheckingController extends Controller
     }
 
 
-    // single checkout in group booking
+    public function bookingCheckoutGetData(Request $request)
+    {
+        
+        $checkindata = Checkin::where('room_id',$request->room_id)->where('is_occupy',1)->with('checkin','foodandbeverage','restaurant','vouchers')->first();
+
+        $current = $request->date;
+        return view('hotelbooking.home.ajax.checkout_ajax',compact('checkindata','current'));
+    }
+
+
+    public function bookingCheckoutStore(Request $request)
+    {
+        $checkindata = Checkin::where('room_id',$request->room_id)->where('is_occupy',1)->with('checkin','foodandbeverage','restaurant','vouchers')->first();
+
+        return view('hotelbooking.home.checkout_tax',compact('checkindata'));
+        
+    }
+
+    
  
 }

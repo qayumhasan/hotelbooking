@@ -8,8 +8,6 @@ $time = date("h:i");
 @endphp
 <div class="content-page">
 
-    <form action="{{route('admin.checkout.store')}}" method="post">
-    @csrf
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -44,7 +42,9 @@ $time = date("h:i");
                                 </tbody>
                             </table>
                         </div>
-                       
+                        <!-- hidden data -->
+                        <input type="hidden" id="room_id" value="{{$checkindata->room_id}}" name="room_id">
+                        <!-- hidden data -->
                         <div class="col-md-6 p-2">
                             <table class="table table-bordered">
                                 <tbody>
@@ -66,7 +66,7 @@ $time = date("h:i");
                                                     <input type="text" id="checkoutDate" name="checkoutDate" value="{{$current}}" class="form-control form-control-sm datepickernew">
                                                 </div>
                                                 <div class="col">
-                                                    <input type="time" name="checkout_time" value="{{$time}}" class="form-control form-control-sm col">
+                                                    <input type="time" value="{{$time}}" class="form-control form-control-sm col">
                                                 </div>
                                             </div>
 
@@ -77,7 +77,7 @@ $time = date("h:i");
                                     <tr>
                                         <th>Grace Time</th>
                                         <td>
-                                            <select name="grace_time" class="form-control form-control-sm" id="exampleFormControlSelect1">
+                                            <select class="form-control form-control-sm" id="exampleFormControlSelect1">
                                                 <option value="12">12 Hours</option>
                                                 <option value="5">5 Hours</option>
                                             </select>
@@ -94,82 +94,8 @@ $time = date("h:i");
 
         <!-- guest details area start from here -->
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="checkout_details bg-secondary p-3">
-                    <h5 class="text-white">Guest Details</h5>
-                </div>
-            </div>
+ 
 
-            <div class="col-md-12">
-                <div class="card p-4">
-                    <div class="row">
-                        <div class="col-md-6 p-2">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Guest Name:</th>
-                                        <td class="text-center">{{$checkindata->guest_name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Print Name</th>
-                                        <td class="text-center">{{$checkindata->print_name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Gender:</th>
-                                        <td class="text-center">{{$checkindata->gender}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Address:</th>
-                                        <td class="text-center">{{$checkindata->address}},{{$checkindata->city}}</td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-6 p-2">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Email</th>
-                                        <td class="text-center">{{$checkindata->email}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Mobile</th>
-                                        <td class="text-center">{{$checkindata->mobile}}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">Company Name</th>
-                                        <td class="text-center">
-                                            {{$checkindata->company_name}}
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <th>Propose OF Visit:</th>
-                                        <td class="text-center">
-                                            {{$checkindata->purpose_of_visit}}
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- guest details area end from here -->
-
-        <div class="row" id="preloader">
-            <div class="col">
-                <div class="preloader">
-                    <img src="{{asset('public/uploads/preloader/preloader.gif')}}" alt="" class="w-100" />
-                </div>
-            </div>
-        </div>
 
 
         <!-- service area start from here -->
@@ -329,6 +255,31 @@ $time = date("h:i");
                                             <td class="text-center">$ {{$row->amount}}</td>
                                         </tr>
 
+                                    </tbody>
+                                </table>
+
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Tax Description</th>
+                                            <th scope="col">Calculation On</th>
+                                            <th scope="col">Base On</th>
+                                            <th scope="col">Rate</th>
+                                            <th scope="col">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <table class="table table-bordered">
+                                    <tbody>
                                         @php
                                         $totaladvance = $totaladvance + $row->amount;
                                         @endphp
@@ -352,32 +303,14 @@ $time = date("h:i");
                                                 {{ ((int)$totalamountroom +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant) - $totaladvance }}
                                             </th>
                                         </tr>
-
-
-
                                     </tbody>
                                 </table>
                                 @php
                                 $totalinword = abs(((int)$totalamountroom + (int)$totalamountextra + (int)$totalfandb + (int)$restaurant) - $totaladvance) ;
                                 @endphp
-
-                                 <!-- hidden data -->
-                        <input type="hidden" id="room_id" value="{{$checkindata->room_id}}" name="room_id">
-                        <input type="hidden" value="{{$checkindata->booking_no}}" name="booking_no">
-                        <input type="hidden" value="{{(int)$totalamountroom}}" name="room_total_amount">
-                        <input type="hidden" value="{{(int)$totalamountextra}}" name="extra_service">
-                        <input type="hidden" value="{{(int)$totalfandb}}" name="fb_bservice">
-                        <input type="hidden" value="{{(int)$restaurant}}" name="restaurant">
-                        <input type="hidden" value="{{(int)$totaladvance}}" name="advance_amount">
-                        <input type="hidden" value="{{(int)$totalinword}}" name="net_amount">
-                        <!-- hidden data -->
-
-                                
-                              
                                 <h5 class="text-right mr-auto"><strong>In Word:</strong> <code>{{$numToWord->numberTowords($totalinword)}}</code></h5>
 
                             </div>
-                            
 
                             <button type="submit" class="btn btn-primary mx-auto">Check Out & Generate Invoice</button>
 
@@ -392,41 +325,5 @@ $time = date("h:i");
         <!-- service area end from here -->
 
     </div>
-    </form>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('#preloader').hide();
-        $('#checkoutDate').change(function(e) {
-            var date = e.target.value;
-            var room_id = $('#room_id').val();
-            $('.addcheckout').empty();
-            $('#preloader').show();
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('admin.checkout.get.data') }}",
-                data: {
-                    date: date,
-                    room_id: room_id,
-                },
-                success: function(data) {
-                    $('#preloader').hide();
-                    $('.addcheckout').append(data);
-                }
-            });
-
-        });
-    });
-</script>
-
-
-
 @endsection

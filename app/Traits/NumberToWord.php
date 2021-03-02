@@ -1,5 +1,8 @@
 <?php
 namespace App\Traits;
+
+use DateTime;
+
 class NumberToWord
 {
     function numberTowords(float $amount)
@@ -39,5 +42,13 @@ class NumberToWord
         $get_paise = ($amount_after_decimal > 0) ? "And " . ($change_words[$amount_after_decimal / 10] . " 
    " . $change_words[$amount_after_decimal % 10]) . ' Paise' : '';
         return ($implode_to_Rupees ? $implode_to_Rupees . 'Taka ' : '') . $get_paise;
+    }
+
+    function get_age($birthDate_old) {
+        
+        return date_diff(
+            DateTime::createFromFormat('d/m/Y', $birthDate_old), 
+            new DateTime('today')
+        )->y;
     }
 }
