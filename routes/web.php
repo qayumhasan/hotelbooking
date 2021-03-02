@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\Hotel\VoucherController;
 use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
 use App\Http\Controllers\Admin\Hotel\AdvanceBookingController;
 use App\Http\Controllers\Admin\Hotel\RestaurantTableController;
+use App\Http\Controllers\Admin\Hotel\HotelServiceController;
 use App\Http\Controllers\Admin\Stock\PhysicalStockController;
 use App\Http\Controllers\Admin\Stock\StockReportController;
 
@@ -490,6 +491,15 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
 });
 
 Route::get('/admin/service/categores/{id}', [CheckingController::class, 'ServiceCategores']);
+// asif checkout in group booking
+
+
+
+Route::get('admin/singlecheckout/ingroupbooking/{id}', [HotelServiceController::class, 'SingleCheckoutGroupbooking']);
+Route::post('admin/singlecheckout/ingroupbooking/request', [HotelServiceController::class, 'SingleCheckoutRequest']);
+
+
+// end
 
 Route::middleware(['admin'])->prefix(md5('admin/voucher'))->group(function () {
     Route::get('/create', [VoucherController::class, 'create'])->name('admin.voucher.create');

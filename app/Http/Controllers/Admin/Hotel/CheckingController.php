@@ -428,4 +428,8 @@ class CheckingController extends Controller
     {
         
     }
+
+
+    // single checkout in group booking
+ 
 }
