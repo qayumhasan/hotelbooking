@@ -290,12 +290,12 @@ $time = date("h:i:sa");
                                     </tr>
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" data-toggle="modal" data-target="#changetarif"><i class="fa fa-star" aria-hidden="true"></i>Master Room In Group Booking</a>
+                                            <a class="buttoncss add" href="{{url('admin/change/masterroom/groupbooking',$checkin->id)}}"><i class="fa fa-star" aria-hidden="true"></i>Master Room In Group Booking</a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class=" d-block">
-                                            <a class="buttoncss add" id="delete" href="{{route('admin.delete.booking',$checkin->id)}}"><i class="fa fa-star" aria-hidden="true"></i>Change Tariff For New Day</a>
+                                            <a class="buttoncss add" href="{{url('admin/change/roomtarif/groupbooking',$checkin->id)}}"><i class="fa fa-star" aria-hidden="true"></i>Change Tariff For New Day</a>
                                         </td>
                                     </tr>
                                     

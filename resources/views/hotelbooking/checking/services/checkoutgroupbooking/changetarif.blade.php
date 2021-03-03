@@ -50,7 +50,7 @@ $time = date("h:i A");
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Add Room In Existing Booking</h4>
+                            <h4 class="card-title">Change Tariff</h4>
                         </div>
 
 
@@ -110,12 +110,12 @@ $time = date("h:i A");
                             <div class="card shadow-sm shadow-showcase">
                                 <div class="card-header d-flex justify-content-between">
                                     <div class="header-title">
-                                        <h4 class="card-title">Booking Details</h4>
+                                        <h4 class="card-title">Tariff</h4>
                                     </div>
                                 </div>
 
 
-                                <form action="{{url('admin/change/room/groupbooking/submit')}}" method="post">
+                                <form action="{{url('admin/change/roomtarif/groupbooking/submit')}}" method="post">
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
@@ -138,6 +138,10 @@ $time = date("h:i A");
                                             <div class="form-group row">
                                                 <label class="control-label col-sm-3 align-self-center" for="email">Old Tariff:</label>
                                                 <div class="col-sm-3">
+                                                
+                                                    <input type="hidden" name="booking_no" value="{{ $checkin->booking_no }}">
+                                                    <input type="hidden" name="id" value="{{ $checkin->id }}">
+                                                    <input type="hidden" name="old_room" value="{{ $checkin->room_id }}">
                                                     <input type="text" class="form-control form-control-sm" value="{{$checkin->tarif}}" disabled>
                                                 </div>
                                              
@@ -146,32 +150,12 @@ $time = date("h:i A");
 
                                         <div class="col-md-8">
                                             <div class="form-group row">
-                                                <label class="control-label col-sm-3 align-self-center" for="email">Select New Room:</label>
-                                                <div class="col-sm-6">
-                                                    <input type="hidden" name="booking_no" value="{{ $checkin->booking_no }}">
-                                                    <input type="hidden" name="id" value="{{ $checkin->id }}">
-                                                    <input type="hidden" name="old_room" value="{{ $checkin->room_id }}">
-                                                    <select name="room_id"  class="form-control form-control-sm">
-                                                        @php
-                                                          $allroom=App\Models\Room::where('room_status',1)->where('is_active',1)->get();
-                                                        @endphp
-                                                        <option value="">--Select--</option>
-                                                        @foreach($allroom as $room)
-                                                        <option value="{{$room->id}}">{{ $room->room_no }}({{ $room->roomtype->room_type }} - {{ $room->tariff}})</option>
-                                                        @endforeach
-                                                 
-                                                    </select>
-                                                    @error('room_id')
+                                                <label class="control-label col-sm-3 align-self-center" for="email">New Tarrif:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" name="new_tarrif" class="form-control form-control-sm" value="">
+                                                    @error('new_tarrif')
                                                         <div style="color:red">{{ $message }}</div>
                                                     @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="form-group row">
-                                                <label class="control-label col-sm-3 align-self-center" for="email">Tarrif:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" name="tarrif" id="tarrif" class="form-control form-control-sm" value="">
                                                 </div>
                                              
                                             </div>

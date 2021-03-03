@@ -491,9 +491,20 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
 });
 
 Route::get('/admin/service/categores/{id}', [CheckingController::class, 'ServiceCategores']);
+
 // asif checkout in group booking
 
 
+
+
+// change amount
+
+Route::get('admin/change/roomtarif/groupbooking/{id}', [HotelServiceController::class, 'changetariff']);
+Route::post('admin/change/roomtarif/groupbooking/submit', [HotelServiceController::class, 'changetariffsubmit']);
+//  change amount end
+
+Route::get('admin/change/masterroom/groupbooking/{id}', [HotelServiceController::class, 'ChangeRoomMaster']);
+Route::post('admin/change/masterroom/groupbooking/submit', [HotelServiceController::class, 'ChangeRoomMasterSubmit']);
 
 Route::get('/get/addroom/tariff/{room_id}', [HotelServiceController::class, 'getprice']);
 

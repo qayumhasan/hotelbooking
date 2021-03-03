@@ -183,12 +183,120 @@ class HotelServiceController extends Controller
     }
     // change 
     public function ChangeRoomGroupBookingSubmit(Request $request){
-        return $request;
+      // return $request;
         $validated = $request->validate([
             'room_id' => 'required',
         ]);
+        $room=Room::where('id',$request->room_id)->first();
+
         $update=Checkin::where('id',$request->id)->update([
-            ''
+            'room_no'=>$room->room_no,
+            'room_id'=>$room->id,
+            'tarif'=>$request->tarrif,
+            'room_type'=>$room->room_type,
+            'updated_by'=>Auth::user()->id,
+            'updated_by'=>Carbon::now()->toDateTimeString(),
         ]);
+        $roomupdate=Room::where('id',$request->room_id)->update([
+                'room_status'=>3,
+        ]);
+        $oldroom=Room::where('id',$request->old_room)->update([
+            'room_status'=>2,
+
+        ]);
+        if($update){
+            $notification=array(
+                'messege'=>'Update success',
+                'alert-type'=>'success'
+                );
+            return redirect()->back()->with($notification);
+        }else{
+            $notification=array(
+                'messege'=>'Update Faild',
+                'alert-type'=>'error'
+                );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+      // cheange master room
+      public function ChangeRoomMaster($id){
+
+        $checkin = Checkin::findOrFail($id);
+        $booking_no=$checkin->booking_no;
+        $masterroom=Checkin::where('booking_no',$booking_no)->first();
+        return view('hotelbooking.checking.services.checkoutgroupbooking.masterroomchange',compact('checkin','masterroom'));
+    }
+
+    public function ChangeRoomMasterSubmit(Request $request){
+        //return $request;
+        $validated = $request->validate([
+            'room_id' => 'required',
+        ]);
+        $booking_no=Checkin::where('booking_no',$request->booking_no)->first();
+    
+        $room=Room::where('id',$request->room_id)->first();
+        $update=Checkin::where('id',$booking_no->id)->update([
+            'room_no'=>$room->room_no,
+            'room_id'=>$room->id,
+            'tarif'=>$request->tarrif,
+            'room_type'=>$room->room_type,
+            'updated_by'=>Auth::user()->id,
+            'updated_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        $roomupdate=Room::where('id',$request->room_id)->update([
+                'room_status'=>3,
+        ]);
+        $oldroom=Room::where('id',$request->old_room)->update([
+            'room_status'=>2,
+        ]);
+        if($update){
+            $notification=array(
+                'messege'=>'success',
+                'alert-type'=>'success'
+                );
+            return redirect()->back()->with($notification);
+        }else{
+            $notification=array(
+                'messege'=>'Faild',
+                'alert-type'=>'error'
+                );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    // 
+    public function changetariff($id){
+        
+        $checkin = Checkin::findOrFail($id);
+        $booking_no=$checkin->booking_no;
+        $masterroom=Checkin::where('booking_no',$booking_no)->first();
+        return view('hotelbooking.checking.services.checkoutgroupbooking.changetarif',compact('checkin','masterroom'));
+    }
+    //
+    public function changetariffsubmit(Request $request){
+        //return $request;
+        $validated = $request->validate([
+            'new_tarrif' => 'required',
+        ]);
+        $id=$request->id;
+        $update=Checkin::where('id',$id)->update([
+            'tarif'=>$request->new_tarrif,
+            'updated_by'=>Auth::user()->id,
+            'updated_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        if($update){
+            $notification=array(
+                'messege'=>'success',
+                'alert-type'=>'success'
+                );
+            return redirect()->back()->with($notification);
+        }else{
+            $notification=array(
+                'messege'=>'Faild',
+                'alert-type'=>'error'
+                );
+            return redirect()->back()->with($notification);
+        }
     }
 }
