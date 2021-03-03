@@ -15,8 +15,10 @@ class CreateCheckoutsTable extends Migration
     {
         Schema::create('checkouts', function (Blueprint $table) {
             $table->id();
+            $table->string('prime_room');
             $table->string('booking_no');
             $table->string('invoice_no');
+            $table->string('invoice_date')->nullable();
             $table->string('checkout_date');
             $table->string('checkout_time');
             $table->string('grace_time')->nullable();
@@ -27,7 +29,9 @@ class CreateCheckoutsTable extends Migration
             $table->float('voucher_amount')->nullable();
             $table->float('net_amount')->nullable();
             $table->float('gross_amount')->nullable();
+            $table->float('discount_amount')->nullable();
             $table->float('outstanding_amount')->nullable();
+            $table->float('advance_amount')->nullable();
             $table->text('additional_room')->nullable();
 
             $table->integer('is_active')->default(1);

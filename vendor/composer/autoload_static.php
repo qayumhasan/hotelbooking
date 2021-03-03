@@ -759,6 +759,7 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\Branch' => __DIR__ . '/../..' . '/app/Models/Branch.php',
         'App\\Models\\BulkSms' => __DIR__ . '/../..' . '/app/Models/BulkSms.php',
         'App\\Models\\ChartOfAccount' => __DIR__ . '/../..' . '/app/Models/ChartOfAccount.php',
+        'App\\Models\\CheckOut_Tax_Details' => __DIR__ . '/../..' . '/app/Models/CheckOut_Tax_Details.php',
         'App\\Models\\Checkin' => __DIR__ . '/../..' . '/app/Models/Checkin.php',
         'App\\Models\\CheckinService' => __DIR__ . '/../..' . '/app/Models/CheckinService.php',
         'App\\Models\\Checkout' => __DIR__ . '/../..' . '/app/Models/Checkout.php',

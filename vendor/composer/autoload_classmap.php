@@ -112,6 +112,7 @@ return array(
     'App\\Models\\Branch' => $baseDir . '/app/Models/Branch.php',
     'App\\Models\\BulkSms' => $baseDir . '/app/Models/BulkSms.php',
     'App\\Models\\ChartOfAccount' => $baseDir . '/app/Models/ChartOfAccount.php',
+    'App\\Models\\CheckOut_Tax_Details' => $baseDir . '/app/Models/CheckOut_Tax_Details.php',
     'App\\Models\\Checkin' => $baseDir . '/app/Models/Checkin.php',
     'App\\Models\\CheckinService' => $baseDir . '/app/Models/CheckinService.php',
     'App\\Models\\Checkout' => $baseDir . '/app/Models/Checkout.php',

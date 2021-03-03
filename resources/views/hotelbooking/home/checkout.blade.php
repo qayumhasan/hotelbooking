@@ -291,9 +291,10 @@ $time = date("h:i");
                             </div>
 
                         </div>
+                </div>
 
                         <div class="row">
-                            <div class="col-sm-12 p-0">
+                            <div class="col-sm-12">
                                 <div class="checkout_details bg-secondary p-3">
                                     <h5 class="text-white">Advance</h5>
                                 </div>

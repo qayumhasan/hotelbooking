@@ -634,6 +634,15 @@ Route::prefix(md5('admin/booking/checkout'))->group(function(){
     Route::post('/checkout/store',[CheckingController::class,'bookingCheckoutStore'])->name('admin.checkout.store');
 
     Route::get('/at/aglance/{id}',[CheckingController::class,'bookingAtAGlance'])->name('admin.chickin.at.glance');
+
+    Route::get('/checkout/invoice/page/{room_id}/{invoice_id}',[CheckingController::class,'checkOutInvoice'])->name('admin.checkout.invoice.page');
+
+    Route::post('/get/tax/value',[CheckingController::class,'getTaxValue'])->name('admin.checkout.invoice.get.tax.data');
+
+    Route::post('/get/tax/amount',[CheckingController::class,'calculateTaxAmount'])->name('admin.checkout.invoice.get.tax.amount');
+
+    Route::post('/get/gross/amount',[CheckingController::class,'calculateGrossAmount'])->name('admin.checkout.invoice.get.gross.amount');
+
 });
 
 
