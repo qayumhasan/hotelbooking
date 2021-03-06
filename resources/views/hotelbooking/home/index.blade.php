@@ -134,7 +134,7 @@ $time = date("h:i");
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu" href=""><i class="fa fa-calendar-check" aria-hidden="true"></i> History
+                              <a class="bg-menu" href="{{url('admin/checkin/room/history/'.$row->id)}}"><i class="fa fa-calendar-check" aria-hidden="true"></i> History
                               </a>
                            </li>
 
