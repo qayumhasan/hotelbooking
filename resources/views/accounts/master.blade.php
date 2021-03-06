@@ -129,6 +129,21 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="">
+                            <a href="#Accounttransection" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Account Trasection</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="Accounttransection" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.transection.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Account Trasection</span>
+                                    </a>
+                                </li>
+                              
+                            </ul>
+                        </li>
 
                     </ul>
                 </nav>

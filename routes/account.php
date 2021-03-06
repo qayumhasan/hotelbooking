@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Account\AccountCategoryController;
 use App\Http\Controllers\Admin\Account\AccountMainCategoryController;
 use App\Http\Controllers\Admin\Account\AccountSubCategoryController;
 use App\Http\Controllers\Admin\Account\ChartOfAccountController;
+use App\Http\Controllers\Admin\Account\AccountTrasectionController;
 
 
 
@@ -55,3 +56,8 @@ Route::get('admin/chartofaccount/deactive/{id}', [ChartOfAccountController::clas
 Route::get('admin/chartofaccount/edit/{id}', [ChartOfAccountController::class, 'edit']);
 Route::get('admin/chartofaccount/delete/{id}', [ChartOfAccountController::class, 'delete']);
 Route::post('admin/chartofaccount/update', [ChartOfAccountController::class, 'update'])->name('admin.chartofaccount.update');
+
+Route::get('admin/account/transection/create', [AccountTrasectionController::class, 'create'])->name('admin.transection.create');
+Route::get('/get/account/cateid/{cate_id}', [AccountTrasectionController::class, 'getaccount']);
+Route::get('/get/account/mainaccountcate/{accountid}', [AccountTrasectionController::class, 'getsubcateone']);
+Route::get('/get/account/subaccountcate/{subcateone_id}', [AccountTrasectionController::class, 'getsubcatetwo']);

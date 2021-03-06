@@ -838,4 +838,10 @@ class CheckingController extends Controller
         
         
     }
+
+    // checkinf history
+    public function checkinhistory($id){
+
+        return view('hotelbooking.home.history.checkinhistory');
+    }
 }

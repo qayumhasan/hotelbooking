@@ -488,9 +488,11 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
 
     Route::get('/print/service/{id}', [CheckingController::class, 'printService'])->name('admin.print.service');
     
+    
 });
 
 Route::get('/admin/service/categores/{id}', [CheckingController::class, 'ServiceCategores']);
+Route::get('admin/checkin/room/history/{id}', [CheckingController::class, 'checkinhistory']);
 
 // asif checkout in group booking
 
