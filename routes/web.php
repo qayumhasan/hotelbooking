@@ -652,6 +652,9 @@ Route::prefix(md5('admin/booking/checkout'))->group(function(){
 
     Route::post('/get/tax/amount',[CheckingController::class,'calculateTaxAmount'])->name('admin.checkout.invoice.get.tax.amount');
 
+    Route::post('/tax/edit',[CheckingController::class,'editTaxData'])->name('admin.checkout.invoice.tax.data.edit');
+
+
     Route::post('/get/gross/amount',[CheckingController::class,'calculateGrossAmount'])->name('admin.checkout.invoice.get.gross.amount');
 
 });
@@ -665,3 +668,6 @@ Route::get('/show/image',[MediaManagerController::class, 'showImage'])->name('ad
 Route::get('/media/manager/pagination/{id}',[MediaManagerController::class, 'showPaginationImage'])->name('admin.media.manager.pagination');
 Route::get('admin/media/manager/delete/{id}',[MediaManagerController::class, 'mediaDelete']);
 Route::get('test',[MediaManagerController::class, 'test']);
+
+
+Route::get('admin/checkout/invoice/tax/data/delete/{id}',[CheckingController::class,'deleteTaxData']);
