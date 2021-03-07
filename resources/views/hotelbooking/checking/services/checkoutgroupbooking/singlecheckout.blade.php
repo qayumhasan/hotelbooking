@@ -147,7 +147,7 @@ $time = date("h:i A");
                                             <div class="form-group row">
                                                 <label class="control-label col-sm-3 align-self-center" for="email">CheckOut Date And Time:</label>
                                                 <div class="col-sm-4">
-                                                    <input type="text" name="date" class="form-control form-control-sm datepicker" value="{{$current}}">
+                                                    <input type="text" name="date" class="form-control form-control-sm datepickernew" value="{{$current}}">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <input type="text" name="time" class="form-control form-control-sm" value="{{$time}}">

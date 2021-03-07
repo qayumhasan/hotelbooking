@@ -110,6 +110,8 @@ $time = date("h:i");
 
                   </div>
 
+                  
+
 
                   <!-- room status Available area start -->
                   @if($row->room_status == 1)

@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin\Hotel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Checkin;
+use App\Models\HouseKeeping;
 use App\Models\Room;
 use Session;
 use Auth;
 use Carbon\Carbon;
 use DateTime;
-
-
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class HotelServiceController extends Controller
 {
@@ -28,51 +28,54 @@ class HotelServiceController extends Controller
 
     // incomplate
     public function SingleCheckoutRequest(Request $request){
+
+        $request->validate([
+            'room_id'=>'required',
+
+        ]);
         $current=date("d-m-Y");
         
-        $checkindata=Checkin::where('booking_no',$request->booking_no)->where('room_id',$request->room_id)->first();
+       $checkindata=Checkin::where('booking_no',$request->booking_no)->where('room_id',$request->room_id)->first();
         $origin = new DateTime($checkindata->checkin_date);
-        $target=Carbon::parse("{$current}")->toFormattedDateString();
+        $target=Carbon::parse("{$request->date}")->toFormattedDateString();
         $target = new DateTime($target);
 
         $interval =$origin->diff($target);
 
-        $date =abs($interval->format('%R%a'));
+       $date =abs($interval->format('%R%a'));
 
-       return $totalamountroom = (int)$date * $checkindata->tarif;
-    
+       $day = $date == 0?1:$date;
+
+       $totalamountroom = (int)$day * $checkindata->tarif;
+
+    //    insert aditional room information on checckin
+       if($checkindata){
+
+            $checkindata->add_room_checkout_date = $request->date;
+            $checkindata->add_room_checkout_time = $request->time;
+            $checkindata->additional_room_day = $day;
+            $checkindata->additional_room_amount = $totalamountroom;
+            $checkindata->is_occupy =0;
+            $checkindata->is_active =0;
+            $checkindata->updated_by =auth()->user()->id;
+            $checkindata->updated_date =Carbon::now();
+            $checkindata->save();
+       }
 
 
+    //    add new booking in housekeeping
+
+       $housekeeping = new HouseKeeping();
+       $housekeeping->room_id = $request->room_id;
+       $housekeeping->save();
 
 
-        $validated = $request->validate([
-            'room_id' => 'required',
-        ]);
-        
-        $amount=$check->tarif;
-        $checkindate=$check->checkin_date;
-         $checkoutdate=$request->date;
-        return  $checkoutdate - $checkindate;
+    //    make this room as dirty
 
-
-        $update=Checkin::where('id',$check->id)->update([
-            'is_active'=>1,
-            'is_occupy'=>0,
-            // 'final_checkout_amount'=>
-            // 'final_checkout_date'=>$request->date
-            // 'final_checkout_time'=>$request->time
-            'updated_by'=>Auth::user()->id,
-            'updated_at'=>Carbon::now()->toDateTimeString(),
-        ]);
-        $room_update=Room::where('id',$request->room_id)->update([
-            'room_status'=>2,
-        ]);
-        if($update){
-            return back();
-        }else{
-            return back();
-        }
-    
+    $room = Room::findOrFail($request->room_id);
+    $room->room_status = 2;
+    $room->save();
+    return redirect()->route('admin.checkin.show.voucher',$request->booking_no);
     }
 
     // add room in existing booking

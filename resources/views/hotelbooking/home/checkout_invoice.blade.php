@@ -15,18 +15,10 @@ $time = date("h:i");
 
 
     .invoice-card {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
+
         padding: 10px 2em;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        min-height: 25em;
-        width: 22em;
         background-color: #fff;
         border-radius: 5px;
-        box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.15);
     }
 
     .invoice-card>div {
@@ -111,10 +103,16 @@ $time = date("h:i");
     .btn#later {
         margin-right: 2em;
     }
+
+    .company_info {
+        font-size: 10px;
+        font-weight: normal;
+    }
 </style>
 <div class="content-page">
 
-    <form id="invoice_form">
+    <form id="invoice_form" action="{{route('admin.checkout.invoice.store')}}" method="post">
+        @csrf
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
@@ -161,7 +159,7 @@ $time = date("h:i");
 
                                                 <div class="row">
                                                     <div class="col">
-                                                        <input type="text" id="invoice_date" name="checkoutDate" value="{{$current}}" class="form-control form-control-sm datepickernew">
+                                                        <input type="text" id="invoice_date" name="invoicedate" value="{{$current}}" class="form-control form-control-sm datepickernew">
                                                     </div>
                                                 </div>
 
@@ -217,16 +215,86 @@ $time = date("h:i");
 
                                             <tr>
                                                 <th scope="row">Room Charge</th>
-
-                                                <td class="text-center">
-                                                    <h6>Room No : {{$checkindata->room_no}}</h6><br>
-
-                                                    <span>{{$origin->format('d F Y')}} - {{date('d F Y')}} = {{(int)$date}} days</span><br>
-
-                                                    <p>Tariff@ {{(int)$checkindata->tarif}}/= Per Day</p><br>
-                                                </td>
-                                                <td class="text-center">$ {{ $totalamountroom}}</td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
+
+                                            @php
+                                            $totalroomamount = 0;
+                                            @endphp
+
+                                            @foreach($addi_checkins as $row)
+                                            <td class="text-center">
+
+                                                <!-- if room alreay checkout -->
+                                                @if($row->is_occupy == 0)
+                                                <tr class="text-center">
+                                                    <td></td>
+                                                    <td>
+                                                        <h6>Room No : {{$row->room_no}}</h6><br>
+
+                                                        <span>{{$row->checkin_date}} - {{$row->add_room_checkout_date}} = {{$row->additional_room_day}} days</span> </br>
+
+
+                                                        <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
+                                                    </td>
+                                                    <td class="text-center">$ {{ $row->additional_room_amount}}</td>
+                                                    @php
+                                                    $totalroomamount = $totalroomamount + $row->additional_room_amount;
+                                                    @endphp
+                                                    @endif
+                                                    <!-- if room alreay checkout -->
+
+
+
+
+                                                    <!-- if room alreay not checkout -->
+                                                    @if($row->is_occupy == 1)
+
+                                                    <!-- calculate day and amount  -->
+
+                                                    @php
+                                                    $origin = new DateTime(Carbon\Carbon::parse("{$row->checkin_date}")->toFormattedDateString());
+                                                    $target=Carbon\Carbon::parse("{$current}")->toFormattedDateString();
+                                                    $target = new DateTime($target);
+
+                                                    $interval =$origin->diff($target);
+
+                                                    $date =abs($interval->format('%R%a'));
+                                                    $date = $date > 0 ? $date : 1;
+
+
+                                                    $totalamountroom = $date > 0 ?(int)$date * $checkindata->tarif : $checkindata->tarif;
+
+                                                    @endphp
+
+                                                    <!-- calculate day and amount  -->
+                                                    <!-- hidden room id -->
+
+                                                    <input type="hidden" name="non_checkout_room[]" value="{{$row->room_id}}" />
+                                                    <td class="text-center">
+
+                                                        <h6>Room No : {{$row->room_no}}</h6><br>
+
+                                                        <span>{{$origin->format('d F Y')}} - {{date('d F Y')}} = {{(int)$date}} days</span><br>
+
+
+                                                        <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
+                                                    </td>
+                                                    <td class="text-center">$ {{ $totalamountroom}}</td>
+
+                                                    @php
+                                                    $totalroomamount = $totalroomamount + $totalamountroom;
+                                                    @endphp
+                                                    @endif
+                                                    <!-- if room alreay not checkout -->
+
+
+
+                                            </td>
+                                            </tr>
+                                            </td>
+                                            @endforeach
 
                                             <tr>
                                                 <th scope="row">Extra Service</th>
@@ -484,7 +552,7 @@ $time = date("h:i");
                                             </tr>
 
                                             @php
-                                            $paybleAmount =$checkout->gross_amount - $checkout->voucher_amount;
+                                            $paybleAmount =$checkout->gross_amount;
                                             @endphp
                                             <tr>
                                                 <th class="text-right" scope="row" colspan="5">OutStanding Amount</th>
@@ -537,27 +605,27 @@ $time = date("h:i");
 
                                             <li class="list-group-item">
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
+                                                    <input type="checkbox" name="withoutFoodBill" class="form-check-input">
                                                     <label class="form-check-label" for="exampleCheck1">Print Invoice With Out Food Bill</label>
                                                 </div>
                                             </li>
 
                                             <li class="list-group-item">
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
+                                                    <input type="checkbox" name="withoutExtraService" class="form-check-input">
                                                     <label class="form-check-label" for="exampleCheck1">Print Invoice With Out Extra Service</label>
                                                 </div>
                                             </li>
 
                                             <li class="list-group-item">
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
+                                                    <input type="checkbox" name="withoutHealthClub" class="form-check-input">
                                                     <label class="form-check-label" for="exampleCheck1">Print Invoice With Out Health Club Bill</label>
                                                 </div>
                                             </li>
                                             <li class="list-group-item">
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
+                                                    <input type="checkbox" name="othercurrency" class="form-check-input">
                                                     <label class="form-check-label" for="exampleCheck1">Want to Print Invoice in other Currency? </label>
                                                 </div>
                                             </li>
@@ -572,7 +640,7 @@ $time = date("h:i");
                         <div class="row">
                             <div class="col-sm-12 text-center p-4">
 
-                                <button type="submit" class="btn btn-primary mx-auto">Check Out & Generate Invoice</button>
+                                <button type="submit" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Print</button>
                             </div>
                         </div>
                     </div>
@@ -585,66 +653,263 @@ $time = date("h:i");
     </form>
 </div>
 
+<!-- food list invoice -->
 
 
 
 <div class="modal fade" id="foodlist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Food List Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body printableAreasaveprint">
+                <div class="invoice-card">
+                    <div class="invoice-title">
+                        <div id="main-title">
+                            <h4>INVOICE</h4>
+                            <span>#89 292</span>
+                        </div>
+
+                        <span id="date">{{$current}}</span>
+                    </div>
+
+                    <div class="invoice-details">
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <td>PRODUCT</td>
+                                    <td>UNIT</td>
+                                    <td>PRICE</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="row-data">
+                                    <td>Espresso <span>(large)</span></td>
+                                    <td id="unit">1</td>
+                                    <td>2.90</td>
+                                </tr>
+
+                                <tr class="row-data">
+                                    <td>Cappucino <span>(small)</span></td>
+                                    <td id="unit">2</td>
+                                    <td>7.00</td>
+                                </tr>
+
+                                <tr class="calc-row">
+                                    <td colspan="2">Total</td>
+                                    <td>9.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
 
+                    <div class="invoice-footer">
+                        <button type="button" class="btn btn-sm btn-outline-secondary mr-4" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-outline-primary savepritbtn">Print</button>
+                    </div>
 
-        <div class="invoice-card">
-            <div class="invoice-title">
-                <div id="main-title">
-                    <h4>INVOICE</h4>
-                    <span>#89 292</span>
+
                 </div>
-
-                <span id="date">16/02/2019</span>
             </div>
 
-            <div class="invoice-details">
-                <table class="invoice-table">
-                    <thead>
-                        <tr>
-                            <td>PRODUCT</td>
-                            <td>UNIT</td>
-                            <td>PRICE</td>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr class="row-data">
-                            <td>Espresso <span>(large)</span></td>
-                            <td id="unit">1</td>
-                            <td>2.90</td>
-                        </tr>
-
-                        <tr class="row-data">
-                            <td>Cappucino <span>(small)</span></td>
-                            <td id="unit">2</td>
-                            <td>7.00</td>
-                        </tr>
-
-                        <tr class="calc-row">
-                            <td colspan="2">Total</td>
-                            <td>9.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="invoice-footer">
-                <button type="button" class="btn btn-sm btn-outline-secondary mr-4" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-sm btn-outline-primary">Save changes</button>
-            </div>
         </div>
-
-
-
-
     </div>
 </div>
+
+
+<!-- checkout invoice -->
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 printableAreasaveprint">
+                        <style>
+                            table.items {
+                                border: 0.1mm solid #e7e7e7;
+                            }
+
+                            td {
+                                vertical-align: top;
+                            }
+
+                            .items td {
+                                border-left: 0.1mm solid #e7e7e7;
+                                border-right: 0.1mm solid #e7e7e7;
+                            }
+
+                            table thead td {
+                                text-align: center;
+                                border: 0.1mm solid #e7e7e7;
+                            }
+
+                            .items td.blanktotal {
+                                background-color: #EEEEEE;
+                                border: 0.1mm solid #e7e7e7;
+                                background-color: #FFFFFF;
+                                border: 0mm none #e7e7e7;
+                                border-top: 0.1mm solid #e7e7e7;
+                                border-right: 0.1mm solid #e7e7e7;
+                            }
+
+                            .items td.totals {
+                                text-align: right;
+                                border: 0.1mm solid #e7e7e7;
+                            }
+
+                            .items td.cost {
+                                text-align: "."center;
+                            }
+                        </style>
+                        </head>
+
+                        <body>
+                            <table width="100%" style="font-family: sans-serif;" cellpadding="10">
+                                <tr>
+                                    <td width="100%" style="padding: 0px; text-align: center;">
+                                        <a href="#" target="_blank"><img src="{{asset('public/uploads/logo/')}}/{{$logos->logo}}" width="264" height="110" alt="Logo" align="center" border="0"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" style="text-align: center; font-size: 20px; font-weight: bold; padding: 0px;">
+                                        Voucher
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="10" style="font-size: 0px; line-height: 10px; height: 10px; padding: 0px;">&nbsp;</td>
+                                </tr>
+                            </table>
+                            <table width="100%" style="font-family: sans-serif;" cellpadding="10">
+                                <tr>
+
+
+                                    <td width="49%" style="border: 0.1mm solid #eee; text-align: left;"><strong>Guest Name:</strong> qayum hasan
+                                        <br>
+
+                                        <b>Address: </b> fsdafdsaf , sdafdsafsda
+                                        <br>
+                                        <b>Phone: </b>fsafdsafds
+                                    </td>
+                                    <td width="2%">&nbsp;</td>
+                                    <td width="49%" style="border: 0.1mm solid #eee;">
+
+                                        <table width="100%" align="left" style="font-family: sans-serif; font-size: 14px;">
+
+                                        </table>
+                                        <table width="100%" align="right" style="font-family: sans-serif; font-size: 14px;">
+                                            <tr>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Voucher No:</strong></td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">dsfadsafdsaf</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Booking No:</strong></td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">fdsafdsaf</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Room No:</strong></td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">fdsfadsf</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Voucher Date</strong></td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">fsfddsfa</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Payment Method:</strong></td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">dsafdsf</td>
+                                            </tr>
+
+                                        </table>
+
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <br>
+                            <table class="items" width="100%" style="font-size: 14px; border-collapse: collapse;" cellpadding="8">
+                                <thead>
+                                    <tr>
+                                        <td width="15%" style="text-align: left;"><strong>Date</strong></td>
+                                        <td width="45%" style="text-align: left;"><strong>Remarks</strong></td>
+                                        <td width="20%" style="text-align: left;"><strong>Amount</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                    <tr>
+                                        <td style="padding: 5px 7px;border: 1px #eee solid; line-height: 20px;">fdsafdsaf</td>
+                                 
+
+                                 
+                                    </tr>
+                                  
+                                    <tr>
+                                        <td colspan="2" class="text-right" style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Total Amount</strong></td>
+                                        <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">$ sdafdsafdsa</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2" class="text-right"><strong>In Word:</strong></td>
+                                        <td>fdsafdsa</td>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            <span>Assign By:fdsafdsafsd</span>
+
+                            <br>
+                            <table width="100%" style="font-family: sans-serif; font-size: 14px;">
+                                <br>
+                                <tr>
+                                    <td>
+
+                                        <table width="100%" align="left" style="font-family: sans-serif; font-size: 13px; text-align: center;">
+                                            <tr>
+                                                <td class="text-center" style="padding: 0px; line-height: 20px;">
+                                                    <strong>Company Name</strong>
+                                                    <br>
+                                                    {{$companyinformation->company_name}}
+                                                    <br>
+                                                    Tel: {{$companyinformation->mobile}} | Email: {{$companyinformation->email}}
+                                                    <br>
+                                                    Company Registered in {{$companyinformation->address}}. Company Reg. 12121212.
+                                                    <br>
+                                                    VAT Registration No. 021021021 | ATOL No. 1234
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <br>
+
+
+                            </table>
+
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-primary mx-auto mt-5 savepritbtn">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     function calculateTax() {
@@ -849,5 +1114,21 @@ $time = date("h:i");
 
 
     }
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        $(".savepritbtn").on('click', function() {
+            alert('ok');
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableAreasaveprint").printArea(options);
+        });
+    });
 </script>
 @endsection
