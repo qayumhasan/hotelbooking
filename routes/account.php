@@ -61,3 +61,6 @@ Route::get('admin/account/transection/create', [AccountTrasectionController::cla
 Route::get('/get/account/cateid/{cate_id}', [AccountTrasectionController::class, 'getaccount']);
 Route::get('/get/account/mainaccountcate/{accountid}', [AccountTrasectionController::class, 'getsubcateone']);
 Route::get('/get/account/subaccountcate/{subcateone_id}', [AccountTrasectionController::class, 'getsubcatetwo']);
+
+
+Route::get('admin/transectiondetails/insert', [AccountTrasectionController::class, 'transectiondetailsinsert'])->name('account.transection.insert');

@@ -30,10 +30,9 @@ $current = date("d/m/Y");
                        <a href="{{route('admin.purchase.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.purchase.insert')}}" method="post">
-                @csrf
+               
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-body">
                                 <div class="row">
@@ -46,170 +45,204 @@ $current = date("d/m/Y");
                                                     <td><label>Voucher Type:</label></td>
                                               
                                                     <td>   
-                                                            
-                                                        
-                                                                
-                                                                    <select name="" id="" class="form-control noradious">
-                                                                        <option value="">--select--</option>
-                                                                        <option value="">--select--</option>
-                                                                        <option value="">--select--</option>
-                                                                        <option value="">--select--</option>
-                                                                        <option value="">--select--</option>
-                                                                        <option value="">--select--</option>
-                                                                        <option value="">--select--</option>
-                                                                        <option value="">--select--</option>
-                                                                    </select>
-                                                     
+                                                        <select name="" id="" class="form-control noradious">
+                                                            <option value="">--select--</option>
+                                                            <option value="">Cash Payment Voucher</option>
+                                                            <option value="">Bank Payment Voucher</option>
+                                                            <option value="">Fund Transfer Voucher</option>
+                                                            <option value="">Cash Receipt Voucher</option>
+                                                            <option value="">Bank Receipt Voucher</option>
+                                                            <option value="">A/C Receivable Journal Voucher</option>
+                                                            <option value="">A/C Payble Journal Voucher</option>
+                                                            <option value="">Adjustment Journal Voucher</option>
+                                                            <option value="">Acount Opening Voucher</option>
+                                                           
+                                                        </select>
                                                      </td>
 
                                                      <td><label>Referance:</label></td>
                                                    <td>
-                                                   
-                                             
-                                                        
-                                                        
-                                                        <input type="text" class="form-control noradious" name="">
-                                                        
-                                             
+                                                    <input type="text" class="form-control noradious" name="">
                                                    
                                                    </td>
                                                    <td><label>Branch:</label></td>
                                                     <td>
-
-                                                
-                                                        
-                                                        
                                                         <input type="text" class="form-control noradious" name="">
-                                                        
-                                           
-                                                    
-                                                    
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><label>Narration:</label></td>
                                                     <td colspan="5">
-                                                    
-                                        
-                                                        
-                                        
-                                                            <textarea name="" class="form-control noradious"></textarea>
-                                        
-                                        
-                                                    
+                                                        <textarea name="" class="form-control noradious"></textarea>
                                                     </td>
                                                    
                                                 </tr>
-                                                <!-- <tr>
-                                                 
-                                                    <td >Larry the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr> -->
+                                              
                                             </tbody>
                                             </table>
                                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                         
-                                    <!-- <div class="col-md-4 text-left">
-                                        <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label text-right">Voucher Type:</label>
-                                            <div class="col-sm-8">
-                                                <select name="" id="" class="form-control noradious">
-                                                    <option value="">--select--</option>
-                                                    <option value="">--select--</option>
-                                                    <option value="">--select--</option>
-                                                    <option value="">--select--</option>
-                                                    <option value="">--select--</option>
-                                                    <option value="">--select--</option>
-                                                    <option value="">--select--</option>
-                                                    <option value="">--select--</option>
-                                                </select>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label text-right">Referance:</label>
-                                            <div class="col-sm-8">
-                                              <input type="text" class="form-control noradious" name="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label text-right">Branch:</label>
-                                            <div class="col-sm-8">
-                                              <input type="text" class="form-control noradious" name="">
-                                            </div>
+                                </div>
+
+                             </div>
+                            <div class="card shadow-sm shadow-showcase">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td><label>Sourch Cash:</label></td>
+                                                    <td colspan="5">
+                                                        <input type="text" id="" name="sourchcash" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
+                                                        <datalist id="ref_in">
+                                                             @foreach($allchartofaccount as $account)
+                                                            <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
+                                                            @endforeach
+                                                        </datalist>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label>Account Head:</label></td>
+                                                    <td colspan="5">
+                                                         <input type="text" id="account_head" name="account_head" class="form-control noradious account_head" list="ref_inss" placeholder="Account Head" />
+                                                        <datalist id="ref_inss">
+                                                             @foreach($allchartofaccount as $account)
+                                                            <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
+                                                            @endforeach
+                                                        </datalist>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td >
+                                                        <label>Qty:</label>
+                                                        <input type="checkbox" id="mainqty">
+                                                    </td>
+                                                    <td class="qty" style="display:none"> <input type="text" id="qty" name="qty"  class="form-control noradious" placeholder="Qty"></td>
+                                                    <td class="qty" style="display:none"> <input type="text" id="price" name="price" class="form-control noradious" placeholder="Price"></td>
+                                                    <td><label>Remarks:</label></td>
+                                                    <td colspan="2">
+                                                        <input type="text"  id="remarks" name="remarks" class="form-control noradious">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td >
+                                                        <label>Sub Head:</label>
+                                                        <input type="checkbox" id="mainsubheadone">
+                                                    </td>
+                                                 
+                                                    <td class="subheadone" style="display:none">
+                                                        <select name="subcategory_codeone" id="subcategory_codeone" class="form-control noradious">
+                                                            <option value="">--Select--</option>
+                                                            @foreach($allsubcategoryone as $subcate)
+                                                            <option value="{{$subcate->subcategory_codeone}}">{{$subcate->subcategory_nameone}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    
+                                                    </td> 
+                                                    <td >
+                                                        <label>Sub Head-2:</label>
+                                                        <input type="checkbox" id="mainsubheadtwo">
+                                                        
+                                                    </td>
+                                                    <td class="subheadtwo" style="display:none"> 
+                                                            <select name="subcategory_codetwo" id="subcategory_codetwo" class="form-control noradious">
+                                                            <option value="">--Select--</option>
+                                                            @foreach($allsubcategorytwo as $subcatetwo)
+                                                            <option value="{{$subcatetwo->subcategory_codetwo}}">{{$subcatetwo->subcategory_nametwo}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group row">
-                                            <label  class="col-md-2">Narration:</label>
-                                            <div class="col-md-10">
-                                                <textarea name="" class="form-control noradious"></textarea>
+                             </div>
+                    </div>
+                    <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                        <div class="card shadow-sm shadow-showcase">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="fname">Voucher No: *</label>
+                                                            <input type="text"  class="form-control noradious" value="{{$invoice}}" disabled>
+                                                            <input type="hidden" name="invoice" id="invoice" value="{{$invoice}}" disabled>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="fname">Voucher Date: *</label>
+                                                                <input type="text" name="date" class="form-control noradious" value="{{$current}}">
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="staticEmail" class="col-form-label">Advice:</label>
+                                                             
+                                                                <input type="text" name="advice" class="form-control noradious" id="staticEmail" value="">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="card shadow-sm shadow-showcase">
+                                      
+                                            <div class="card-body">
+                                             
+                                                <div class="row">
+                                                      
+                                                        <div class="col-md-12">
+                                                             <div class="form-group row">
+                                                                <label for="staticEmail" class="col-sm-3 col-form-label">Location:</label>
+                                                                <div class="col-sm-9">
+                                                                <input type="text" class="form-control noradious" id="location" name="location">
+                                                                </div>
+                                                            </div>
+                                                          
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group row">
+                                                                <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
+                                                                <div class="col-sm-7">
+                                                                <input type="text" class="form-control noradious" id="amount" name="amount" value="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                             <div class="form-group row">
+                                                                <div class="col-sm-9">
+                                                                    <select name="amount_cate" id="amount_cate" class="form-control noradious">
+                                                                        <option value="Debit">Debit</option>
+                                                                        <option value="Cradit">Cradit</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 ">
+                                                                
+                                                            <button id="additem" class="btn-sm btn-primary">Add Record</button>
+                                                                    
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
                                     </div>
-                                </div> -->
-                                   
+                                </div>
                             </div>
-                        </div>
-
+                            
+                           
                     </div>
-                
-                </div>
      
                     <div class="col-md-12">
                         <div class="card shadow-sm shadow-showcase">
@@ -230,250 +263,86 @@ $current = date("d/m/Y");
                     </div>
                 </div>
             </div>
-           
-              
-             </form>
             
         </div>
     </div>
 </div>
-
-
 <script type="text/javascript">
   $(document).ready(function() {
-     $("#category_code").on('change', function(){
-         var cate_id = $(this).val();
-         //alert(cate_id);
-         if(cate_id) {
-             $.ajax({
-                 url: "{{  url('/get/account/cateid/') }}/"+cate_id,
-                 type:"GET",
-                 dataType:"json",
-                 success:function(data) {
+     $("#mainqty").on('click', function(){
+        
+            if($(this).is(":checked")) {
+                $(".qty").show();
+            } else {
+                $(".qty").hide();
+            }
+       
+        });
 
-                        $('#account_code').empty();
-                        $('#account_code').append(' <option value="">--Select--</option>');
-                        $.each(data,function(index,districtObj){
-                         $('#account_code').append('<option value="' + districtObj.id + '">'+districtObj.maincategory_name+'</option>');
-                       });
+      $("#mainsubheadone").on('click', function(){
+        
+        if($(this).is(":checked")) {
+            $(".subheadone").show();
+        } else {
+            $(".subheadone").hide();
+        }
+   
+         });
+         $("#mainsubheadtwo").on('click', function(){
+        
+        if($(this).is(":checked")) {
+            $(".subheadtwo").show();
+        } else {
+            $(".subheadtwo").hide();
+        }
+   
+         });
 
-                    }
-             });
-         } 
-     });
-
-    //  
-    $("#account_code").on('change', function(){
-         var accountid = $(this).val();
-         if(accountid) {
-             $.ajax({
-                 url: "{{  url('/get/account/mainaccountcate/') }}/"+accountid,
-                 type:"GET",
-                 dataType:"json",
-                 success:function(data) {
-
-                        $('#sub_account_codeone').empty();
-                        $('#sub_account_codeone').append(' <option value="">--Select--</option>');
-                        $.each(data,function(index,districtObj){
-                         $('#sub_account_codeone').append('<option value="' + districtObj.id + '">'+districtObj.subcategory_nameone+'</option>');
-                       });
-
-                    }
-             });
-         } 
-     });
-
-    //  
-    $("#sub_account_codeone").on('change', function(){
-        alert("ok");
-         var subcateone_id = $(this).val();
-         if(subcateone_id) {
-             $.ajax({
-                 url: "{{  url('/get/account/subaccountcate/') }}/"+subcateone_id,
-                 type:"GET",
-                 dataType:"json",
-                 success:function(data) {
-
-                        $('#sub_account_codetwo').empty();
-                        $('#sub_account_codetwo').append(' <option value="">--Select--</option>');
-                        $.each(data,function(index,districtObj){
-                         $('#sub_account_codetwo').append('<option value="' + districtObj.id + '">'+districtObj.subcategory_nametwo+'</option>');
-                       });
-
-                    }
-             });
-         } 
-     });
-
-
-
-    // 
+         
+        
  });
 </script>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-     $("#item_name").on('change', function(){
-         var item_name = $(this).val();
-         //alert(item_name);
-         if(item_name) {
-             $.ajax({
-                 url: "{{  url('/get/item/all/') }}/"+item_name,
-                 type:"GET",
-                 dataType:"json",
-                 success:function(data) {
 
-                        $('#unit').val(data.unit_name);
-                        $('#unit_name').val(data.name);
-                        $('#Qty').val(1);
-                        $('.rate').val(data.rate);
-                        $('.amount').val(data.rate);
-
-                    }
-             });
-         } else {
-             //alert('danger');
-         }
-
-     });
- });
-</script>
-<script>
-$(document).ready(function() {
-        $('#additemajax').click(function (e) {
-            //alert("success");
-            $('#err_item_name').html("");
-            
-        $.ajax({
-            type: 'POST',
-            url: "{{route('itementery.modalinsert.data')}}",
-            data: $('#ajaxitementry').serializeArray(),
-            success: function(data) {
-                if(data=='success'){
-                    getallitem();
-                    $('.ajax_item_name').val("");
-                    $('.short_name').val("");
-                    $('.category_name').val("");
-                    $('.ajaxunit_name').val("");
-                    $('.rate').val("");
-                    $('.min_level').val("");
-                    $('#itementrymodal').modal('hide');
-                   
-                }else{
-
-                    $('#err_item_name').html("");
-                    
-                }
-            },
-
-            error: function (err) {
-                console.log(err);
-                if(err.responseJSON.errors.item_name[0]){
-                    $('#err_item_name').html(err.responseJSON.errors.item_name[0]);
-                }
-               
-              
-               
-            }
-          
-        });
-    });
-});
-
-</script>
-<script>
-$(document).ready(function() {
-        $('#suupliradd').click(function (e) {
-            $('#errtitle').html("");
-            $('#errmobile').html("");
-            $('#errname').html("");
-            
-        $.ajax({
-            type: 'POST',
-            url: "{{route('supplier.modalinsert.data')}}",
-            data: $('#addsuppiler').serializeArray(),
-            success: function(data) {
-                if(data=='success'){
-                    getallsuplier();
-                    $('.title').val("");
-                    $('.name').val("");
-                    $('.print_name').val("");
-                    $('.designation').val("");
-                    $('.tin_vat_no').val("");
-                    $('.addressline_one').val("");
-                    $('.addressline_two').val("");
-                    $('.city').val("");
-                    $('.zip_code').val("");
-                    $('.telephone').val("");
-                    $('.contact_persion').val("");
-                    $('.mobile').val("");
-                    $('.email').val("");
-                    $('#errtitle').html("");
-                    $('#errmobile').html("");
-                    $('#errname').html("");
-                    $('#supllirmodal').modal('hide');
-                   
-                }else{
-                    $('#errtitle').html("");
-                    $('#errmobile').html("");
-                    $('#errname').html("");
-                }
-            },
-
-            error: function (err) {
-                if(err.responseJSON.errors.title[0]){
-                    $('#errtitle').html(err.responseJSON.errors.title[0]);
-                }
-                if(err.responseJSON.errors.mobile[0]){
-                    $('#errmobile').html(err.responseJSON.errors.mobile[0]);
-                }
-                if(err.responseJSON.errors.name[0]){
-                    $('#errname').html(err.responseJSON.errors.name[0]);
-                }
-              
-               
-            }
-          
-        });
-    });
-});
-
-</script>
 <!-- tax add -->
 <script>
 $(document).ready(function() {
-    $('#addtax').on('click', function() {
-      var tax_id=$("#tax_id").val();
-      var calculation_on=$("#calculation_on").val();
-      var based_on=$("#based_on").val();
-      var tax_amount=$("#tax_amount").val();
-      var taxrate=$(".taxrate").val();
-      var invoice_no = $(".invoice").val();
-      var taxupdate_id = $("#taxupdate_id").val();
+    $('#additem').on('click', function() {
+
+      var subcategory_codetwo=$("#subcategory_codetwo").val();
+      var subcategory_codeone=$("#subcategory_codeone").val();
+      var remarks=$("#remarks").val();
+      var qty=$("#qty").val();
+      var price=$("#price").val();
+      var account_head=$("#account_head").val();
+      var location=$("#location").val();
+      var amount=$("#amount").val();
+      var amount_cate=$("#amount_cate").val();
+      var invoice=$("#invoice").val();
+      var date=$("#date").val();
      
       //alert(invoice_no);
         $.ajax({
             type: 'GET',
-            url: "{{route('tax.insert.data')}}",
+            url: "{{route('account.transection.insert')}}",
             //data: $('#tax_cal').serializeArray(),
             data: {
-                tax_id:tax_id,
-                calculation_on:calculation_on,
-                based_on:based_on,
-                tax_amount:tax_amount,
-                taxrate:taxrate,
-                invoice_no:invoice_no,
-                taxupdate_id:taxupdate_id,
+                subcategory_codetwo:subcategory_codetwo,
+                subcategory_codeone:subcategory_codeone,
+                remarks:remarks,
+                qty:qty,
+                price:price,
+                account_head:account_head,
+                location:location,
+                amount:amount,
+                amount_cate:amount_cate,
+                invoice:invoice,
+                date:date,
             },
 
             success: function(data) {
                 $('#tax_id').val("");
-                $('#calculation_on').val("");
-                $('#based_on').val("");
-                $("#tax_amount").val("");
-                $(".taxrate").val("");
-                $(".taxamount").val("");
-                $("#taxupdate_id").val("");
+              
                 totalamount();
                 alltaxfile();
                

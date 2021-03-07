@@ -8,6 +8,7 @@ use App\Models\AccountCategory;
 use App\Models\AccountMainCategory;
 use App\Models\AccountSubCategoryOne;
 use App\Models\AccountSubCategoryTwo;
+use App\Models\ChartOfAccount;
 use Carbon\Carbon;
 use Session;
 
@@ -22,8 +23,12 @@ class AccountTrasectionController extends Controller
     }
 
     public function create(){
+        $invoice=0;
         $allcategory=AccountCategory::get();
-        return view('accounts.accounttransection.create',compact('allcategory'));
+        $allchartofaccount=ChartOfAccount::get();
+        $allsubcategoryone=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
+        $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
+        return view('accounts.accounttransection.create',compact('allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice'));
     }
     // get ajax account
     public function getaccount($cate_id){
@@ -39,5 +44,23 @@ class AccountTrasectionController extends Controller
     }
     public function getsubcatetwo($subcateone_id){
         return $subcateone_id;
+    }
+
+    // transection details insert
+    public function transectiondetailsinsert(Request $request){
+       
+        $validated = $request->validate([
+            'account_head' => 'required',
+        ]);
+
+        $insert=AccountTransectionDetails::insert([
+            'account_head'=>$request->account_head,
+            'invoice'=>$request->invoice,
+            'account_head'=>$request->account_head,
+            'account_head'=>$request->account_head,
+            'account_head'=>$request->account_head,
+            'account_head'=>$request->account_head,
+            'account_head'=>$request->account_head,
+        ]);
     }
 }
