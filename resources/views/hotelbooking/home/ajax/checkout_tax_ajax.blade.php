@@ -68,7 +68,7 @@
 <script>
     
 
-    $(document).ready(function() {
+
         
 
 

@@ -18,6 +18,7 @@ class HouseKippingController extends Controller
 
     public function reportList()
     {
+        
         $roomtypes = RoomType::where('is_active',1)->where('is_deleted',0)->get();
         $rooms = Room::with('housekeeping')->where('is_active',1)->where('is_deleted',0)->where('room_status','!=',3)->get();
         return view('housekipping.report.list',compact('rooms','roomtypes'));
@@ -64,6 +65,7 @@ class HouseKippingController extends Controller
             $housekeeping->keeping_status=$request->kepping_status;
             $housekeeping->keeping_assign_name=auth()->user()->id;
             $housekeeping->remarks=$request->last_log;
+            $housekeeping->is_active=0;
             $housekeeping->save();
             $notification=array(
                 'messege'=>'HouseKeeping Updated successfully!',
