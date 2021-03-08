@@ -43,6 +43,9 @@ $time = date("h:i");
         border: 1px solid red;
         outline: none;
     }
+    #rooms{
+        overflow: scroll;
+    }
 </style>
 <div class="content-page">
     <div class="container-fluid">
@@ -678,6 +681,8 @@ $time = date("h:i");
     </div>
 </div>
 
+<input type="text" id="except_room_id" value="{{$room->id}}" />
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
@@ -761,6 +766,8 @@ $time = date("h:i");
         var rooms = [];
 
         var getRooms = function() {
+
+            var room_id = document.querySelector('#except_room_id').value;
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -769,9 +776,10 @@ $time = date("h:i");
             $.ajax({
                 type: 'get',
                 url: "{{ route('admin.get.hotel') }}",
-
+                data:{
+                    room_id :room_id
+                },
                 success: function(data) {
-
                     rooms.push(data);
 
                 }

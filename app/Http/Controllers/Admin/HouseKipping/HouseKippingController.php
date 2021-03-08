@@ -114,7 +114,7 @@ class HouseKippingController extends Controller
 
     public function getHousekeepingHistory($id)
     {
-        $housekeepings = HouseKeeping::where('room_id',$id)->get();
+        $housekeepings = HouseKeeping::where('room_id',$id)->where('is_active',0)->get();
 
         return view('hotelbooking.home.ajax.housekeeping_history',compact('housekeepings'));
     }

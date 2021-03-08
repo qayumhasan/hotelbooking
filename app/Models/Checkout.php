@@ -9,4 +9,9 @@ class Checkout extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\Admin','id','entry_by');
+    }
 }
