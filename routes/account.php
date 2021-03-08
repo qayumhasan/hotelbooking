@@ -57,10 +57,21 @@ Route::get('admin/chartofaccount/edit/{id}', [ChartOfAccountController::class, '
 Route::get('admin/chartofaccount/delete/{id}', [ChartOfAccountController::class, 'delete']);
 Route::post('admin/chartofaccount/update', [ChartOfAccountController::class, 'update'])->name('admin.chartofaccount.update');
 
-Route::get('admin/account/transection/create', [AccountTrasectionController::class, 'create'])->name('admin.transection.create');
+Route::get('admin/account/transectionhead/create', [AccountTrasectionController::class, 'create'])->name('admin.transection.create');
+Route::post('admin/account/transectionhead/create', [AccountTrasectionController::class, 'insertfinal'])->name('admin.transection.create');
+Route::get('admin/account/transectionhead/index', [AccountTrasectionController::class, 'index'])->name('admin.transection.index');
+Route::get('admin/account/transectionhead/active/{id}', [AccountTrasectionController::class, 'active']);
+Route::get('admin/account/transectionhead/deactive/{id}', [AccountTrasectionController::class, 'deactive']);
+Route::get('admin/account/transectionhead/edit/{id}', [AccountTrasectionController::class, 'edit']);
+Route::get('admin/account/transectionhead/delete/{id}', [AccountTrasectionController::class, 'delete']);
+Route::post('admin/account/transectionhead/update', [AccountTrasectionController::class, 'update'])->name('admin.transection.update');
+
+
+
 Route::get('/get/account/cateid/{cate_id}', [AccountTrasectionController::class, 'getaccount']);
 Route::get('/get/account/mainaccountcate/{accountid}', [AccountTrasectionController::class, 'getsubcateone']);
 Route::get('/get/account/subaccountcate/{subcateone_id}', [AccountTrasectionController::class, 'getsubcatetwo']);
-
-
 Route::get('admin/transectiondetails/insert', [AccountTrasectionController::class, 'transectiondetailsinsert'])->name('account.transection.insert');
+Route::post('admin/transectiondetails/edit', [AccountTrasectionController::class, 'transectiondetailsedit'])->name('get.alldatatransection.edit');
+Route::post('/get/alldatatransection/data/{invoice}', [AccountTrasectionController::class, 'gettransectiondetails']);
+Route::post('admin/transectiondetails/delete', [AccountTrasectionController::class, 'transectiondelete'])->name('get.transection.delete');

@@ -1,5 +1,5 @@
 @extends('accounts.master')
-@section('title', 'Create Account Transection| '.$seo->meta_title)
+@section('title', 'Update Account Transection | '.$seo->meta_title)
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
@@ -25,12 +25,12 @@ $current = date("d/m/Y");
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Account Transection</h4>
+                            <h4 class="card-title">Update Account Transection</h4>
                         </div>
                        <a href="{{route('admin.purchase.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.transection.create')}}" method="post">
+                <form action="{{route('admin.transection.update')}}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-md-8">
@@ -49,15 +49,15 @@ $current = date("d/m/Y");
                                                    
                                                         <select name="voucher" id="" class="form-control noradious">
                                                             <option value="">--select--</option>
-                                                            <option value="Cash Payment Voucher">Cash Payment Voucher</option>
-                                                            <option value="Bank Payment Voucher">Bank Payment Voucher</option>
-                                                            <option value="Fund Transfer Voucher">Fund Transfer Voucher</option>
-                                                            <option value="Cash Receipt Voucher">Cash Receipt Voucher</option>
-                                                            <option value="Bank Receipt Voucher">Bank Receipt Voucher</option>
-                                                            <option value="A/C Receivable Journal Voucher">A/C Receivable Journal Voucher</option>
-                                                            <option value="A/C Payble Journal Voucher">A/C Payble Journal Voucher</option>
-                                                            <option value="Adjustment Journal Voucher">Adjustment Journal Voucher</option>
-                                                            <option value="Acount Opening Voucher">Acount Opening Voucher</option>
+                                                            <option value="Cash Payment Voucher" @if($edit->voucher_type=='Cash Payment Voucher') selected @endif>Cash Payment Voucher</option>
+                                                            <option value="Bank Payment Voucher" @if($edit->voucher_type=='Bank Payment Voucher') selected @endif>Bank Payment Voucher</option>
+                                                            <option value="Fund Transfer Voucher" @if($edit->voucher_type=='Fund Transfer Voucher') selected @endif>Fund Transfer Voucher</option>
+                                                            <option value="Cash Receipt Voucher" @if($edit->voucher_type=='Cash Receipt Voucher') selected @endif>Cash Receipt Voucher</option>
+                                                            <option value="Bank Receipt Voucher" @if($edit->voucher_type=='Bank Receipt Voucher') selected @endif>Bank Receipt Voucher</option>
+                                                            <option value="A/C Receivable Journal Voucher" @if($edit->voucher_type=='A/C Receivable Journal Voucher') selected @endif>A/C Receivable Journal Voucher</option>
+                                                            <option value="A/C Payble Journal Voucher" @if($edit->voucher_type=='A/C Payble Journal Voucher') selected @endif>A/C Payble Journal Voucher</option>
+                                                            <option value="Adjustment Journal Voucher" @if($edit->voucher_type=='Adjustment Journal Voucher') selected @endif>Adjustment Journal Voucher</option>
+                                                            <option value="Acount Opening Voucher" @if($edit->voucher_type=='Acount Opening Voucher') selected @endif>Acount Opening Voucher</option>
                                                         </select>
                                                         @error('voucher')
                                                             <p style="color:red">{{ $message }}</p>
@@ -69,18 +69,19 @@ $current = date("d/m/Y");
 
                                                      <td><label>Referance:</label></td>
                                                    <td>
-                                                    <input type="text" class="form-control noradious" name="reference">
+                                                    <input type="text" class="form-control noradious" name="reference" value="{{$edit->reference}}">
+                                                    <input type="hidden" class="form-control noradious" name="id" value="{{$edit->id}}">
                                                    
                                                    </td>
                                                    <td><label>Cheque Referance:</label></td>
                                                     <td>
-                                                        <input type="text" class="form-control noradious" name="cheque_reference">
+                                                        <input type="text" class="form-control noradious" name="cheque_reference" value="{{$edit->cheque_reference}}">
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><label>Narration:</label></td>
                                                     <td colspan="5">
-                                                        <textarea name="narration" class="form-control noradious"></textarea>
+                                                        <textarea name="narration" class="form-control noradious">{{$edit->narration}}</textarea>
                                                     </td>
                                                    
                                                 </tr>
@@ -101,7 +102,7 @@ $current = date("d/m/Y");
                                                 <tr>
                                                     <td><label>Sourch Cash:</label></td>
                                                     <td colspan="5">
-                                                        <input type="text" id="account_head_main" name="account_head_main" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
+                                                        <input type="text" id="" name="sourchcash" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
                                                         <datalist id="ref_in">
                                                              @foreach($allchartofaccount as $account)
                                                             <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
@@ -178,8 +179,8 @@ $current = date("d/m/Y");
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="fname">Voucher No: *</label>
-                                                            <input type="text"  class="form-control noradious" value="{{$invoice}}" disabled>
-                                                            <input type="hidden" name="invoice" id="invoice" value="{{$invoice}}">
+                                                            <input type="text"  class="form-control noradious" value="{{$edit->voucher_no}}" disabled>
+                                                            <input type="hidden" name="invoice" id="invoice" value="{{$edit->voucher_no}}">
                                                             <input type="hidden" name="accounttransecti_id" id="accounttransecti_id" >
                                                         </div>
                                                     </div>
@@ -188,7 +189,7 @@ $current = date("d/m/Y");
                                                     <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="fname">Voucher Date: *</label>
-                                                                <input type="text" id="date" name="date" class="form-control noradious" value="{{$current}}">
+                                                                <input type="text" id="date" name="date" class="form-control noradious" value="{{$edit->date}}">
                                                             </div>
                                                         </div>
                                                 </div>
@@ -197,7 +198,7 @@ $current = date("d/m/Y");
                                                             <div class="form-group">
                                                                 <label for="staticEmail" class="col-form-label">Advice:</label>
                                                              
-                                                                <input type="text" name="advice" class="form-control noradious" id="staticEmail" value="">
+                                                                <input type="text" name="advice" class="form-control noradious" id="staticEmail" value="{{$edit->advice}}">
                                                                 
                                                             </div>
                                                         </div>
@@ -272,7 +273,7 @@ $current = date("d/m/Y");
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success">Update</button>
                     </div>
                 </div>
                 </form>
@@ -329,7 +330,6 @@ $(document).ready(function() {
       var qty=$("#qty").val();
       var price=$("#price").val();
       var account_head=$("#account_head").val();
-      var account_head_main=$("#account_head_main").val();
       var location=$("#location").val();
       var amount=$("#amount").val();
       var amount_cate=$("#amount_cate").val();
@@ -349,7 +349,6 @@ $(document).ready(function() {
                 qty:qty,
                 price:price,
                 account_head:account_head,
-                account_head_main:account_head_main,
                 location:location,
                 amount:amount,
                 amount_cate:amount_cate,
@@ -369,7 +368,6 @@ $(document).ready(function() {
                 $('#location').val("");
                 $('#amount').val("");
                 $('#accounttransecti_id').val("");
-                $('#account_head_main').val("");
                
                 
                 alldata();
