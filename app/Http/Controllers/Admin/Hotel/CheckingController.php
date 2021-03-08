@@ -33,9 +33,10 @@ class CheckingController extends Controller
         return view('hotelbooking.checking.checking', compact('room'));
     }
 
-    public function getRoom()
+    public function getRoom(Request $request)
     {
-        $rooms = Room::where('room_status', 1)->with('roomtype')->select(['id', 'room_no', 'room_type', 'tariff'])->get();
+        
+        $rooms = Room::where('room_status', 1)->where('id','!=',$request->room_id)->with('roomtype')->select(['id', 'room_no', 'room_type', 'tariff'])->get();
         return response()->json($rooms);
     }
 
@@ -282,7 +283,7 @@ class CheckingController extends Controller
 
     public function serviceStore(Request $request)
     {
-        // return $request;
+        return $request;
         $request->validate([
             'service_date' => 'required',
             'service_time' => 'required',
@@ -453,6 +454,9 @@ class CheckingController extends Controller
     {
 
         
+        
+
+        
         $request->validate([
             'checkoutDate'=>'required',
             'checkout_time'=>'required',
@@ -465,6 +469,7 @@ class CheckingController extends Controller
             foreach($request->non_checkout_room as $row){
                 // make room dirty
 
+                
                 $room =Room::findOrFail($row);
                 $room->room_status = 2;
                 $room->save();
@@ -475,7 +480,15 @@ class CheckingController extends Controller
                 $housekeeping->room_id = $row;
                 $housekeeping->save();
 
+                // add amount and day in checkin
 
+                $checkin = Checkin::where('room_id',$row)->where('booking_no',$request->booking_no)->first();
+                $checkin->additional_room_day = $request->non_checkout_room_day;
+                $checkin->additional_room_amount = $checkin->tarif * $request->non_checkout_room_day;
+                $checkin->add_room_checkout_date =$request->checkoutDate;
+                $checkin->add_room_checkout_time =$request->checkout_time;
+                $checkin->is_occupy =0;
+                $checkin->save();
             }
         }
 
@@ -512,12 +525,10 @@ class CheckingController extends Controller
                 'messege' => 'Checkout Already Done!! Please create an invoice',
                 'alert-type' => 'error'
             );
-            $roomID = $check->prime_room;
-            $id = $check->id;
-            return redirect()->route('admin.checkout.invoice.page', [\Crypt::encrypt($roomID), \Crypt::encrypt($id)])->with($notification);
+            return redirect()->route('admin.checkout.invoice.page', \Crypt::encrypt($request->booking_no))->with($notification);
         }
 
-        return redirect()->route('admin.checkout.invoice.page', [\Crypt::encrypt($request->room_id), \Crypt::encrypt($checkout->id)]);
+        return redirect()->route('admin.checkout.invoice.page', [\Crypt::encrypt($request->booking_no)]);
     }
 
     public function getTaxValue(Request $request)
@@ -528,15 +539,17 @@ class CheckingController extends Controller
     }
 
 
-    public function checkOutInvoice($room_id, $checkoutID)
+    public function checkOutInvoice($booking_no)
     {
-        $room_id = \Crypt::decrypt($room_id);
-        $checkoutID = \Crypt::decrypt($checkoutID);
+        
+        $booking_no = \Crypt::decrypt($booking_no);
+        
 
-        $checkindata = Checkin::where('room_id', $room_id)->where('is_occupy', 1)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
-        $addi_checkins = Checkin::where('booking_no', $checkindata->booking_no)->get();
+        $checkindata = Checkin::where('booking_no', $booking_no)->where('is_occupy', 0)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
 
-        $checkout = Checkout::findOrFail($checkoutID);
+        $addi_checkins = Checkin::where('booking_no', $booking_no)->get();
+
+        $checkout = Checkout::where('booking_no',$booking_no)->first();
 
         $taxs = TaxSetting::where('is_active', 1)->where('is_deleted', 0)->get();
 
@@ -816,37 +829,92 @@ class CheckingController extends Controller
     public function checkinhistory($id)
     {
 
-        return view('hotelbooking.home.history.checkinhistory');
+        $checkins = Checkin::where('room_id',$id)->where('is_occupy',0)->get();
+
+        return view('hotelbooking.home.ajax.checkin_history_ajax',compact('checkins'));
     }
 
 
     public function checkoutInvoiceStore(Request $request)
     {
         
-        $checkout = Checkout::where('booking_no',$request->booking_no)->where('invoice_no',$request->invoice_no)->first();
+        
+      $checkout = Checkout::where('booking_no',$request->booking_no)->first();
         if($checkout){
             $checkout->invoice_date= $request->invoicedate;
             $checkout->is_active = 0;
             $checkout->updated_by = Auth::user()->id;
             $checkout->updated_date = Carbon::now();
-            // $checkout->save();
+            $checkout->save();
         }
 
 
         if(isset($request->withoutFoodBill) and isset($request->withoutExtraService) and isset($request->withoutHealthClub)){
 
-            return "all";
+            $amount = $checkout->gross_amount - ($checkout->fb_amount + $checkout->extra_service_amount);
+             $data = [
+                'identifier'=>'except_all_item',
+                'amount'=>$amount,
+            ];
 
         }elseif(isset($request->withoutFoodBill) and isset($request->withoutExtraService)){
-
-            return "food and extra";
+            $amount = $checkout->gross_amount - ($checkout->fb_amount + $checkout->extra_service_amount);
+             $data = [
+                'identifier'=>'food_and_extra',
+                'amount'=>$amount,
+            ];
 
         }elseif(isset($request->withoutFoodBill)){
-            return "food";
+            $amount = $checkout->gross_amount - $checkout->fb_amount;
+
+            $data = [
+                'identifier'=>'is_food',
+                'amount'=>$amount,
+            ];
+
+      
+
         }elseif(isset($request->withoutExtraService)){
-            return "extra";
+            $amount = $checkout->gross_amount - $checkout->extra_service_amount;
+            $data = [
+                'identifier'=>'is_extra',
+                'amount'=>$amount,
+            ];
         }elseif(isset($request->othercurrency)){
-            return "all";
+            $data = [
+                'identifier'=>'other_currency',
+            ];
+        }else{
+            $data = [
+                'identifier'=>'all_item',
+                'amount'=>$checkout->gross_amount,
+            ];
         }
+
+
+              
+        $checkindata = Checkin::where('booking_no',$request->booking_no)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
+        $addi_checkins = Checkin::where('booking_no', $request->booking_no)->get();
+
+        $checkout = Checkout::findOrFail($request->checkout_id);
+
+        $taxs = TaxSetting::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        $tax_details = CheckOut_Tax_Details::where('booking_no', $request->booking_no)->where('invoice_no', $request->invoice_no)->get();
+
+        $checkins = Checkin::where('booking_no',$request->booking_no)->get();
+
+        return view('hotelbooking.home.checkout_invoice', compact('checkindata', 'taxs', 'checkout', 'tax_details','addi_checkins','data','checkins'));
+
+
+    }
+
+
+    public function historySearch(Request $request)
+    {
+        
+
+        $checkins = Checkin::whereBetween('checkin_date', [$request->form_date, $request->to_date])->where('room_id',$request->room_id)->get();
+        return view('hotelbooking.home.ajax.checkin_history_ajax',compact('checkins'));
     }
 }

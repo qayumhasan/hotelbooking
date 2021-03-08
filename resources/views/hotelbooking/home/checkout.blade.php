@@ -14,7 +14,7 @@ $time = date("h:i");
             <div class="row">
                 <div class="col-sm-12">
                     <div class="checkout_details bg-secondary p-3">
-                        <h5 class="text-white">Checkout Details</h5>
+                        <h5 class="text-white">Checkout Details </h5>
                     </div>
                 </div>
 
@@ -50,7 +50,7 @@ $time = date("h:i");
                                     <tbody>
                                         <tr>
                                             <th scope="row">Room</th>
-                                            <td class="text-center">{{$checkindata->room_no}}</td>
+                                            <td class="text-center">{{$checkindata->room_no}} </td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Room Type</th>
@@ -246,6 +246,8 @@ $time = date("h:i");
                                                         <!-- hidden room id -->
 
                                                         <input type="hidden" name="non_checkout_room[]" value="{{$row->room_id}}"/>
+                                                        
+                                                        <input type="hidden" name="non_checkout_room_day" value="{{(int)$date}} "/>
                                                         <td class="text-center">
                                                             
                                                             <h6>Room No : {{$row->room_no}}</h6><br>
@@ -255,10 +257,12 @@ $time = date("h:i");
 
                                                             <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
                                                         </td>
-                                                        <td class="text-center">$ {{ $totalamountroom}}</td>
+
+
+                                                        <td class="text-center">$ {{ $row->tarif * (int)$date}}</td>
 
                                                         @php   
-                                                            $totalroomamount = $totalroomamount + $totalamountroom;                                           
+                                                            $totalroomamount = $totalroomamount + $row->tarif * (int)$date;                                           
                                                         @endphp
                                                         @endif
                                                         <!-- if room alreay not checkout -->

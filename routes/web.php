@@ -487,6 +487,7 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
     Route::get('/get/view/service/{id}', [CheckingController::class, 'viewService'])->name('admin.checkin.get.view.service');
 
     Route::get('/print/service/{id}', [CheckingController::class, 'printService'])->name('admin.print.service');
+    Route::post('/history/search', [CheckingController::class, 'historySearch'])->name('admin.checkin.history.search');
     
     
 });
@@ -648,7 +649,7 @@ Route::prefix(md5('admin/booking/checkout'))->group(function(){
 
     Route::get('/at/aglance/{id}',[CheckingController::class,'bookingAtAGlance'])->name('admin.chickin.at.glance');
 
-    Route::get('/checkout/invoice/page/{room_id}/{invoice_id}',[CheckingController::class,'checkOutInvoice'])->name('admin.checkout.invoice.page');
+    Route::get('/checkout/invoice/page/{booking_no}',[CheckingController::class,'checkOutInvoice'])->name('admin.checkout.invoice.page');
 
     Route::post('/get/tax/value',[CheckingController::class,'getTaxValue'])->name('admin.checkout.invoice.get.tax.data');
 

@@ -4,6 +4,7 @@
 @php
 date_default_timezone_set("asia/dhaka");
 $current = date("d/m/Y");
+$current = date("d-m-Y");
 $time = date("h:i");
 @endphp
 
@@ -110,7 +111,7 @@ $time = date("h:i");
 
                   </div>
 
-                  
+
 
 
                   <!-- room status Available area start -->
@@ -136,7 +137,7 @@ $time = date("h:i");
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu" href="{{url('admin/checkin/room/history/'.$row->id)}}"><i class="fa fa-calendar-check" aria-hidden="true"></i> History
+                              <a class="bg-menu checkinHistorybtn" data-toggle="modal" data-target="#checkinhistory" id="{{$row->id}}" href="{{url('admin/checkin/room/history/'.$row->id)}}"><i class="fa fa-calendar-check" aria-hidden="true"></i> History
                               </a>
                            </li>
 
@@ -236,7 +237,7 @@ $time = date("h:i");
                            </li>
 
                            <li class="list-group-item bg-menu">
-                           <a data-toggle="modal" data-target=".housekeeping_history" class="bg-menu housekeeping_history_btn" data-whatever="{{$row->id}}" href="{{route('admin.housekeeping.history',$row->id)}}"><i class="fa fa-calendar-check" aria-hidden="true"></i> History
+                              <a data-toggle="modal" data-target=".housekeeping_history" class="bg-menu housekeeping_history_btn" data-whatever="{{$row->id}}" href="{{route('admin.housekeeping.history',$row->id)}}"><i class="fa fa-calendar-check" aria-hidden="true"></i> History
                               </a>
                            </li>
 
@@ -465,14 +466,14 @@ $time = date("h:i");
                      <th scope="col">Remarks</th>
                   </tr>
                </thead>
-               
+
                <tbody id="add_house_keeping_history">
-               <tr id="add_house_keeping_history_preloader">
-                  <th colspan="5" class="text-center">
-                     <img src="{{asset('public/uploads/preloader/preloader.gif')}}" alt="" />
-                  </th>
-               </tr>
-                 
+                  <tr id="add_house_keeping_history_preloader">
+                     <th colspan="5" class="text-center">
+                        <img src="{{asset('public/uploads/preloader/preloader.gif')}}" alt="" />
+                     </th>
+                  </tr>
+
                </tbody>
             </table>
 
@@ -483,6 +484,69 @@ $time = date("h:i");
 </div>
 
 <!-- House keeping history area end -->
+
+<!-- checkin history area start -->
+
+
+<div class="modal fade" id="checkinhistory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Checkin History</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body printableAreasaveprint">
+            <form id="checkinhistoryarea" action="{{route('admin.checkin.history.search')}}" method="post">
+            @csrf
+               <div class="row p-4">
+                  <div class="col">
+                     <label for="inputEmail4">Form Date:</label>
+                     <input type="text" name="form_date" class="form-control form-control-sm datepickernew" value="{{$current}}">
+
+                     <input type="hidden" id="table_id" name="room_id" value="">
+                  </div>
+                  <div class="col">
+                     <label for="inputEmail4">To Date:</label>
+                     <input type="text" name="to_date" class="form-control form-control-sm datepickernew" value="{{$current}}">
+                  </div>
+                  <div class="col pt-4 mt-2">
+                     
+                     <button type="submit" class="btn btn-sm btn-primary" id="checkinHistorySearch">Search</button>
+                  
+                  </div>
+               </div>
+            </form>
+
+
+
+            <table class="table table-bordered">
+               <thead>
+                  <tr>
+                     <th scope="col">Room No:</th>
+                     <th scope="col">Check-In Date</th>
+                     <th scope="col">Time</th>
+                     <th scope="col">Guest</th>
+                     <th scope="col">City</th>
+                     <th scope="col">Amount</th>
+                  </tr>
+               </thead>
+               <tbody id="checkinhistoryadd">
+
+                  
+                  
+               </tbody>
+            </table>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary mx-auto savepritbtn">Print</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- checkin history area end -->
 
 <script>
    $(document).ready(function() {
@@ -509,17 +573,17 @@ $time = date("h:i");
 </script>
 
 <script>
-   $(document).ready(function(){
-      $('.housekeeping_history_btn').click(function(e){
+   $(document).ready(function() {
+      $('.housekeeping_history_btn').click(function(e) {
          var url = e.currentTarget.href;
          var modal = $(this)
          var data = modal.data('whatever');
-         
+
          $('#add_house_keeping_history').empty();
          $('#add_house_keeping_history_preloader').show();
          $('#add_house_keeping_history').hide();
-         $('#house_keeping_history_search').attr('action',"{{url('admin/house/keeping/search')}}/"+data);
-         $('#house_keeping_history_search').attr('method','post');
+         $('#house_keeping_history_search').attr('action', "{{url('admin/house/keeping/search')}}/" + data);
+         $('#house_keeping_history_search').attr('method', 'post');
          $.ajaxSetup({
             headers: {
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -560,14 +624,14 @@ $time = date("h:i");
 
 
 <script>
-   $(document).ready(function(){
+   $(document).ready(function() {
       $.ajaxSetup({
-            headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+         headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         }
       });
 
-      $(document).on('submit','#house_keeping_history_search',function(e){
+      $(document).on('submit', '#house_keeping_history_search', function(e) {
          e.preventDefault();
          $('#add_house_keeping_history').empty();
          $('#add_house_keeping_history_preloader').show();
@@ -590,5 +654,86 @@ $time = date("h:i");
       })
    });
 </script>
+
+<script>
+   $(document).ready(function() {
+      $('.checkinHistorybtn').click(function(e) {
+         e.preventDefault();
+         $('#table_id').val(e.currentTarget.id);
+         $('#checkinhistoryadd').empty();
+         var item = $(this);
+         var url = item.attr('href');
+
+
+         $.ajaxSetup({
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+         });
+
+         $.ajax({
+            type: 'get',
+            url: url,
+            success: function(data) {
+               console.log(data);
+               $('#checkinhistoryadd').append(data);
+            }
+         });
+
+
+
+
+      });
+   });
+</script>
+
+
+<script>
+
+   $(document).ready(function(){
+      $(document).on('submit', '#checkinhistoryarea', function(e){
+         e.preventDefault();
+
+         var url = $(this).attr('action');
+         $('#checkinhistoryadd').empty();
+
+         console.log(url);
+         var data = $('#checkinhistoryarea').serializeArray();
+
+         $.ajaxSetup({
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+         });
+
+         $.ajax({
+            type: 'post',
+            url: url,
+            data:data,
+            success: function(data) {
+               
+               $('#checkinhistoryadd').append(data);
+            }
+         });
+      });
+   });
+
+</script>
+
+
+<script>
+        $(function () {
+            $(".savepritbtn").on('click', function () {
+
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printableAreasaveprint").printArea(options);
+            });
+        });
+   </script>
 
 @endsection

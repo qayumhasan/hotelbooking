@@ -640,7 +640,7 @@ $time = date("h:i");
                         <div class="row">
                             <div class="col-sm-12 text-center p-4">
 
-                                <button type="submit" class="btn btn-primary mx-auto" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Print</button>
+                                <button type="submit" class="btn btn-primary mx-auto">Save & Print</button>
                             </div>
                         </div>
                     </div>
@@ -666,7 +666,7 @@ $time = date("h:i");
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body printableAreasaveprint">
+            <div class="modal-body">
                 <div class="invoice-card">
                     <div class="invoice-title">
                         <div id="main-title">
@@ -726,11 +726,13 @@ $time = date("h:i");
 <!-- checkout invoice -->
 
 
+@if(isset($data['identifier']))
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Invoice</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -798,12 +800,12 @@ $time = date("h:i");
                                 <tr>
 
 
-                                    <td width="49%" style="border: 0.1mm solid #eee; text-align: left;"><strong>Guest Name:</strong> qayum hasan
+                                    <td width="49%" style="border: 0.1mm solid #eee; text-align: left;"><strong>Guest Name:</strong>{{$checkindata->guest_name}}
                                         <br>
 
-                                        <b>Address: </b> fsdafdsaf , sdafdsafsda
+                                        <b>Address: </b> {{$checkindata->address}} , {{$checkindata->city}}
                                         <br>
-                                        <b>Phone: </b>fsafdsafds
+                                        <b>Phone: </b>{{$checkindata->mobile}}
                                     </td>
                                     <td width="2%">&nbsp;</td>
                                     <td width="49%" style="border: 0.1mm solid #eee;">
@@ -813,25 +815,22 @@ $time = date("h:i");
                                         </table>
                                         <table width="100%" align="right" style="font-family: sans-serif; font-size: 14px;">
                                             <tr>
-                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Voucher No:</strong></td>
-                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">dsfadsafdsaf</td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Invoice No:</strong></td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">{{$checkout->invoice_no}}</td>
                                             </tr>
                                             <tr>
                                                 <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Booking No:</strong></td>
-                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">fdsafdsaf</td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">{{$checkout->booking_no}}</td>
                                             </tr>
                                             <tr>
                                                 <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Room No:</strong></td>
-                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">fdsfadsf</td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">{{$checkout->prime_room}}</td>
                                             </tr>
                                             <tr>
-                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Voucher Date</strong></td>
-                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">fsfddsfa</td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Invoice Date Date</strong></td>
+                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">{{$checkout->invoice_date}}</td>
                                             </tr>
-                                            <tr>
-                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Payment Method:</strong></td>
-                                                <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">dsafdsf</td>
-                                            </tr>
+
 
                                         </table>
 
@@ -840,38 +839,72 @@ $time = date("h:i");
                                 </tr>
                             </table>
                             <br>
-                            <table class="items" width="100%" style="font-size: 14px; border-collapse: collapse;" cellpadding="8">
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <td width="15%" style="text-align: left;"><strong>Date</strong></td>
-                                        <td width="45%" style="text-align: left;"><strong>Remarks</strong></td>
-                                        <td width="20%" style="text-align: left;"><strong>Amount</strong></td>
+                                        <th>Name</th>
+                                        <th>Details</th>
+                                        <th>Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
                                     <tr>
-                                        <td style="padding: 5px 7px;border: 1px #eee solid; line-height: 20px;">fdsafdsaf</td>
-                                 
+                                
+                                        <td>Rooms</td>
+                                        @php
+                                            (float)$totalroom = 0;
+                                        @endphp
+                                        @if(count($checkins))
 
-                                 
+                                        <td>
+                                            @foreach($checkins as $row)
+                                                <div class="room card text-center">
+                                                    <h6>Room No : 670</h6>
+                                                    <span>{{$row->checkin_date}} - {{$row->add_room_checkout_date}} = {{$row->additional_room_day}} day </span>
+                                                    <span>Tariff@ {{$row->tarif}}/= Per Day</span>
+                                                </div>
+                                                @php
+                                                    $totaltarif = (int)$row->additional_room_day * (int)$row->tarif;
+                                                    $totalroom = $totalroom + $totaltarif;
+                                                @endphp
+
+
+                                            
+                                            @endforeach
+                                        </td>
+
+                                        <td>$ {{$totalroom}}</td>
+                                    
+                                        @endif
+                                
                                     </tr>
-                                  
+                                    @php
+                                    $discount =$totalroom - $checkout->room_amount;
+                                    @endphp
                                     <tr>
-                                        <td colspan="2" class="text-right" style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;"><strong>Total Amount</strong></td>
-                                        <td style="border: 1px #eee solid; padding: 0px 8px; line-height: 20px;">$ sdafdsafdsa</td>
+                                        <th colspan="2" class="text-right">Room Discount</th>
+                                        <td>{{$discount}}</td>
                                     </tr>
+                                    <tr>
+                                        <th colspan="2" class="text-right">Total Room Amount</th>
+                                        <td>{{$checkout->room_amount}}</td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <th colspan="2" class="text-right">Advance Amount</th>
+                                        <td>{{$checkout->voucher_amount}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2" class="text-right">Total Amount</th>
+                                        <td>{{$data['amount']}}</td>
+                                    </tr>
+                                
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="2" class="text-right"><strong>In Word:</strong></td>
-                                        <td>fdsafdsa</td>
-
-                                    </tr>
-                                </tfoot>
                             </table>
 
-                            <span>Assign By:fdsafdsafsd</span>
+                            <span>Assign By: {{$checkout->user->username ?? ''}}</span>
 
                             <br>
                             <table width="100%" style="font-family: sans-serif; font-size: 14px;">
@@ -909,6 +942,16 @@ $time = date("h:i");
         </div>
     </div>
 </div>
+
+@endif
+
+@if(isset($data['identifier']))
+<script>
+    $(document).ready(function() {
+        $('#exampleModal').modal('show');
+    });
+</script>
+@endif
 
 
 <script>
@@ -1120,7 +1163,7 @@ $time = date("h:i");
 <script>
     $(document).ready(function() {
         $(".savepritbtn").on('click', function() {
-            alert('ok');
+            
             var mode = 'iframe'; //popup
             var close = mode == "popup";
             var options = {
