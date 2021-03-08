@@ -141,6 +141,11 @@
                                         <i class="las la-list-alt"></i><span>Add Account Trasection</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.transection.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Account Trasection</span>
+                                    </a>
+                                </li>
                               
                             </ul>
                         </li>
