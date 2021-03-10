@@ -68,16 +68,15 @@ $time = date("h:i");
 
 
    .datepicker {
-    padding: 0px; 
-     -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
-  
-}
+      padding: 0px;
+      -webkit-border-radius: 0px;
+      -moz-border-radius: 0px;
+      border-radius: 0px;
+
+   }
 
 
-/* preloader css start from here */
- 
+   /* preloader css start from here */
 </style>
 
 
@@ -110,7 +109,7 @@ $time = date("h:i");
                   <div class="status text-center 
                  {{$row->is_booked == 1 ?'bg-red':'bg-green'}}
                   ">
-                     <span  class="status-heading">{{ $row->table_no}}</span>
+                     <span class="status-heading">{{ $row->table_no}}</span>
 
                   </div>
 
@@ -140,7 +139,7 @@ $time = date("h:i");
                            </li>
 
                            <li class="list-group-item bg-menu">
-                              
+
 
                               <a class="bg-menu getkothistory" class="btn btn-primary" data-toggle="modal" data-target=".historymodal" data-whatever="{{$row->id}}"><i class="fa fa-globe" aria-hidden="true"></i> At a Glance</a>
                            </li>
@@ -363,22 +362,22 @@ $time = date("h:i");
 
 <!-- at a glance -->
 
-<div class="modal fade ataglance_updatemodal" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade ataglance_updatemodal" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
          <div class="modal-header">
-               <h5 class="modal-title">At a Glance</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title">At a Glance</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
-               </button>
+            </button>
          </div>
          <div class="modal-body">
             <div class="row" id="mainataglance">
-                  
+
             </div>
          </div>
          <div class="modal-footer">
-           
+
          </div>
       </div>
    </div>
@@ -387,87 +386,221 @@ $time = date("h:i");
 
 
 <!-- main history -->
-<div class="modal fade history_updatemodal" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal fade history_updatemodal" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
          <div class="modal-header">
-               <h5 class="modal-title">Kot History</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title">Kot History</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
-               </button>
+            </button>
          </div>
          <div class="modal-body">
-         <div class="row">
+            <div class="row">
 
-                  <div class="col-md-1"></div>
-                  <div class="col-md-4"> Form Date: <input type="text" name="formdate" class="datepicker formdate" value="{{$current}}"> </div>
-                  <div class="col-md-4">To Date: <input type="text" name="todate" class="datepicker todate" value="{{$current}}"></div>
-                  <div class="col-md-2 mt-3"><button class="btn-sm btn-success" id="kothistorysearch">search</button></div>
+               <div class="col-md-1"></div>
+               <div class="col-md-4"> Form Date: <input type="text" name="formdate" class="datepicker formdate" value="{{$current}}"> </div>
+               <div class="col-md-4">To Date: <input type="text" name="todate" class="datepicker todate" value="{{$current}}"></div>
+               <div class="col-md-2 mt-3"><button class="btn-sm btn-success" id="kothistorysearch">search</button></div>
 
 
-                  <div class="col-md-12">
-                        <div class="card shadow-sm shadow-showcase">
-                            <div class="card-body">
-                            <div class="dots text-center" id="searchPreloader" style="display:none">
-                                 <img src="{{asset('public/uploads/preloader/spinnervlll.gif')}}" width="25%" height="100px" alt="preloader"/>
-                              
-                           
-                           </div>
-                                <div class="row asif allhistorydata">
-                                    
-                            </div>
+               <div class="col-md-12">
+                  <div class="card shadow-sm shadow-showcase">
+                     <div class="card-body">
+                        <div class="dots text-center" id="searchPreloader" style="display:none">
+                           <img src="{{asset('public/uploads/preloader/spinnervlll.gif')}}" width="25%" height="100px" alt="preloader" />
+
+
+                        </div>
+                        <div class="row asif allhistorydata">
+
                         </div>
                      </div>
                   </div>
+               </div>
             </div>
          </div>
          <div class="modal-footer">
-           
+
          </div>
       </div>
    </div>
 </div>
 </div>
 
+@isset($orderhead)
+@if($orderhead && count($orderdetails) > 0)
+
+<div class="modal fade" id="printmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content printableAreasaveprint">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Invoice</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="container printableAreasaveprintsection" id="billinginvoice">
+
+               <div class="row">
+                  <div class="col-md-12 text-center">
+                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" alt="logo" height="25px">
+                  </div>
+                  <div class="col-md-12 text-center">
+                     <h4>{{$companyinformation->company_name}}</h4>
+                     <p>{{$companyinformation->address}}</p>
+                  </div>
+                  <div class="col-md-6 text-center">
+                     <p style="padding:5px 0px; background:#000;color:#fff">Invoice</p>
+                  </div>
+                  <div class="col-md-6 text-center">
+                     <p style="padding:5px 0px; background:#f7f7f7;color:#000">{{$orderhead->invoice_no}}</p>
+                  </div>
+                  <div class="col-md-12 text-left">
+                     <h4 style="font-size:12px">Waiter Name: {{$orderdetails->first()->waiter->employee_name?? ''}}</h4>
+                     <p style="font-size:11px">Table No: {{$orderdetails->first()->tableName->table_no?? ''}}</p>
+                  </div>
+                  <div class="col-md-6 text-left">
+                     <!-- <p style="font-size:11px">Booking No: 209876</p> -->
+                  </div>
+                  <div class="col-md-6 text-right">
+                     <p style="font-size:11px">Billing Date: {{$orderhead->payment_date}}</p>
+                  </div>
+                  <div class="col-md-12">
+                     <table class="table table-bordered mt-4">
+                        <thead>
+                           <tr class="bg-secondary">
+                              <th scope="col">Item Name</th>
+                              <th scope="col">QTY</th>
+                              <th scope="col">Rate</th>
+                              <th scope="col">Amount</th>
+
+                           </tr>
+                        </thead>
+                        <tbody>
+                           @if(count($orderdetails) > 0)
+                           @foreach($orderdetails as $row)
+
+                           <tr class="deletehistory">
+                              <td>{{$row->item->item_name?? ''}}</td>
+                              <td>{{$row->qty}}</td>
+                              <td>{{$row->rate}}</td>
+                              <td>{{$row->amount}}</td>
+                           <tr>
+
+                              @endforeach
+                              @else
+                           <tr>
+                              <th colspan="6" class="text-center">No Data Found!</th>
+                           </tr>
+                           @endif
 
 
 
 
-<!-- foysal script start -->
+                        </tbody>
+
+                     </table>
+                  </div>
+                  <div class="col-md-12 text-right mb=-2">
+                     <hr>
+                     <p style="font-size:11px">Net Amount: {{$orderhead->total_amount}}</p>
+                     <hr>
+                     <p style="font-size:11px">Gross Amount:{{$orderhead->gross_amount}} </p>
+                  </div>
+
+                  <div class="col-md-6 text-left">
+                     <p style="font-size:11px">Signature: </p>
+                  </div>
+                  <div class="col-md-6 text-right">
+                     <p style="font-size:11px">Demo User: </p>
+                  </div>
+               </div>
+
+
+
+
+
+
+
+            </div>
+         </div>
+         <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" class="btn btn-primary mx-auto savepritbtnarea">Print</button>
+         </div>
+      </div>
+   </div>
+</div>
+
+@endif
+@endisset
+
+@isset($orderhead)
+@if($orderhead && count($orderdetails) > 0)
+<script>
+   $(document).ready(function() {
+      $('#printmodal').modal('show');
+   });
+</script>
+@endif
+@endisset
+
+
+
+<script>
+    $(function() {
+        $(".savepritbtnarea").on('click', function() {
+
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableAreasaveprintsection").printArea(options);
+        });
+    });
+</script>
+
+
+
+
 <!--  ata a glance start-->
 <script>
-$(document).ready(function() {
-     $('#kothistorysearch').on('click', function(){
-            var todate=$(".todate").val();
-            var formdate=$(".formdate").val();
-            var table_id=$(".table_id").val();
-            //alert(table_id);
-            $(".allhistorydata").empty();
-            $('#searchPreloader').show();
-            
-            if(table_id) {
-                  $.ajax({
-                     url: "{{  url('/admin/restaurant/chui/getsearch/history/') }}",
-                     type:"GET",
-                     data:{
-                        todate:todate,
-                        formdate:formdate,
-                        table_id:table_id,
-                     },
-                     success:function(data) {
+   $(document).ready(function() {
+      $('#kothistorysearch').on('click', function() {
+         var todate = $(".todate").val();
+         var formdate = $(".formdate").val();
+         var table_id = $(".table_id").val();
+         //alert(table_id);
+         $(".allhistorydata").empty();
+         $('#searchPreloader').show();
 
-                              $(".allhistorydata").append(data);
-                              $('#searchPreloader').hide();
-                           
-                        }
+         if (table_id) {
+            $.ajax({
+               url: "{{  url('/admin/restaurant/chui/getsearch/history/') }}",
+               type: "GET",
+               data: {
+                  todate: todate,
+                  formdate: formdate,
+                  table_id: table_id,
+               },
+               success: function(data) {
 
-                        
-                  });
-               } 
+                  $(".allhistorydata").append(data);
+                  $('#searchPreloader').hide();
 
-           
-    });
- });
+               }
+
+
+            });
+         }
+
+
+      });
+   });
 </script>
 
 
@@ -475,54 +608,54 @@ $(document).ready(function() {
 
 
 <script>
-$(document).ready(function() {
-     $('.ataglance_update').on('click', function(){
-     
-               var t_id = $(this).data('id');
-               $("#mainataglance").empty();
-            if(t_id) {
-                  $.ajax({
-                     url: "{{  url('/admin/restaurant/chui/getataglance/') }}/"+t_id,
-                     type:"GET",
-                     success:function(data) {
-                              $("#mainataglance").append(data);
-                              $('.ataglance_updatemodal').modal('toggle');
-                           
-                        }
+   $(document).ready(function() {
+      $('.ataglance_update').on('click', function() {
 
-                        
-                  });
-               } 
+         var t_id = $(this).data('id');
+         $("#mainataglance").empty();
+         if (t_id) {
+            $.ajax({
+               url: "{{  url('/admin/restaurant/chui/getataglance/') }}/" + t_id,
+               type: "GET",
+               success: function(data) {
+                  $("#mainataglance").append(data);
+                  $('.ataglance_updatemodal').modal('toggle');
 
-     });
- });
+               }
+
+
+            });
+         }
+
+      });
+   });
 </script>
 <!-- at a glance end-->
 <!-- main history -->
 <script>
-$(document).ready(function() {
-     $('.getkothistory_onlyhistory').on('click', function(){
-               var t_id = $(this).data('id');
-               //alert(ch_id);
-           
-            //$('.historydata').empty();
-            $(".allhistorydata").empty();
-            if(t_id) {
-                  $.ajax({
-                     url: "{{  url('/admin/restaurant/chui/gethistory/') }}/"+t_id,
-                     type:"GET",
-                     success:function(data) {
-                              $(".allhistorydata").append(data);
-                              $('.history_updatemodal').modal('toggle');
-                           
-                        }
+   $(document).ready(function() {
+      $('.getkothistory_onlyhistory').on('click', function() {
+         var t_id = $(this).data('id');
+         //alert(ch_id);
 
-                        
-                  });
-               } 
+         //$('.historydata').empty();
+         $(".allhistorydata").empty();
+         if (t_id) {
+            $.ajax({
+               url: "{{  url('/admin/restaurant/chui/gethistory/') }}/" + t_id,
+               type: "GET",
+               success: function(data) {
+                  $(".allhistorydata").append(data);
+                  $('.history_updatemodal').modal('toggle');
 
-     });
- });
+               }
+
+
+            });
+         }
+
+      });
+   });
 </script>
 
 
@@ -799,7 +932,7 @@ $(document).ready(function() {
             type: 'get',
             url: "{{ url('/admin/restaurant/chui/menu/history/kot/item') }}/" + data,
             success: function(data) {
-               
+
                $('#kothistorytable').append(data);
 
 
@@ -811,87 +944,87 @@ $(document).ready(function() {
 
 
 <script>
-        $(document).ready(function () {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(document).on('submit', '#billing_info_submit', function(e){
-                e.preventDefault();
-                var url = $(this).attr('action');
-                var type = $(this).attr('method');
-                var request = $(this).serialize();
-                $.ajax({
-                    url:url,
-                    type:type,
-                    data: request,
-                    success:function(data){
-                     console.log(data);
+   $(document).ready(function() {
+      $.ajaxSetup({
+         headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         }
+      });
+      $(document).on('submit', '#billing_info_submit', function(e) {
+         e.preventDefault();
+         var url = $(this).attr('action');
+         var type = $(this).attr('method');
+         var request = $(this).serialize();
+         $.ajax({
+            url: url,
+            type: type,
+            data: request,
+            success: function(data) {
+               console.log(data);
 
-                     if(data.msg == 1){
-                        
-                     
-                     }
-
-                        
-                    },
-                    error:function(err){
-                       if(err.responseJSON.errors.card_number){
-                        iziToast.error({
-                           message: err.responseJSON.errors.card_number[0],
-                           position: 'topCenter',
-                        });
-                       }
-
-                       if(err.responseJSON.errors.mobile_number){
-                        iziToast.error({
-                           message: err.responseJSON.errors.mobile_number[0],
-                           position: 'topCenter',
-                        });
-                       }
-
-                       if(err.responseJSON.errors.trans_number){
-                        iziToast.error({
-                           message: err.responseJSON.errors.trans_number[0],
-                           position: 'topCenter',
-                        });
-                       }
-
-                       if(err.responseJSON.errors.bank_name){
-                        iziToast.error({
-                           message: err.responseJSON.errors.bank_name[0],
-                           position: 'topCenter',
-                        });
-                       }
-
-                       if(err.responseJSON.errors.bank_name){
-                        iziToast.error({
-                           message: err.responseJSON.errors.bank_name[0],
-                           position: 'topCenter',
-                        });
-                       }
-                       if(err.responseJSON.errors.room_no){
-                        iziToast.error({
-                           message: err.responseJSON.errors.room_no[0],
-                           position: 'topCenter',
-                        });
-                       }
-
-                       if(err.responseJSON.errors.customar_number){
-                        iziToast.error({
-                           message:'Customar Name Must Not be Empty!',
-                           position: 'topCenter',
-                        });
-                       }
+               if (data.msg == 1) {
 
 
-                        
-                    }
-                });
-            });
-        });
-    </script> 
+               }
+
+
+            },
+            error: function(err) {
+               if (err.responseJSON.errors.card_number) {
+                  iziToast.error({
+                     message: err.responseJSON.errors.card_number[0],
+                     position: 'topCenter',
+                  });
+               }
+
+               if (err.responseJSON.errors.mobile_number) {
+                  iziToast.error({
+                     message: err.responseJSON.errors.mobile_number[0],
+                     position: 'topCenter',
+                  });
+               }
+
+               if (err.responseJSON.errors.trans_number) {
+                  iziToast.error({
+                     message: err.responseJSON.errors.trans_number[0],
+                     position: 'topCenter',
+                  });
+               }
+
+               if (err.responseJSON.errors.bank_name) {
+                  iziToast.error({
+                     message: err.responseJSON.errors.bank_name[0],
+                     position: 'topCenter',
+                  });
+               }
+
+               if (err.responseJSON.errors.bank_name) {
+                  iziToast.error({
+                     message: err.responseJSON.errors.bank_name[0],
+                     position: 'topCenter',
+                  });
+               }
+               if (err.responseJSON.errors.room_no) {
+                  iziToast.error({
+                     message: err.responseJSON.errors.room_no[0],
+                     position: 'topCenter',
+                  });
+               }
+
+               if (err.responseJSON.errors.customar_number) {
+                  iziToast.error({
+                     message: 'Customar Name Must Not be Empty!',
+                     position: 'topCenter',
+                  });
+               }
+
+
+
+            }
+         });
+      });
+   });
+</script>
 
 
 

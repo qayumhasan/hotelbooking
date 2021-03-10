@@ -9,12 +9,14 @@ use App\Models\Employee;
 use App\Models\ItemEntry;
 use App\Models\Restaurant_order_detail;
 use App\Models\Restaurant_Order_head;
+use App\Models\Restaurant_Tax_head;
 use App\Models\RestaurantTable;
 use App\Models\Room;
 use App\Models\SideMenu;
 use App\Models\TaxDetails;
 use App\Models\TaxHead;
 use App\Models\TaxSetting;
+use App\Traits\KotTaxCalculate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -255,6 +257,7 @@ class ChuiController extends Controller
             $head->number_of_qty = $qtysum;
             $head->total_amount = $amountsum;
             $head->gross_amount = $amountsum;
+            $head->food_amount = $amountsum;
             $head->save();
 
             $kotdetails = Restaurant_order_detail::where('table_no', $request->tbl_no)->where('kot_status', 0)->where('is_active', 0)->latest('id')->first();
@@ -271,14 +274,109 @@ class ChuiController extends Controller
                 'alert-type' => 'success'
             );
 
-            return Redirect()->back()->with($notification);
+            return Redirect()->route('admin.chui.restaurant')->with($notification);
         } else {
 
             $notification = array(
                 'messege' => ' No item selected!',
                 'alert-type' => 'warning'
             );
-            return Redirect()->back()->with($notification);
+            return Redirect()->route('admin.chui.restaurant')->with($notification);
+        }
+    }
+
+
+    public function kotTaxEdit($id)
+    {
+        $taxhead = Restaurant_Tax_head::findOrFail($id);
+        return response()->json($taxhead);
+
+    }
+
+    public function kotTaxUpdate(Request $request)
+    {
+        $taxhead=Restaurant_Tax_head::findOrFail($request->update_tax);
+        if($taxhead){
+            $this->KotEditDelete($taxhead);
+            $taxhead->delete();
+        }
+        
+
+        $tax = new KotTaxCalculate($request);
+        $tax->Tax();
+
+
+
+        $texdatas = Restaurant_Tax_head::where('invoice_id', $request->invoice_no)->get();
+
+
+
+        $resgross = Restaurant_Order_head::where('invoice_no', $request->invoice_no)->first();
+
+
+
+
+        return view('restaurant.chui.home.ajax.tax_details_ajax', compact('texdatas', 'resgross'));
+    }
+
+    public function kotTaxDelete($id)
+    {
+        $taxhead = Restaurant_Tax_head::findOrFail($id);
+        $this->KotEditDelete($taxhead);
+
+        if ($taxhead) {
+            $taxhead->delete();
+        }
+
+
+        $resgross = Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->first();
+
+        return response()->json($resgross);
+    }
+
+
+    public function KotEditDelete($taxhead)
+    {
+        if ($taxhead->effect == 'Add') {
+
+            if ($taxhead->calculation_id == 1) {
+
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('gross_amount', $taxhead->amount);
+            } elseif ($taxhead->calculation_id == 2) {
+
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('gross_amount', $taxhead->amount);
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('food_amount', $taxhead->amount);
+            } elseif ($taxhead->calculation_id == 3) {
+
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('gross_amount', $taxhead->amount);
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->increment('discount_amount', $taxhead->amount);
+            } elseif ($taxhead->calculation_id == 4) {
+
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('gross_amount', $taxhead->amount);
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('total_amount', $taxhead->amount);
+            }
+        } elseif ($taxhead->effect == 'Deduct') {
+
+
+            if ($taxhead->calculation_id == 1) {
+
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->increment('gross_amount', $taxhead->amount);
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('discount_amount', $taxhead->amount);
+            } elseif ($taxhead->calculation_id == 2) {
+
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->increment('gross_amount', $taxhead->amount);
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->increment('food_amount', $taxhead->amount);
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('discount_amount', $taxhead->amount);
+            } elseif ($taxhead->calculation_id == 3) {
+
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->increment('gross_amount', $taxhead->amount);
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('discount_amount', $taxhead->amount);
+            } elseif ($taxhead->calculation_id == 4) {
+
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->increment('gross_amount', $taxhead->amount);
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->increment('total_amount', $taxhead->amount);
+                Restaurant_Order_head::where('invoice_no', $taxhead->invoice_id)->decrement('discount_amount', $taxhead->amount);
+            }
         }
     }
 
@@ -301,19 +399,36 @@ class ChuiController extends Controller
 
 
 
-    public function getKotItemTaxValue($id)
+    public function getKotItemTaxValue(Request $request)
     {
-        $taxrate = TaxSetting::findOrFail($id);
 
-        return response()->json($taxrate);
+
+        $request->validate([
+            'tax_discription' => 'required',
+            'calculation_on' => 'required',
+            'base_on' => 'required',
+            'rate' => 'required',
+        ]);
+
+        $tax = new KotTaxCalculate($request);
+        return $tax->amount();
     }
 
 
+    public function getKotTaxItem($id)
+    {
+        $tax = TaxSetting::findOrFail($id);
+        return response()->json($tax);
+    }
+
     public function getKotItemTaxCalculate(Request $request)
     {
+  
         $request->validate([
             'rate' => 'required',
         ]);
+
+
 
 
 
@@ -337,86 +452,14 @@ class ChuiController extends Controller
     public function addToGridKotBillingItem(Request $request)
     {
 
-
-        $tax = TaxSetting::findOrFail($request->tax_id);
-        if ($tax) {
-            // if tax effect add in amount
-            if ($tax->effect == 'Add') {
-
-                $resorderhead = Restaurant_Order_head::where('invoice_no', $request->invoice_no)->first();
-
-                if ($resorderhead) {
-
-                    $taxhead = new TaxHead();
-
-                    if ($request->base_on == 'percentage') {
-                        $amount = $this->getTotalValue($request, $resorderhead);
-                        $totalpercent = ($amount * $request->rate) / 100;
-                        $taxhead->amount = $totalpercent;
-                        $gross_amount = $amount + $totalpercent;
-                        $resorderhead->increment('gross_amount', $gross_amount);
-                    }
-
-                    if ($request->base_on == 'amount') {
-                        $amount = $this->getTotalValue($request, $resorderhead);
-                        $totalpercent = $request->rate;
-                        $taxhead->amount = $totalpercent;
-                        $gross_amount = $amount + $totalpercent;
-                        $resorderhead->increment('gross_amount', $gross_amount);
-                    }
+        $tax = new KotTaxCalculate($request);
+        $tax->Tax();
 
 
 
-
-                    $taxhead->tax_id = $request->tax_id;
-                    $taxhead->calculation_id = $request->calculation_on;
-                    $taxhead->base_on = $request->base_on;
-                    $taxhead->rate = $request->rate;
-                    $taxhead->effect = 1;
-                    $taxhead->invoice_id = $request->invoice_no;
-                    $taxhead->save();
-                }
-            } elseif ($tax->effect == 'Deduct') {
-                // if tax effect deduct in amount
-                $resorderhead = Restaurant_Order_head::where('invoice_no', $request->invoice_no)->first();
-
-                if ($resorderhead) {
-
-                    $taxhead = new TaxHead();
-
-                    if ($request->base_on == 'percentage') {
-                        $amount = $this->getTotalValue($request, $resorderhead);
-                        $totalpercent = ($amount * $request->rate) / 100;
-                        $taxhead->amount = $totalpercent;
-                        $gross_amount = $amount - $totalpercent;
-
-                        $resorderhead->decrement('gross_amount', $gross_amount);
-                    }
-
-                    if ($request->base_on == 'amount') {
-                        $amount = $this->getTotalValue($request, $resorderhead);
-                        $totalpercent = $request->rate;
-                        $taxhead->amount = $totalpercent;
-                        $gross_amount = $amount - $totalpercent;
-
-                        $resorderhead->decrement('gross_amount', $gross_amount);
-                    }
+        $texdatas = Restaurant_Tax_head::where('invoice_id', $request->invoice_no)->get();
 
 
-
-
-                    $taxhead->tax_id = $request->tax_id;
-                    $taxhead->calculation_id = $request->calculation_on;
-                    $taxhead->base_on = $request->base_on;
-                    $taxhead->rate = $request->rate;
-                    $taxhead->effect = 0;
-                    $taxhead->invoice_id = $request->invoice_no;
-                    $taxhead->save();
-                }
-            }
-        }
-
-        $texdatas = TaxDetails::where('invoice_id', $request->invoice_no)->get();
 
         $resgross = Restaurant_Order_head::where('invoice_no', $request->invoice_no)->first();
 
@@ -429,19 +472,7 @@ class ChuiController extends Controller
 
     public function getTotalValue($request, $head)
     {
-        // if($request->calculation_on == 1){
-        //     return 'gross';
-        //     return $head->total_amount + $head->gross_amount;
-        // }elseif($request->calculation_on == 2){
-        //     return 'food';
-        //     return $head->total_amount;
-        // }elseif($request->calculation_on == 3){
-        //     return 'discount';
-        //     return (int)0;
-        // }elseif($request->calculation_on == 4){
-        //     return 'net';
-        //     return $head->total_amount;
-        // }
+
 
         switch ($request->calculation_on) {
             case '1':
@@ -469,7 +500,7 @@ class ChuiController extends Controller
 
     public function slectRoomForBillingGet($id)
     {
-        $roomdata = Checkin::where('room_id', $id)->first();
+        $roomdata = Checkin::where('room_id', $id)->where('is_occupy',1)->first();
         return response()->json($roomdata);
     }
 
@@ -479,114 +510,113 @@ class ChuiController extends Controller
     public function storeKotItemHistoryByTableID(Request $request)
     {
 
+        
+
+
         $kothead = Restaurant_Order_head::where('invoice_no', $request->invoice_no)->first();
 
         if (isset($request->payment_method)) {
 
-        if ($kothead) {
-            $kothead->no_of_pax = $request->no_of_pax;
-            $kothead->payment_date = $request->paymentdate;
+            if ($kothead) {
+
+                $kothead->no_of_pax = $request->no_of_pax;
+                $kothead->payment_date = $request->paymentdate;
+
+                if (isset($request->payment_method)) {
+                    $kothead->is_payment = 1;
+                    $kothead->payment_method = $request->payment_method;
+
+                    // payment with cash
+
+                    if ($request->payment_method == 1) {
+                        $kothead->payment_method = $request->payment_method;
+                        $kothead->payment_details = 'Cash';
+                    }
+
+                    // add mobile money
+                    if ($request->payment_method == 3) {
+                        $request->validate([
+                            'mobile_number' => 'required',
+                            'trans_number' => 'required',
+                        ]);
+                        $data = [
+                            'mobile_number' => $request->mobile_number,
+                            'trans_number' => $request->trans_number,
+                        ];
+                        $kothead->payment_details = json_encode($data);
+                    }
+
+
+                    // Add Payment with bank
+
+                    if ($request->payment_method == 2) {
+                        $request->validate([
+                            'bank_name' => 'required',
+                            'card_number' => 'required',
+                        ]);
+                        $data = [
+                            'bank_name' => $request->bank_name,
+                            'card_number' => $request->card_number,
+                        ];
+                        $kothead->payment_details = json_encode($data);
+                    }
+
+                    // add Credit payment
+
+                    if ($request->payment_method == 4) {
+                        $request->validate([
+                            'customar_number' => 'required',
+                        ]);
+                        $data = [
+                            'customar_number' => $request->customar_number,
+                        ];
+                        $kothead->payment_details = json_encode($data);
+                    }
+
+                    // payment with post to room
+
+                    if ($request->payment_method == 5) {
+                        $request->validate([
+                            'room_no' => 'required',
+                        ]);
+                        $kothead->room_no = $request->room_no;
+                        $kothead->booking_no = $request->booking_no;
+                    }
+                }
+
+                $kothead->table_no = $request->table_no;
+                $kothead->mobile_no = $request->mobile_no;
+                $kothead->remarks = $request->remarks;
+            }
+
 
             if (isset($request->payment_method)) {
-                $kothead->is_payment = 1;
-                $kothead->payment_method = $request->payment_method;
+                $kotdetails = Restaurant_order_detail::where('table_no', $request->table_no)->where('is_active', 0)->where('kot_status', 0)->get();
 
-                // payment with cash
-
-                if ($request->payment_method == 1) {
-                    $kothead->payment_method = $request->payment_method;
-                    $kothead->payment_details = 'Cash';
-                }
-
-                // add mobile money
-                if ($request->payment_method == 3) {
-                    $request->validate([
-                        'mobile_number' => 'required',
-                        'trans_number' => 'required',
+                if (count($kotdetails) > 0) {
+                    $kotdetails = Restaurant_order_detail::where('table_no', $request->table_no)->where('is_active', 0)->where('kot_status', 0)->update([
+                        'is_active' => 1,
+                        'kot_status' => 1,
+                        'room_booking_no' => $request->booking_no,
                     ]);
-                    $data = [
-                        'mobile_number' => $request->mobile_number,
-                        'trans_number' => $request->trans_number,
-                    ];
-                    $kothead->payment_details = json_encode($data);
-                }
-
-
-                // Add Payment with bank
-
-                if ($request->payment_method == 2) {
-                    $request->validate([
-                        'bank_name' => 'required',
-                        'card_number' => 'required',
-                    ]);
-                    $data = [
-                        'bank_name' => $request->bank_name,
-                        'card_number' => $request->card_number,
-                    ];
-                    $kothead->payment_details = json_encode($data);
-                }
-
-                // add Credit payment
-
-                if ($request->payment_method == 4) {
-                    $request->validate([
-                        'customar_number' => 'required',
-                    ]);
-                    $data = [
-                        'customar_number' => $request->customar_number,
-                    ];
-                    $kothead->payment_details = json_encode($data);
-                }
-
-                // payment with post to room
-
-                if ($request->payment_method == 5) {
-                    $request->validate([
-                        'room_no' => 'required',
-                    ]);
-                    $kothead->room_no = $request->room_no;
-                    $kothead->booking_no = $request->booking_no;
                 }
             }
 
-            $kothead->table_no = $request->table_no;
-            $kothead->mobile_no = $request->mobile_no;
-            $kothead->remarks = $request->remarks;
+            if (isset($request->payment_method)) {
+                $table = RestaurantTable::findOrFail($request->table_no);
+                $table->waiter_id = 0;
+                $table->total_amounnt = 0;
+                $table->data = null;
+                $table->is_booked = 0;
+                $table->save();
+            }
+
+            if ($kothead->save()) {
+               return redirect()->route('admin.chui.restaurant.tax.print',$request->invoice_no);
+            }
+        } else {
+            return "no";
         }
-
-
-        if (isset($request->payment_method)) {
-        $kotdetails = Restaurant_order_detail::where('table_no', $request->table_no)->where('is_active', 0)->where('kot_status', 0)->get();
-
-        if (count($kotdetails) > 0) {
-            $kotdetails = Restaurant_order_detail::where('table_no', $request->table_no)->where('is_active', 0)->where('kot_status', 0)->update([
-                'is_active' => 1,
-                'kot_status' => 1,
-                'room_booking_no'=>$request->booking_no,
-            ]);
-        }
-    }
-
-        if (isset($request->payment_method)) {
-            $table = RestaurantTable::findOrFail($request->table_no);
-            $table->waiter_id = 0;
-            $table->total_amounnt = 0;
-            $table->data = null;
-            $table->is_booked = 0;
-            $table->save();
-        }
-
-        if($kothead->save()){
-            return response()->json([
-                'msg'=>1
-            ]);
-        }
-    }else{
-        return response()->json([
-            'msg'=>0
-        ]);
-
-    }
     }
 
 
@@ -658,9 +688,14 @@ class ChuiController extends Controller
 
     public function billingInfoPrint($id)
     {
-        $orderhead = Restaurant_Order_head::where('invoice_no',$id)->first();
-        $orderdetails = Restaurant_order_detail::where('invoice_id',$id)->get();
+        $orderhead = Restaurant_Order_head::where('invoice_no', $id)->first();
+        $orderdetails = Restaurant_order_detail::where('invoice_id', $id)->get();
 
-        return view('restaurant.chui.home.ajax.print_ajax',compact('orderhead','orderdetails'));
+        $allwaiter = Employee::get();
+
+        $allitem = ItemEntry::where('is_deleted', 0)->where('is_active', 1)->orderBy('id', 'DESC')->get();
+        $tables = RestaurantTable::where('is_deleted', 0)->where('is_active', 1)->orderBy('id', 'DESC')->get();
+      
+        return view('restaurant.chui.home.index', compact('allwaiter', 'allitem', 'tables', 'orderhead', 'orderdetails'));
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Checkin;
 use App\Models\CheckinService;
 use App\Models\Checkout;
 use App\Models\CheckOut_Tax_Details;
+use App\Models\Guest;
 use App\Models\HouseKeeping;
 use App\Models\ItemEntry;
 use App\Models\MenuCategory;
@@ -30,7 +31,9 @@ class CheckingController extends Controller
     public function index($id)
     {
         $room = Room::findOrFail($id);
-        return view('hotelbooking.checking.checking', compact('room'));
+        
+        $guests = Guest::where('is_active',1)->where('is_deleted',0)->get();
+        return view('hotelbooking.checking.checking', compact('room','guests'));
     }
 
     public function getRoom(Request $request)
@@ -73,6 +76,7 @@ class CheckingController extends Controller
         $room->update([
             'room_status' => 3,
         ]);
+
 
         $checkin = new Checkin();
         $checkin->room_id = $request->room_id;
@@ -283,7 +287,7 @@ class CheckingController extends Controller
 
     public function serviceStore(Request $request)
     {
-        return $request;
+
         $request->validate([
             'service_date' => 'required',
             'service_time' => 'required',
@@ -292,11 +296,20 @@ class CheckingController extends Controller
             'rate' => 'required',
             'qty' => 'required',
         ]);
+
         $item_name = ItemEntry::where('id', $request->services)->select(['item_name', 'id'])->first();
+
+        $checkin = Checkin::findOrFail($request->service_id);
+        if($checkin){
+            $booking_no =$checkin->booking_no;
+        }
+
+        
 
         $services = new CheckinService();
         $services->service_no = $request->service_no;
         $services->checkin_id = $request->service_id;
+        $services->booking_no = $booking_no;
         $services->service_date = $request->service_date;
         $services->service_time = $request->service_time;
         $services->service_category = $request->service_category;
@@ -445,8 +458,10 @@ class CheckingController extends Controller
 
         $checkindata = Checkin::where('room_id', $request->room_id)->where('is_occupy', 1)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
 
+        $addi_checkins = Checkin::where('booking_no', $checkindata->booking_no)->get();
+
         $current = $request->date;
-        return view('hotelbooking.home.ajax.checkout_ajax', compact('checkindata', 'current'));
+        return view('hotelbooking.home.ajax.checkout_ajax', compact('checkindata', 'current','addi_checkins'));
     }
 
 
@@ -916,5 +931,13 @@ class CheckingController extends Controller
 
         $checkins = Checkin::whereBetween('checkin_date', [$request->form_date, $request->to_date])->where('room_id',$request->room_id)->get();
         return view('hotelbooking.home.ajax.checkin_history_ajax',compact('checkins'));
+    }
+
+
+    public function guestInfo($guestname)
+    {
+        $guest = Guest::where('guest_name',$guestname)->where('is_active',1)->where('is_deleted',0)->first();
+
+        return response()->json($guest);
     }
 }

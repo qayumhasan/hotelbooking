@@ -11,6 +11,6 @@
 @endforeach
 @else
 <tr>
-    <td>safdsafdd</td>
+    <th colspan="6" class="text-center">No Data Found!</th>
 </tr>
 @endif

@@ -14,6 +14,8 @@ Route::get('/restaurant',[RestaurantController::class, 'index'])->name('admin.re
 
 Route::middleware('admin')->prefix(md5('admin/chui'))->group(function(){
     Route::get('/',[ChuiController::class,'chuiIndex'])->name('admin.chui.restaurant');
+    
+    Route::get('/billing/print/{id}',[ChuiController::class,'billingInfoPrint'])->name('admin.chui.restaurant.tax.print');
 
         Route::prefix(md5('menu/category'))->group(function(){
             Route::get('/',[MenuController::class,'menuCategory'])->name('admin.restaurant.menu.category');
@@ -58,6 +60,10 @@ Route::middleware('admin')->prefix(md5('admin/chui'))->group(function(){
             Route::get('/history',[OtherInfoController::class,'OtherInfo'])->name('admin.restaurant.menu.Kot.history');
             Route::post('/history/search',[OtherInfoController::class,'KotHistorySearch'])->name('admin.restaurant.chui.menu.kot.history.search');
             Route::get('/in/house/geust',[OtherInfoController::class,'inHouseGuest'])->name('admin.restaurant.chui.menu.kot.inhouse.guest');
+            // tax delete
+            Route::get('/tax/edit/{id}',[ChuiController::class,'kotTaxEdit'])->name('admin.resturant.kot.tax.edit');
+
+            Route::get('/tax/delete/{id}',[ChuiController::class,'kotTaxDelete'])->name('admin.resturant.kot.tax.delete');
             
         });
 
@@ -126,8 +132,11 @@ Route::get('/admin/restaurant/chui/menu/get/at/glance/item/{id}',[ChuiController
 
 Route::get('/admin/restaurant/chui/menu/get/print/invoice/item/{id}',[ChuiController::class,'getKotItematglanceByInvoiceID']);
 
-Route::get('/admin/restaurant/chui/menu/get/tax/value/{id}',[ChuiController::class,'getKotItemTaxValue']);
+Route::post('/admin/restaurant/chui/menu/get/tax/value',[ChuiController::class,'getKotItemTaxValue']);
 Route::post('/admin/restaurant/chui/menu/get/tax/calculate',[ChuiController::class,'getKotItemTaxCalculate']);
+
+Route::get('/admin/restaurant/chui/menu/get/tax/item/{id}',[ChuiController::class,'getKotTaxItem']);
+
 Route::post('/admin/restaurant/chui/menu/tax/add/to/grid',[ChuiController::class,'addToGridKotBillingItem']);
 
 // asif route history
@@ -137,6 +146,8 @@ Route::get('/admin/restaurant/chui/getsearch/history/',[ChuiController::class,'g
 
 Route::get('/admin/restaurant/chui/menu/select/room',[ChuiController::class,'slectRoomForBilling']);
 Route::get('/admin/restaurant/chui/menu/select/room/data/get/{id}',[ChuiController::class,'slectRoomForBillingGet']);
+
 Route::get('/admin/restaurant/chui/menu/history/kot/print/{id}',[ChuiController::class,'billingInfoPrint']);
+Route::post('/admin/restaurant/chui/menu/tax/add/to/grid/update',[ChuiController::class,'kotTaxUpdate']);
 
 

@@ -30,7 +30,7 @@ class Checkin extends Model
      */
     public function checkin()
     {
-        return $this->hasMany(CheckinService::class);
+        return $this->hasMany(CheckinService::class,'booking_no','booking_no');
     }
 
      /**
