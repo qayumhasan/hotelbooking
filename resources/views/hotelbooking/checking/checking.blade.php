@@ -43,7 +43,8 @@ $time = date("h:i");
         border: 1px solid red;
         outline: none;
     }
-    #rooms{
+
+    #rooms {
         overflow: scroll;
     }
 </style>
@@ -143,6 +144,8 @@ $time = date("h:i");
                                                     <td>
                                                         <div class="col-12">
                                                             <input type="text" class="controll-from" id="pwd1" name="adv_guest_name" placeholder="Enter Guest Name">
+
+
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -189,20 +192,25 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Guest Name <small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" required autofocus id="pwd1" name="guest_name" placeholder="Enter Guest Name">
+                                            <input type="text" class="controll-from" required autofocus id="guestname" onblur="getGuestData(this)" onkeyup="enterPrintName(this)" name="guest_name" list="datalistOptions" placeholder="Enter Guest Name">
+                                            <datalist id="datalistOptions">
+                                                @foreach($guests as $row)
+                                                <option value="{{$row->guest_name}}">
+                                                    @endforeach
+                                            </datalist>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Print Name <small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" required id="pwd1" name="print_name" placeholder="Enter Print Name">
+                                            <input type="text" class="controll-from" required id="printname" name="print_name" placeholder="Enter Print Name">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="email">Gender<small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <select class="controll-from" id="exampleFormControlSelect1" name="gender" required>
+                                            <select class="controll-from" id="guestgender" name="gender" required>
                                                 <option value="1">Male</option>
                                                 <option value="2">Female</option>
                                             </select>
@@ -224,16 +232,16 @@ $time = date("h:i");
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="control-label col-sm-3 align-self-center" for="pwd1">City<small class="text-danger">*</small></label>
+                                        <label class="control-label col-sm-3 align-self-center" for="city">City<small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" name="city" id="pwd1" required placeholder="Enter City">
+                                            <input type="text" class="controll-from" name="city" id="city" required placeholder="Enter City">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Mobile<small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" name="mobile" required id="pwd1" placeholder="Enter Mobile">
+                                            <input type="text" class="controll-from" name="mobile" required id="mobile" placeholder="Enter Mobile">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -246,7 +254,7 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="email" class="controll-from" name="email" id="pwd1" placeholder="Enter Email">
+                                            <input type="email" class="controll-from" name="email" id="email" placeholder="Enter Email">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -300,7 +308,7 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Check-In Date <small class="text-danger">*</small></label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="controll-from" name="checkin_date"  required id="datepicker" value="{{$current}}" placeholder="d/m/y">
+                                            <input type="text" class="controll-from" name="checkin_date" required id="datepicker" value="{{$current}}" placeholder="d/m/y">
                                         </div>
                                         <div class="col-sm-2">
                                             <input type="time" class="controll-from" name="checkin_time" required id="pwd1" value="{{$time}}" placeholder="h:m">
@@ -310,13 +318,10 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Expected Check-Out Date <small class="text-danger">*</small></label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="controll-from datepicker" name="expected_checkout_date" required id="pwd1" 
-                                            placeholder="d/m/y"
-                                            value="{{$current}}">
+                                            <input type="text" class="controll-from datepicker" name="expected_checkout_date" required id="pwd1" placeholder="d/m/y" value="{{$current}}">
                                         </div>
                                         <div class="col-sm-2">
-                                            <input type="time" class="controll-from" name="exp_checkout_time" required id="pwd1" placeholder="h:m"
-                                            value="{{$time}}">
+                                            <input type="time" class="controll-from" name="exp_checkout_time" required id="pwd1" placeholder="h:m" value="{{$time}}">
                                         </div>
                                     </div>
 
@@ -341,7 +346,7 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="email">Company Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" name="company_name" id="pwd1">
+                                            <input type="text" class="controll-from" name="company_name" id="company_name">
                                         </div>
                                     </div>
 
@@ -621,7 +626,7 @@ $time = date("h:i");
                         <div class="col-md-6">
                             <div id="my_camera"></div>
                             <br />
-                            
+
                             <input type="hidden" name="image" class="image-tag">
                         </div>
                         <div class="col-md-6">
@@ -629,7 +634,7 @@ $time = date("h:i");
                                 Your captured image will appear here...
                             </div>
                         </div>
-                       
+
                     </div>
 
 
@@ -661,13 +666,13 @@ $time = date("h:i");
                         <div class="col-md-6">
                             <div id="doc_camera"></div>
                             <br />
-                            
+
                             <input type="hidden" name="image" class="image-tag">
                         </div>
                         <div class="col-md-6">
                             <div id="results_doc">Your captured image will appear here...</div>
                         </div>
-                       
+
                     </div>
 
 
@@ -693,25 +698,25 @@ $time = date("h:i");
         image_format: 'jpeg',
         jpeg_quality: 90
     });
-  
-    Webcam.attach( '#my_camera' );
-    Webcam.attach( '#doc_camera' );
-  
+
+    Webcam.attach('#my_camera');
+    Webcam.attach('#doc_camera');
+
     function take_snapshot() {
-        Webcam.snap( function(data_uri) {
+        Webcam.snap(function(data_uri) {
 
 
             $(".image-tag").val(data_uri);
             $(".client_web_img").val(data_uri);
-            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-        } );
+            document.getElementById('results').innerHTML = '<img src="' + data_uri + '"/>';
+        });
     }
 
     function take_snapshot_doc() {
-        Webcam.snap( function(data_uri) {
+        Webcam.snap(function(data_uri) {
             $(".image-tag").val(data_uri);
-            document.getElementById('results_doc').innerHTML = '<img src="'+data_uri+'"/>';
-        } );
+            document.getElementById('results_doc').innerHTML = '<img src="' + data_uri + '"/>';
+        });
     }
 </script>
 
@@ -776,8 +781,8 @@ $time = date("h:i");
             $.ajax({
                 type: 'get',
                 url: "{{ route('admin.get.hotel') }}",
-                data:{
-                    room_id :room_id
+                data: {
+                    room_id: room_id
                 },
                 success: function(data) {
                     rooms.push(data);
@@ -880,6 +885,83 @@ $time = date("h:i");
 
 
     controller.init();
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        $('#guestname').change(function(e) {
+            var guestname = e.target.value;
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            $.ajax({
+                type: 'get',
+                url: "{{ url('/admin/checkin/get/guest/info') }}/" + guestname,
+
+                success: function(data) {
+                    if (data.length > 0) {
+                        alert('ok');
+                    }
+                }
+            });
+        });
+    });
+
+
+    function enterPrintName(el) {
+        $('#printname').val(el.value);
+
+
+    }
+
+
+    function getGuestData(el) {
+        var guestname = el.value;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+        $.ajax({
+            type: 'get',
+            url: "{{ url('/admin/checkin/get/guest/info') }}/" + guestname,
+
+            success: function(data) {
+                if(data.guest_name){
+                    
+                    swal({
+                    title: "One Guest Name Found!",
+                    text: "Are You Sure Fill Up from with this Guest information?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $('#printname').val(data.print_name);
+                        $('#company_name').val(data.company_name);
+                        $('#city').val(data.city);
+                        $('#mobile').val(data.mobile);
+                        $('#email').val(data.email);
+                        $('#guestgender').val(data.gender).selected;
+
+                    } else {
+                        swal("Ok!");
+                    }
+                });
+                }
+            }
+        });
+    }
 </script>
 
 

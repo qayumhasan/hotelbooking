@@ -3,8 +3,10 @@ date_default_timezone_set("Asia/Dhaka");
 $current =date("d/m/Y");
 $time = date("h:i");
 @endphp
+
 @if($kotdetailamounts)
-<form id="billing_info_submit" action="{{url('admin/restaurant/chui/menu/history/kot/store')}}" method="post">
+<form id="billing_info_submit_form" action="{{url('admin/restaurant/chui/menu/history/kot/store')}}" method="post">
+    @csrf
     <div class="modal-content printableAreasaveprint">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">History Of Table No <b><span id="table_no">{{$kotdetailamounts->tableName->table_no ?? ''}}</span></b></h5>
@@ -93,6 +95,8 @@ $time = date("h:i");
         <input type="hidden" id="invoice_no_area" value="{{$kotdetailamounts->invoice_id}}" name="invoice_no">
         <input type="hidden" id="table_no_data" value="{{$kotdetailamounts->table_no}}" name="table_no">
         <input type="hidden" id="room_no_date" name="room_no">
+
+        <input type="hidden" id="update_tax" name="update_tax">
         <!-- hidden field -->
 
         <div class="container">
@@ -100,23 +104,26 @@ $time = date("h:i");
                 <div class="col-md-2 col-sm-6">
                     <div class="form-group">
                         <label for="exampleInputPassword1">Tax Discription</label>
-                        <select class="form-control form-control-sm" id="tax_discription">
+                        <select class="form-control form-control-sm" name="tax_discription" onchange="calculationKotTax(this)" id="tax_discription">
+                            <option disabled selected>---- Select----</option>
                             @foreach($taxs as $row)
                             <option value="{{$row->id}}">{{$row->tax_description}}</option>
                             @endforeach
                         </select>
+                        <small class="tax_discription_alt text-danger"></small>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-6">
                     <div class="form-group">
                         <label for="exampleInputPassword1">Calculation On</label>
-                        <select class="form-control form-control-sm" id="calculation_on">
+                        <select class="form-control form-control-sm" onchange="calculationKotTax(this)" name="calculation_on" id="calculation_on">
                             <option disabled selected>---- Select----</option>
                             <option value="1">Calculate On Gross Amount</option>
                             <option value="2">Calculate On Food Amount</option>
                             <option value="3">Calculate On Discount Amount</option>
                             <option value="4">Calculate On Net Amount</option>
                         </select>
+                        <small id="calculation_on_alt" class="text-danger"></small>
                     </div>
                 </div>
 
@@ -124,25 +131,27 @@ $time = date("h:i");
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">Base On </label>
-                        <select class="form-control form-control-sm base_on" id="base_on" name="base_on">
+                        <select class="form-control form-control-sm base_on" onchange="calculationKotTax(this)" id="base_on" name="base_on">
+                            <option disabled selected>---- Select----</option>
                             <option value="percentage">Percentage</option>
                             <option value="amount">Amount</option>
 
                         </select>
+                        <small class="base_on_alt text-danger"></small>
                     </div>
                 </div>
                 <div class="col-md-2 col-sm-6">
                     <div class="form-group">
                         <label for="exampleInputPassword1">Rate </label>
-                        <input type="number" id="rate" class="form-control form-control-sm" />
-                        <small id="rate_alt" class="text-danger"></small>
+                        <input type="number" id="rate" onkeyup="calculationKotTax(this)" name="rate" class="form-control form-control-sm" />
+                        <small id="rate_alt" class="rate_alt text-danger"></small>
                     </div>
                 </div>
 
                 <div class="col-md-2 col-sm-6">
                     <div class="form-group">
                         <label for="exampleInputPassword1">Amount </label>
-                        <input type="hidden" id="amounthidden" class="form-control form-control-sm" />
+                        <input type="hidden" id="amounthidden" name="amount" class="form-control form-control-sm" />
                         <input type="number" id="amountshow" disabled class="form-control form-control-sm" />
                     </div>
                 </div>
@@ -150,14 +159,15 @@ $time = date("h:i");
                 <div class="col-md-2 col-sm-6">
                     <div class="form-group">
                         <label for="exampleInputPassword1"> .</label><br>
-                        <button type="button" onclick="addToGrid()" id="addtogrid" class="btn btn-sm btn-primary">Add To Grid</button>
+                        <button type="button" onclick="addToGrid()" id="addtogridarea" class="btn btn-sm btn-primary">Add To Grid</button>
+                        <button type="button" onclick="updateTax()" id="update" class="btn btn-sm btn-primary">Update</button>
                     </div>
                 </div>
             </div>
         </div>
 
         @php
-        $texdatas = App\Models\TaxDetails::where('invoice_id',$kotdetailamounts->invoice_id)->get();
+        $texdatas = App\Models\Restaurant_Tax_head::where('invoice_id',$kotdetailamounts->invoice_id)->get();
         $resgross= App\Models\Restaurant_Order_head::where('invoice_no',$kotdetailamounts->invoice_id)->first();
         @endphp
 
@@ -179,15 +189,21 @@ $time = date("h:i");
                         <tbody id="taxarea">
                             @if(count($texdatas) > 0)
                             @foreach($texdatas as $row)
-                            <tr>
-                                <td scope="row">{{$row->tax_description}}</td>
-                                <td>{{$row->CalculateOn[$row->calculation_id]}}</td>
+                            <tr class="deleteitem">
+                                <td scope="row">{{$row->taxdetails->tax_description ?? ''}}</td>
+                                    
+                                <td>{{$row->Calculation}}</td>
+
                                 <td>{{ucfirst($row->base_on)}}</td>
-                                <td>{{$row->EffectOn[$row->effect]}}</td>
+                                <td>{{$row->effect}}</td>
 
                                 <td>{{$row->rate}}</td>
                                 <td>{{round($row->amount,2)}}</td>
                                 <td>
+                                    <a class="badge bg-primary-light mr-2 editkottaxitem" data-toggle="tooltip" data-placement="top" href="{{route('admin.resturant.kot.tax.edit',$row->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
+
+
+                                    <a class="badge bg-danger-light mr-2 deletekottaxitem" data-toggle="tooltip" data-placement="top" href="{{route('admin.resturant.kot.tax.delete',$row->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
 
                                 </td>
                             </tr>
@@ -201,7 +217,7 @@ $time = date("h:i");
                             <tr>
 
                                 <th colspan="5" class="text-right">Discount Amount</th>
-                                <td>0</td>
+                                <td id="discount_amount">$ {{round($resgross->discount_amount,2)}}</td>
 
                             </tr>
 
@@ -209,7 +225,7 @@ $time = date("h:i");
                             <tr>
 
                                 <th colspan="5" class="text-right">Gross Amount</th>
-                                <td>{{round($resgross->gross_amount,2)}}</td>
+                                <td id="gross_amount">$ {{round($resgross->gross_amount,2)}}</td>
 
                             </tr>
 
@@ -266,11 +282,12 @@ $time = date("h:i");
 
         <div class="modal-footer text-center mx-auto">
             <input type="hidden" id="history_table_no" value="{{$kotdetailamounts->table_no ?? ''}}" />
-            <button type="submit" id="historysave" class="btn btn-info">Save</button>
-            <button type="submit" id="historysaveandprint" class="btn btn-primary savepritbtn">Save & Print</button>
+            <!-- <button type="submit" id="historysave" class="btn btn-info">Save</button> -->
+            <button type="submit" id="billing_save_and_print" class="btn btn-primary">Save & Print</button>
         </div>
     </div>
 </form>
+
 @else
 <div class="container">
     <div class="row">
@@ -286,97 +303,11 @@ $time = date("h:i");
 
 
 <!-- invoice modal -->
-<div class="modal fade" id="printmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content printableAreasaveprint">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Invoice</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-               <div class="container printableAreasaveprintsection" id="billinginvoice">
 
-
-
-                                                   
-
-
-
-
-               </div>
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-        <button type="button" class="btn btn-primary mx-auto savepritbtnarea">Print</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
-        $(function() {
-            $(".savepritbtnarea").on('click', function() {
-
-                var mode = 'iframe'; //popup
-                var close = mode == "popup";
-                var options = {
-                    mode: mode,
-                    popClose: close
-                };
-                $("div.printableAreasaveprintsection").printArea(options);
-            });
-        });
-    </script>
-
-<script>
-    $(document).ready(function(){
-        $('#historysaveandprint').click(function(){
-            $('#printmodal').modal('show');
-            var invoiceid =$('#invoice_no_area').val();
-
-            $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'get',
-            url: "{{ url('/admin/restaurant/chui/menu/history/kot/print') }}/" + invoiceid,
-            success: function(data) {
-                $('#billinginvoice').empty();
-                $('#billinginvoice').append(data);
-            }
-        });
-
-
-        });
-    });
-</script>
-
-
-<!-- 
-<script>
-    $(document).ready(function() {
-        $('#historysaveandprint').click(function() {
-            savehistory();
-
-
-
-        });
-    });
-
-
-
-    $(document).ready(function() {
-        $('#historysave').click(function() {
-            savehistory();
-        });
-    });
-
     $(function() {
-        $(".savepritbtn").on('click', function() {
+        $(".savepritbtnarea").on('click', function() {
 
             var mode = 'iframe'; //popup
             var close = mode == "popup";
@@ -384,43 +315,42 @@ $time = date("h:i");
                 mode: mode,
                 popClose: close
             };
-            $("div.printableAreasaveprint").printArea(options);
+            $("div.printableAreasaveprintsection").printArea(options);
         });
     });
-</script> -->
-
-
-
+</script>
 
 <script>
-    function savehistory() {
-        var table_id = document.querySelector('#history_table_no').value;
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'get',
-            url: "{{ url('/admin/restaurant/chui/menu/history/kot/store') }}/" + table_id,
-            success: function(data) {
-                console.log(data);
-                if (data.msg == 1) {
-                    $('.historymodal').modal('hide')
-                    iziToast.success({
-                        message: 'Kot Data Save Successfully!',
-                        position: 'topCenter',
-                    });
-                } else {
-                    iziToast.warning({
-                        message: 'Sorry, Something went wrong!',
-                        position: 'topCenter',
-                    });
+    $(document).ready(function() {
+        $('#update').hide();
+        $('#historysaveandprint').click(function() {
+            $('#printmodal').modal('show');
+            var invoiceid = $('#invoice_no_area').val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }
+            });
+            $.ajax({
+                type: 'get',
+                url: "{{ url('/admin/restaurant/chui/menu/history/kot/print') }}/" + invoiceid,
+                success: function(data) {
+                    $('#billinginvoice').empty();
+                    $('#billinginvoice').append(data);
+                }
+            });
+
+
         });
-    }
+    });
 </script>
+
+
+
+
+
+
 
 
 
@@ -435,6 +365,8 @@ $time = date("h:i");
         $('#tax_discription').change(function(e) {
             var id = e.target.value;
 
+
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -442,7 +374,7 @@ $time = date("h:i");
             });
             $.ajax({
                 type: 'get',
-                url: "{{ url('/admin/restaurant/chui/menu/get/tax/value') }}/" + id,
+                url: "{{ url('/admin/restaurant/chui/menu/get/tax/item') }}/" + id,
                 success: function(data) {
                     $('#base_on').val(data.base_on).selected;
                     if (data.rate != null) {
@@ -457,59 +389,15 @@ $time = date("h:i");
 
 
 
-        // calculation on tax
-        $('#calculation_on').change(function(e) {
-            var calculation_on = e.target.value;
-            var tax_id = $('#tax_discription').find(":selected").val();
-            var base_on = $('#base_on').find(":selected").val();
-            var rate = $('#rate').val();
-            var invoice_no = $('#invoice_no_area').val();
-
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: 'post',
-                url: "{{ url('/admin/restaurant/chui/menu/get/tax/calculate') }}",
-                data: {
-                    tax_id: tax_id,
-                    calculation_on: calculation_on,
-                    base_on: base_on,
-                    rate: rate,
-                    invoice_no: invoice_no
-                },
-                success: function(data) {
-                    $('#rate_alt').html('');
-                    $('#amounthidden').val(data);
-                    $('#amountshow').val(data);
-
-                },
-                error: function(err) {
-                    if (err.responseJSON.errors.rate) {
-                        $('#rate_alt').html('Rate Fields must not be empty!');
-                    }
-                }
-            });
-
-
-
-        })
 
     });
 
     // add to grid
 
     function addToGrid(e) {
-        var calculation_on = $('#calculation_on').find(":selected").val();
-        var tax_id = $('#tax_discription').find(":selected").val();
-        var base_on = $('#base_on').find(":selected").val();
-        var rate = $('#rate').val();
-        var amount = $('#amountshow').val();
-        var invoice_no = $('#invoice_no_area').val();
-        var table_no = $('#table_no_data').val();
+    
+
+        var data = $('#billing_info_submit_form').serializeArray();
 
 
         $.ajaxSetup({
@@ -520,15 +408,7 @@ $time = date("h:i");
         $.ajax({
             type: 'post',
             url: "{{ url('/admin/restaurant/chui/menu/tax/add/to/grid') }}",
-            data: {
-                tax_id: tax_id,
-                amount: amount,
-                base_on: base_on,
-                rate: rate,
-                invoice_no: invoice_no,
-                calculation_on: calculation_on,
-                table_no: table_no
-            },
+            data: data,
             success: function(data) {
                 console.log(data);
                 $('#taxarea').empty();
@@ -544,9 +424,20 @@ $time = date("h:i");
 
             },
             error: function(err) {
-                if (err.responseJSON.errors.rate) {
-                    $('#rate_alt').html('Rate Fields must not be empty!');
+                console.log(err);
+                if (err.responseJSON.errors.calculation_on) {
+                    $('#calculation_on_alt').html(err.responseJSON.errors.calculation_on[0]);
                 }
+                if (err.responseJSON.errors.tax_discription) {
+                    $('.tax_discription_alt').html('The tax description field is required');
+                }
+                if (err.responseJSON.errors.base_on) {
+                    $('.base_on_alt').html(err.responseJSON.errors.base_on[0]);
+                }
+                if (err.responseJSON.errors.rate) {
+                    $('.rate_alt').html(err.responseJSON.errors.rate[0]);
+                }
+
             }
         });
 
@@ -630,7 +521,7 @@ $time = date("h:i");
 
             success: function(data) {
 
-                $('#getroomdata').append('<h6>Guest Information:</h6><h6>Bookin No: <span>' + data.booking_no + '</span></h6><h6>Guest Name: <span>' + data.guest_name + '</span></h6><h6>Mobile No: <span>' + data.mobile + '</span></h6><h6>Check-In Date: <span>' + data.checkin_date + '</span></h6> <input type="hidden" name="booking_no" value="'+data.booking_no+'"/>');
+                $('#getroomdata').append('<h6>Guest Information:</h6><h6>Bookin No: <span>' + data.booking_no + '</span></h6><h6>Guest Name: <span>' + data.guest_name + '</span></h6><h6>Mobile No: <span>' + data.mobile + '</span></h6><h6>Check-In Date: <span>' + data.checkin_date + '</span></h6> <input type="hidden" name="booking_no" value="' + data.booking_no + '"/>');
 
 
 
@@ -642,4 +533,166 @@ $time = date("h:i");
 
 
     }
+
+
+
+    function calculationKotTax() {
+
+        $('#amounthidden').val(0);
+        $('#amountshow').val(0);
+        $('#calculation_on_alt').html('');
+        $('.tax_discription_alt').html('');
+        $('.base_on_alt').html('');
+        $('.rate_alt').html('');
+        var data = $('#billing_info_submit_form').serializeArray();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'post',
+            url: "{{ url('/admin/restaurant/chui/menu/get/tax/value') }}",
+            data: data,
+            success: function(data) {
+                console.log(data);
+
+                $('#amounthidden').val(data);
+                $('#amountshow').val(data);
+
+            },
+            error: function(err) {
+                console.log(err);
+                if (err.responseJSON.errors.calculation_on) {
+                    $('#calculation_on_alt').html(err.responseJSON.errors.calculation_on[0]);
+                }
+                if (err.responseJSON.errors.tax_discription) {
+                    $('.tax_discription_alt').html('The tax description field is required');
+                }
+                if (err.responseJSON.errors.base_on) {
+                    $('.base_on_alt').html(err.responseJSON.errors.base_on[0]);
+                }
+                if (err.responseJSON.errors.rate) {
+                    $('.rate_alt').html(err.responseJSON.errors.rate[0]);
+                }
+
+            }
+        });
+    }
+
+
+    $(document).ready(function() {
+
+        $('.editkottaxitem').click(function(e) {
+            
+            e.preventDefault();
+            var url = $(this).attr('href');
+           
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'get',
+                url: url,
+                success: function(data) {
+                    $('#update').show();
+                    console.log($('#addtogridarea').hide())
+
+                    $('#update_tax').val(data.id);
+                    $('#tax_discription').val(data.tax_id).selected;
+                    $('#calculation_on').val(data.calculation_id).selected;
+                    $('#base_on').val(data.base_on).selected;
+                    $('#rate').val(data.rate);
+                    $('#amountshow').val(data.amount);
+                    $('#amounthidden').val(data.amount);
+
+
+          
+
+                }
+            });
+        })
+    })
+
+
+    $(document).ready(function() {
+        $('.deletekottaxitem').click(function(e) {
+            e.currentTarget.closest('.deleteitem').remove();
+            event.preventDefault();
+            var url = $(this).attr('href');
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'get',
+                url: url,
+                success: function(data) {
+                    
+
+                    $('#discount_amount').html(data.discount_amount);
+                    $('#gross_amount').html(data.gross_amount);
+
+
+                }
+            });
+        })
+    })
+
+    // update kot tax
+
+    function updateTax(e) {
+    
+
+    var data = $('#billing_info_submit_form').serializeArray();
+
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type: 'post',
+        url: "{{ url('/admin/restaurant/chui/menu/tax/add/to/grid/update') }}",
+        data: data,
+        success: function(data) {
+            console.log(data);
+            $('#taxarea').empty();
+            $('#taxarea').append(data);
+
+            // remove previous field
+
+            var calculation_on = $('#calculation_on').val(' ');
+            var tax_id = $('#tax_discription').val(' ');
+            var base_on = $('#base_on').val(' ');
+            var rate = $('#rate').val(' ');
+            var amount = $('#amountshow').val(0);
+
+        },
+        error: function(err) {
+            console.log(err);
+            if (err.responseJSON.errors.calculation_on) {
+                $('#calculation_on_alt').html(err.responseJSON.errors.calculation_on[0]);
+            }
+            if (err.responseJSON.errors.tax_discription) {
+                $('.tax_discription_alt').html('The tax description field is required');
+            }
+            if (err.responseJSON.errors.base_on) {
+                $('.base_on_alt').html(err.responseJSON.errors.base_on[0]);
+            }
+            if (err.responseJSON.errors.rate) {
+                $('.rate_alt').html(err.responseJSON.errors.rate[0]);
+            }
+
+        }
+    });
+
+}
 </script>
