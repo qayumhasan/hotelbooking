@@ -113,6 +113,7 @@ class ChartOfAccountController extends Controller
     // sub cate two
     public function subcatetwo($subcateone_id){
         $data=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->where('subcategoryone_id',$subcateone_id)->get();
+       
         return response()->json($data);
     }
 

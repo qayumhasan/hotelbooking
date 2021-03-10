@@ -432,6 +432,9 @@ function editdata(el) {
 
                 $("#location").val(data.location);
                 $("#account_head").val(data.account_head_details);
+                
+                $("#account_head_main").val(data.account_head_details);
+
                 $("#price").val(data.price);
                 $("#accounttransecti_id").val(data.id);
                 

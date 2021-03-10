@@ -218,7 +218,7 @@
                         $('#subcate_two').empty();
                         $('#subcate_two').append(' <option value="">--Select--</option>');
                         $.each(data,function(index,districtObj){
-                         $('#subcate_two').append('<option value="' + districtObj.id + '">'+districtObj.subcategory_nameone+'</option>');
+                         $('#subcate_two').append('<option value="' + districtObj.id + '">'+districtObj.subcategory_nametwo+'</option>');
                        });
                      }
              });
