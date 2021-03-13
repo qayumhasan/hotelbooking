@@ -12,6 +12,9 @@ $time = date("h:i");
         color: white;
         cursor: pointer;
     }
+    .mouse_pointer{
+        cursor: pointer;
+    }
 
 
     .invoice-card {
@@ -378,7 +381,7 @@ $time = date("h:i");
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="checkout_details bg-secondary p-3">
-                                    <h5 class="text-white">Advance</h5>
+                                    <h5 class="text-white">Advance & Refund</h5>
                                 </div>
                             </div>
 
@@ -393,6 +396,7 @@ $time = date("h:i");
                                                 <th scope="col">Mode</th>
                                                 <th scope="col">Against</th>
                                                 <th class="text-center" scope="col">Amount</th>
+                                                <th  class="text-center"  scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -406,10 +410,20 @@ $time = date("h:i");
                                             <tr>
                                                 <th scope="row">{{$row->voucher_no}}</th>
                                                 <td>{{$row->date}}</td>
-                                                <td>Receipt</td>
+                                                @if($row->type == 1)
+                                                <td>Recept</td>
+                                                @elseif($row->type == 0)
+                                                <td>Refund</td>
+                                                @endif
                                                 <td>{{ucfirst($row->debit)}}</td>
                                                 <td>Booking</td>
                                                 <td class="text-center">$ {{$row->amount}}</td>
+                                                <td class="text-center">
+
+                                                    <a href="{{route('admin.checkout.invoice_edit',$row->id)}}" class="badge bg-primary-light mr-2 mouse_pointer" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="lar la-edit"></i></a>
+
+                                                    <a class="badge bg-danger-light mr-2 mouse_pointer" data-toggle="tooltip" data-placement="top" data-original-title="Print"> <i class="la la-print"></i></a>
+                                                </td>
                                             </tr>
                                             @php
                                             $totaladvance = $totaladvance + $row->amount;
@@ -552,7 +566,7 @@ $time = date("h:i");
                                             </tr>
 
                                             @php
-                                            $paybleAmount =$checkout->gross_amount;
+                                            $paybleAmount =$checkout->gross_amount - $checkout->voucher_amount;
                                             @endphp
                                             <tr>
                                                 <th class="text-right" scope="row" colspan="5">OutStanding Amount</th>
@@ -586,9 +600,10 @@ $time = date("h:i");
                                         <ul class="list-group">
                                             <li class="list-group-item active">Make Invoice</li>
                                             <li class="list-group-item invoice_item" data-toggle="modal" data-target="#foodlist" data-whatever="@getbootstrap">Food List Invoice</li>
-                                            <li class="list-group-item invoice_item">ES List Invoice</li>
-                                            <li class="list-group-item invoice_item">Receipt Invoice</li>
-                                            <li class="list-group-item invoice_item">Refund Invoice</li>
+                                            <li class="list-group-item invoice_item" data-toggle="modal" data-target="#eslistinvoice">ES List Invoice</li>
+                                            <li class="list-group-item invoice_item"><a id="recepipt_invoice" href="{{route('admin.checkout.show.voucher',$checkindata->booking_no)}}">Receipt Invoice</a></li>
+
+                                            <li class="list-group-item invoice_item"> <a id="refund_invoice" href="{{route('admin.checkout.refund.voucher',$checkindata->booking_no)}}">Refund Invoice</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -640,6 +655,7 @@ $time = date("h:i");
                         <div class="row">
                             <div class="col-sm-12 text-center p-4">
 
+
                                 <button type="submit" class="btn btn-primary mx-auto">Save & Print</button>
                             </div>
                         </div>
@@ -653,78 +669,9 @@ $time = date("h:i");
     </form>
 </div>
 
-<!-- food list invoice -->
 
 
-
-<div class="modal fade" id="foodlist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Food List Invoice</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="invoice-card">
-                    <div class="invoice-title">
-                        <div id="main-title">
-                            <h4>INVOICE</h4>
-                            <span>#89 292</span>
-                        </div>
-
-                        <span id="date">{{$current}}</span>
-                    </div>
-
-                    <div class="invoice-details">
-                        <table class="invoice-table">
-                            <thead>
-                                <tr>
-                                    <td>PRODUCT</td>
-                                    <td>UNIT</td>
-                                    <td>PRICE</td>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr class="row-data">
-                                    <td>Espresso <span>(large)</span></td>
-                                    <td id="unit">1</td>
-                                    <td>2.90</td>
-                                </tr>
-
-                                <tr class="row-data">
-                                    <td>Cappucino <span>(small)</span></td>
-                                    <td id="unit">2</td>
-                                    <td>7.00</td>
-                                </tr>
-
-                                <tr class="calc-row">
-                                    <td colspan="2">Total</td>
-                                    <td>9.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
-                    <div class="invoice-footer">
-                        <button type="button" class="btn btn-sm btn-outline-secondary mr-4" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-sm btn-outline-primary savepritbtn">Print</button>
-                    </div>
-
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<!-- checkout invoice -->
-
+<!-- save and print -->
 
 @if(isset($data['identifier']))
 
@@ -849,34 +796,34 @@ $time = date("h:i");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                
+
                                         <td>Rooms</td>
                                         @php
-                                            (float)$totalroom = 0;
+                                        (float)$totalroom = 0;
                                         @endphp
                                         @if(count($checkins))
 
                                         <td>
                                             @foreach($checkins as $row)
-                                                <div class="room card text-center">
-                                                    <h6>Room No : 670</h6>
-                                                    <span>{{$row->checkin_date}} - {{$row->add_room_checkout_date}} = {{$row->additional_room_day}} day </span>
-                                                    <span>Tariff@ {{$row->tarif}}/= Per Day</span>
-                                                </div>
-                                                @php
-                                                    $totaltarif = (int)$row->additional_room_day * (int)$row->tarif;
-                                                    $totalroom = $totalroom + $totaltarif;
-                                                @endphp
+                                            <div class="room card text-center">
+                                                <h6>Room No : 670</h6>
+                                                <span>{{$row->checkin_date}} - {{$row->add_room_checkout_date}} = {{$row->additional_room_day}} day </span>
+                                                <span>Tariff@ {{$row->tarif}}/= Per Day</span>
+                                            </div>
+                                            @php
+                                            $totaltarif = (int)$row->additional_room_day * (int)$row->tarif;
+                                            $totalroom = $totalroom + $totaltarif;
+                                            @endphp
 
 
-                                            
+
                                             @endforeach
                                         </td>
 
                                         <td>$ {{$totalroom}}</td>
-                                    
+
                                         @endif
-                                
+
                                     </tr>
                                     @php
                                     $discount =$totalroom - $checkout->room_amount;
@@ -900,7 +847,7 @@ $time = date("h:i");
                                         <th colspan="2" class="text-right">Total Amount</th>
                                         <td>{{$data['amount']}}</td>
                                     </tr>
-                                
+
                                 </tbody>
                             </table>
 
@@ -945,97 +892,433 @@ $time = date("h:i");
 
 @endif
 
-@if(isset($data['identifier']))
-<script>
-    $(document).ready(function() {
-        $('#exampleModal').modal('show');
-    });
-</script>
-@endif
+
+<!-- food list invoice -->
 
 
-<script>
-    function calculateTax() {
-        var element = $('#invoice_form').serializeArray();
-        $('.calculation_on_alt').html('');
-        $('.tax_details_alt').html('');
-        $('.rate_alt').html('');
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+
+
+<div class="modal fade" id="foodlist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Food List Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="invoice-card printfood">
+                    <style>
+                        .invoice_item:hover {
+                            background: gray;
+                            color: white;
+                            cursor: pointer;
+                        }
+
+
+                        .invoice-card {
+
+                            padding: 10px 2em;
+                            background-color: #fff;
+                            border-radius: 5px;
+                        }
+
+                        .invoice-card>div {
+                            margin: 5px 0;
+                        }
+
+                        .invoice-title {
+                            flex: 3;
+                        }
+
+                        .invoice-title #date {
+                            display: block;
+                            margin: 8px 0;
+                            font-size: 12px;
+                        }
+
+                        .invoice-title #main-title {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: 2em;
+                        }
+
+                        .invoice-title #main-title h4 {
+                            letter-spacing: 2.5px;
+                        }
+
+                        .invoice-title span {
+                            color: rgba(0, 0, 0, 0.4);
+                        }
+
+                        .invoice-details {
+                            flex: 1;
+                            border-top: 0.5px dashed grey;
+                            border-bottom: 0.5px dashed grey;
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .invoice-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        .invoice-table thead tr td {
+                            font-size: 12px;
+                            letter-spacing: 1px;
+                            color: grey;
+                            padding: 8px 0;
+                        }
+
+                        .invoice-table thead tr td:nth-last-child(1),
+                        .row-data td:nth-last-child(1),
+                        .calc-row td:nth-last-child(1) {
+                            text-align: right;
+                        }
+
+                        .invoice-table tbody tr td {
+                            padding: 8px 0;
+                            letter-spacing: 0;
+                        }
+
+                        .invoice-table .row-data #unit {
+                            text-align: center;
+                        }
+
+                        .invoice-table .row-data span {
+                            font-size: 13px;
+                            color: rgba(0, 0, 0, 0.6);
+                        }
+
+                        .invoice-footer {
+                            flex: 1;
+                            display: flex;
+                            justify-content: flex-end;
+                            align-items: center;
+                        }
+
+                        .invoice-footer #later {
+                            margin-right: 5px;
+                        }
+
+                        .btn#later {
+                            margin-right: 2em;
+                        }
+
+                        .company_info {
+                            font-size: 10px;
+                            font-weight: normal;
+                        }
+                    </style>
+                    <div class="invoice-title">
+                        <div id="main-title">
+                            <h4>INVOICE</h4>
+                            <span>#{{$checkout->invoice_no}}</span>
+                        </div>
+
+                        <span id="date">{{$current}}</span>
+                    </div>
+
+                    <div class="invoice-details">
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <td>PRODUCT</td>
+                                    <td>UNIT</td>
+                                    <td>PRICE</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @php
+                                $totalfandb = 0;
+                                $restaurant = 0;
+                                @endphp
+
+
+                                <tr>
+                                    <th>Food(F & B)</th>
+                                </tr>
+
+                                @foreach($checkindata->foodandbeverage as $row)
+                                <tr class="row-data">
+                                    <td>{{$row->item_name}} <span>@ {{$row->rate}} per pcs</span></td>
+                                    <td id="unit">{{$row->qty}}</td>
+                                    <td>{{$row->qty * $row->rate}}</td>
+                                </tr>
+                                @php
+                                $totalfandb = $totalfandb + $row->amount;
+                                @endphp
+                                @endforeach
+
+                                <tr>
+                                    <th>Restaurant</th>
+                                </tr>
+
+                                @foreach($checkindata->restaurant as $row)
+                                <tr class="row-data">
+                                    <td>{{$row->item->item_name ?? ''}} <span>@ {{$row->rate}} per pcs</span></td>
+                                    <td id="unit">{{$row->qty}}</td>
+                                    <td>{{$row->qty * $row->rate}}</td>
+                                </tr>
+                                @php
+                                $restaurant = $restaurant + $row->amount;
+                                @endphp
+                                @endforeach
+
+
+
+
+
+                                <tr class="calc-row">
+                                    <td colspan="2">Total</td>
+                                    <td>$ {{$totalfandb + $restaurant}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="invoice-footer">
+                        <button type="button" class="btn btn-sm btn-outline-secondary mr-4" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-outline-primary savefood">Print</button>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- checkout invoice -->
+
+
+<!-- es list invoice -->
+
+
+<div class="modal fade" id="eslistinvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Extra Service List Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="invoice-card printextraservice">
+                    <style>
+                        .invoice_item:hover {
+                            background: gray;
+                            color: white;
+                            cursor: pointer;
+                        }
+
+
+                        .invoice-card {
+
+                            padding: 10px 2em;
+                            background-color: #fff;
+                            border-radius: 5px;
+                        }
+
+                        .invoice-card>div {
+                            margin: 5px 0;
+                        }
+
+                        .invoice-title {
+                            flex: 3;
+                        }
+
+                        .invoice-title #date {
+                            display: block;
+                            margin: 8px 0;
+                            font-size: 12px;
+                        }
+
+                        .invoice-title #main-title {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: 2em;
+                        }
+
+                        .invoice-title #main-title h4 {
+                            letter-spacing: 2.5px;
+                        }
+
+                        .invoice-title span {
+                            color: rgba(0, 0, 0, 0.4);
+                        }
+
+                        .invoice-details {
+                            flex: 1;
+                            border-top: 0.5px dashed grey;
+                            border-bottom: 0.5px dashed grey;
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .invoice-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        .invoice-table thead tr td {
+                            font-size: 12px;
+                            letter-spacing: 1px;
+                            color: grey;
+                            padding: 8px 0;
+                        }
+
+                        .invoice-table thead tr td:nth-last-child(1),
+                        .row-data td:nth-last-child(1),
+                        .calc-row td:nth-last-child(1) {
+                            text-align: right;
+                        }
+
+                        .invoice-table tbody tr td {
+                            padding: 8px 0;
+                            letter-spacing: 0;
+                        }
+
+                        .invoice-table .row-data #unit {
+                            text-align: center;
+                        }
+
+                        .invoice-table .row-data span {
+                            font-size: 13px;
+                            color: rgba(0, 0, 0, 0.6);
+                        }
+
+                        .invoice-footer {
+                            flex: 1;
+                            display: flex;
+                            justify-content: flex-end;
+                            align-items: center;
+                        }
+
+                        .invoice-footer #later {
+                            margin-right: 5px;
+                        }
+
+                        .btn#later {
+                            margin-right: 2em;
+                        }
+
+                        .company_info {
+                            font-size: 10px;
+                            font-weight: normal;
+                        }
+                    </style>
+                    <div class="invoice-title">
+                        <div id="main-title">
+                            <h4>INVOICE</h4>
+                            <span>#{{$checkout->invoice_no}}</span>
+                        </div>
+
+                        <span id="date">{{$current}}</span>
+                    </div>
+
+                    <div class="invoice-details">
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <td>PRODUCT</td>
+                                    <td>UNIT</td>
+                                    <td>PRICE</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @php
+                                $totalamountextra = 0;
+                                @endphp
+
+
+                                @foreach($checkindata->checkin as $row)
+                                <tr class="row-data">
+                                    <td>{{$row->item_name}} <span>@ {{$row->rate}} per pcs</span></td>
+                                    <td id="unit">{{$row->qty}}</td>
+                                    <td>{{$row->qty * $row->rate}}</td>
+                                </tr>
+                                @php
+                                $totalamountextra = $totalamountextra + $row->amount;
+                                @endphp
+                                @endforeach
+
+                                <tr class="calc-row">
+                                    <td colspan="2">Total</td>
+                                    <td>$ {{ $totalamountextra}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="invoice-footer">
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-4" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-outline-primary saveextraservice">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- es list invoice -->
+
+<!-- voucher area start -->
+
+<div class="modal fade" id="voucher_area" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="vouchername">Voucher</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="voucerareastart">
+
+            </div>
+        </div>
+    </div>
+    <!-- voucher area end -->
+
+
+
+
+
+
+
+
+
+    @if(isset($data['identifier']))
+    <script>
+        $(document).ready(function() {
+            $('#exampleModal').modal('show');
         });
-
-        $.ajax({
-            type: 'POST',
-            url: "{{route('admin.checkout.invoice.get.tax.amount')}}",
-            data: element,
-            success: function(data) {
-                console.log(data);
-
-                $('#amount').val(data);
-                $('#amountActual').val(data);
+    </script>
+    @endif
 
 
-            },
-            error: function(err) {
-                if (err.responseJSON.errors.calculation_on) {
-                    $('.calculation_on_alt').html(err.responseJSON.errors.calculation_on[0]);
-                }
-                if (err.responseJSON.errors.tax_details) {
-                    $('.tax_details_alt').html(err.responseJSON.errors.tax_details[0]);
-                }
-                if (err.responseJSON.errors.rate) {
-                    $('.rate_alt').html(err.responseJSON.errors.rate[0]);
-                }
-            }
-        });
-    }
-
-    function getCalculateData(el) {
-
-        var element = $('#invoice_form').serializeArray();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: 'POST',
-            url: "{{route('admin.checkout.invoice.get.tax.data')}}",
-            data: element,
-            success: function(data) {
-                console.log(data);
-                $('#base_on').val(data.base_on).selected;
-                if (data.base_on == 'percentage') {
-                    $('#rate').val(data.rate);
-                } else {
-                    $('#rate').val(data.amount);
-                }
-
-            }
-        });
-    }
-
-    function getTaxAllData(el) {
-        getCalculateData(el);
-
-        calculateTax();
-
-    }
-
-
-    $(document).ready(function() {
-        $('#tax_update').hide();
-        $('#addToGrid').click(function() {
+    <script>
+        function calculateTax() {
+            var element = $('#invoice_form').serializeArray();
             $('.calculation_on_alt').html('');
             $('.tax_details_alt').html('');
             $('.rate_alt').html('');
-            $('#tax_details_amount').empty();
-
-            var element = $('#invoice_form').serializeArray();
 
             $.ajaxSetup({
                 headers: {
@@ -1045,12 +1328,13 @@ $time = date("h:i");
 
             $.ajax({
                 type: 'POST',
-                url: "{{route('admin.checkout.invoice.get.gross.amount')}}",
+                url: "{{route('admin.checkout.invoice.get.tax.amount')}}",
                 data: element,
                 success: function(data) {
+                    console.log(data);
 
-
-                    $('#tax_details_amount').append(data);
+                    $('#amount').val(data);
+                    $('#amountActual').val(data);
 
 
                 },
@@ -1066,36 +1350,11 @@ $time = date("h:i");
                     }
                 }
             });
+        }
 
-        });
-    })
-
-
-
-    $(document).ready(function() {
-        $('.tax_edit').click(function(e) {
-            $('#tax_update').show();
-            $('#addToGrid').hide();
-            var modal = $(this);
-            var data = modal.data('whatever');
-
-            $('#tax_id').val(data.id);
-            $('#tax_details').val(data.tax_description_id).selected;
-            $('#calculation_on').val(data.calculation_on).selected;
-            $('#base_on').val(data.base_on).selected;
-            $('#rate').val(data.rate);
-            $('#amountActual').val(data.amount);
-            $('#amount').val(data.amount);
-        });
-    })
-
-    $(document).ready(function() {
-        $('#tax_update').click(function() {
-
+        function getCalculateData(el) {
 
             var element = $('#invoice_form').serializeArray();
-
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1104,74 +1363,288 @@ $time = date("h:i");
 
             $.ajax({
                 type: 'POST',
-                url: "{{route('admin.checkout.invoice.tax.data.edit')}}",
+                url: "{{route('admin.checkout.invoice.get.tax.data')}}",
                 data: element,
                 success: function(data) {
+                    console.log(data);
+                    $('#base_on').val(data.base_on).selected;
+                    if (data.base_on == 'percentage') {
+                        $('#rate').val(data.rate);
+                    } else {
+                        $('#rate').val(data.amount);
+                    }
+
+                }
+            });
+        }
+
+        function getTaxAllData(el) {
+            getCalculateData(el);
+
+            calculateTax();
+
+        }
 
 
-                    $('#addToGrid').show();
-                    $('#tax_update').hide();
+        $(document).ready(function() {
+            $('#tax_update').hide();
+            $('#addToGrid').click(function() {
+                $('.calculation_on_alt').html('');
+                $('.tax_details_alt').html('');
+                $('.rate_alt').html('');
+                $('#tax_details_amount').empty();
+
+                var element = $('#invoice_form').serializeArray();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('admin.checkout.invoice.get.gross.amount')}}",
+                    data: element,
+                    success: function(data) {
+
+
+                        $('#tax_details_amount').append(data);
+
+                        $('#tax_id').val(0);
+                        $('#tax_details').val(0);
+                        $('#calculation_on').val(0);
+                        $('#base_on').val(0);
+                        $('#rate').val(0);
+                        $('#amountActual').val(0);
+                        $('#amount').val(0);
+
+
+                    },
+                    error: function(err) {
+                        if (err.responseJSON.errors.calculation_on) {
+                            $('.calculation_on_alt').html(err.responseJSON.errors.calculation_on[0]);
+                        }
+                        if (err.responseJSON.errors.tax_details) {
+                            $('.tax_details_alt').html(err.responseJSON.errors.tax_details[0]);
+                        }
+                        if (err.responseJSON.errors.rate) {
+                            $('.rate_alt').html(err.responseJSON.errors.rate[0]);
+                        }
+                    }
+                });
+
+            });
+        })
+
+
+
+        $(document).ready(function() {
+            $('.tax_edit').click(function(e) {
+                $('#tax_update').show();
+                $('#addToGrid').hide();
+                var modal = $(this);
+                var data = modal.data('whatever');
+
+                $('#tax_id').val(data.id);
+                $('#tax_details').val(data.tax_description_id).selected;
+                $('#calculation_on').val(data.calculation_on).selected;
+                $('#base_on').val(data.base_on).selected;
+                $('#rate').val(data.rate);
+                $('#amountActual').val(data.amount);
+                $('#amount').val(data.amount);
+            });
+        })
+
+        $(document).ready(function() {
+            $('#tax_update').click(function() {
+
+
+
+
+
+                var element = $('#invoice_form').serializeArray();
+
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{route('admin.checkout.invoice.tax.data.edit')}}",
+                    data: element,
+                    success: function(data) {
+
+
+                        $('#addToGrid').show();
+                        $('#tax_update').hide();
+                        $('#tax_details_amount').empty();
+                        $('#tax_details_amount').append(data);
+
+
+
+                        $('#tax_id').val(0);
+                        $('#tax_details').val(0);
+                        $('#calculation_on').val(0);
+                        $('#base_on').val(0);
+                        $('#rate').val(0);
+                        $('#amountActual').val(0);
+                        $('#amount').val(0);
+
+                    },
+                    error: function(err) {
+                        if (err.responseJSON.errors.calculation_on) {
+                            $('.calculation_on_alt').html(err.responseJSON.errors.calculation_on[0]);
+                        }
+                        if (err.responseJSON.errors.tax_details) {
+                            $('.tax_details_alt').html(err.responseJSON.errors.tax_details[0]);
+                        }
+                        if (err.responseJSON.errors.rate) {
+                            $('.rate_alt').html(err.responseJSON.errors.rate[0]);
+                        }
+                    }
+                });
+            })
+        });
+
+        function delete_row(em) {
+            $('#tax_update').hide();
+            $('#addToGrid').show();
+            $(em).closest('.delelement').remove();
+            var modal = $(em);
+            var data = modal.data('whatever');
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'get',
+                url: "{{url('admin/checkout/invoice/tax/data/delete')}}/" + data,
+                success: function(data) {
+
                     $('#tax_details_amount').empty();
                     $('#tax_details_amount').append(data);
 
-                },
-                error: function(err) {
-                    if (err.responseJSON.errors.calculation_on) {
-                        $('.calculation_on_alt').html(err.responseJSON.errors.calculation_on[0]);
-                    }
-                    if (err.responseJSON.errors.tax_details) {
-                        $('.tax_details_alt').html(err.responseJSON.errors.tax_details[0]);
-                    }
-                    if (err.responseJSON.errors.rate) {
-                        $('.rate_alt').html(err.responseJSON.errors.rate[0]);
-                    }
+
                 }
             });
+
+
+
+        }
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $(".savefood").on('click', function() {
+
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printfood").printArea(options);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(".saveextraservice").on('click', function() {
+
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printextraservice").printArea(options);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#recepipt_invoice').click(function(e) {
+                e.preventDefault();
+                var url = e.currentTarget.href;
+
+                $('#vouchername').html('Payment Voucher');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function(data) {
+
+                        $('#voucerareastart').empty();
+                        $('#voucerareastart').append(data);
+                        $('#voucher_area').modal('show');
+                    }
+                });
+            });
         })
-    });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#refund_invoice').click(function(e) {
+                e.preventDefault();
+                var url = e.currentTarget.href;
+                $('#vouchername').html('Refund Voucher');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
-    function delete_row(em) {
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function(data) {
 
-        $(em).closest('.delelement').remove();
-        var modal = $(em);
-        var data = modal.data('whatever');
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            type: 'get',
-            url: "{{url('admin/checkout/invoice/tax/data/delete')}}/" + data,
-            success: function(data) {
-
-                $('#tax_details_amount').empty();
-                $('#tax_details_amount').append(data);
-
-
-            }
-        });
-
-
-
-    }
-</script>
-
+                        $('#voucerareastart').empty();
+                        $('#voucerareastart').append(data);
+                        $('#voucher_area').modal('show');
+                    }
+                });
+            });
+        })
+    </script>
 
 <script>
-    $(document).ready(function() {
-        $(".savepritbtn").on('click', function() {
-            
-            var mode = 'iframe'; //popup
-            var close = mode == "popup";
-            var options = {
-                mode: mode,
-                popClose: close
-            };
-            $("div.printableAreasaveprint").printArea(options);
-        });
-    });
-</script>
-@endsection
+        $(document).ready(function() {
+            $('#refund_invoice').click(function(e) {
+                e.preventDefault();
+                var url = e.currentTarget.href;
+                $('#vouchername').html('Refund Voucher');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function(data) {
+
+                        $('#voucerareastart').empty();
+                        $('#voucerareastart').append(data);
+                        $('#voucher_area').modal('show');
+                    }
+                });
+            });
+        })
+    </script>
+    @endsection

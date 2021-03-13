@@ -48,6 +48,8 @@ class CheckingController extends Controller
 
     public function store(Request $request)
     {
+
+        
         $request->validate([
             'guest_name' => 'required',
             'print_name' => 'required',
@@ -450,6 +452,15 @@ class CheckingController extends Controller
 
     public function bookingAtAGlance($id)
     {
+  
+
+            
+        $checkindata = Checkin::where('room_id', $id)->where('is_occupy', 1)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
+
+        $addi_checkins = Checkin::where('booking_no', $checkindata->booking_no)->get();
+
+        return view('hotelbooking.home.ajax.checkin_atglance_ajax', compact('checkindata','addi_checkins'));
+
     }
 
 
@@ -629,6 +640,7 @@ class CheckingController extends Controller
 
     public function editTaxData(Request $request)
     {
+
         
         $request->validate([
             'base_on' => 'required',
@@ -637,131 +649,30 @@ class CheckingController extends Controller
             'tax_details' => 'required',
         ]);
 
-        $checkout = Checkout::where('booking_no', $request->booking_no)->where('invoice_no', $request->invoice_no)->first();
+        $taxupdate = CheckOut_Tax_Details::where('id',$request->tax_id)->first();
 
-        $taxupdate = CheckOut_Tax_Details::findOrFail($request->tax_id);
-
-        $taxsetting = TaxSetting::findOrFail($request->tax_details);
-
-
-        if ($taxupdate->effect == 'Deduct') {
-
-            if ($taxupdate->calculation_on == 1) {
-
-                $checkout->increment('room_amount', $taxupdate->amount);
-                $checkout->increment('gross_amount', $taxupdate->amount);
-                $checkout->decrement('discount_amount', $taxupdate->amount);
-            } elseif ($taxupdate->calculation_on == 2) {
-                $checkout->increment('fb_amount', $taxupdate->amount);
-                $checkout->increment('gross_amount', $taxupdate->amount);
-                $checkout->decrement('discount_amount', $taxupdate->amount);
-            } elseif ($taxupdate->calculation_on == 3) {
-
-                $checkout->increment('discount_amount', $taxupdate->amount);
-                $checkout->increment('gross_amount', $taxupdate->amount);
-                $checkout->decrement('discount_amount', $taxupdate->amount);
-            } elseif ($taxupdate->calculation_on == 4) {
-                $checkout->increment('net_amount', $taxupdate->amount);
-                $checkout->increment('gross_amount', $taxupdate->amount);
-                $checkout->decrement('discount_amount', $taxupdate->amount);
-            } elseif ($taxupdate->calculation_on == 5) {
-
-                $checkout->increment('gross_amount', $taxupdate->amount);
-                $checkout->decrement('discount_amount', $taxupdate->amount);
-            }
-        } elseif ($taxupdate->effect == 'Add') {
-
-            if ($taxupdate->calculation_on == 1) {
-
-                $checkout->decrement('room_amount', $taxupdate->amount);
-                $checkout->decrement('gross_amount', $taxupdate->amount);
-            } elseif ($taxupdate->calculation_on == 2) {
-                $checkout->decrement('fb_amount', $taxupdate->amount);
-                $checkout->decrement('gross_amount', $taxupdate->amount);
-            } elseif ($taxupdate->calculation_on == 3) {
-
-                $checkout->decrement('discount_amount', $taxupdate->amount);
-                $checkout->decrement('gross_amount', $taxupdate->amount);
-            } elseif ($taxupdate->calculation_on == 4) {
-                $checkout->decrement('net_amount', $taxupdate->amount);
-                $checkout->decrement('gross_amount', $taxupdate->amount);
-            } elseif ($taxupdate->calculation_on == 5) {
-
-                $checkout->decrement('gross_amount', $taxupdate->amount);
-            }
-        }
+        $checkout = Checkout::where('booking_no', $taxupdate->booking_no)->where('invoice_no', $taxupdate->invoice_no)->first();
+       
+        $this->taxEditDelete($taxupdate,$checkout);
+        $taxupdate->delete();
 
 
+        $base_on = $request->base_on;
+        $calculation_on = $request->calculation_on;
+        $rate = $request->rate;
+        $tax_details = $request->tax_details;
+        $checkout_id = $request->checkout_id;
+        $amount = $request->amount;
 
-        $taxupdate->booking_no = $request->booking_no;
-        $taxupdate->invoice_no = $request->invoice_no;
-        $taxupdate->tax_description_id = $request->tax_details;
-        $taxupdate->tax_description_name = $taxsetting->tax_description;
-        $taxupdate->calculation_on = $request->calculation_on;
-        $taxupdate->base_on = $request->base_on;
-        $taxupdate->rate = $request->rate;
-        $taxupdate->amount = $request->amount;
-        $taxupdate->effect = $taxsetting->effect;
-        $taxupdate->save();
+        $element = new CalculationTax($base_on, $calculation_on, $rate, $tax_details, $checkout_id, $amount);
 
 
+        $element->storeTax($request);
 
 
+        
+       
 
-
-
-        $checkout = Checkout::where('booking_no', $request->booking_no)->where('invoice_no', $request->invoice_no)->first();
-
-        if ($taxsetting->effect == 'Deduct') {
-
-            if ($request->calculation_on == 1) {
-
-                $checkout->decrement('room_amount', $request->amount);
-                $checkout->decrement('gross_amount', $request->amount);
-                $checkout->increment('discount_amount', $request->amount);
-            } elseif ($request->calculation_on == 2) {
-
-                $checkout->decrement('fb_amount', $request->amount);
-                $checkout->decrement('gross_amount', $request->amount);
-                $checkout->increment('discount_amount', $request->amount);
-            } elseif ($request->calculation_on == 3) {
-
-                $checkout->decrement('discount_amount', $request->amount);
-                $checkout->decrement('gross_amount', $request->amount);
-                $checkout->increment('discount_amount', $request->amount);
-            } elseif ($request->calculation_on == 4) {
-
-                $checkout->decrement('net_amount', $request->amount);
-                $checkout->decrement('gross_amount', $request->amount);
-                $checkout->increment('discount_amount', $request->amount);
-            } elseif ($request->calculation_on == 5) {
-
-                $checkout->decrement('gross_amount', $request->amount);
-                $checkout->increment('discount_amount', $request->amount);
-            }
-        } elseif ($taxsetting->effect == 'Add') {
-
-            if ($request->calculation_on == 1) {
-
-                $checkout->increment('room_amount', $request->amount);
-                $checkout->increment('gross_amount', $request->amount);
-            } elseif ($request->calculation_on == 2) {
-
-                $checkout->increment('fb_amount', $request->amount);
-                $checkout->increment('gross_amount', $request->amount);
-            } elseif ($request->calculation_on == 3) {
-
-                $checkout->increment('discount_amount', $request->amount);
-                $checkout->increment('gross_amount', $request->amount);
-            } elseif ($request->calculation_on == 4) {
-
-                $checkout->increment('net_amount', $request->amount);
-                $checkout->increment('gross_amount', $request->amount);
-            } elseif ($request->calculation_on == 5) {
-
-                $checkout->increment('gross_amount', $request->amount);
-            }
-        }
 
         $checkout = Checkout::where('booking_no', $request->booking_no)->where('invoice_no', $request->invoice_no)->first();
 
@@ -776,9 +687,23 @@ class CheckingController extends Controller
 
          $checkout = Checkout::where('booking_no', $taxupdate->booking_no)->where('invoice_no', $taxupdate->invoice_no)->first();
         
-          
-           
+          $this->taxEditDelete($taxupdate,$checkout);
 
+        if ($taxupdate) {
+            $taxupdate->delete();
+
+            $checkout = Checkout::where('booking_no', $taxupdate->booking_no)->where('invoice_no', $taxupdate->invoice_no)->first();
+
+            $taxs = CheckOut_Tax_Details::where('booking_no', $taxupdate->booking_no)->where('invoice_no', $taxupdate->invoice_no)->get();
+            return view('hotelbooking.home.ajax.checkout_tax_ajax', compact('taxs', 'checkout'));
+        }
+    }
+
+
+    // checkout edit delete
+
+    public function taxEditDelete($taxupdate,$checkout)
+    {
         if ($taxupdate->effect == 'Deduct') {
 
             
@@ -827,19 +752,7 @@ class CheckingController extends Controller
                 $checkout->decrement('gross_amount', $taxupdate->amount);
             }
         }
-   
-
-
-        if ($taxupdate) {
-            $taxupdate->delete();
-
-            $checkout = Checkout::where('booking_no', $taxupdate->booking_no)->where('invoice_no', $taxupdate->invoice_no)->first();
-
-            $taxs = CheckOut_Tax_Details::where('booking_no', $taxupdate->booking_no)->where('invoice_no', $taxupdate->invoice_no)->get();
-            return view('hotelbooking.home.ajax.checkout_tax_ajax', compact('taxs', 'checkout'));
-        }
     }
-
     // checkinf history
     public function checkinhistory($id)
     {

@@ -61,15 +61,21 @@ class CalculationTax{
             // calculation on food amount
 
             }elseif($this->calculation_on == 2){
+                
                 $fb_amount = $this->getCheckoutDetails()->fb_amount;
                 $restaurant_amount = $this->getCheckoutDetails()->restaurant_amount;
                 $amount = $fb_amount + $restaurant_amount;
-                if($amount){
-                    $this->tax = ($amount * $this->rate) /100;
-                }
+           
+                $this->tax = ($amount * $this->rate) /100;
+           
             // calculation on room Discount
 
             }elseif($this->calculation_on == 3){
+
+                $amount =$this->getCheckoutDetails()->discount_amount;
+                if($amount){
+                    $this->tax = ($amount * $this->rate) /100;
+                }
 
             // calculation on net amount
 
@@ -157,7 +163,6 @@ class CalculationTax{
 
             }elseif($request->calculation_on == 3){
 
-                $checkout->decrement('discount_amount',$request->amount);  
                 $checkout->decrement('gross_amount',$request->amount); 
                 $checkout->increment('discount_amount',$request->amount);   
 
@@ -188,7 +193,7 @@ class CalculationTax{
 
             }elseif($request->calculation_on == 3){
 
-                $checkout->increment('discount_amount',$request->amount);  
+                $checkout->decrement('discount_amount',$request->amount);  
                 $checkout->increment('gross_amount',$request->amount);  
 
             }elseif($request->calculation_on == 4){

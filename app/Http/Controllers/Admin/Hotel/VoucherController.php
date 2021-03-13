@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Hotel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Checkin;
+use App\Models\Checkout;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,9 +19,17 @@ class VoucherController extends Controller
 
     public function showvoucher($booking_no)
     {
+        
         $guestname = Checkin::where('booking_no',$booking_no)->where('is_occupy',1)->first(); 
         $voucher_no = date("M").'/'.rand(111,999);
         return view('hotelbooking.checking.voucher.create',compact('booking_no','guestname','voucher_no'));
+    }
+
+    public function showCheckoutvoucher($booking_no)
+    {
+        $guestname = Checkin::where('booking_no',$booking_no)->first(); 
+        $voucher_no = date("M").'/'.rand(111,999);
+        return view('hotelbooking.home.ajax.voucher_ajax',compact('booking_no','guestname','voucher_no'));
     }
 
     public function submitVoucher(Request $request , $booking_no)
@@ -36,6 +45,7 @@ class VoucherController extends Controller
         $voucher->voucher_no = $request->voucher_no;
         $voucher->booking_no = $booking_no;
         $voucher->date = $request->date;
+        $voucher->type = 1;
         $voucher->remarks = $request->remarks;
 
         $voucher->entry_by = Auth::user()->id;
@@ -60,6 +70,106 @@ class VoucherController extends Controller
         };
         
         
+    }
+
+
+    public function submitCheckoutVoucher(Request $request , $booking_no)
+    {
+     
+     $guestname = Checkin::where('booking_no',$booking_no)->first(); 
+     
+        if(Voucher::where('voucher_no',$request->voucher_no)->doesntExist()){
+            
+        $voucher = new Voucher();
+        $voucher->debit = $request->debit;
+        $voucher->credit = $request->credit;
+        $voucher->amount = $request->amount;
+        $voucher->type = 1;
+        $voucher->voucher_no = $request->voucher_no;
+        $voucher->booking_no = $booking_no;
+        $voucher->date = $request->date;
+        $voucher->remarks = $request->remarks;
+
+        $voucher->entry_by = Auth::user()->id;
+        $voucher->entry_date = Carbon::now();
+
+        // change in checkout table
+
+        $checkout = Checkout::where('booking_no',$booking_no)->increment('voucher_amount',$request->amount);
+
+        if($voucher->save()){
+            
+            $notification=array(
+                'messege'=>'Voucher Added!!',
+                'alert-type'=>'success'
+                );
+            
+            return back()->with($notification);
+        }
+        }else{
+            $notification=array(
+                'messege'=>'Create New Voucher From Here!!',
+                'alert-type'=>'success'
+                );
+            return redirect()->route('admin.checkin.edit',$guestname->id)->with($notification);
+
+        };
+        
+        
+    }
+
+
+    public function submitCheckoutRefund(Request $request ,$booking_no)
+
+    {
+        
+
+        $guestname = Checkin::where('booking_no',$booking_no)->first(); 
+     
+        if(Voucher::where('voucher_no',$request->voucher_no)->doesntExist()){
+            
+        $voucher = new Voucher();
+        $voucher->debit = $request->debit;
+        $voucher->credit = $request->credit;
+        $voucher->amount = $request->amount;
+        $voucher->type = 0;
+        $voucher->voucher_no = $request->voucher_no;
+        $voucher->booking_no = $booking_no;
+        $voucher->date = $request->date;
+        $voucher->remarks = $request->remarks;
+
+        $voucher->entry_by = Auth::user()->id;
+        $voucher->entry_date = Carbon::now();
+
+        // change in checkout table
+
+        $checkout = Checkout::where('booking_no',$booking_no)->decrement('voucher_amount',$request->amount);
+
+        if($voucher->save()){
+            
+            $notification=array(
+                'messege'=>'Refund Success!!',
+                'alert-type'=>'success'
+                );
+            
+            return back()->with($notification);
+        }
+        }else{
+            $notification=array(
+                'messege'=>'Create New Voucher From Here!!',
+                'alert-type'=>'success'
+                );
+            return redirect()->route('admin.checkin.edit',$guestname->id)->with($notification);
+
+        };
+    }
+
+
+    public function refundCheckoutVoucher($booking_no)
+    {
+        $guestname = Checkin::where('booking_no',$booking_no)->first(); 
+        $voucher_no = date("M").'/'.rand(111,999);
+        return view('hotelbooking.home.ajax.refund_ajax',compact('booking_no','guestname','voucher_no'));
     }
 
 
@@ -99,6 +209,12 @@ class VoucherController extends Controller
                 );
             return redirect()->route('admin.checkin.list.voucher',$voucher->booking_no)->with($notification);
         }
+    }
+
+
+    public function editVoucher($booking_no)
+    {
+        return $booking_no;
     }
 
 
