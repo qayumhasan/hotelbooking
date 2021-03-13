@@ -129,7 +129,7 @@ $time = date("h:i");
                      <div class="col-6">
                         <ul class="list-group pt-1 bg-menu">
                            <li class="list-group-item bg-menu">
-                              <a class="bg-menu" href=""><i class="fa fa-history" aria-hidden="true"></i> At a Glance</a>
+                              <a class="bg-menu" href="#"><i class="fa fa-history" aria-hidden="true"></i> At a Glance</a>
                            </li>
 
                            <li class="list-group-item bg-menu">
@@ -282,55 +282,13 @@ $time = date("h:i");
    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">At A Glance Of Table No : 500</h5>
+            <h5 class="modal-title" id="exampleModalLabel">At A Glance</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
             </button>
          </div>
-         <div class="modal-body">
-            <form>
-               <div class="row">
-                  <div class="col-md-5">
-                     <input type="text" class="form-control form-control-sm" placeholder="First name">
-                  </div>
-                  <div class="col-md-5">
-                     <input type="text" class="form-control form-control-sm" placeholder="Last name">
-                  </div>
-                  <div class="col-md-2">
-                     <button type="submit" class="btn btn-sm btn-primary mr-auto">Search</button>
-                  </div>
-               </div>
-            </form>
-
-            <table class="table table-bordered mt-5">
-               <thead>
-                  <tr>
-                     <th scope="col">#</th>
-                     <th scope="col">First</th>
-                     <th scope="col">Last</th>
-                     <th scope="col">Handle</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr>
-                     <th scope="row">1</th>
-                     <td>Mark</td>
-                     <td>Otto</td>
-                     <td>@mdo</td>
-                  </tr>
-                  <tr>
-                     <th scope="row">2</th>
-                     <td>Jacob</td>
-                     <td>Thornton</td>
-                     <td>@fat</td>
-                  </tr>
-                  <tr>
-                     <th scope="row">3</th>
-                     <td colspan="2">Larry the Bird</td>
-                     <td>@twitter</td>
-                  </tr>
-               </tbody>
-            </table>
+         <div class="modal-body" id="booking_info">
+            
 
 
          </div>
@@ -563,7 +521,9 @@ $time = date("h:i");
             type: 'get',
             url: url,
             success: function(data) {
-               console.log(data);
+               
+               $('#booking_info').empty();
+               $('#booking_info').append(data);
             }
          });
 

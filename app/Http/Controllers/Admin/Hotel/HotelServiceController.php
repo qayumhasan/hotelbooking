@@ -21,7 +21,16 @@ class HotelServiceController extends Controller
 
     public function SingleCheckoutGroupbooking($id){
 
+        
         $checkin = Checkin::findOrFail($id);
+        if($checkin->booking_type == 1){
+
+            $notification=array(
+                'messege'=>'Single Checkout Only for Group Booking!',
+                'alert-type'=>'warning'
+                );
+            return redirect()->back()->with($notification);
+        }
         return view('hotelbooking.checking.services.checkoutgroupbooking.singlecheckout',compact('checkin'));
 
     }
@@ -81,6 +90,15 @@ class HotelServiceController extends Controller
     // add room in existing booking
     public function addroom($id){
         $checkin = Checkin::findOrFail($id);
+        if($checkin->booking_type == 1){
+
+            $notification=array(
+                'messege'=>'Single Checkout Only for Group Booking!',
+                'alert-type'=>'warning'
+                );
+            return redirect()->back()->with($notification);
+        }
+
         return view('hotelbooking.checking.services.checkoutgroupbooking.addroom',compact('checkin'));
     }
     public function addroomsubmit(Request $request){
@@ -182,6 +200,14 @@ class HotelServiceController extends Controller
     // chenge room ingroup boooking
     public function ChangeRoomGroupBooking($id){
         $checkin = Checkin::findOrFail($id);
+        if($checkin->booking_type == 1){
+
+            $notification=array(
+                'messege'=>'Single Checkout Only for Group Booking!',
+                'alert-type'=>'warning'
+                );
+            return redirect()->back()->with($notification);
+        }
         return view('hotelbooking.checking.services.checkoutgroupbooking.changeroom',compact('checkin'));
     }
     // change 
@@ -226,6 +252,15 @@ class HotelServiceController extends Controller
       public function ChangeRoomMaster($id){
 
         $checkin = Checkin::findOrFail($id);
+        if($checkin->booking_type == 1){
+
+            $notification=array(
+                'messege'=>'Single Checkout Only for Group Booking!',
+                'alert-type'=>'warning'
+                );
+            return redirect()->back()->with($notification);
+        }
+
         $booking_no=$checkin->booking_no;
         $masterroom=Checkin::where('booking_no',$booking_no)->first();
         return view('hotelbooking.checking.services.checkoutgroupbooking.masterroomchange',compact('checkin','masterroom'));
@@ -272,6 +307,16 @@ class HotelServiceController extends Controller
     public function changetariff($id){
         
         $checkin = Checkin::findOrFail($id);
+
+        if($checkin->booking_type == 1){
+
+            $notification=array(
+                'messege'=>'Single Checkout Only for Group Booking!',
+                'alert-type'=>'warning'
+                );
+            return redirect()->back()->with($notification);
+        }
+
         $booking_no=$checkin->booking_no;
         $masterroom=Checkin::where('booking_no',$booking_no)->first();
         return view('hotelbooking.checking.services.checkoutgroupbooking.changetarif',compact('checkin','masterroom'));
