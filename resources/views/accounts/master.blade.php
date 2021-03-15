@@ -146,6 +146,11 @@
                                         <i class="las la-list-alt"></i><span>All Account Trasection</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.checkbook.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.checkbook.create')}}">
+                                        <i class="las la-list-alt"></i><span>CheckBook</span>
+                                    </a>
+                                </li>
                               
                             </ul>
                         </li>
