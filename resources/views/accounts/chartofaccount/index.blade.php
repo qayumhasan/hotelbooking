@@ -18,7 +18,7 @@
                   </div>
                   <div class="card-body">
                      <div class="table-responsive">
-                        <table id="datatable" class="table data-table table-striped table-bordered" >
+                        <table id="datatable" class="table data-table table-striped table-bordered" style="font-size:12px">
                            <thead class="text-center">
                               <tr>
                                  <th>Description</th>
@@ -34,7 +34,6 @@
                            <tbody class="text-center">
                               @foreach($alldata as $data)
                               <tr>
-                               
                                  <td>{{$data->desription_of_account}}</td>
                                  <td>{{$data->code}}</td>
                                  <td>{{$data->category_name}}</td>

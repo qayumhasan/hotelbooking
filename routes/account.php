@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Account\AccountMainCategoryController;
 use App\Http\Controllers\Admin\Account\AccountSubCategoryController;
 use App\Http\Controllers\Admin\Account\ChartOfAccountController;
 use App\Http\Controllers\Admin\Account\AccountTrasectionController;
+use App\Http\Controllers\Admin\Account\CheckBookController;
 
 
 
@@ -75,3 +76,8 @@ Route::get('admin/transectiondetails/insert', [AccountTrasectionController::clas
 Route::post('admin/transectiondetails/edit', [AccountTrasectionController::class, 'transectiondetailsedit'])->name('get.alldatatransection.edit');
 Route::post('/get/alldatatransection/data/{invoice}', [AccountTrasectionController::class, 'gettransectiondetails']);
 Route::post('admin/transectiondetails/delete', [AccountTrasectionController::class, 'transectiondelete'])->name('get.transection.delete');
+// checkbook controller
+Route::get('admin/checkbook/create', [CheckBookController::class, 'create'])->name('admin.checkbook.create');
+Route::get('/get/account/checkbook/entry/{bank_code}', [CheckBookController::class, 'getallcheckentry']);
+Route::get('admin/account/checktransectiondetails/insert', [CheckBookController::class, 'chekcbooktransectioninsert'])->name('account.checktransectiondetails.insert');
+Route::get('admin/account/checktransectiondetails/show', [CheckBookController::class, 'chekcbooktransectionshow'])->name('account.checktransectiondetails.showitem');
