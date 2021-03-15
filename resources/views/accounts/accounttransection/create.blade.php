@@ -47,7 +47,7 @@ $current = date("d/m/Y");
                                               
                                                     <td>   
                                                    
-                                                        <select name="voucher" id="" class="form-control noradious">
+                                                        <select name="voucher" id="voucher_type" class="form-control noradious">
                                                             <option value="">--select--</option>
                                                             <option value="Cash Payment Voucher">Cash Payment Voucher</option>
                                                             <option value="Bank Payment Voucher">Bank Payment Voucher</option>

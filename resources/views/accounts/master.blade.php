@@ -148,7 +148,7 @@
                                 </li>
                                 <li class="{{ request()->routeIs('admin.checkbook.create*') ? 'active' : '' }}">
                                     <a href="{{route('admin.checkbook.create')}}">
-                                        <i class="las la-list-alt"></i><span>CheckBook</span>
+                                        <i class="las la-list-alt"></i><span>ChecqueBook</span>
                                     </a>
                                 </li>
                               

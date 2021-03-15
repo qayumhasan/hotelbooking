@@ -23,6 +23,7 @@ class CreateCheckBookTransectionsTable extends Migration
             $table->string('check_date',30)->nullable();
             $table->float('check_amount',30)->nullable();
             $table->float('delevery_date',30)->nullable();
+            $table->string('status')->nullable();
   
 
             $table->integer('is_active')->default(1);
