@@ -22,8 +22,22 @@
             <td>{{$row->updatedby->username?? ''}}</td>
             <td>{{$row->updatedby->username ?? ''}}</td>
             <td>{{$row->keeping_status}}</td>
-            <td></td>
+            <td>{{$row->created_at}}</td>
             <td>{{$row->log_date}}</td>
+            @php
+                $newDate = date("d-m-Y", strtotime($row->created_at)); 
+             
+                $origin = new DateTime(Carbon\Carbon::parse("{$row->log_date}")->toFormattedDateString());
+                $target=Carbon\Carbon::parse("{$newDate}")->toFormattedDateString();
+                $target = new DateTime($target);
+
+                $interval =$origin->diff($target);
+
+                $date =abs($interval->format('%R%a'));
+                $date = $date > 0 ? $date : 1;
+
+            @endphp
+            <td>{{$date}}</td>
         </tr>
         @endforeach
         @else
@@ -31,10 +45,10 @@
             <td>No Data Found!</td>
         </tr>
         @endif
-        
+
     </tbody>
 
-    
+
 
 
 

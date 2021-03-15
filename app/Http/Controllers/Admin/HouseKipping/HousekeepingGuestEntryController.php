@@ -81,9 +81,8 @@ class HousekeepingGuestEntryController extends Controller
 
     public function guestEntryReportPage()
     {
-        $rooms=Room::where('is_active',1)->where('is_deleted',0)->get();
-        $guestentres=HouseKeepingGuestEntry::where('is_active',1)->where('is_deleted',0)->get();
-        return view('housekipping.guest_entry.guest_entry_report',compact('guestentres','rooms')); 
+        $rooms=Room::with('guestentry')->where('room_status',3)->where('is_active',1)->where('is_deleted',0)->get();
+        return view('housekipping.guest_entry.guest_entry_report',compact('rooms')); 
     }
 
     public function guestEntryReportAjaxData(Request $request)

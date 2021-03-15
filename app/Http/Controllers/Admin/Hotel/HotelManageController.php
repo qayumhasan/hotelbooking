@@ -15,7 +15,7 @@ class HotelManageController extends Controller
     }
     // home
     public function index(){
-        $rooms = RoomType::with('rooms')->get();
+        $rooms = RoomType::with('rooms')->where('is_active',1)->where('is_deleted',0)->get();
         return view('hotelbooking.home.index',compact('rooms'));
     }
 }

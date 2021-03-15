@@ -33,7 +33,7 @@ class HousekeepingReportController extends Controller
             'room_no'=>'required',
         ]);
         
-        $rooms=HouseKeeping::whereBetween('log_date', [$request->from_date, $request->to_date])->where('room_id',$request->room_no)->where('is_active',1)->where('is_deleted',0)->get();
+        $rooms=HouseKeeping::whereBetween('log_date', [$request->from_date, $request->to_date])->where('room_id',$request->room_no)->where('is_deleted',0)->get();
         return view('housekipping.report.ajax.ajax_clean_duration',compact('rooms'));
         
     }

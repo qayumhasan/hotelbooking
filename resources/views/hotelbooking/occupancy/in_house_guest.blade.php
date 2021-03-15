@@ -1,4 +1,4 @@
-@extends('housekipping.master')
+@extends('hotelbooking.master')
 @section('title', 'In House Guest | '.$seo->meta_title)
 @section('content')
 

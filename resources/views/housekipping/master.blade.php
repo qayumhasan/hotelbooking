@@ -394,6 +394,14 @@
         });
    </script>
 
+<script>
+        $('#datepickernew').datepicker(
+            {
+                format: 'dd-mm-yyyy',
+            }
+        );
+    </script>
+
   
 
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>

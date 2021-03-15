@@ -112,6 +112,33 @@ $time = date("h:i");
         font-weight: normal;
     }
 </style>
+
+<!-- print invoice -->
+
+    
+<div class="modal fade" id="printvoucer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Print Voucer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="showinvoiceprint">
+                
+            </div>
+            <div class="modal-footer">
+                <div class="invoice-footer">
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-4" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-outline-primary saveextraservice">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="content-page">
 
     <form id="invoice_form" action="{{route('admin.checkout.invoice.store')}}" method="post">
@@ -360,7 +387,8 @@ $time = date("h:i");
                                                     <p>Rate @ {{$row->rate}} per pcs</p>
 
                                                     @php
-                                                    $restaurant = $restaurant + $row->amount;
+                                                    $head = App\Models\Restaurant_Order_head::where('invoice_no',$row->invoice_id)->first();
+                                                    $restaurant = $restaurant + $head->gross_amount;
 
                                                     @endphp
 
@@ -420,9 +448,9 @@ $time = date("h:i");
                                                 <td class="text-center">$ {{$row->amount}}</td>
                                                 <td class="text-center">
 
-                                                    <a href="{{route('admin.checkout.invoice_edit',$row->id)}}" class="badge bg-primary-light mr-2 mouse_pointer" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="lar la-edit"></i></a>
+                                                    <a href="{{route('admin.checkout.invoice_edit',$row->id)}}" class="badge bg-primary-light mr-2 mouse_pointer editinvoice" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="lar la-edit"></i></a>
 
-                                                    <a class="badge bg-danger-light mr-2 mouse_pointer" data-toggle="tooltip" data-placement="top" data-original-title="Print"> <i class="la la-print"></i></a>
+                                                    <a href="{{route('admin.checkout.invoice_print',$row->id)}}" class="badge bg-danger-light mr-2 printvoucher mouse_pointer" data-toggle="tooltip" data-placement="top" data-original-title="Print"> <i class="la la-print"></i></a>
                                                 </td>
                                             </tr>
                                             @php
@@ -536,13 +564,24 @@ $time = date("h:i");
                                             <tr class="delelement">
 
                                                 <td>{{$row->tax_description_name}}</td>
-                                                <td>{{$row->calculation_on}}</td>
+                                                @if($row->calculation_on == 1)
+                                                <td>Room Amount</td>
+                                                @elseif($row->calculation_on == 2)
+                                                <td>Food Amount</td>
+                                                @elseif($row->calculation_on == 3)
+                                                <td>Discount Amount</td>
+                                                @elseif($row->calculation_on == 4)
+                                                <td>Net Amount</td>
+                                                @elseif($row->calculation_on == 5)
+                                                <td>Gross Amount</td>
+                                                @endif
                                                 <td>{{$row->base_on}}</td>
                                                 <td>{{$row->effect}}</td>
                                                 <td>{{$row->rate}}</td>
                                                 <td class="text-center">{{round($row->amount,2)}}</td>
                                                 <td class="text-center">
                                                     <a class="badge bg-primary-light tax_edit mr-2" data-toggle="tooltip" data-toggle="modal" data-target="#exampleModal" data-whatever="{{$row}}"><i class="lar la-edit"></i></a>
+
                                                     <a class="badge bg-danger-light mr-2 deletetax" data-toggle="tooltip" onclick="delete_row(this)" data-placement="top" data-whatever="{{$row->id}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
                                                 </td>
                                             </tr>
@@ -566,7 +605,7 @@ $time = date("h:i");
                                             </tr>
 
                                             @php
-                                            $paybleAmount =$checkout->gross_amount - $checkout->voucher_amount;
+                                            $paybleAmount =$checkout->gross_amount;
                                             @endphp
                                             <tr>
                                                 <th class="text-right" scope="row" colspan="5">OutStanding Amount</th>
@@ -845,7 +884,11 @@ $time = date("h:i");
                                     </tr>
                                     <tr>
                                         <th colspan="2" class="text-right">Total Amount</th>
-                                        <td>{{$data['amount']}}</td>
+                                        @php
+                                        $amount = $data['amount'];
+                                        $totalamount = $amount - $checkindata->voucher_amount;
+                                        @endphp
+                                        <td>{{$amount}}</td>
                                     </tr>
 
                                 </tbody>
@@ -1297,6 +1340,12 @@ $time = date("h:i");
     <!-- voucher area end -->
 
 
+    <!-- print voucher -->
+
+
+
+
+
 
 
 
@@ -1638,10 +1687,66 @@ $time = date("h:i");
                     type: 'get',
                     url: url,
                     success: function(data) {
-
+                        
                         $('#voucerareastart').empty();
                         $('#voucerareastart').append(data);
                         $('#voucher_area').modal('show');
+                    }
+                });
+            });
+        })
+    </script>
+
+
+<!-- Edit Invoice -->
+<script>
+        $(document).ready(function() {
+            $('.editinvoice').click(function(e) {
+                e.preventDefault();
+                var url = e.currentTarget.href;
+                $('#vouchername').html('Edit Voucher');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function(data) {
+                        console.log(data);
+                        $('#voucerareastart').empty();
+                        $('#voucerareastart').append(data);
+                        $('#voucher_area').modal('show');
+                    }
+                });
+            });
+        })
+    </script>
+
+<!-- print Invoice -->
+<script>
+        $(document).ready(function() {
+            $('.printvoucher').click(function(e) {
+                e.preventDefault();
+               
+                var url = e.currentTarget.href;
+                
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'get',
+                    url: url,
+                    success: function(data) {
+                        console.log(data);
+                        $('#showinvoiceprint').empty();
+                        $('#showinvoiceprint').append(data);
+                        $('#printvoucer').modal('show');
                     }
                 });
             });

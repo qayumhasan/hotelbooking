@@ -29,7 +29,7 @@ class RestaurantTableController extends Controller
 
         
         $validated = $request->validate([
-            'table_type' => 'required|unique:restaurant_table_types|max:30',
+            'table_type' => 'required|unique:restaurant_table_types',
         ]);
 
         $type = new RestaurantTableType();
@@ -160,7 +160,7 @@ class RestaurantTableController extends Controller
     {
         
         $request->validate([
-            'table_no' => 'required|unique:restaurant_tables|max:150|numeric',
+            'table_no' => 'required|unique:restaurant_tables',
             'branch_id'=>'required',
             'table_type'=>'required',
         ]);

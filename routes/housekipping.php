@@ -102,7 +102,7 @@ Route::middleware(['admin'])->prefix('admin/housekeeping/advance/report')->group
     Route::get('/day/by/day', [AdvanceBookingHouseKeepingController::class, 'advanceBookingCalenderDaybyDay'])->name('admin.housekeeping.advance.booking.calender.daybyday');
 });
 
-Route::middleware(['admin'])->prefix('admin/housekeeping/advance/report')->group(function () {
+Route::middleware(['admin'])->prefix('admin/housekeeping/advance/')->group(function () {
     Route::get('/occupancy/report', [OccupancyReportController::class, 'occupancyReport'])->name('admin.housekeeping.expected.occupancy.report');
     Route::get('/occupancy/report/icon', [OccupancyReportController::class, 'occupancyReportIcon'])->name('admin.housekeeping.expected.occupancy.report.icon');
 });
@@ -132,6 +132,7 @@ Route::get('admin/acquisition/close/order', [AcquisitionController::class, 'clos
 
 // Ajax route start from here
 Route::get('/admin/housekepping/ajax/list/{id}', [HouseKippingController::class, 'reporAjaxList']);
+
 Route::get('/admin/housekepping/clean/duration/ajax/list', [HousekeepingReportController::class, 'cleaningDurationGetAjaxData']);
 Route::get('/admin/housekepping/clean/day/wise/ajax/list', [HousekeepingReportController::class, 'cleaningDayWiseGetAjaxData']);
 Route::get('/admin/housekepping/room/wise/ajax/list', [HousekeepingReportController::class, 'roomWiseGetAjaxData']);

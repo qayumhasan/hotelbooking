@@ -34,6 +34,11 @@ class Room extends Model
         return $this->hasOne('App\Models\HouseKeeping','room_id','id')->where('is_active',1);
     }
 
+    public function housekeepingreport()
+    {
+        return $this->hasOne('App\Models\HouseKeeping','room_id','id')->latest();
+    }
+
     public function updatedby()
     {
         return $this->hasOne('App\Models\Admin','id','keeping_assign_name');

@@ -11,6 +11,6 @@ class RoomType extends Model
 
     public function rooms()
     {
-        return $this->hasMany(Room::class,'room_type','id');
+        return $this->hasMany(Room::class,'room_type','id')->where('is_active',1)->where('is_deleted',0);
     }
 }

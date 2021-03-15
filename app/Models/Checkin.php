@@ -57,6 +57,15 @@ class Checkin extends Model
     {
         return $this->hasMany(Voucher::class,'booking_no','booking_no')->orderby('type', 'DESC');
     }
+
+
+    public function checkout()
+    {
+        return $this->hasOne('App\Models\Checkout','booking_no','booking_no');
+    }
+
+
+
    
 
 }

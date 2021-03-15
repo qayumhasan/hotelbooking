@@ -300,16 +300,20 @@ $time = date("h:i");
                                                 <th scope="row">Ref. Invoice(Restaurant)</th>
                                                 <td class="text-center">
                                                     <h6>Room No : {{$checkindata->room_no}}({{$checkindata->roomtype->room_type ?? ''}})</h6><br>
+
                                                     @foreach($checkindata->restaurant as $row)
                                                     <p>{{$row->item->item_name ?? ''}} {{$row->qty}} pcs</p>
                                                     <p>Rate @ {{$row->rate}} per pcs</p>
 
                                                     @php
-                                                    $restaurant = $restaurant + $row->amount;
+                                                    $head = App\Models\Restaurant_Order_head::where('invoice_no',$row->invoice_id)->first();
+                                                    $restaurant = $restaurant + $head->gross_amount;
 
                                                     @endphp
 
                                                     @endforeach
+
+
                                                 </td>
                                                 <td class="text-center">$ {{ $restaurant}}</td>
                                             </tr>
