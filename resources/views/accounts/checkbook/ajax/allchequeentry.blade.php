@@ -8,8 +8,8 @@ $current = date("d/m/Y");
         <label for="inputEmail3" class="col-sm-4 col-form-label text-right">Date:</label>
         <div class="col-sm-5">
         <input type="text" name="reg_date" id="reg_date" class="form-control datepicker" placeholder="Regitration Date" value="{{$current}}">
-        <input type="hidden" name="account_code" id="account_code" value="{{$bank_code}}">
-        <input type="hidden" name="book_id" id="book_id" value="">
+
+        <input type="hidden" name="book_id" id="book_id" value="{{$book_id}}">
         </div>
     </div>
 </div>
@@ -57,21 +57,21 @@ $current = date("d/m/Y");
 <div class="col-md-12 mt-4">
         <div class="table-responsive mt-4">
             <table class="table table-striped table-bordered" style="font-size:12px">
-            <thead class="text-center">
-                <tr>
-                    <th>#</th>
-                    <th>Cheque No:</th>
-                    <th>Voucher No</th>
-                    <th>Cheque Date</th>
-                    <th>Cheque Amount</th>
-                    <th>Delevery Date</th>
-                    <th>status</th>
-                    <th>Remarks</th>
-                </tr>
-            </thead>
-            <tbody class="text-center">
-                
-            </tbody>
+                <thead class="text-center">
+                    <tr>
+                        <th>#</th>
+                        <th>Cheque No:</th>
+                        <th>Voucher No</th>
+                        <th>Cheque Date</th>
+                        <th>Cheque Amount</th>
+                        <th>Delevery Date</th>
+                        <th>status</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center" id="maindata">
+                    
+                </tbody>
             </table>
         </div>
 
@@ -80,29 +80,30 @@ $current = date("d/m/Y");
 <script>
 $(document).ready(function() {
     $('#show_btn').on('click', function() {
-   
+
                                                         
-      var bank_code=$("#bank_code").val();
-      var check_qty=$("#check_qty").val();
- 
+    var account_code=$("#account_code").val();
+    var book_id=$("#book_id").val();
+    var check_qty=$("#check_qty").val();
+    var start_id=$("#start_id").val();
+    //alert(book_id);
+    if(start_id){
         $.ajax({
             type: 'GET',
             url: "{{route('account.checktransectiondetails.showitem')}}",
-            //data: $('#tax_cal').serializeArray(),
             data: {
-                bank_code:remarks,
+                account_code:account_code,
                 check_qty:check_qty,
+                start_id:start_id,
                
             },
 
             success: function(data) {
                 
-                $('#remarks').val("");
-                $('#start_id').val("");
-                $('#check_qty').val("");
+                $("#maindata").html(data);
       
                 
-                alldata();
+              
                
             },
 
@@ -111,6 +112,10 @@ $(document).ready(function() {
             }
           
         });
+    }else{
+        alert("Please Add Start Value");
+    }
+        
     
       
        
@@ -127,9 +132,9 @@ $(document).ready(function() {
       var start_id=$("#start_id").val();
       var reg_date=$("#reg_date").val();
       var book_id=$("#book_id").val();
-      var account_code=$("#account_code").val();
-
-      //alert(invoice_no);
+      var account_code=$("#bank_code").val();
+        //alert(account_code);
+     if(start_id){
         $.ajax({
             type: 'GET',
             url: "{{route('account.checktransectiondetails.insert')}}",
@@ -147,10 +152,10 @@ $(document).ready(function() {
                 
                 $('#remarks').val("");
                 $('#start_id').val("");
-                $('#check_qty').val("");
-      
-                
-                alldata();
+               $("#allcheckbook").html("")
+               
+
+
                
             },
 
@@ -159,6 +164,10 @@ $(document).ready(function() {
             }
           
         });
+     }else{
+         alert("Please Add Start Value");
+     }
+       
        
 
     });

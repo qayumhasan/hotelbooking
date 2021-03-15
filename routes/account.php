@@ -81,3 +81,7 @@ Route::get('admin/checkbook/create', [CheckBookController::class, 'create'])->na
 Route::get('/get/account/checkbook/entry/{bank_code}', [CheckBookController::class, 'getallcheckentry']);
 Route::get('admin/account/checktransectiondetails/insert', [CheckBookController::class, 'chekcbooktransectioninsert'])->name('account.checktransectiondetails.insert');
 Route::get('admin/account/checktransectiondetails/show', [CheckBookController::class, 'chekcbooktransectionshow'])->name('account.checktransectiondetails.showitem');
+
+Route::get('/get/account/status/bankentry/all/{bank_code}', [CheckBookController::class, 'getbankallstatus']);
+
+Route::get('/get/account/showallstatus/bankentry/{status_show_book_id}', [CheckBookController::class, 'getshowstatusdata']);
