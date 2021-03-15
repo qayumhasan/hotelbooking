@@ -83,20 +83,20 @@ $time = date("h:i");
                                 </thead>
                              
                                 <tbody class="text-center">
-                                @foreach($checkins as $row)
+                                @foreach($occupancyreports as $row)
                                     <tr>
-                                        <td>{{$row->booking_no}}</td>
-                                        <td>{{$row->room_no}}</td>
-                                        <td>{{$row->guest_name}}</td>
-                                        <td>{{$row->city}}</td>
-                                        <td>{{$row->number_of_person}}</td>
-                                        <td>{{$row->checkin_date}}</td>
-                                        <td>{{$row->checkin_time}}</td>
-                                        <td>{{$row->exp_checkin_date}}</td>
-                                        <td>{{$row->exp_checkin_time}}</td>
-                                        <td>{{$row->roomtype->room_type?? ''}}</td>
-                                        <td>{{$row->tarif}}</td>
-                                        <td>{{$row->user->username}}</td>
+                                        <td>{{$row->checkin->booking_no}}</td>
+                                        <td>{{$row->checkin->room_no}}</td>
+                                        <td>{{$row->checkin->guest_name}}</td>
+                                        <td>{{$row->checkin->city}}</td>
+                                        <td>{{$row->checkin->number_of_person}}</td>
+                                        <td>{{$row->checkin->checkin_date}}</td>
+                                        <td>{{$row->checkin->checkin_time}}</td>
+                                        <td>{{$row->checkin->exp_checkin_date}}</td>
+                                        <td>{{$row->checkin->exp_checkin_time}}</td>
+                                        <td>{{$row->checkin->roomtype->room_type?? ''}}</td>
+                                        <td>{{$row->checkin->tarif}}</td>
+                                        <td>{{$row->checkin->user->username}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

@@ -46,7 +46,7 @@
     </tr>
 
     @php
-    $paybleAmount =$checkout->gross_amount - $checkout->voucher_amount;
+    $paybleAmount =$checkout->gross_amount;
     @endphp
     <tr>
         <th class="text-right" scope="row" colspan="5">OutStanding Amount</th>
@@ -58,7 +58,7 @@
         <th class="text-right" scope="row" colspan="5">Payable Amount (In Word):</th>
         <td class="text-center">
 
-            <!-- <code>{{$numToWord->numberTowords($paybleAmount)}}</code> -->
+            <code>{{$numToWord->numberTowords($paybleAmount)}}</code>
         </td>
         <td></td>
 

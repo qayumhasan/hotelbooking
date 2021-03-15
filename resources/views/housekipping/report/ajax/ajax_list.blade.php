@@ -19,7 +19,7 @@
         <tr>
             <td>{{$room->room_no}}</td>
             <td>{{$room->roomtype->room_type?? ''}}</td>
-            <td>{{$room->housekeeping->keeping_status?? ''}}</td>
+            <td>{{$room->housekeepingreport->keeping_status?? ''}}</td>
 
 
 
@@ -32,9 +32,9 @@
             @elseif($room->room_status == 4)
             <td class="bg-yellow">Maintenance</td>
             @endif
-            <td>{{$room->housekeeping->remarks?? ''}}</td>
-            <td>{{$room->housekeeping->log_date ?? ''}}</td>
-            <td>{{$room->housekeeping->keeping_name?? ''}}</td>
+            <td>{{$room->housekeepingreport->remarks?? ''}}</td>
+            <td>{{$room->housekeepingreport->log_date ?? ''}}</td>
+            <td>{{$room->housekeepingreport->keeping_name?? ''}}</td>
             <td>
                 <a class="badge bg-primary-light mr-2 editmodal" data-toggle="modal" data-target="#exampleModal" data-whatever="{{$room}}"><i class="lar la-edit"></i></a>
             </td>
@@ -52,25 +52,25 @@
 
 </table>
 
-{{$rooms->links()}}
+
 
 
 
 <script>
     $(document).ready(function() {
         $(".editmodal").click(function() {
-
+            
             var modal = $(this)
             var data = modal.data('whatever');
             console.log(data.housekeeping);
             document.getElementById('room_no').innerHTML = data.room_no;
             document.getElementById('room_id').value = data.id;
-            document.getElementById('keeping_date').value = data.housekeeping.log_date;
-            document.getElementById('keeping_time').value = data.housekeeping.log_time;
-            document.getElementById('remarks').value = data.housekeeping.remarks;
-            $('#updatedby').val(data.housekeeping.keeping_name).selected;
-            $('#status').val(data.housekeeping.keeping_status).selected;
-
+            document.getElementById('housekeeping_id').value = data.housekeepingreport.id;
+            document.getElementById('keeping_date').value = data.housekeepingreport.log_date;
+            document.getElementById('keeping_time').value = data.housekeepingreport.log_time;
+            document.getElementById('remarks').value = data.housekeepingreport.remarks;
+            $('#updatedby').val(data.housekeepingreport.keeping_name).selected;
+            $('#status').val(data.housekeepingreport.keeping_status).selected;
 
         });
     });

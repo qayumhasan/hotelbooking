@@ -212,9 +212,56 @@ class VoucherController extends Controller
     }
 
 
-    public function editVoucher($booking_no)
+    public function editVoucher($id)
     {
-        return $booking_no;
+        
+        $editvoucher=Voucher::findOrFail($id);
+
+        if($editvoucher->type == 1){
+            return view('hotelbooking.home.ajax.edit_voucher',compact('editvoucher'));
+        }elseif($editvoucher->type == 0){
+
+            return view('hotelbooking.home.ajax.edit_refund_voucher',compact('editvoucher'));
+        }
+        
+        
+        
+    }
+
+    public function updateCheckoutVoucher(Request $request ,$id)
+    {
+        
+        $voucher = Voucher::findOrFail($id);
+
+        if($voucher->type == 1){
+            $checkout = Checkout::where('booking_no',$voucher->booking_no)->decrement('voucher_amount', $voucher->amount);
+
+            $checkout = Checkout::where('booking_no',$voucher->booking_no)->increment('voucher_amount', $request->amount);
+        }elseif($voucher->type == 0){
+
+            $checkout = Checkout::where('booking_no',$voucher->booking_no)->increment('voucher_amount', $voucher->amount);
+
+            $checkout = Checkout::where('booking_no',$voucher->booking_no)->decrement('voucher_amount', $request->amount);
+        }
+
+     
+
+        $voucher->debit = $request->debit;
+        $voucher->credit = $request->credit;
+        $voucher->amount = $request->amount;
+        $voucher->date = $request->date;
+        $voucher->remarks = $request->remarks;
+
+        $voucher->updated_by = Auth::user()->id;
+        $voucher->updated_date = Carbon::now();
+
+        if($voucher->save()){
+            $notification=array(
+                'messege'=>'Voucer Updated Succesfully!!',
+                'alert-type'=>'success'
+                );
+            return redirect()->back()->with($notification);
+        }
     }
 
 
@@ -244,5 +291,14 @@ class VoucherController extends Controller
         $voucherdetails = Voucher::where('booking_no',$booking_no)->where('is_deleted',0)->get();
         return view('hotelbooking.checking.voucher.view_list',compact('voucherdetails'));
         
+    }
+
+
+    public function printVoucher($id)
+    {
+        $voucher = Voucher::findOrFail($id);
+
+        return view('hotelbooking.home.ajax.voucher_print_ajax',compact('voucher'));
+
     }
 }

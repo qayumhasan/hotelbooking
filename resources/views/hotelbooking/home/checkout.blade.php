@@ -339,7 +339,8 @@ $time = date("h:i");
                                                     <p>Rate @ {{$row->rate}} per pcs</p>
 
                                                     @php
-                                                    $restaurant = $restaurant + $row->amount;
+                                                    $head = App\Models\Restaurant_Order_head::where('invoice_no',$row->invoice_id)->first();
+                                                    $restaurant = $restaurant + $head->gross_amount;
 
                                                     @endphp
 

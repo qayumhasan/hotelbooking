@@ -21,12 +21,14 @@ use App\Http\Controllers\Admin\Hotel\CheckingController;
 use App\Http\Controllers\Admin\Hotel\SupplierController;
 use App\Http\Controllers\Admin\Hotel\PurchaseController;
 use App\Http\Controllers\Admin\Hotel\TaxSettingController;
+use App\Http\Controllers\Admin\Hotel\ArrivalDepartureReportController;
 use App\Http\Controllers\Admin\Hotel\StockTransferController;
 use App\Http\Controllers\Admin\Hotel\PurchaseOrderController;
 use App\Http\Controllers\Admin\Inventory\InventoryManageController;
 use App\Http\Controllers\Admin\Inventory\ReportController;
 use App\Http\Controllers\Admin\Hotel\VoucherController;
 use App\Http\Controllers\Admin\Hotel\CheckinUpdateController;
+use App\Http\Controllers\Admin\Hotel\OccupancyController;
 use App\Http\Controllers\Admin\Hotel\AdvanceBookingController;
 use App\Http\Controllers\Admin\Hotel\RestaurantTableController;
 use App\Http\Controllers\Admin\Hotel\HotelServiceController;
@@ -537,6 +539,10 @@ Route::middleware(['admin'])->prefix(md5('admin/voucher'))->group(function () {
 
     Route::get('/edit/{id}', [VoucherController::class, 'editVoucher'])->name('admin.checkout.invoice_edit');
 
+    Route::get('/print/{id}', [VoucherController::class, 'printVoucher'])->name('admin.checkout.invoice_print');
+
+    Route::post('/update/{id}', [VoucherController::class, 'updateCheckoutVoucher'])->name('admin.checkout.voucher.update');
+
     Route::post('/voucher/{booking_no}', [VoucherController::class, 'submitVoucher'])->name('admin.checkin.voucher.submit');
 
     Route::post('/checkout/voucher/{booking_no}', [VoucherController::class, 'submitCheckoutVoucher'])->name('admin.checkout.voucher.submit');
@@ -672,6 +678,25 @@ Route::prefix(md5('admin/booking/checkout'))->group(function(){
 
     Route::post('/invoice/store',[CheckingController::class,'checkoutInvoiceStore'])->name('admin.checkout.invoice.store');
 
+});
+
+
+
+Route::middleware(['admin'])->prefix(md5('admin/occupancey'))->group(function () {
+    Route::get('/report', [OccupancyController::class, 'inhouseGuestReport'])->name('admin.occupancey.report');
+    Route::get('/expected/checkout/report', [OccupancyController::class, 'expCheckoutReport'])->name('admin.expected.checkout.report');
+});
+
+Route::middleware(['admin'])->prefix('admin/')->group(function () {
+    Route::get('/occupancy/report', [OccupancyController::class, 'occupancyReport'])->name('admin.expected.occupancy.report');
+    Route::get('/occupancy/report/icon', [OccupancyController::class, 'occupancyReportIcon'])->name('admin.expected.occupancy.report.icon');
+});
+
+
+Route::middleware(['admin'])->prefix(md5('admin/arrival/departure/'))->group(function(){
+    Route::get('/checkin/report',[ArrivalDepartureReportController::class,'checkinReport'])->name('admin.arrival.departure.checkin.report');
+    Route::get('/checkout/report',[ArrivalDepartureReportController::class,'checkoutReport'])->name('admin.arrival.departure.checkout.report');
+    Route::get('/guest/report',[ArrivalDepartureReportController::class,'guestReport'])->name('admin.arrival.departure.guest.report');
 });
 
 

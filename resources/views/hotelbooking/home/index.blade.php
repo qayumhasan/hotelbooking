@@ -5,6 +5,7 @@
 date_default_timezone_set("asia/dhaka");
 $current = date("d/m/Y");
 $current = date("d-m-Y");
+$currentdate = date("d-m-Y");
 $time = date("h:i");
 @endphp
 
@@ -321,19 +322,23 @@ $time = date("h:i");
                <div class="form-group row">
                   <label for="inputPassword" class="col-sm-2 col-form-label">Date</label>
                   <div class="col-sm-6">
-                     <input type="text" required class="form-control form-control-sm datepicker" name="keeping_date" id="keeping_date" value="{{$current}}">
+                     <input type="text" required class="form-control form-control-sm datepickernew" name="keeping_date" id="keeping_date" value="{{$currentdate}}">
                   </div>
                   <div class="col-sm-4">
                      <input type="time" required class="form-control form-control-sm" name="keeping_time" id="keeping_time" value="{{$time}}">
                   </div>
                </div>
 
+               @php
+                  $employee = App\Models\Employee::all();
+               @endphp
                <div class="form-group row">
                   <label for="inputPassword" class="col-sm-2 col-form-label">Updated By</label>
                   <div class="col-sm-8">
                      <select required class="form-control form-control-sm" id="updatedby" name="kepping_name">
-                        <option value="Qayum Hasan">Qayum Hasan</option>
-                        <option value="Asif Foysal">Asif Foysal</option>
+                        @foreach($employee as $row)
+                           <option value="{{$row->employee_name}}">{{$row->employee_name}}</option>
+                        @endforeach
 
                      </select>
                   </div>

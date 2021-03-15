@@ -132,6 +132,70 @@
                         </li>
 
 
+                        <li class="">
+                            <a href="#occupancy" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Occupancy Report</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="occupancy" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.occupancey.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.occupancey.report')}}">
+                                        <i class="las la-list-alt"></i><span>In-House Guest</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.expected.checkout.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.expected.checkout.report')}}">
+                                        <i class="las la-list-alt"></i><span>Expected Checkout Report</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.expected.occupancy.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.expected.occupancy.report')}}">
+                                        <i class="las la-list-alt"></i><span>Occupancy Report</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.expected.occupancy.report.icon*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.expected.occupancy.report.icon')}}">
+                                        <i class="las la-list-alt"></i><span>Occ. Report(Icon)</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+
+                        <li class="">
+                            <a href="#occupancy" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Arrival & Departure Reports</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="occupancy" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.arrival.departure.checkin.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.arrival.departure.checkin.report')}}">
+                                        <i class="las la-list-alt"></i><span>CheckIn Reports</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.arrival.departure.checkout.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.arrival.departure.checkout.report')}}">
+                                        <i class="las la-list-alt"></i><span>CheckOut Reports</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.arrival.departure.guest.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.arrival.departure.guest.report')}}">
+                                        <i class="las la-list-alt"></i><span>Guest Arrival Report</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+
 
                         <li class="">
                             <a href="#branch" class="collapsed" data-toggle="collapse" aria-expanded="false">

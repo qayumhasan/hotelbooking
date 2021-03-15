@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class CheckOut_Tax_Details extends Model
 {
     use HasFactory;
+
+  
 }

@@ -1,5 +1,5 @@
 @extends('housekipping.master')
-@section('title', 'All Room | '.$seo->meta_title)
+@section('title', 'Person Entry | '.$seo->meta_title)
 @section('content')
 
 @php
@@ -87,20 +87,20 @@ $time = date("h:i");
                                         <th scope="col">Varified By</th>
                                     </tr>
                                 </thead>
-                                @if(count($guestentres) > 0)
+                                @if(count($rooms) > 0)
 
 
                                 <tbody>
-                                    @foreach($guestentres as $row)
+                                    @foreach($rooms as $row)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$row->room->room_no??''}}</td>
-                                        <td>{{$row->room->checkin->guest_name??''}}</td>
-                                        <td>{{$row->room->checkin->checkin_date?? ''}}</td>
-                                        <td>{{$row->entry_date}}</td>
-                                        <td>{{$row->no_of_pax}}</td>
+                                        <td>{{$row->room_no}}</td>
+                                        <td>{{$row->checkin->guest_name??''}}</td>
+                                        <td>{{$row->checkin->checkin_date?? ''}}</td>
+                                        <td>{{$row->guestentry->entry_date}}</td>
+                                        <td>{{$row->guestentry->no_of_pax}}</td>
                                         <td>
-                                            {{$row->varifiedby->username?? ''}}
+                                            {{$row->guestentry->varifiedby->username?? ''}}
                                         </td>
                                     </tr>
                                     @endforeach

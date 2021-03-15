@@ -4,7 +4,7 @@
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$date = date("d/m/Y");
+$date = date("d-m-Y");
 $time = date("h:i");
 @endphp
 
@@ -218,7 +218,7 @@ $time = date("h:i");
                                     <tr>
                                         <td>{{$room->room_no}}</td>
                                         <td>{{$room->roomtype->room_type?? ''}}</td>
-                                        <td>{{$room->housekeeping->keeping_status?? ''}}</td>
+                                        <td>{{$room->housekeepingreport->keeping_status?? ''}}</td>
 
 
 
@@ -231,9 +231,9 @@ $time = date("h:i");
                                         @elseif($room->room_status == 4)
                                         <td class="bg-yellow">Maintenance</td>
                                         @endif
-                                        <td>{{$room->housekeeping->remarks?? ''}}</td>
-                                        <td>{{$room->housekeeping->log_date ?? ''}}</td>
-                                        <td>{{$room->housekeeping->keeping_name?? ''}}</td>
+                                        <td>{{$room->housekeepingreport->remarks?? ''}}</td>
+                                        <td>{{$room->housekeepingreport->log_date ?? ''}}</td>
+                                        <td>{{$room->housekeepingreport->keeping_name?? ''}}</td>
                                         <td>
                                             <a class="badge bg-primary-light mr-2 editmodal" data-toggle="modal" data-target="#exampleModal" data-whatever="{{$room}}"><i class="lar la-edit"></i></a>
                                         </td>
@@ -295,7 +295,7 @@ $time = date("h:i");
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">House Keeping Update</h5>
+                <h5 class="modal-title" id="exampleModalLabel">House Keeping Update new</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -308,24 +308,30 @@ $time = date("h:i");
                         <div class="col-sm-10">
                             <b id="room_no"></b>
                             <input type="hidden" required name="room_id" id="room_id">
+                            <input type="hidden" required name="housekeeping_id" id="housekeeping_id">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-6">
-                            <input type="text" required class="form-control form-control-sm datepicker" name="keeping_date" id="keeping_date" value="{{$date}}">
+                            <input type="text" required class="form-control form-control-sm" id="datepickernew" name="keeping_date" id="keeping_date" value="{{$date}}">
                         </div>
                         <div class="col-sm-4">
                             <input type="time" required class="form-control form-control-sm" name="keeping_time" id="keeping_time" value="{{$time}}">
                         </div>
                     </div>
 
+                    @php
+                  $employee = App\Models\Employee::all();
+                 @endphp
+
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">Updated By</label>
                         <div class="col-sm-8">
                             <select required class="form-control form-control-sm" id="updatedby" name="kepping_name">
-                                <option value="Qayum Hasan">Qayum Hasan</option>
-                                <option value="Asif Foysal">Asif Foysal</option>
+                            @foreach($employee as $row)
+                                <option value="{{$row->employee_name}}">{{$row->employee_name}}</option>
+                            @endforeach
 
                             </select>
                         </div>
@@ -397,22 +403,24 @@ $time = date("h:i");
 <script>
     $(document).ready(function() {
         $(".editmodal").click(function() {
-
+            
             var modal = $(this)
             var data = modal.data('whatever');
             console.log(data.housekeeping);
             document.getElementById('room_no').innerHTML = data.room_no;
             document.getElementById('room_id').value = data.id;
-            document.getElementById('keeping_date').value = data.housekeeping.log_date;
-            document.getElementById('keeping_time').value = data.housekeeping.log_time;
-            document.getElementById('remarks').value = data.housekeeping.remarks;
-            $('#updatedby').val(data.housekeeping.keeping_name).selected;
-            $('#status').val(data.housekeeping.keeping_status).selected;
-
+            document.getElementById('housekeeping_id').value = data.housekeepingreport.id;
+            document.getElementById('keeping_date').value = data.housekeepingreport.log_date;
+            document.getElementById('keeping_time').value = data.housekeepingreport.log_time;
+            document.getElementById('remarks').value = data.housekeepingreport.remarks;
+            $('#updatedby').val(data.housekeepingreport.keeping_name).selected;
+            $('#status').val(data.housekeepingreport.keeping_status).selected;
 
         });
     });
 </script>
+
+
 
 
 

@@ -20,13 +20,13 @@ class HouseKippingController extends Controller
     {
         
         $roomtypes = RoomType::where('is_active',1)->where('is_deleted',0)->get();
-        $rooms = Room::with('housekeeping')->where('is_active',1)->where('is_deleted',0)->where('room_status','!=',3)->get();
+        $rooms = Room::with('housekeepingreport')->where('is_active',1)->where('is_deleted',0)->where('room_status','!=',3)->get();
         return view('housekipping.report.list',compact('rooms','roomtypes'));
     }
 
     public function reporAjaxList($id)
     {
-        $rooms = Room::where('room_type',$id)->where('is_active',1)->where('is_deleted',0)->paginate(10);
+        $rooms = Room::where('room_type',$id)->where('is_active',1)->where('is_deleted',0)->get();
 
         return view('housekipping.report.ajax.ajax_list',compact('rooms'));
 
@@ -34,10 +34,12 @@ class HouseKippingController extends Controller
 
     public function reportUpdate(Request $request)
     {
+
+        
         
        
 
-        $housekeeping = HouseKeeping::where('room_id',$request->room_id)->where('is_active',1)->first();
+        $housekeeping = HouseKeeping::where('room_id',$request->room_id)->where('id',$request->housekeeping_id)->where('is_active',1)->first();
 
         if($housekeeping){
 
