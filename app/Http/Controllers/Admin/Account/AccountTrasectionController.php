@@ -36,9 +36,9 @@ class AccountTrasectionController extends Controller
         $date= Carbon::now()->format('d');
         $orderhed=AccountTransectionHead::orderBy('id','DESC')->first();
         if($orderhed){
-            $invoice='ACT'.$year.'-'.$date.'-H-'.$orderhed->id;
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.$orderhed->id;
         }else{
-            $invoice='ACT'.$year.'-'.$date.'-H-'.'0';
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.'0';
         }
         $allcategory=AccountCategory::get();
         $allchartofaccount=ChartOfAccount::get();
@@ -64,6 +64,9 @@ class AccountTrasectionController extends Controller
 
     // transection details insert
     public function transectiondetailsinsert(Request $request){
+         //return $request;
+
+
        if($request->accounttransecti_id == ''){
            //return "faka";
         $validated = $request->validate([
@@ -79,11 +82,22 @@ class AccountTrasectionController extends Controller
         $data->price = $request->price;
         $data->qty = $request->qty;
         $data->remarks = $request->remarks;
-        $data->category_code = $request->category_code;
-        $data->Accountcategory_code = $request->Accountcategory_code;
+        $data->hiddeninvoice = $request->hiddeninvoice;
 
-        $data->subcategory_codeone = $request->subcategory_codeone;
-        $data->subcategory_codetwo = $request->subcategory_codetwo;
+        if($request->subcategory_codeone=='NULL'){
+            $data->subcategory_codeone = $request->acchead_subcate_codeone;
+        }else{
+            $data->subcategory_codeone = $request->subcategory_codeone;
+        }
+        if($request->subcategory_codetwo=='NULL'){
+            $data->subcategory_codetwo = $request->acchead_subcate_codetwo;
+        }else{
+            $data->subcategory_codetwo = $request->subcategory_codetwo;
+        }
+        $data->category_code = $request->acchead_cate_code;
+        $data->Accountcategory_code = $request->acchead_Accountcate_code;
+        
+        
         
         if($request->amount_cate == "Debit"){
             $data->dr_amount = $request->amount;
@@ -99,15 +113,18 @@ class AccountTrasectionController extends Controller
         $newdata->voucher_no = $request->invoice;
         $newdata->date = $request->date;
         $newdata->rand_id = $rand_id;
+
+        $data->main_invoice = $request->main_invoice;
  
         $newdata->price = $request->price;
         $newdata->qty = $request->qty;
         $newdata->remarks = $request->remarks;
-        $newdata->category_code = $request->category_code;
-        $newdata->Accountcategory_code = $request->Accountcategory_code;
+        
+        $newdata->category_code = $request->sourch_cate_code;
+        $newdata->Accountcategory_code = $request->sourch_Accountcate_code;
 
-        $newdata->subcategory_codeone = $request->subcategory_codeone;
-        $newdata->subcategory_codetwo = $request->subcategory_codetwo;
+        $newdata->subcategory_codeone = $request->sourch_subcate_codeone;
+        $newdata->subcategory_codetwo = $request->sourch_subcate_codetwo;
         
         if($request->amount_cate == "Debit"){
             $newdata->cr_amount = $request->amount;
@@ -161,7 +178,7 @@ class AccountTrasectionController extends Controller
 //
     public function gettransectiondetails($invoice){
        // return $invoice;
-        $alldata=AccountTransectionDetails::where('voucher_no', $invoice)->orderBy('id','DESC')->get();
+        $alldata=AccountTransectionDetails::where('main_invoice', $invoice)->orderBy('id','DESC')->get();
         return view('accounts.accounttransection.ajax.alldata',compact('alldata'));
 
     }
@@ -344,6 +361,117 @@ class AccountTrasectionController extends Controller
         }
     }
 
+    public function getsourchaccount($account_head){
+       
+        $data=ChartOfAccount::where('desription_of_account',$account_head)->first();
+        return response()->json($data);
+    }
+
+    // 
+    public function getsaccheadaccount($account_head){
+        $data=ChartOfAccount::where('desription_of_account',$account_head)->first();
+        return response()->json($data);
+    }
+
+    // 
+    public function getvouchertype($voucher_type){
+
+        $year= Carbon::now()->format('Y');
+        $date= Carbon::now()->format('d');
+        $orderhed=AccountTransectionHead::orderBy('id','DESC')->first();
+
+
+        if($voucher_type=='Cash Payment Voucher'){
+          
+            if($orderhed){
+                $invoice='CPV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='CPV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }elseif($voucher_type=='Bank Payment Voucher'){
+
+            if($orderhed){
+                $invoice='BPV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='BPV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+        }
+        elseif($voucher_type=='Fund Transfer Voucher'){
+
+            if($orderhed){
+                $invoice='FTV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='FTV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }
+        elseif($voucher_type=='Cash Receipt Voucher'){
+
+            if($orderhed){
+                $invoice='CRV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='CRV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }
+        elseif($voucher_type=='Bank Receipt Voucher'){
+            if($orderhed){
+                $invoice='BRV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='BRV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+        }
+        elseif($voucher_type=='AorC Receivable Journal Voucher'){
+
+            if($orderhed){
+                $invoice='ACRJV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='ACRJV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }
+        elseif($voucher_type=='AorC Payble Journal Voucher'){
+
+
+            if($orderhed){
+                $invoice='ACPJV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='ACPJV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }
+        elseif($voucher_type=='Adjustment Journal Voucher'){
+            if($orderhed){
+                $invoice='AJV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='AJV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }elseif($voucher_type=='Acount Opening Voucher'){
+
+            if($orderhed){
+                $invoice='AOV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='AOV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }
+    }
+
+
+
+    // main load invoice
+    
 
 
 }
