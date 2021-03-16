@@ -375,6 +375,7 @@ $time = date("h:i:sa");
                                     <input type="text" required name="service_date" class="controll-from datepicker" value="{{$servicedate}}">
                                     <input type="hidden" name="service_id" value="{{$checkin->id}}" class="controll-from" id="inputEmail3">
                                     <input type="hidden" name="service_no" value="{{rand(1111,99999)}}" class="controll-from" id="inputEmail3">
+                                    <input type="hidden" name="room_no" value="{{$checkin->room_no}}" class="controll-from" id="inputEmail3">
                                 </div>
                                 <div class="col-sm-4">
                                     <input type="time" required name="service_time" class="controll-from" value="{{$servicetime}}">

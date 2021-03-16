@@ -21,9 +21,11 @@ use App\Http\Controllers\Admin\Hotel\CheckingController;
 use App\Http\Controllers\Admin\Hotel\SupplierController;
 use App\Http\Controllers\Admin\Hotel\PurchaseController;
 use App\Http\Controllers\Admin\Hotel\TaxSettingController;
+use App\Http\Controllers\Admin\Hotel\ReservationAnalysisReportControler;
 use App\Http\Controllers\Admin\Hotel\ArrivalDepartureReportController;
 use App\Http\Controllers\Admin\Hotel\StockTransferController;
 use App\Http\Controllers\Admin\Hotel\PurchaseOrderController;
+use App\Http\Controllers\Admin\Hotel\HouseKeepingReportController;
 use App\Http\Controllers\Admin\Inventory\InventoryManageController;
 use App\Http\Controllers\Admin\Inventory\ReportController;
 use App\Http\Controllers\Admin\Hotel\VoucherController;
@@ -497,7 +499,7 @@ Route::middleware(['admin'])->prefix(md5('admin/check-in'))->group(function () {
 Route::get('/admin/service/categores/{id}', [CheckingController::class, 'ServiceCategores']);
 Route::get('admin/checkin/room/history/{id}', [CheckingController::class, 'checkinhistory']);
 
-// asif checkout in group booking
+
 
 
 
@@ -690,6 +692,10 @@ Route::middleware(['admin'])->prefix(md5('admin/occupancey'))->group(function ()
 Route::middleware(['admin'])->prefix('admin/')->group(function () {
     Route::get('/occupancy/report', [OccupancyController::class, 'occupancyReport'])->name('admin.expected.occupancy.report');
     Route::get('/occupancy/report/icon', [OccupancyController::class, 'occupancyReportIcon'])->name('admin.expected.occupancy.report.icon');
+
+   
+
+  
 });
 
 
@@ -697,6 +703,27 @@ Route::middleware(['admin'])->prefix(md5('admin/arrival/departure/'))->group(fun
     Route::get('/checkin/report',[ArrivalDepartureReportController::class,'checkinReport'])->name('admin.arrival.departure.checkin.report');
     Route::get('/checkout/report',[ArrivalDepartureReportController::class,'checkoutReport'])->name('admin.arrival.departure.checkout.report');
     Route::get('/guest/report',[ArrivalDepartureReportController::class,'guestReport'])->name('admin.arrival.departure.guest.report');
+    Route::get('/pending/invoice/report', [ArrivalDepartureReportController::class, 'pendingInvoiceReport'])->name('admin.arrival.departure.pending.invoice.report');
+
+    Route::get('/pending/invoice/report/delete/{booking_no}', [ArrivalDepartureReportController::class, 'pendingInvoiceReportDelete'])->name('admin.pending.invoice.report.delete');
+
+    Route::get('/pending/invoice/{id}', [ArrivalDepartureReportController::class, 'pendingInvoiceReportCreate'])->name('admin.pending.invoice.report.create');
+});
+
+
+Route::middleware(['admin'])->prefix(md5('admin/housekeeping'))->group(function(){
+    Route::get('/extra/service/report',[HouseKeepingReportController::class,'extraServiceReport'])->name('admin.houseKeeping.extra.service.report');
+
+    Route::get('/day/wise/report',[HouseKeepingReportController::class,'dayWiseReport'])->name('admin.houseKeeping.day.wise.report');
+
+    Route::get('/room/wise/report',[HouseKeepingReportController::class,'roomWiseHousekeeping'])->name('admin.houseKeeping.room.wise.report');
+
+    Route::get('/employee/wise/report',[HouseKeepingReportController::class,'employeeWiseHousekeeping'])->name('admin.houseKeeping.employee.wise.report');
+});
+
+
+Route::middleware(['admin'])->prefix(md5('admin/reservation/analysis'))->group(function(){
+    Route::get('/room/report',[ReservationAnalysisReportControler::class,'roomwiseReport'])->name('admin.reservation.analysis.room.report');
 });
 
 

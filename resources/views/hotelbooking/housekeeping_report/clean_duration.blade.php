@@ -1,5 +1,5 @@
 @extends('housekipping.master')
-@section('title', 'Person Entry | '.$seo->meta_title)
+@section('title', 'Clean Duration | '.$seo->meta_title)
 @section('content')
 
 @php
@@ -15,8 +15,6 @@ $time = date("h:i");
 @endphp
 
 
-
-
 <div class="content-page">
     <div class="container-fluid">
 
@@ -24,8 +22,21 @@ $time = date("h:i");
             <div class="col-sm-12">
                 <div class="card p-4">
 
-                    <form id="search_guest_entry_report">
+                    <form id="clean_duration_search">
                         <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
+                            <div class="col-sm-2">
+                                <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
+                                <small class="text-danger from_date"></small>
+                            </div>
+
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
+                            <div class="col-sm-2">
+                                <input class="form-control datepicker form-control-sm" name="to_date" type="text">
+                                <small class="text-danger to_date"></small>
+                            </div>
+
+
 
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>Room No:</b></label>
                             <div class="col-sm-2">
@@ -36,17 +47,6 @@ $time = date("h:i");
                                     @endforeach
                                 </select>
                                 <small class="text-danger room_no"></small>
-                            </div>
-
-
-                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Shift:</b></label>
-                            <div class="col-sm-2">
-                                <select class="form-control form-control-sm" id="select_shift" name="select_shift">
-
-                                    <option>Morning Shift</option>
-                                    <option>Evening Shift</option>
-                                </select>
-                                <small class="text-danger select_shift"></small>
                             </div>
 
                             <div class="col-sm-2">
@@ -61,10 +61,10 @@ $time = date("h:i");
 
         <div class="row">
             <div class="col-sm-12">
-                <div class="card">
+                <div class="card printableAreasaveprint">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Actual No of Guest Entry Report</h4>
+                            <h4 class="card-title">Cleaning Duration Analysis</h4>
                         </div>
                         <!-- <span class="float-right mr-2">
                             <a href="#" class="btn btn-sm bg-primary">
@@ -72,45 +72,8 @@ $time = date("h:i");
                             </a>
                         </span> -->
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive" id="guest_entry_ajax_data">
-
-                            <table class="table table-bordered" id="table_id">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">SL</th>
-                                        <th scope="col">Room</th>
-                                        <th scope="col">Guest Name</th>
-                                        <th scope="col">Arrival</th>
-                                        <th scope="col">Varified Date</th>
-                                        <th scope="col">Actual Pax</th>
-                                        <th scope="col">Varified By</th>
-                                    </tr>
-                                </thead>
-                                @if(count($rooms) > 0)
-
-
-                                <tbody>
-                                    @foreach($rooms as $row)
-                                    <tr>
-                                        <td>{{$loop->iteration}}</td>
-                                        <td>{{$row->room_no}}</td>
-                                        <td>{{$row->checkin->guest_name??''}}</td>
-                                        <td>{{$row->checkin->checkin_date?? ''}}</td>
-                                        <td>{{$row->guestentry->entry_date??''}}</td>
-                                        <td>{{$row->guestentry->no_of_pax??''}}</td>
-                                        <td>
-                                            {{$row->guestentry->varifiedby->username?? ''}}
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                                @endif
-
-
-                            </table>
-
-
+                    <div class="card-body ">
+                        <div class="table-responsive room_ajax_data">
 
 
 
@@ -118,50 +81,76 @@ $time = date("h:i");
 
 
                         </div>
+
+                        <!-- preloader area start -->
+                        <section id="preloader">
+                            <div class="preloader">
+                                <!-- <div></div>
+                                <div></div>
+                                <div></div> -->
+                                <h3 class="text-center">Loading</h3>
+                            </div>
+
+                        </section>
+                        <!-- preloader area end -->
+
+
+
                     </div>
                 </div>
+            </div>
+        </div>
+
+
+        <div class="row text-center">
+            <div class="col-md-12">
+                <button type="button" class="btn-sm btn-info savepritbtn">Print</button>
             </div>
         </div>
     </div>
 </div>
 
+
+
+
 <script>
-    $(document).ready(function() {
-        $('#table_id').DataTable();
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
     });
 </script>
+
 <script>
     $("#select_room_no").select2({
         placeholder: '----Select Room No----'
     });
 </script>
 
-
 <script>
     $(document).ready(function() {
-
+        $('.preloader').hide();
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $(document).on('submit', '#search_guest_entry_report', function(e) {
+        $(document).on('submit', '#clean_duration_search', function(e) {
 
             e.preventDefault();
 
+            $('.preloader').show();
+            $('.room_simple_data').hide();
             $.ajax({
                 type: 'GET',
-                url: "{{ url('/admin/housekepping/guest/entry/report/ajax/list') }}",
-                data: $('#search_guest_entry_report').serializeArray(),
+                url: "{{ url('/admin/housekepping/clean/duration/ajax/list') }}",
+                data: $('#clean_duration_search').serializeArray(),
                 success: function(data) {
                     console.log(data);
-                    document.querySelector('#table_id').remove();
-
-                    $('#guest_entry_ajax_data').append(data);
+                    $('.preloader').hide();
+                    $('.room_ajax_data').append(data);
 
                 },
                 error: function(err) {
-
+                    $('.preloader').hide();
                     if (err.responseJSON.errors.room_no) {
                         $('.room_no').html(err.responseJSON.errors.room_no[0]);
                     }
@@ -180,6 +169,7 @@ $time = date("h:i");
         });
     });
 </script>
+
 
 
 @endsection

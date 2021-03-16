@@ -167,12 +167,12 @@
 
 
                         <li class="">
-                            <a href="#occupancy" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <a href="#arrival_departure" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <i class="far fa-user"></i><span>Arrival & Departure Reports</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
-                            <ul id="occupancy" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                            <ul id="arrival_departure" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
 
 
                                 <li class="{{ request()->routeIs('admin.arrival.departure.checkin.report*') ? 'active' : '' }}">
@@ -192,11 +192,80 @@
                                     </a>
                                 </li>
 
+                                <li class="{{ request()->routeIs('admin.arrival.departure.pending.invoice.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.arrival.departure.pending.invoice.report')}}">
+                                        <i class="las la-list-alt"></i><span>Pending Checkout for Invoice</span>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+
+                        <li class="">
+                            <a href="#housekeepingreport" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>HouseKeeping Report</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="housekeepingreport" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+
+
+                                <li class="{{ request()->routeIs('admin.houseKeeping.extra.service.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.houseKeeping.extra.service.report')}}">
+                                        <i class="las la-list-alt"></i><span>Extra Service Report</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.houseKeeping.day.wise.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.houseKeeping.day.wise.report')}}">
+                                        <i class="las la-list-alt"></i><span>Day Wise Housekeeping</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.houseKeeping.room.wise.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.houseKeeping.room.wise.report')}}">
+                                        <i class="las la-list-alt"></i><span>Room Wise Housekeeping</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.houseKeeping.employee.wise.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.houseKeeping.employee.wise.report')}}">
+                                        <i class="las la-list-alt"></i><span>Employee Wise Housekeeping</span>
+                                    </a>
+                                </li>
+
+
+                              
+                                
+
 
                             </ul>
                         </li>
 
 
+                        <li class="">
+                            <a href="#reservation" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Reservation Analysis</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="reservation" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.reservation.analysis.room.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.reservation.analysis.room.report')}}">
+                                        <i class="las la-user-plus"></i><span>Reservation Analysis By Room</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.branch.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.branch.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Branch</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        
                         <li class="">
                             <a href="#branch" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <i class="far fa-user"></i><span>Branch</span>
