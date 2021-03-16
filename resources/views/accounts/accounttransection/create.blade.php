@@ -18,10 +18,7 @@ $current = date("d/m/Y");
 <div class="content-page">
     <div class="container-fluid">
         <div class="row">
-          
-       
             <div class="col-md-12">
-              
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
@@ -44,9 +41,7 @@ $current = date("d/m/Y");
                                             <tbody>
                                                 <tr>
                                                     <td><label>Voucher Type:</label></td>
-                                              
                                                     <td>   
-                                                   
                                                         <select name="voucher" id="voucher_type" class="form-control noradious">
                                                             <option value="">--select--</option>
                                                             <option value="Cash Payment Voucher">Cash Payment Voucher</option>
@@ -54,23 +49,18 @@ $current = date("d/m/Y");
                                                             <option value="Fund Transfer Voucher">Fund Transfer Voucher</option>
                                                             <option value="Cash Receipt Voucher">Cash Receipt Voucher</option>
                                                             <option value="Bank Receipt Voucher">Bank Receipt Voucher</option>
-                                                            <option value="A/C Receivable Journal Voucher">A/C Receivable Journal Voucher</option>
-                                                            <option value="A/C Payble Journal Voucher">A/C Payble Journal Voucher</option>
+                                                            <option value="AorC Receivable Journal Voucher">A/C Receivable Journal Voucher</option>
+                                                            <option value="AorC Payble Journal Voucher">A/C Payble Journal Voucher</option>
                                                             <option value="Adjustment Journal Voucher">Adjustment Journal Voucher</option>
                                                             <option value="Acount Opening Voucher">Acount Opening Voucher</option>
                                                         </select>
                                                         @error('voucher')
                                                             <p style="color:red">{{ $message }}</p>
                                                         @enderror
-                                                       
-                                                       
                                                      </td>
-                                                       
-
                                                      <td><label>Referance:</label></td>
                                                    <td>
                                                     <input type="text" class="form-control noradious" name="reference">
-                                                   
                                                    </td>
                                                    <td><label>Cheque Referance:</label></td>
                                                     <td>
@@ -82,9 +72,7 @@ $current = date("d/m/Y");
                                                     <td colspan="5">
                                                         <textarea name="narration" class="form-control noradious"></textarea>
                                                     </td>
-                                                   
                                                 </tr>
-                                              
                                             </tbody>
                                             </table>
                                         </div>
@@ -107,6 +95,10 @@ $current = date("d/m/Y");
                                                             <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
                                                             @endforeach
                                                         </datalist>
+                                                        <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
+                                                        <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
+                                                        <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
+                                                        <input type="hidden" value="" name="sourch_subcate_codetwo" id="sourch_subcate_codetwo">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -119,6 +111,10 @@ $current = date("d/m/Y");
                                                             @endforeach
                                                         </datalist>
                                                         <span style="color:red" id="accont_head_err"></span>
+                                                        <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
+                                                        <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
+                                                        <input type="hidden" value="" name="acchead_subcate_codeone" id="acchead_subcate_codeone">
+                                                        <input type="hidden" value="" name="acchead_subcate_codetwo" id="acchead_subcate_codetwo">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -178,8 +174,9 @@ $current = date("d/m/Y");
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="fname">Voucher No: *</label>
-                                                            <input type="text"  class="form-control noradious" value="{{$invoice}}" disabled>
-                                                            <input type="hidden" name="invoice" id="invoice" value="{{$invoice}}">
+                                                            <input type="text"  class="form-control noradious newinvoice" value="" disabled>
+                                                            <input type="hidden" name="invoice" id="invoice" class="newinvoice" value="">
+                                                            <input type="hidden" name="hiddeninvoice" id="hiddeninvoice" class="hiddeninvoice" value="{{$invoice}}">
                                                             <input type="hidden" name="accounttransecti_id" id="accounttransecti_id" >
                                                         </div>
                                                     </div>
@@ -196,20 +193,15 @@ $current = date("d/m/Y");
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="staticEmail" class="col-form-label">Advice:</label>
-                                                             
                                                                 <input type="text" name="advice" class="form-control noradious" id="staticEmail" value="">
-                                                                
                                                             </div>
                                                         </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="card shadow-sm shadow-showcase">
-                                      
                                             <div class="card-body">
-                                             
                                                 <div class="row">
-                                                      
                                                         <div class="col-md-12">
                                                              <div class="form-group row">
                                                                 <label for="staticEmail" class="col-sm-3 col-form-label">Location:</label>
@@ -217,7 +209,6 @@ $current = date("d/m/Y");
                                                                 <input type="text" class="form-control noradious" id="location" name="location">
                                                                 </div>
                                                             </div>
-                                                          
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group row">
@@ -238,9 +229,7 @@ $current = date("d/m/Y");
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2 ">
-                                                               
                                                             <a id="additem" class="btn-sm" style="padding: 10px;background: red; color: #151515;">Add</a>
-                                                                    
                                                         </div>
                                                 </div>
                                             </div>
@@ -249,11 +238,7 @@ $current = date("d/m/Y");
                                     </div>
                                 </div>
                             </div>
-                            
-                           
                     </div>
-                   
-     
                     <div class="col-md-12">
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-header d-flex justify-content-between">
@@ -281,6 +266,40 @@ $current = date("d/m/Y");
         </div>
     </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#voucher_type').on('change', function(){
+       var voucher_type = $(this).val();
+       //alert(voucher_type);
+       if(voucher_type) {
+           $.ajax({
+               url: "{{  url('/get/admin/vouchertype/voucherno/all/') }}/"+voucher_type,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                   //console.log(data);
+                    $(".newinvoice").val(data);
+                    
+                }
+           });
+       } else {
+           //alert('danger');
+       }
+
+   });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#voucher_type').on('change', function(){
+        this.attr('disabled','true');
+      
+
+   });
+});
+</script>
+
 <script type="text/javascript">
   $(document).ready(function() {
      $("#mainqty").on('click', function(){
@@ -317,14 +336,64 @@ $current = date("d/m/Y");
  });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#account_head_main').on('change', function(){
+       var account_head = $(this).val();
+       if(account_head) {
+           $.ajax({
+               url: "{{  url('/get/admin/sourchofaccount/all/') }}/"+account_head,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                    $("#sourch_cate_code").val(data.category_code);
+                    $("#sourch_Accountcate_code").val(data.maincategory_code);
+                    $("#sourch_subcate_codeone").val(data.subcategoryone_code);
+                    $("#sourch_subcate_codetwo").val(data.subcategorytwo_code);
+                }
+           });
+       } else {
+           //alert('danger');
+       }
 
-<!-- tax add -->
+   });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#account_head').on('change', function(){
+     var account_head = $(this).val();
+     //alert(account_head);
+       if(account_head) {
+           $.ajax({
+               url: "{{  url('/get/admin/headofaccount/all/') }}/"+account_head,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                    $("#acchead_cate_code").val(data.category_code);
+                    $("#acchead_Accountcate_code").val(data.maincategory_code);
+                    $("#acchead_subcate_codeone").val(data.subcategoryone_code);
+                    $("#acchead_subcate_codetwo").val(data.subcategorytwo_code);
+                   
+                }
+           });
+       } else {
+          // alert('danger');
+       }
+
+   });
+});
+</script>
 <script>
 $(document).ready(function() {
     $('#additem').on('click', function() {
 
       var subcategory_codetwo=$("#subcategory_codetwo").val();
       var subcategory_codeone=$("#subcategory_codeone").val();
+     
+
       var remarks=$("#remarks").val();
       var qty=$("#qty").val();
       var price=$("#price").val();
@@ -336,6 +405,19 @@ $(document).ready(function() {
       var invoice=$("#invoice").val();
       var date=$("#date").val();
       var accounttransecti_id=$("#accounttransecti_id").val();
+    //   hidden value
+      var sourch_cate_code=$("#sourch_cate_code").val();
+      var sourch_Accountcate_code=$("#sourch_Accountcate_code").val();
+      var sourch_subcate_codeone=$("#sourch_subcate_codeone").val();
+      var sourch_subcate_codetwo=$("#sourch_subcate_codetwo").val();
+
+      var acchead_cate_code=$("#acchead_cate_code").val();
+      var acchead_Accountcate_code=$("#acchead_Accountcate_code").val();
+      var acchead_subcate_codeone=$("#acchead_subcate_codeone").val();
+      var acchead_subcate_codetwo=$("#acchead_subcate_codetwo").val();
+
+      var hiddeninvoice=$("#hiddeninvoice").val();
+
      
       //alert(invoice_no);
         $.ajax({
@@ -343,6 +425,7 @@ $(document).ready(function() {
             url: "{{route('account.transection.insert')}}",
             //data: $('#tax_cal').serializeArray(),
             data: {
+
                 subcategory_codetwo:subcategory_codetwo,
                 subcategory_codeone:subcategory_codeone,
                 remarks:remarks,
@@ -356,6 +439,21 @@ $(document).ready(function() {
                 invoice:invoice,
                 date:date,
                 accounttransecti_id:accounttransecti_id,
+
+                sourch_cate_code:sourch_cate_code,
+                sourch_Accountcate_code:sourch_Accountcate_code,
+                sourch_subcate_codeone:sourch_subcate_codeone,
+                sourch_subcate_codetwo:sourch_subcate_codetwo,
+
+                acchead_cate_code:acchead_cate_code,
+                acchead_Accountcate_code:acchead_Accountcate_code,
+                acchead_subcate_codeone:acchead_subcate_codeone,
+                acchead_subcate_codetwo:acchead_subcate_codetwo,
+
+                hiddeninvoice:hiddeninvoice,
+
+
+
             },
 
             success: function(data) {
@@ -370,6 +468,17 @@ $(document).ready(function() {
                 $('#amount').val("");
                 $('#accounttransecti_id').val("");
                 $('#account_head_main').val("");
+
+
+                $('#sourch_cate_code').val("");
+                $('#sourch_Accountcate_code').val("");
+                $('#sourch_subcate_codeone').val("");
+                $('#sourch_subcate_codetwo').val("");
+
+                $('#acchead_cate_code').val("");
+                $('#acchead_Accountcate_code').val("");
+                $('#acchead_subcate_codeone').val("");
+                $('#acchead_subcate_codetwo').val("");
                
                 
                 alldata();
@@ -392,8 +501,8 @@ $(document).ready(function() {
 <script>
     function alldata() {
       //alert("ok");
-        var invoice = $("#invoice").val();
-        //alert(invoice);
+        var invoice = $("#hiddeninvoice").val();
+        // alert(invoice);
         $.post('{{ url('/get/alldatatransection/data/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
             function(data) {
 
