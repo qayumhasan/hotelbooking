@@ -54,4 +54,7 @@ class OccupancyController extends Controller
         
     }
 
+
+    
+
 }

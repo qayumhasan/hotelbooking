@@ -13,4 +13,14 @@ class CheckinService extends Model
     {
         return $this->hasOne('App\Models\Checkin','id','checkin_id');
     }
+
+    public function itementry()
+    {
+        return $this->hasOne('App\Models\ItemEntry','id','services');
+    }
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\Admin','id','entry_by');
+    }
 }

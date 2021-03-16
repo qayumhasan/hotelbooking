@@ -73,6 +73,8 @@ class HousekeepingReportController extends Controller
 
     public function employeeWiseGetAjaxData(Request $request)
     {
+
+        
         $request->validate([
             'keeping_name'=>'required',
         ]);

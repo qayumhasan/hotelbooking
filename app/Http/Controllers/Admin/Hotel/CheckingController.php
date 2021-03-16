@@ -290,6 +290,8 @@ class CheckingController extends Controller
     public function serviceStore(Request $request)
     {
 
+        
+
         $request->validate([
             'service_date' => 'required',
             'service_time' => 'required',
@@ -309,6 +311,7 @@ class CheckingController extends Controller
         
 
         $services = new CheckinService();
+        $services->room_no = $request->room_no;
         $services->service_no = $request->service_no;
         $services->checkin_id = $request->service_id;
         $services->booking_no = $booking_no;
@@ -323,6 +326,8 @@ class CheckingController extends Controller
         $services->qty = $request->qty;
         $services->amount = $request->qty * $request->rate;
         $services->is_third = $request->is_third;
+        $services->entry_by = auth()->user()->id;
+        $services->entry_date = Carbon::now();
         if ($request->is_third == 1) {
             $services->third_party = $request->third_party;
         }
@@ -542,6 +547,7 @@ class CheckingController extends Controller
 
 
             $checkout->additional_room = $request->safsda;
+            
 
             $checkout->entry_by = Auth::user()->id;
             $checkout->entry_date = Carbon::now();
@@ -853,4 +859,7 @@ class CheckingController extends Controller
 
         return response()->json($guest);
     }
+
+
+    
 }

@@ -63,11 +63,19 @@ $time = date("h:i");
                                         <td>{{$row->booking_no}}</td>
                                         <td>{{$row->room_no}}</td>
                                         <td>{{$row->roomtype->room_type ?? ''}}</td>
-                                        <td>{{$row->checkout->gross_amount?round($row->checkout->gross_amount,2):''}}</td>
+                                        @if(isset($row->checkout->gross_amount))
+                                        <td>{{round($row->checkout->gross_amount,2)}}</td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>{{$row->guest_name}}</td>
                                         <td>{{$row->city}}</td>
                                         <td>{{$row->company}}</td>
-                                        <td>{{$row->checkout->discount_amount?round($row->checkout->discount_amount,2):''}}</td>
+                                        @if(isset($row->checkout->discount_amount))
+                                        <td>{{round($row->checkout->discount_amount,2)}}</td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td>{{$row->number_of_person}}</td>
                                         <td>{{$row->vehicle_type}}</td>
                                         <td>{{$row->checkin_date}}</td>
@@ -79,8 +87,20 @@ $time = date("h:i");
                                         @php
                                         $totalnight =  $totalnight + (int)$row->additional_room_day;
                                         $noofpax = $noofpax +$row->number_of_person;
-                                        $totaldiscount  =  $totaldiscount +$row->checkout->discount_amount?round($row->checkout->discount_amount,2):0;
-                                        $netamount  =  $netamount + $row->checkout->gross_amount;
+                               
+                                        if(isset($row->checkout->discount_amount)){
+                                            $totaldiscount  =  $totaldiscount + $row->checkout->discount_amount;
+                                        }else{
+                                            $totaldiscount  =  $totaldiscount + 0;
+                                        }
+                                        
+
+                                        if(isset($row->checkout->gross_amount)){
+                                            $netamount  =  $netamount + $row->checkout->gross_amount;
+                                        }else{
+                                            $netamount  =  $netamount + 0;
+                                        }
+                                        
 
                                         @endphp
 

@@ -14,4 +14,13 @@ class Checkout extends Model
     {
         return $this->hasOne('App\Models\Admin','id','entry_by');
     }
+
+    
+    /**
+     * Get the phone associated with the user.
+     */
+    public function checkin()
+    {
+        return $this->hasOne('App\Models\Checkin','booking_no','booking_no');
+    }
 }
