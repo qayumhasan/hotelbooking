@@ -48,6 +48,39 @@ class Room extends Model
         return $this->hasOne('App\Models\HouseKeepingGuestEntry','room_id','id');
     }
 
+    public function checkindata()
+    {
+        return $this->hasMany('App\Models\Checkin','room_id','id');
+    }
+
+    public function getNumberOfBookingAttribute()
+    {
+        return $this->checkindata->count();
+        
+    }
+
+    public function getNumberOfNightAttribute()
+    {
+        return $this->checkindata->sum('additional_room_day');
+        
+    }
+
+    public function getnumberofguestAttribute()
+    {
+        return $this->checkindata->sum('number_of_person');
+    }
+
+    public function gettotalrevenuesAttribute()
+    {
+        $totalrevenus = 0;
+        foreach ($this->checkindata as $item) {
+            $totalrevenus = $totalrevenus +$item->checkout['gross_amount'];
+        }
+        return $totalrevenus;
+    }
+
+  
+
 
   
 
