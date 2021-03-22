@@ -940,19 +940,19 @@ $time = date("h:i");
                     
                     swal({
                     title: "One Guest Name Found!",
-                    text: "Are You Sure Fill Up from with this Guest information?",
+                    text: "Please!Choose Another Name!",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
                 })
                 .then((willDelete) => {
                     if (willDelete) {
-                        $('#printname').val(data.print_name);
-                        $('#company_name').val(data.company_name);
-                        $('#city').val(data.city);
-                        $('#mobile').val(data.mobile);
-                        $('#email').val(data.email);
-                        $('#guestgender').val(data.gender).selected;
+                        // $('#printname').val(data.print_name);
+                        // $('#company_name').val(data.company_name);
+                        // $('#city').val(data.city);
+                        // $('#mobile').val(data.mobile);
+                        // $('#email').val(data.email);
+                        // $('#guestgender').val(data.gender).selected;
 
                     } else {
                         swal("Ok!");

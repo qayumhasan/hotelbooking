@@ -48,7 +48,7 @@ $time = date("h:i");
                 <div class="card printableAreasaveprint">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Reservation Room Wise Analysis</h4>
+                            <h4 class="card-title">Reservation Room Type Wise Analysis</h4>
                         </div>
                         <!-- <span class="float-right mr-2">
                             <a href="#" class="btn btn-sm bg-primary">
@@ -73,7 +73,7 @@ $time = date("h:i");
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
+                                @php
                                     $booking_number = 0;
                                     $total_night = 0;
                                     $avgnight = 0;
@@ -84,24 +84,27 @@ $time = date("h:i");
                                     $total_revenue = 0;
                                     @endphp
 
-                                    @if(count($rooms) > 0)
-
-
-                                    @foreach($rooms as $row)
+                                    @if(count($roomtypes) > 0)
+                                    @foreach($roomtypes as $row)
                                     <tr>
-                                        <td>{{$row->room_no}}</td>
+                                        <td>{{$row->room_type}}</td>
                                         <td>{{$row->NumberOfBooking}}</td>
                                         <td>{{$row->NumberOfNight}}</td>
-                                        <td>{{round($row->NumberOfNight / $row->NumberOfBooking,2)}}</td>
-                                        <td>{{$row->numberofguest}}</td>
-                                        <td>{{$row->totalrevenues}}</td>
-                                        @if($row->NumberOfNight != 0)
-                                        <td>{{round($row->totalrevenues/$row->NumberOfNight,2)}}</td>
+                                        @if($row->NumberOfNight !=0)
+                                        <td>{{$row->NumberOfBooking /$row->NumberOfNight}}</td>
                                         @else
                                         <td>0</td>
                                         @endif
-                                        @if($row->NumberOfBooking != 0)
-                                        <td>{{round($row->totalrevenues/$row->NumberOfBooking,2)}}</td>
+                                        <td>{{$row->numberofguest}}</td>
+                                        <td>{{$row->totalrevenues}}</td>
+                                        @if($row->NumberOfNight !=0)
+                                        <td>{{$row->totalrevenues / $row->NumberOfNight}}</td>
+                                        @else
+                                        <td>0</td>
+                                        @endif
+
+                                        @if($row->NumberOfBooking !=0)
+                                        <td>{{$row->totalrevenues / $row->NumberOfBooking}}</td>
                                         @else
                                         <td>0</td>
                                         @endif
@@ -111,7 +114,14 @@ $time = date("h:i");
                                     @php
                                     $booking_number = $booking_number + $row->NumberOfBooking;
                                     $total_night = $total_night + $row->NumberOfNight;
-                                    $avgnight = $avgnight + round($row->NumberOfNight / $row->NumberOfBooking,2);
+                                    if($row->NumberOfBooking !=0){
+                                        $avgnight = $avgnight +  ($row->NumberOfBooking /$row->NumberOfNight);
+                                    }else{
+                                        $avgnight = $avgnight + 0;
+                                    }
+                                   
+                                   
+
                                     $no_of_guest = $no_of_guest + $row->numberofguest;
 
                                     $accumo_revenue = $accumo_revenue + $row->totalrevenues;
@@ -131,9 +141,8 @@ $time = date("h:i");
 
                                     @endphp
                                     @endforeach
-
                                     @endif
-
+                         
                                     <tr>
                                         <th>Total</th>
                                         <th>{{$booking_number}}</th>
@@ -145,6 +154,7 @@ $time = date("h:i");
                                         <th>{{$avg_booking}}</th>
                                         <th>{{$total_revenue}}</th>
                                     </tr>
+            
 
                                 </tbody>
                             </table>
@@ -174,24 +184,5 @@ $time = date("h:i");
         </div>
     </div>
 </div>
-
-
-
-
-<script>
-    $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy',
-    });
-</script>
-
-<script>
-    $("#select_room_no").select2({
-        placeholder: '----Select Room No----'
-    });
-</script>
-
-<!--  -->
-
-
 
 @endsection

@@ -79,6 +79,32 @@ class CheckingController extends Controller
             'room_status' => 3,
         ]);
 
+        // insert guest information
+
+        $check = Guest::where('guest_name',$request->guest_name)->first();
+        if(!$check){
+            $guest = new Guest();
+            $guest->guest_name = $request->guest_name;
+            $guest->title = $request->person_title;
+            $guest->print_name = $request->print_name;
+            $guest->gender = $request->gender;
+            $guest->company_name = $request->company_name;
+            $guest->city = $request->city;
+            $guest->mobile = $request->mobile;
+            $guest->email = $request->email;
+            $guest->date = Carbon::now();
+            $guest->save();
+        }else{
+
+            $notification = array(
+                'messege' => 'Sorry! This Guest Name Already exist!',
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+
 
         $checkin = new Checkin();
         $checkin->room_id = $request->room_id;

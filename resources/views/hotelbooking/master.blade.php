@@ -253,14 +253,41 @@
                             <ul id="reservation" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.reservation.analysis.room.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.reservation.analysis.room.report')}}">
-                                        <i class="las la-user-plus"></i><span>Reservation Analysis By Room</span>
+                                        <i class="las la-user-plus"></i><span>Room Wise Analysis</span>
                                     </a>
                                 </li>
-                                <li class="{{ request()->routeIs('admin.branch.create*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.branch.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Branch</span>
+                                
+                                <li class="{{ request()->routeIs('admin.reservation.analysis.room.type.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.reservation.analysis.room.type.report')}}">
+                                        <i class="las la-user-plus"></i><span>Room Type Analysis</span>
                                     </a>
                                 </li>
+                                
+                            </ul>
+                        </li>
+
+
+                        <li class="">
+                            <a href="#collectionreport" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Collection Report</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="collectionreport" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.daily.collection.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.daily.collection.report')}}">
+                                        <i class="las la-user-plus"></i><span>Daily Collection</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.guest.payment.history*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.guest.payment.history')}}">
+                                        <i class="las la-user-plus"></i><span>Guest Payment History</span>
+                                    </a>
+                                </li>
+                                
+
+                                
                             </ul>
                         </li>
 

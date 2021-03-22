@@ -14,4 +14,12 @@ class Voucher extends Model
     {
         return $this->belongsTo(Checkin::class,'booking_no','booking_no');
     }
+
+    
+    public function cashier()
+    {
+        return $this->hasOne('App\Models\Admin','id','entry_by');
+    }
+
+
 }

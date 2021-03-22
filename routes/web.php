@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Hotel\HotelManageController;
 use App\Http\Controllers\Admin\Hotel\BranchController;
 use App\Http\Controllers\Admin\Hotel\FloorController;
 use App\Http\Controllers\Admin\Hotel\RoomTypeController;
+use App\Http\Controllers\Admin\Hotel\CollectionReportController;
 use App\Http\Controllers\Admin\Hotel\RoomController;
 use App\Http\Controllers\Admin\Hotel\UnitMasterController;
 use App\Http\Controllers\Admin\Hotel\MenuCategoryController;
@@ -724,6 +725,20 @@ Route::middleware(['admin'])->prefix(md5('admin/housekeeping'))->group(function(
 
 Route::middleware(['admin'])->prefix(md5('admin/reservation/analysis'))->group(function(){
     Route::get('/room/report',[ReservationAnalysisReportControler::class,'roomwiseReport'])->name('admin.reservation.analysis.room.report');
+
+    Route::get('/room/type/report',[ReservationAnalysisReportControler::class,'roomtypewiseReport'])->name('admin.reservation.analysis.room.type.report');
+});
+
+
+Route::middleware(['admin'])->prefix(md5('admin/collection/report'))->group(function(){
+
+    Route::get('/daily/collection',[CollectionReportController::class,'dailyCollection'])->name('admin.daily.collection.report');
+    Route::get('/daily/ajax/collection',[CollectionReportController::class,'dailyCollectionAjaxReport'])->name('admin.daily.collection.ajax.report');
+
+    Route::get('/guest/payment/history',[CollectionReportController::class,'guestPaymentHistory'])->name('admin.guest.payment.history');
+
+    Route::get('/ajax/guest/payment/history',[CollectionReportController::class,'ajaxGuestPaymentHistory'])->name('admin.guest.payment.history.ajax');
+
 });
 
 
