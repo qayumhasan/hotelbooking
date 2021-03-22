@@ -57,15 +57,15 @@ $current = date("d/m/Y");
                                                         @error('voucher')
                                                             <p style="color:red">{{ $message }}</p>
                                                         @enderror
+                                                        <input type="hidden" id="voucher_name" name="voucher_name">
                                                      </td>
+                                                     <td><span id="plus_icon" style="display:none"><a href="#" id="changeVoucher"><i class="fas fa-plus-square"></i></a></span></td>
+                                                     <td></td>
                                                      <td><label>Referance:</label></td>
                                                    <td>
                                                     <input type="text" class="form-control noradious" name="reference">
                                                    </td>
-                                                   <td><label>Cheque Referance:</label></td>
-                                                    <td>
-                                                        <input type="text" class="form-control noradious" name="cheque_reference">
-                                                    </td>
+                                                   
                                                 </tr>
                                                 <tr>
                                                     <td><label>Narration:</label></td>
@@ -197,6 +197,16 @@ $current = date("d/m/Y");
                                                             </div>
                                                         </div>
                                                 </div>
+                                                <div class="row" id="check_r" style="display:none">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="staticEmail" class="col-form-label">Cheque Referance:</label>
+                                                                <select name="cheque_reference" id="cheque_reference" class="form-control noradious">
+                                                                    <option value="">--select--</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="card shadow-sm shadow-showcase">
@@ -214,7 +224,8 @@ $current = date("d/m/Y");
                                                             <div class="form-group row">
                                                                 <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
                                                                 <div class="col-sm-7">
-                                                                <input type="text" class="form-control noradious" id="amount" name="amount" >
+                                                                <input type="text" class="form-control noradious" id="amount" name="amount">
+                                                                <span style="color:red;font-size:10px;" id="accont_amount"></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -270,7 +281,7 @@ $current = date("d/m/Y");
 $(document).ready(function() {
    $('#voucher_type').on('change', function(){
        var voucher_type = $(this).val();
-       //alert(voucher_type);
+        
        if(voucher_type) {
            $.ajax({
                url: "{{  url('/get/admin/vouchertype/voucherno/all/') }}/"+voucher_type,
@@ -279,6 +290,7 @@ $(document).ready(function() {
                success:function(data) {
                    //console.log(data);
                     $(".newinvoice").val(data);
+                    alldata();
                     
                 }
            });
@@ -289,13 +301,94 @@ $(document).ready(function() {
    });
 });
 </script>
+<script>
+
+$(document).ready(function() {
+   $('#account_head_main').on('change', function(){
+       var account_head = $(this).val();
+        //alert(account_head);
+       if(account_head) {
+           $.ajax({
+               url: "{{  url('/get/admin/accounthead/checkbok/all') }}/"+account_head,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#cheque_reference').empty();
+                        $('#cheque_reference').append(' <option value="">--select--</option>');
+                        $.each(data,function(index,districtObj){
+                         $('#cheque_reference').append('<option value="' + districtObj.id + '">'+districtObj.check_number+'</option>');
+                       });
+                    alldata();
+                    
+                }
+           });
+       } else {
+         
+       }
+
+   });
+});
+</script>
+
+
+
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#changeVoucher').on('click', function(){
+       var invoice =$("#invoice").val();
+      
+       if(invoice) {
+           $.ajax({
+               url: "{{  url('/get/admin/vouchertype/open/voucher/') }}/"+invoice,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                 
+                    var item =document.querySelector('#voucher_type').disabled = false;
+                    $("#plus_icon").hide();
+                    alldata();
+                    
+                }
+           });
+       } else {
+        
+       }
+
+   });
+});
+</script>
+
 
 <script type="text/javascript">
 $(document).ready(function() {
    $('#voucher_type').on('change', function(){
-        this.attr('disabled','true');
+       
+       var mainval=$(this).val();
+       $("#voucher_name").val(mainval);
+        var item =document.querySelector('#voucher_type').disabled = true;
+        alldata();
+        
       
+   });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#voucher_type').on('change', function(){
+       $("#plus_icon").show();
 
+       var v_val=$(this).val();
+       if(v_val=="Bank Receipt Voucher"){
+        $("#check_r").show();
+       }else if(v_val=="Bank Payment Voucher"){
+        $("#check_r").show();
+       }else{
+           $("#check_r").hide();
+       }
+       alldata();
+      
    });
 });
 </script>
@@ -389,11 +482,14 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     $('#additem').on('click', function() {
+        var vouchertype=$("#voucher_type").val();
+        if(vouchertype == ''){
+            alert("Please select Voucher Type");
 
+        }else{
+           // alert("ok");
       var subcategory_codetwo=$("#subcategory_codetwo").val();
       var subcategory_codeone=$("#subcategory_codeone").val();
-     
-
       var remarks=$("#remarks").val();
       var qty=$("#qty").val();
       var price=$("#price").val();
@@ -415,11 +511,9 @@ $(document).ready(function() {
       var acchead_Accountcate_code=$("#acchead_Accountcate_code").val();
       var acchead_subcate_codeone=$("#acchead_subcate_codeone").val();
       var acchead_subcate_codetwo=$("#acchead_subcate_codetwo").val();
-
       var hiddeninvoice=$("#hiddeninvoice").val();
-
      
-      //alert(invoice_no);
+      //alert(voucher_name);
         $.ajax({
             type: 'GET',
             url: "{{route('account.transection.insert')}}",
@@ -449,8 +543,8 @@ $(document).ready(function() {
                 acchead_Accountcate_code:acchead_Accountcate_code,
                 acchead_subcate_codeone:acchead_subcate_codeone,
                 acchead_subcate_codetwo:acchead_subcate_codetwo,
-
                 hiddeninvoice:hiddeninvoice,
+               
 
 
 
@@ -479,6 +573,7 @@ $(document).ready(function() {
                 $('#acchead_Accountcate_code').val("");
                 $('#acchead_subcate_codeone').val("");
                 $('#acchead_subcate_codetwo').val("");
+           
                
                 
                 alldata();
@@ -487,9 +582,13 @@ $(document).ready(function() {
 
             error: function (err) {
                $('#accont_head_err').html(err.responseJSON.errors.account_head[0]);
+               $('#accont_amount').html(err.responseJSON.errors.amount[0]);
             }
           
         });
+        }
+    
+      
        
 
     });
@@ -501,7 +600,7 @@ $(document).ready(function() {
 <script>
     function alldata() {
       //alert("ok");
-        var invoice = $("#hiddeninvoice").val();
+        var invoice = $("#invoice").val();
         // alert(invoice);
         $.post('{{ url('/get/alldatatransection/data/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
             function(data) {

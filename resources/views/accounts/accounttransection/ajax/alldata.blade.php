@@ -20,7 +20,7 @@
       <td>{{$data->cr_amount}}</td>
       <td>{{$data->remarks}}</td>
       <td>
-      <button type="button" onclick="editdata(this)" data-toggle="tooltip" title="" class="editcat badge bg-primary-light" value="{{$data->id}}" data-original-title="Remove"><i class="lar la-edit"></i></button>
+      
         <button type="button" onclick="Datadelete(this)" data-toggle="tooltip" title="" class="badge bg-danger-light" value="{{$data->id}}" data-original-title="Remove"><i class="la la-trash"></i></button>
       
       </td>

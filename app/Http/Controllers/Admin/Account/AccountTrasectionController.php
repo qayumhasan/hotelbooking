@@ -11,6 +11,7 @@ use App\Models\AccountSubCategoryTwo;
 use App\Models\ChartOfAccount;
 use App\Models\AccountTransectionDetails;
 use App\Models\AccountTransectionHead;
+use App\Models\CheckBookTransection;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -36,9 +37,9 @@ class AccountTrasectionController extends Controller
         $date= Carbon::now()->format('d');
         $orderhed=AccountTransectionHead::orderBy('id','DESC')->first();
         if($orderhed){
-            $invoice='invoice-'.$year.'-'.$date.'-H-'.$orderhed->id;
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.$orderhed->id.rand(5555,10000);
         }else{
-            $invoice='invoice-'.$year.'-'.$date.'-H-'.'0';
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.'0'.rand(5555,10000);
         }
         $allcategory=AccountCategory::get();
         $allchartofaccount=ChartOfAccount::get();
@@ -71,6 +72,7 @@ class AccountTrasectionController extends Controller
            //return "faka";
         $validated = $request->validate([
             'account_head' => 'required',
+            'amount' => 'required',
         ]);
         $rand_id=rand(666,1999);
         $data = new AccountTransectionDetails;
@@ -82,7 +84,8 @@ class AccountTrasectionController extends Controller
         $data->price = $request->price;
         $data->qty = $request->qty;
         $data->remarks = $request->remarks;
-        $data->hiddeninvoice = $request->hiddeninvoice;
+        $data->main_invoice = $request->hiddeninvoice;
+        $data->is_active = 0;
 
         if($request->subcategory_codeone=='NULL'){
             $data->subcategory_codeone = $request->acchead_subcate_codeone;
@@ -113,12 +116,11 @@ class AccountTrasectionController extends Controller
         $newdata->voucher_no = $request->invoice;
         $newdata->date = $request->date;
         $newdata->rand_id = $rand_id;
-
-        $data->main_invoice = $request->main_invoice;
- 
         $newdata->price = $request->price;
         $newdata->qty = $request->qty;
         $newdata->remarks = $request->remarks;
+        $newdata->main_invoice = $request->hiddeninvoice;
+        $data->is_active = 0;
         
         $newdata->category_code = $request->sourch_cate_code;
         $newdata->Accountcategory_code = $request->sourch_Accountcate_code;
@@ -138,47 +140,13 @@ class AccountTrasectionController extends Controller
         }else{
             return response('no');
         }
-    }else{
-        
-            $id=$request->accounttransecti_id;
-            $validated = $request->validate([
-                'account_head' => 'required',
-            ]);
-
-            $data = AccountTransectionDetails::findorFail($id);
-            $data->account_head_details = $request->account_head;
-            $data->voucher_no = $request->invoice;
-            $data->date = $request->date;
-            $data->location = $request->location;
-            $data->price = $request->price;
-            $data->qty = $request->qty;
-            $data->remarks = $request->remarks;
-            $data->category_code = $request->category_code;
-            $data->Accountcategory_code = $request->Accountcategory_code;
-
-            $data->subcategory_codeone = $request->subcategory_codeone;
-            $data->subcategory_codetwo = $request->subcategory_codetwo;
-            
-            if($request->amount_cate == "Debit"){
-                $data->dr_amount = $request->amount;
-                $data->cr_amount = NULL;
-            }elseif($request->amount_cate == "Cradit"){
-                $data->cr_amount = $request->amount;
-                $data->dr_amount = NULL;
-            }
-            if($data->save()){
-            
-            return response('ok');
-            }else{
-                return response('Faild');
-            }
     }
 
 }
 //
     public function gettransectiondetails($invoice){
        // return $invoice;
-        $alldata=AccountTransectionDetails::where('main_invoice', $invoice)->orderBy('id','DESC')->get();
+        $alldata=AccountTransectionDetails::where('voucher_no', $invoice)->where('is_deleted',0)->orderBy('id','DESC')->get();
         return view('accounts.accounttransection.ajax.alldata',compact('alldata'));
 
     }
@@ -190,8 +158,14 @@ class AccountTrasectionController extends Controller
 
     // delete
     public function transectiondelete(Request $request){
-       // return $request->tran_id;
-        $delete=AccountTransectionDetails::where('id',$request->tran_id)->delete();
+      
+        $check=AccountTransectionDetails::where('id',$request->tran_id)->first();
+        
+        $fioo=AccountTransectionDetails::where('rand_id',$check->rand_id)->get();
+       
+        foreach($fioo as $del){
+            AccountTransectionDetails::where('id',$del->id)->delete();
+        }
         return response("ok");
 
     }
@@ -199,14 +173,12 @@ class AccountTrasectionController extends Controller
 
     // final account transection 
     public function insertfinal(Request $request){
-        //return $request;
+       // return $request->voucher_name;
         $check=AccountTransectionDetails::where('voucher_no',$request->invoice)->first();
         if($check){
-            $validated = $request->validate([
-                'voucher' => 'required',
-            ]);
+              
                 $insert=AccountTransectionHead::insert([
-                    'voucher_type'=>$request->voucher,
+                    'voucher_type'=>$request->voucher_name,
                     'voucher_no'=>$request->invoice,
                     'date'=>$request->date,
                     'reference'=>$request->reference,
@@ -382,7 +354,6 @@ class AccountTrasectionController extends Controller
 
 
         if($voucher_type=='Cash Payment Voucher'){
-          
             if($orderhed){
                 $invoice='CPV'.$year.'-'.$date.'-H-'.$orderhed->id;
             }else{
@@ -468,9 +439,24 @@ class AccountTrasectionController extends Controller
         }
     }
 
+    public function openvoichertype($invoice){
+        $foioo=AccountTransectionDetails::where('voucher_no',$invoice)->get();
+        foreach($foioo as $del){
+            AccountTransectionDetails::where('id',$del->id)->delete();
+        }
+        return response()->json("ok");
+    }
 
 
     // main load invoice
+    public function getcheckbookall($account_head){
+       
+        $data=ChartOfAccount::where('desription_of_account',$account_head)->select(['id'])->first();
+        $newdata=CheckBookTransection::where('account_code',$data->id)->get();
+        return response()->json($newdata);
+       
+
+    }
     
 
 
