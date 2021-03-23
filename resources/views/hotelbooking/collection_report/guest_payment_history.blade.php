@@ -14,7 +14,7 @@
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>Guest:</b></label>
                             <div class="col-sm-5">
-                                <select class="form-control form-control-sm" id="guest_name">
+                                <select class="form-control form-control-sm" id="guest_name select_room_no">
                                     <option disabled selected>---- Select A Guest Name ----</option>
                                     @foreach($guests as $row)
                                     <option value="{{$row->id}}">{{$row->guest_name}}</option>
@@ -120,6 +120,12 @@
     </div>
 </div>
 
+
+<script>
+    $("#select_room_no").select2({
+        placeholder: '----Select Room No----'
+    });
+</script>
 
 
 <script>

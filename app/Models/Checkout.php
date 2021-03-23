@@ -23,4 +23,19 @@ class Checkout extends Model
     {
         return $this->hasOne('App\Models\Checkin','booking_no','booking_no');
     }
+
+    public function checkindata()
+    {
+        return $this->hasMany('App\Models\Checkin','booking_no','booking_no');
+    }
+
+    public function voucherData()
+    {
+        return $this->hasMany('App\Models\Voucher','booking_no','booking_no');
+    }
+
+    public function taxdetails()
+    {
+        return $this->hasMany('App\Models\CheckOut_Tax_Details','booking_no','booking_no');
+    }
 }
