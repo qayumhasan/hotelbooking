@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Hotel;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Checkin;
+use App\Models\Checkout;
 use App\Models\Guest;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
@@ -60,6 +61,45 @@ class CollectionReportController extends Controller
         }
 
 
+    }
+
+
+    public function invoiceSummaryList()
+
+    {
+        
+        $guests =Guest::where('is_active',1)->where('is_deleted',0)->get();
+        $bookinghistory = Checkout::with(['checkin','voucherData'])->where('is_active',0)->get();
+        return view('hotelbooking.collection_report.invoice_summery',compact('bookinghistory','guests'));
+    }
+
+
+    public function invoiceSummaryAjaxList(Request $request)
+    {
+        
+        $request->validate([
+            'guest_name'=>'required',
+        ]);
+
+        $guestname = $request->guest_name;
+        $bookinghistory = Checkout::whereHas('checkin',function($query) use ($guestname){
+            $query->where('guest_name', 'like', '%'.$guestname.'%');
+
+        })
+        ->with(['checkin'=>function($query) use ($guestname){
+            $query->where('guest_name', 'like', '%'.$guestname.'%');
+
+        }])->get();
+
+        return view('hotelbooking.collection_report.ajax.invoice_summery_ajax',compact('bookinghistory'));
+    }
+
+
+    public function postToRoomList()
+    {
+        $guests =Guest::where('is_active',1)->where('is_deleted',0)->get();
+
+        return view('hotelbooking.collection_report.post_to_room',compact('guests'));
     }
 
 

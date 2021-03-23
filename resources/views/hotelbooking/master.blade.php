@@ -285,8 +285,18 @@
                                         <i class="las la-user-plus"></i><span>Guest Payment History</span>
                                     </a>
                                 </li>
-                                
 
+                                <li class="{{ request()->routeIs('admin.invoice.summary.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.invoice.summary.report')}}">
+                                        <i class="las la-user-plus"></i><span>Invoice Summary</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.post.to.room.report*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.post.to.room.report')}}">
+                                        <i class="las la-user-plus"></i><span>Post To Room</span>
+                                    </a>
+                                </li>
                                 
                             </ul>
                         </li>

@@ -741,6 +741,15 @@ Route::middleware(['admin'])->prefix(md5('admin/collection/report'))->group(func
 
 });
 
+Route::middleware(['admin'])->prefix(md5('admin/invoice/summary'))->group(function(){
+    Route::get('/list',[CollectionReportController::class,'invoiceSummaryList'])->name('admin.invoice.summary.report');
+    Route::get('/ajax/list',[CollectionReportController::class,'invoiceSummaryAjaxList'])->name('admin.invoice.summery.ajax.report');
+});
+
+Route::middleware(['admin'])->prefix(md5('admin/post/to/room'))->group(function(){
+    Route::get('/list',[CollectionReportController::class,'postToRoomList'])->name('admin.post.to.room.report');
+});
+
 
 
 Route::get('/page',[MediaManagerController::class, 'insert'])->name('page');
