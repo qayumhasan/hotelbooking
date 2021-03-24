@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Checkin;
 use App\Models\Checkout;
 use App\Models\Guest;
+use App\Models\Restaurant_Order_head;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 
@@ -99,7 +100,19 @@ class CollectionReportController extends Controller
     {
         $guests =Guest::where('is_active',1)->where('is_deleted',0)->get();
 
-        return view('hotelbooking.collection_report.post_to_room',compact('guests'));
+        
+        $postToRooms = Restaurant_Order_head::with(['orderDetail','checkin'])->where('payment_method',5)->get();
+
+        return view('hotelbooking.collection_report.post_to_room',compact('guests','postToRooms'));
+    }
+
+
+    public function postToRoomInvoice($id)
+    { 
+
+        
+        $postToRooms = Restaurant_Order_head::with(['orderDetails','checkin'])->where('id',$id)->first();
+        return view('hotelbooking.collection_report.ajax.post_to_room',compact('postToRooms'));
     }
 
 

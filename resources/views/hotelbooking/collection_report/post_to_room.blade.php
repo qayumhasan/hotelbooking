@@ -13,7 +13,18 @@ $time = date("h:i");
 
         <div class="row">
             <div class="col-sm-12">
+
                 <div class="card p-4">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Restaurant Post To Room Report</h4>
+                        </div>
+                        <!-- <span class="float-right mr-2">
+                            <a href="#" class="btn btn-sm bg-primary">
+                                <i class="ri-add-fill"><span class="pl-1">Add Room</span></i>
+                            </a>
+                        </span> -->
+                    </div>
 
                     <form id="clean_duration_search">
                         <div class="form-group row">
@@ -29,7 +40,7 @@ $time = date("h:i");
                                 <small class="text-danger to_date"></small>
                             </div>
 
-                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Employee:</b></label>
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Guest:</b></label>
                             <div class="col-sm-2">
                                 <select class="form-control form-control-sm" name="employee">
                                     <option selected disabled>---Select A Employee---</option>
@@ -51,18 +62,14 @@ $time = date("h:i");
         </div>
 
         <div class="row">
+
+
+
+
+            @foreach($postToRooms as $row)
             <div class="col-sm-12">
                 <div class="card printableAreasaveprint">
-                    <div class="card-header d-flex justify-content-between">
-                        <div class="header-title">
-                            <h4 class="card-title">Restaurant Post To Room Report</h4>
-                        </div>
-                        <!-- <span class="float-right mr-2">
-                            <a href="#" class="btn btn-sm bg-primary">
-                                <i class="ri-add-fill"><span class="pl-1">Add Room</span></i>
-                            </a>
-                        </span> -->
-                    </div>
+
                     <div class="card-body ">
                         <div class="table-responsive room_ajax_data">
 
@@ -81,39 +88,44 @@ $time = date("h:i");
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
+                                        <th scope="row">{{$loop->iteration}}</th>
+                                        <td>{{$row->checkin->booking_no ?? ''}}</td>
+                                        <td>{{$row->checkin->checkin_date ?? ''}}</td>
+                                        <td>{{$row->checkin->guest_name ?? ''}}</td>
+                                        <td>{{$row->checkin->company_name ?? ''}}</td>
+                                        <td>{{$row->checkin->checkinstatus ?? ''}}</td>
+                                        <td>{{$row->checkin->checkout->checkout_date ?? ''}}</td>
+                                        <td>
+                                            <a href="{{route('admin.post.to.room.invoice.print',$row->id)}}" class="btn btn-primary badge bg-info-light mr-2 invoicebtn" data-toggle="modal" data-target="#invoiceprint"><i class="las la-print"></i></a>
+                                        </td>
+
                                     </tr>
 
                                     <tr class="bg-secondary">
                                         <th scope="col"></th>
+                                        <th scope="col">Date</th>
                                         <th scope="col">Invoice No</th>
                                         <th scope="col">Restaurant Name</th>
                                         <th scope="col">Room No</th>
                                         <th scope="col">Waiter</th>
-                                        <th scope="col" colspan="3">Amount</th>
-                                        
+                                        <th scope="col" class="text-center" colspan="2">Amount</th>
+
                                     </tr>
 
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
+                                        <td></td>
+                                        <td>{{$row->orderDetail->kot_date ?? ''}}</td>
+                                        <td>{{$row->orderDetail->invoice_id ?? ''}}</td>
+
+                                        <td>Durbar-Restaturant</td>
+                                        <td>{{$row->checkin->room_no ?? ''}}</td>
+                                        <td>{{$row->orderDetail->waiter->employee_name ?? ''}}</td>
+                                        <td class="text-center" colspan="2">{{$row->gross_amount}}</td>
+
                                     </tr>
                                     <tr>
-                                        <th class="text-right" colspan="7">Booking Total:</th>
-                                        <td>Otto</td>
+                                        <th class="text-right" colspan="6">Booking Total:</th>
+                                        <td class="text-center" colspan="2">{{$row->gross_amount}}</td>
                                     </tr>
 
                                 </tbody>
@@ -125,6 +137,22 @@ $time = date("h:i");
                     </div>
                 </div>
             </div>
+
+
+
+
+
+            @endforeach
+
+
+
+
+
+
+
+
+
+
         </div>
 
 
@@ -132,6 +160,24 @@ $time = date("h:i");
             <div class="col-md-12">
                 <button type="button" class="btn-sm btn-info savepritbtn">Print</button>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="invoiceprint" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Post to Room</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="posttoroomdata">
+            
+            </div>
+
         </div>
     </div>
 </div>
@@ -148,6 +194,31 @@ $time = date("h:i");
 <script>
     $("#select_room_no").select2({
         placeholder: '----Select Room No----'
+    });
+</script>
+
+
+<script>
+    $(document).ready(function(){
+        $('.invoicebtn').click(function(){
+            var url =$(this)[0].href;
+
+        $('#posttoroomdata').empty();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'get',
+                url: url,
+               
+                success: function(data) {
+                    $('#posttoroomdata').append(data);
+                }
+            });
+        });
     });
 </script>
 
