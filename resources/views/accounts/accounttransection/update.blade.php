@@ -13,7 +13,7 @@
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("d/m/Y");
+$current = date("m/d/Y");
 @endphp
 <div class="content-page">
     <div class="container-fluid">
@@ -27,7 +27,7 @@ $current = date("d/m/Y");
                        <a href=""><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.transection.create')}}" method="post">
+                <form action="{{route('admin.transection.update',$edit->id)}}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-md-8">
@@ -42,28 +42,28 @@ $current = date("d/m/Y");
                                                 <tr>
                                                     <td><label>Voucher Type:</label></td>
                                                     <td>   
-                                                        <select name="voucher" id="voucher_type" class="form-control noradious">
+                                                        <select name="voucher" id="voucher_type" class="form-control noradious" disabled>
                                                             <option value="">--select--</option>
-                                                            <option value="Cash Payment Voucher" >Cash Payment Voucher</option>
-                                                            <option value="Bank Payment Voucher">Bank Payment Voucher</option>
-                                                            <option value="Fund Transfer Voucher">Fund Transfer Voucher</option>
-                                                            <option value="Cash Receipt Voucher">Cash Receipt Voucher</option>
-                                                            <option value="Bank Receipt Voucher">Bank Receipt Voucher</option>
-                                                            <option value="AorC Receivable Journal Voucher">A/C Receivable Journal Voucher</option>
-                                                            <option value="AorC Payble Journal Voucher">A/C Payble Journal Voucher</option>
-                                                            <option value="Adjustment Journal Voucher">Adjustment Journal Voucher</option>
-                                                            <option value="Acount Opening Voucher">Acount Opening Voucher</option>
+                                                            <option value="Cash Payment Voucher"@if($edit->voucher_type=='Cash Payment Voucher') selected @endif>Cash Payment Voucher</option>
+                                                            <option value="Bank Payment Voucher"@if($edit->voucher_type=='Bank Payment Voucher') selected @endif>Bank Payment Voucher</option>
+                                                            <option value="Fund Transfer Voucher"@if($edit->voucher_type=='Fund Transfer Voucher') selected @endif>Fund Transfer Voucher</option>
+                                                            <option value="Cash Receipt Voucher"@if($edit->voucher_type=='Cash Receipt Voucher') selected @endif>Cash Receipt Voucher</option>
+                                                            <option value="Bank Receipt Voucher"@if($edit->voucher_type=='Bank Receipt Voucher') selected @endif>Bank Receipt Voucher</option>
+                                                            <option value="AorC Receivable Journal Voucher"@if($edit->voucher_type=='AorC Receivable Journal Voucher') selected @endif>A/C Receivable Journal Voucher</option>
+                                                            <option value="AorC Payble Journal Voucher"@if($edit->voucher_type=='AorC Payble Journal Voucher') selected @endif>A/C Payble Journal Voucher</option>
+                                                            <option value="Adjustment Journal Voucher"@if($edit->voucher_type=='Adjustment Journal Voucher') selected @endif>Adjustment Journal Voucher</option>
+                                                            <option value="Acount Opening Voucher"@if($edit->voucher_type=='Acount Opening Voucher') selected @endif>Acount Opening Voucher</option>
                                                         </select>
                                                         @error('voucher')
                                                             <p style="color:red">{{ $message }}</p>
                                                         @enderror
-                                                        <input type="hidden" id="voucher_name" name="voucher_name">
+                                                        <input type="hidden" id="voucher_name" name="voucher_name" value="{{$edit->voucher_type}}">
                                                      </td>
                                                      <td><span id="plus_icon" style="display:none"><a href="#" id="changeVoucher"><i class="fas fa-plus-square"></i></a></span></td>
                                                      <td></td>
                                                      <td><label>Referance:</label></td>
                                                    <td>
-                                                    <input type="text" class="form-control noradious" name="reference">
+                                                    <input type="text" class="form-control noradious" name="reference" value="{{$edit->reference}}">
                                                    </td>
                                                    
                                                 </tr>
@@ -174,10 +174,11 @@ $current = date("d/m/Y");
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="fname">Voucher No: *</label>
-                                                            <input type="text"  class="form-control noradious newinvoice" value="" disabled>
-                                                            <input type="hidden" name="invoice" id="invoice" class="newinvoice" value="">
-                                                            <input type="hidden" name="hiddeninvoice" id="hiddeninvoice" class="hiddeninvoice" value="">
+                                                            <input type="text"  class="form-control noradious newinvoice" value="{{$edit->voucher_no}}" disabled>
+                                                            <input type="hidden" name="invoice" id="invoice" class="newinvoice" value="{{$edit->voucher_no}}">
+                                                            <input type="hidden" name="hiddeninvoice" id="hiddeninvoice" class="hiddeninvoice" value="{{$edit->main_invoice}}">
                                                             <input type="hidden" name="accounttransecti_id" id="accounttransecti_id" >
+                                                            
                                                         </div>
                                                     </div>
                                                     </div>
@@ -185,7 +186,7 @@ $current = date("d/m/Y");
                                                     <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="fname">Voucher Date: *</label>
-                                                                <input type="text" id="date" name="date" class="form-control noradious" value="{{$current}}">
+                                                                <input type="text" name="date" id="date" class="form-control noradious datepicker" value="{{$edit->date}}">
                                                             </div>
                                                         </div>
                                                 </div>
@@ -193,20 +194,22 @@ $current = date("d/m/Y");
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="staticEmail" class="col-form-label">Advice:</label>
-                                                                <input type="text" name="advice" class="form-control noradious" id="staticEmail" value="">
+                                                                <input type="text" name="advice" class="form-control noradious" value="{{$edit->advice}}">
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div class="row" id="check_r" style="display:none">
+                                            
+
+                                                    <div class="row" id="check_r" @if($edit->voucher_type=='Bank Payment Voucher')  @elseif($edit->voucher_type=='Bank Receipt Voucher')  @else  style="display:none" @endif>
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="staticEmail" class="col-form-label">Cheque Referance:</label>
-                                                                <select name="cheque_reference"  class="form-control">
+                                                                <select name="cheque_reference"  class="form-control" id="cheque_reference">
                                                                     <option value="">--select--</option>
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                </div>
+                                                    </div>
                                             </div>
                                         </div>
                                         <div class="card shadow-sm shadow-showcase">
@@ -225,7 +228,7 @@ $current = date("d/m/Y");
                                                                 <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
                                                                 <div class="col-sm-7">
                                                                 <input type="text" class="form-control noradious" id="amount" name="amount">
-                                                                <span style="color:red;font-size:10px;" id="accont_amount"></span>
+                                                                <span style="color:red;font-size:10px;" id="accont_amount"> </span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -240,7 +243,7 @@ $current = date("d/m/Y");
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2 ">
-                                                            <a id="additem" class="btn-sm" style="padding: 10px;background: red; color: #151515;">Add</a>
+                                                            <a id="additem" class="btn-sm" style="padding: 10px;background: red; color: #151515; cursor:pointer">Add</a>
                                                         </div>
                                                 </div>
                                             </div>
@@ -268,7 +271,7 @@ $current = date("d/m/Y");
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success">Update</button>
                     </div>
                 </div>
                 </form>
@@ -479,6 +482,7 @@ $(document).ready(function() {
       var acchead_subcate_codeone=$("#acchead_subcate_codeone").val();
       var acchead_subcate_codetwo=$("#acchead_subcate_codetwo").val();
       var hiddeninvoice=$("#hiddeninvoice").val();
+      var cheque_reference=$("#cheque_reference").val();
      
       //alert(voucher_name);
         $.ajax({
@@ -511,6 +515,7 @@ $(document).ready(function() {
                 acchead_subcate_codeone:acchead_subcate_codeone,
                 acchead_subcate_codetwo:acchead_subcate_codetwo,
                 hiddeninvoice:hiddeninvoice,
+                cheque_reference:cheque_reference,
                
 
 
@@ -540,6 +545,7 @@ $(document).ready(function() {
                 $('#acchead_Accountcate_code').val("");
                 $('#acchead_subcate_codeone').val("");
                 $('#acchead_subcate_codetwo').val("");
+                $('#cheque_reference').val("");
            
                
                 
@@ -678,5 +684,33 @@ function editdata(el) {
 
 </script>
 
-                                      
+<script>
+
+$(document).ready(function() {
+   $('#account_head_main').on('change', function(){
+       var account_head = $(this).val();
+        //alert(account_head);
+       if(account_head) {
+           $.ajax({
+               url: "{{  url('/get/admin/accounthead/checkbok/all') }}/"+account_head,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#cheque_reference').empty();
+                        $('#cheque_reference').append(' <option value="">--select--</option>');
+                        $.each(data,function(index,districtObj){
+                         $('#cheque_reference').append('<option value="' + districtObj.id + '">'+districtObj.check_number+'</option>');
+                       });
+                    alldata();
+                    
+                }
+           });
+       } else {
+         
+       }
+
+   });
+});
+</script>                                   
 @endsection

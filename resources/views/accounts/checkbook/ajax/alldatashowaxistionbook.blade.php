@@ -18,8 +18,8 @@
                     <tr>
                         <td>{{++$key}}</td>
                         <td>{{$data->check_number}}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{$data->voucher_number}}</td>
+                        <td>{{$data->check_date}}</td>
                         <td></td>
                         <td></td>
                         <td>{{$data->status}}</td>
