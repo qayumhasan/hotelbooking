@@ -65,7 +65,7 @@ Route::get('admin/account/transectionhead/active/{id}', [AccountTrasectionContro
 Route::get('admin/account/transectionhead/deactive/{id}', [AccountTrasectionController::class, 'deactive']);
 Route::get('admin/account/transectionhead/edit/{id}', [AccountTrasectionController::class, 'edit']);
 Route::get('admin/account/transectionhead/delete/{id}', [AccountTrasectionController::class, 'delete']);
-Route::post('admin/account/transectionhead/update', [AccountTrasectionController::class, 'update'])->name('admin.transection.update');
+Route::post('admin/account/transectionhead/update/{id}', [AccountTrasectionController::class, 'update'])->name('admin.transection.update');
 
 
 
@@ -76,6 +76,13 @@ Route::get('admin/transectiondetails/insert', [AccountTrasectionController::clas
 Route::post('admin/transectiondetails/edit', [AccountTrasectionController::class, 'transectiondetailsedit'])->name('get.alldatatransection.edit');
 Route::post('/get/alldatatransection/data/{invoice}', [AccountTrasectionController::class, 'gettransectiondetails']);
 Route::post('admin/transectiondetails/delete', [AccountTrasectionController::class, 'transectiondelete'])->name('get.transection.delete');
+
+
+Route::get('/get/admin/vouchertype/sourchaccount/{voucher_type}', [AccountTrasectionController::class, 'getvoucherassourchacc']);
+
+
+
+
 // checkbook controller
 Route::get('admin/checkbook/create', [CheckBookController::class, 'create'])->name('admin.checkbook.create');
 Route::get('/get/account/checkbook/entry/{bank_code}', [CheckBookController::class, 'getallcheckentry']);

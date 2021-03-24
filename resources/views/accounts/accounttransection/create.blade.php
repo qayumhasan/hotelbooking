@@ -13,7 +13,7 @@
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("d/m/Y");
+$current = date("m/d/Y");
 @endphp
 <div class="content-page">
     <div class="container-fluid">
@@ -90,10 +90,8 @@ $current = date("d/m/Y");
                                                     <td><label>Sourch Cash:</label></td>
                                                     <td colspan="5">
                                                         <input type="text" id="account_head_main" name="account_head_main" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
-                                                        <datalist id="ref_in">
-                                                             @foreach($allchartofaccount as $account)
-                                                            <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
-                                                            @endforeach
+                                                        <datalist id="ref_in" class="sourch_ajax">
+                                                          
                                                         </datalist>
                                                         <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
                                                         <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
@@ -105,10 +103,8 @@ $current = date("d/m/Y");
                                                     <td><label>Account Head:</label></td>
                                                     <td colspan="5">
                                                          <input type="text" id="account_head" name="account_head" class="form-control noradious account_head" list="ref_inss" placeholder="Account Head" />
-                                                        <datalist id="ref_inss">
-                                                             @foreach($allchartofaccount as $account)
-                                                            <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
-                                                            @endforeach
+                                                        <datalist id="ref_inss" class="acchead_ajax">
+                                                            
                                                         </datalist>
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
@@ -185,7 +181,7 @@ $current = date("d/m/Y");
                                                     <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="fname">Voucher Date: *</label>
-                                                                <input type="text" id="date" name="date" class="form-control noradious" value="{{$current}}">
+                                                                <input type="text"  id="date" name="date" class="form-control noradious datepicker" value="{{$current}}">
                                                             </div>
                                                         </div>
                                                 </div>
@@ -197,7 +193,7 @@ $current = date("d/m/Y");
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div class="row" id="check_r" style="display:none">
+                                                <div class="row" id="check_r"  style="display:none">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
                                                                 <label for="staticEmail" class="col-form-label">Cheque Referance:</label>
@@ -240,7 +236,7 @@ $current = date("d/m/Y");
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2 ">
-                                                            <a id="additem" class="btn-sm" style="padding: 10px;background: red; color: #151515;">Add</a>
+                                                            <a id="additem" class="btn-sm" style="padding: 10px;background: red; color: #151515; cursor:pointer">Add</a>
                                                         </div>
                                                 </div>
                                             </div>
@@ -295,12 +291,47 @@ $(document).ready(function() {
                 }
            });
        } else {
-           //alert('danger');
+           
        }
 
    });
 });
 </script>
+
+<!-- voucher type wise sourh account -->
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#voucher_type').on('change', function(){
+       var voucher_type = $(this).val();
+       alert("alert");
+        
+       if(voucher_type) {
+           $.ajax({
+               url: "{{  url('/get/admin/vouchertype/sourchaccount/') }}/"+voucher_type,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                   
+                  
+                        $('.sourch_ajax').empty();
+                        $('.sourch_ajax').append(' <option>--select--</option>');
+                        $.each(data,function(index,districtObj){
+                         $('.sourch_ajax').append('<option value="' + districtObj.description_of_account + '">'+districtObj.description_of_account+'</option>');
+                       });
+                    
+                }
+           });
+       } else {
+           
+       }
+
+   });
+});
+</script>
+
+
+
+
 <script>
 
 $(document).ready(function() {
@@ -512,6 +543,7 @@ $(document).ready(function() {
       var acchead_subcate_codeone=$("#acchead_subcate_codeone").val();
       var acchead_subcate_codetwo=$("#acchead_subcate_codetwo").val();
       var hiddeninvoice=$("#hiddeninvoice").val();
+      var cheque_reference=$("#cheque_reference").val();
      
       //alert(voucher_name);
         $.ajax({
@@ -544,6 +576,7 @@ $(document).ready(function() {
                 acchead_subcate_codeone:acchead_subcate_codeone,
                 acchead_subcate_codetwo:acchead_subcate_codetwo,
                 hiddeninvoice:hiddeninvoice,
+                cheque_reference:cheque_reference,
                
 
 
@@ -573,6 +606,7 @@ $(document).ready(function() {
                 $('#acchead_Accountcate_code').val("");
                 $('#acchead_subcate_codeone').val("");
                 $('#acchead_subcate_codetwo').val("");
+                $('#cheque_reference').val("");
            
                
                 

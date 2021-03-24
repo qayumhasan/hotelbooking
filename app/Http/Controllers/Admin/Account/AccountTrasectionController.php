@@ -12,6 +12,7 @@ use App\Models\ChartOfAccount;
 use App\Models\AccountTransectionDetails;
 use App\Models\AccountTransectionHead;
 use App\Models\CheckBookTransection;
+use App\Models\CheckBookEntry;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -85,14 +86,15 @@ class AccountTrasectionController extends Controller
         $data->qty = $request->qty;
         $data->remarks = $request->remarks;
         $data->main_invoice = $request->hiddeninvoice;
+        $data->check_reference = $request->cheque_reference;
         $data->is_active = 0;
 
-        if($request->subcategory_codeone=='NULL'){
+        if($request->subcategory_codeone==''){
             $data->subcategory_codeone = $request->acchead_subcate_codeone;
         }else{
             $data->subcategory_codeone = $request->subcategory_codeone;
         }
-        if($request->subcategory_codetwo=='NULL'){
+        if($request->subcategory_codetwo==''){
             $data->subcategory_codetwo = $request->acchead_subcate_codetwo;
         }else{
             $data->subcategory_codetwo = $request->subcategory_codetwo;
@@ -173,24 +175,40 @@ class AccountTrasectionController extends Controller
 
     // final account transection 
     public function insertfinal(Request $request){
-       // return $request->voucher_name;
+      // return $request;
         $check=AccountTransectionDetails::where('voucher_no',$request->invoice)->first();
         if($check){
               
-                $insert=AccountTransectionHead::insert([
-                    'voucher_type'=>$request->voucher_name,
-                    'voucher_no'=>$request->invoice,
-                    'date'=>$request->date,
-                    'reference'=>$request->reference,
-                    'cheque_reference'=>$request->cheque_reference,
-                    'narration'=>$request->narration,
-                    'advice'=>$request->advice,
-                    'created_at'=>Carbon::now()->toDateTimeString(),
-                    'entry_by'=>Auth::user()->id,
+            
+                $data = new AccountTransectionHead;
+                $data->voucher_type=$request->voucher_name;
+                $data->voucher_no=$request->invoice;
+                $data->date=$request->date;
+                $data->reference=$request->reference;
 
+                $data->cheque_reference=$check->check_reference;
 
+                $data->narration=$request->narration;
+                $data->advice=$request->advice;
+                $data->main_invoice=$request->hiddeninvoice;
+                $data->created_at=Carbon::now()->toDateTimeString();
+                $data->entry_by=Auth::user()->id;
+
+                CheckBookTransection::where('id',$check->check_reference)->update([
+                    'status'=>'U',
+                    'voucher_number'=>$request->invoice,
+                    'check_date'=>$request->date,
+
+                    'updated_at'=>Carbon::now()->toDateTimeString(),
                 ]);
-                if($insert){
+                $detailsdata=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
+                foreach($detailsdata as $updata){
+                    AccountTransectionDetails::where('id',$updata->id)->update([
+                        'is_active'=>1,
+                    ]);
+                }
+
+                if($data->save()){
                     $notification = array(
                         'messege' => 'Insert Success',
                         'alert-type' => 'success'
@@ -292,25 +310,47 @@ class AccountTrasectionController extends Controller
     }
 
     // update
-    public function update(Request $request){
+    public function update(Request $request,$id){
+
         $check=AccountTransectionDetails::where('voucher_no',$request->invoice)->first();
         if($check){
-            $validated = $request->validate([
-                'voucher' => 'required',
-            ]);
+                $data = AccountTransectionHead::findOrFail($id);
+                $data->voucher_type=$request->voucher_name;
+                $data->voucher_no=$request->invoice;
+                $data->date=$request->date;
+                $data->reference=$request->reference;
 
-                $insert=AccountTransectionHead::where('id',$request->id)->update([
-                    'voucher_type'=>$request->voucher,
-                    'voucher_no'=>$request->invoice,
-                    'date'=>$request->date,
-                    'reference'=>$request->reference,
-                    'cheque_reference'=>$request->cheque_reference,
-                    'narration'=>$request->narration,
-                    'advice'=>$request->advice,
+                $data->cheque_reference=$check->check_reference;
+
+                $data->narration=$request->narration;
+                $data->advice=$request->advice;
+                $data->main_invoice=$request->hiddeninvoice;
+                $data->created_at=Carbon::now()->toDateTimeString();
+                $data->entry_by=Auth::user()->id;
+
+                $checkbookcheck=CheckBookTransection::where('voucher_number',$request->invoice)->first();
+                if($checkbookcheck){
+                    CheckBookTransection::where('voucher_number',$request->invoice)->update([
+                        'status'=>'B',
+                        'voucher_number'=>'NULL',
+                        'check_date'=>'NULL',
+                        'updated_at'=>'NULL',
+                    ]);
+                }
+                CheckBookTransection::where('id',$check->check_reference)->update([
+                    'status'=>'U',
+                    'voucher_number'=>$request->invoice,
+                    'check_date'=>$request->date,
                     'updated_at'=>Carbon::now()->toDateTimeString(),
-                    'entry_by'=>Auth::user()->id,
                 ]);
-                if($insert){
+                $detailsdata=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
+                foreach($detailsdata as $updata){
+                    AccountTransectionDetails::where('id',$updata->id)->update([
+                        'is_active'=>1,
+                    ]);
+                }
+
+                if($data->save()){
                     $notification = array(
                         'messege' => 'Update Success',
                         'alert-type' => 'success'
@@ -327,7 +367,7 @@ class AccountTrasectionController extends Controller
         }else{
             $notification = array(
                 'messege' => 'Please add Transection',
-                'alert-type' => 'error'
+                'alert-type' => 'Info'
             );
             return Redirect()->back()->with($notification);
         }
@@ -455,7 +495,80 @@ class AccountTrasectionController extends Controller
         $newdata=CheckBookTransection::where('account_code',$data->id)->get();
         return response()->json($newdata);
        
+    }
 
+
+    // 
+    public function getvoucherassourchacc($voucher_type){
+        if($voucher_type=='Cash Payment Voucher'){
+            
+            $data=ChartOfAccount::where('category_id',1)->where('maincategory_id',9)->where('subcategoryone_id',17)->get();
+            $headdata=ChartOfAccount::where('subcategoryone_id','!=',17)->get();
+            // dd($data);
+
+             return response()->json([
+                 'data'=>$data,
+                 'headdata'=>$headdata,
+             ]);
+
+        }elseif($voucher_type=='Bank Payment Voucher'){
+         
+        }
+        elseif($voucher_type=='Fund Transfer Voucher'){
+
+           
+            return response()->json($data);
+
+        }
+        elseif($voucher_type=='Cash Receipt Voucher'){
+
+       
+            return response()->json($data);
+
+        }
+        elseif($voucher_type=='Bank Receipt Voucher'){
+          
+            return response()->json($data);
+        }
+        elseif($voucher_type=='AorC Receivable Journal Voucher'){
+
+            if($orderhed){
+                $invoice='ACRJV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='ACRJV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }
+        elseif($voucher_type=='AorC Payble Journal Voucher'){
+
+
+            if($orderhed){
+                $invoice='ACPJV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='ACPJV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }
+        elseif($voucher_type=='Adjustment Journal Voucher'){
+            if($orderhed){
+                $invoice='AJV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='AJV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }elseif($voucher_type=='Acount Opening Voucher'){
+
+            if($orderhed){
+                $invoice='AOV'.$year.'-'.$date.'-H-'.$orderhed->id;
+            }else{
+                $invoice='AOV'.$year.'-'.$date.'-H-'.'0';
+            }
+            return response()->json($invoice);
+
+        }
     }
     
 
