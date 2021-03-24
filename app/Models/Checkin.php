@@ -85,4 +85,14 @@ class Checkin extends Model
 
         return array_sum($amount);
     }
+
+
+    public function getcheckinstatusAttribute()
+    {
+        if($this->is_occupy == 0){
+            return "Checkout";
+        }elseif($this->is_occupy == 1){
+            return "Occupied";
+        }
+    }
 }

@@ -748,6 +748,7 @@ Route::middleware(['admin'])->prefix(md5('admin/invoice/summary'))->group(functi
 
 Route::middleware(['admin'])->prefix(md5('admin/post/to/room'))->group(function(){
     Route::get('/list',[CollectionReportController::class,'postToRoomList'])->name('admin.post.to.room.report');
+    Route::get('/invoice/{id}',[CollectionReportController::class,'postToRoomInvoice'])->name('admin.post.to.room.invoice.print');
 });
 
 
