@@ -79,7 +79,13 @@ Route::post('admin/transectiondetails/delete', [AccountTrasectionController::cla
 
 
 Route::get('/get/admin/vouchertype/sourchaccount/{voucher_type}', [AccountTrasectionController::class, 'getvoucherassourchacc']);
+Route::get('/get/admin/vouchertype/accountheadaccount/{voucher_type}', [AccountTrasectionController::class, 'getvoucheraccounthead']);
+// voucher typewise payment
 
+Route::get('admin/account/transectionhead/cpv/create', [AccountTrasectionController::class, 'cashpaymentvoucher'])->name('admin.transection.cpv.create');
+Route::get('admin/account/transectionhead/bpv/create', [AccountTrasectionController::class, 'bankpaymentvoucher'])->name('admin.transection.bpv.create');
+Route::get('admin/account/transectionhead/ftv/create', [AccountTrasectionController::class, 'foundtransfervoucher'])->name('admin.transection.ftv.create');
+Route::get('admin/account/transectionhead/crv/create', [AccountTrasectionController::class, 'cashreceiptvoucher'])->name('admin.transection.crv.create');
 
 
 
