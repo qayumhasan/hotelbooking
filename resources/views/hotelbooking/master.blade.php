@@ -892,6 +892,15 @@
         );
     </script>
 
+    
+
+<script>
+    $("#select_room_no").select2({
+        placeholder: '----Select Room No----'
+    });
+</script>
+
+
 <script>
         $(function () {
             $(".savepritbtn").on('click', function () {

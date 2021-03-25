@@ -32,4 +32,13 @@ class Restaurant_Tax_head extends Model
             
         
     }
+
+    public function getTaxRateAttribute()
+    {
+        if($this->base_on == 'percentage'){
+            return $this->rate.'%';
+        }else{
+            return '$'.$this->rate;
+        }
+    }
 }
