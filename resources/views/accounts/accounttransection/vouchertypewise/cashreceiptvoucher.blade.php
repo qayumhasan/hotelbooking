@@ -42,22 +42,13 @@ $current = date("m/d/Y");
                                                 <tr>
                                                     <td><label>Voucher Type:</label></td>
                                                     <td>   
-                                                        <select name="voucher" id="voucher_type" class="form-control noradious">
-                                                            <option value="">--select--</option>
-                                                            <option value="Cash Payment Voucher">Cash Payment Voucher</option>
-                                                            <option value="Bank Payment Voucher">Bank Payment Voucher</option>
-                                                            <option value="Fund Transfer Voucher">Fund Transfer Voucher</option>
+                                                        <select name="voucher" id="voucher_type" class="form-control noradious" disabled>
                                                             <option value="Cash Receipt Voucher">Cash Receipt Voucher</option>
-                                                            <option value="Bank Receipt Voucher">Bank Receipt Voucher</option>
-                                                            <option value="AorC Receivable Journal Voucher">A/C Receivable Journal Voucher</option>
-                                                            <option value="AorC Payble Journal Voucher">A/C Payble Journal Voucher</option>
-                                                            <option value="Adjustment Journal Voucher">Adjustment Journal Voucher</option>
-                                                            <option value="Acount Opening Voucher">Acount Opening Voucher</option>
                                                         </select>
                                                         @error('voucher')
                                                             <p style="color:red">{{ $message }}</p>
                                                         @enderror
-                                                        <input type="hidden" id="voucher_name" name="voucher_name">
+                                                        <input type="hidden" id="voucher_name" name="voucher_name" value="Cash Receipt Voucher">
                                                      </td>
                                                      <td><span id="plus_icon" style="display:none"><a href="#" id="changeVoucher"><i class="fas fa-plus-square"></i></a></span></td>
                                                      <td></td>
@@ -91,7 +82,9 @@ $current = date("m/d/Y");
                                                     <td colspan="5">
                                                         <input type="text" autoComplete="on" id="account_head_main" name="account_head_main" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
                                                         <datalist id="ref_in" class="sourch_ajax">
-                                                          
+                                                        @foreach($datasourche as $sorch_ofacc)
+                                                            <option value="{{$sorch_ofacc->desription_of_account}}">{{$sorch_ofacc->desription_of_account}}</option>
+                                                        @endforeach
                                                         </datalist>
                                                         <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
                                                         <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
@@ -104,7 +97,9 @@ $current = date("m/d/Y");
                                                     <td colspan="5">
                                                          <input type="text" id="account_head" name="account_head" class="form-control noradious account_head" list="ref_inss" placeholder="Account Head" />
                                                         <datalist id="ref_inss" class="acchead_ajax">
-                                                            
+                                                        @foreach($account_head as $sorch_ofacc)
+                                                            <option value="{{$sorch_ofacc->desription_of_account}}">{{$sorch_ofacc->desription_of_account}}</option>
+                                                        @endforeach
                                                         </datalist>
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
@@ -170,8 +165,8 @@ $current = date("m/d/Y");
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="fname">Voucher No: *</label>
-                                                            <input type="text"  class="form-control noradious newinvoice" value="" disabled>
-                                                            <input type="hidden" name="invoice" id="invoice" class="newinvoice" value="">
+                                                            <input type="text"  class="form-control noradious newinvoice" value="{{$vno}}" disabled>
+                                                            <input type="hidden" name="invoice" id="invoice" class="newinvoice" value="{{$vno}}">
                                                             <input type="hidden" name="hiddeninvoice" id="hiddeninvoice" class="hiddeninvoice" value="{{$invoice}}">
                                                             <input type="hidden" name="accounttransecti_id" id="accounttransecti_id" >
                                                         </div>
@@ -193,16 +188,7 @@ $current = date("m/d/Y");
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div class="row" id="check_r"  style="display:none">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <label for="staticEmail" class="col-form-label">Cheque Referance:</label>
-                                                                <select name="cheque_reference" id="cheque_reference" class="form-control noradious">
-                                                                    <option value="">--select--</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                </div>
+                                               
                                             </div>
                                         </div>
                                         <div class="card shadow-sm shadow-showcase">

@@ -151,6 +151,56 @@
                                         <i class="las la-list-alt"></i><span>ChecqueBook</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.transection.cpv.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.cpv.create')}}">
+                                        <i class="las la-list-alt"></i><span>Cash Payment Voucher</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.transection.bpv.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.bpv.create')}}">
+                                        <i class="las la-list-alt"></i><span>Bank Payment Voucher</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.transection.ftv.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.ftv.create')}}">
+                                        <i class="las la-list-alt"></i><span>Found Transfer Voucher</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.transection.crv.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.crv.create')}}">
+                                        <i class="las la-list-alt"></i><span>Cash Receipt Voucher</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.transection.create')}}">
+                                        <i class="las la-list-alt"></i><span>Bank Receipt Voucher</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.transection.create')}}">
+                                        <i class="las la-list-alt"></i><span>A/C Receivable Voucher</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.transection.create')}}">
+                                        <i class="las la-list-alt"></i><span>A/C Payble Voucher</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.transection.create')}}">
+                                        <i class="las la-list-alt"></i><span>A/C Payble Journal Voucher</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.transection.create')}}">
+                                        <i class="las la-list-alt"></i><span>Adjustment Journal Voucher</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.transection.create')}}">
+                                        <i class="las la-list-alt"></i><span>Account Opening Voucher</span>
+                                    </a>
+                                </li>
                               
                             </ul>
                         </li>
