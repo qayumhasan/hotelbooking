@@ -112,7 +112,30 @@ class CollectionReportController extends Controller
 
         
         $postToRooms = Restaurant_Order_head::with(['orderDetails','checkin'])->where('id',$id)->first();
-        return view('hotelbooking.collection_report.ajax.post_to_room',compact('postToRooms'));
+        return view('hotelbooking.collection_report.ajax.post_to_room_invoice_ajax',compact('postToRooms'));
+    }
+
+
+    public function postToRoomAjaxList(Request $request)
+    {
+
+        $request->validate([
+            'from_date'=>'required',
+            'guest_name'=>'required',
+            'to_date'=>'required',
+        ]);
+
+        $guestname = $request->guest_name;
+        $postToRooms = Restaurant_Order_head::whereHas('checkin',function($query) use($guestname,$request){
+                $query->where('guest_name', 'like', '%'.$guestname.'%')->orWhereNotBetween('checkin_date',[$request->from_date,$request->to_date]);
+        })->with(['orderDetail','checkin'=>function($query) use($guestname){
+            $query->where('guest_name', 'like', '%'.$guestname.'%');
+        }])->where('payment_method',5)->get();
+
+
+
+        return view('hotelbooking.collection_report.ajax.post_to_room_ajax',compact('postToRooms'));
+        
     }
 
 

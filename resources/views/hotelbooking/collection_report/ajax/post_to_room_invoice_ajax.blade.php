@@ -155,10 +155,14 @@
             @if(count($postToRooms->taxheads) >0)
             @foreach($postToRooms->taxheads as $row)
                <tr>
-                    <td>{{$row->effect}}:{{$row->taxdetails->tax_description ?? ''}} - {{$row->Calculation}}</td>
+                    <td>{{$row->effect}} : {{$row->taxdetails->tax_description ?? ''}} - {{$row->TaxRate}} On {{$row->Calculation}}</td>
 
                     <td colspan="3" class="text-right">{{$row->amount}}</td>
-                    <td colspan="3" class="text-right">{{$postToRooms->gross_amount}}</td>
+                    
+               </tr>
+               <tr style="border-top: 1px dashed;">
+                    <th colspan="3" class="text-right">Total Amount:   </th>
+                    <td class="text-right">{{$postToRooms->gross_amount}}</td>
                </tr>
                
 
