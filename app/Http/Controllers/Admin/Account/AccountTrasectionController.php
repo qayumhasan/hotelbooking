@@ -736,6 +736,161 @@ class AccountTrasectionController extends Controller
         return view('accounts.accounttransection.vouchertypewise.cashreceiptvoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
     
+    // 
+    public function bankreceiptvoucher(){
 
+        
+        $year= Carbon::now()->format('Y');
+        $date= Carbon::now()->format('d');
+        $orderhed=AccountTransectionHead::orderBy('id','DESC')->first();
+        if($orderhed){
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.$orderhed->id.rand(5555,10000);
+        }else{
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.'0'.rand(5555,10000);
+        }
+        if($orderhed){
+            $vno='BRV'.$year.'-'.$date.'-H-'.$orderhed->id;
+        }else{
+            $vno='BRV'.$year.'-'.$date.'-H-'.'0';
+        }
+
+
+        $allcategory=AccountCategory::get();
+        $allchartofaccount=ChartOfAccount::get();
+        $allsubcategoryone=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
+        $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
+        $datasourche=ChartOfAccount::where('category_id',1)->where('maincategory_id',9)->where('subcategoryone_id',18)->get();
+        $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
+
+        return view('accounts.accounttransection.vouchertypewise.bankreceiptvoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+    }
+    
+    public function aorcreceablevoucher(){
+
+        
+        $year= Carbon::now()->format('Y');
+        $date= Carbon::now()->format('d');
+        $orderhed=AccountTransectionHead::orderBy('id','DESC')->first();
+        if($orderhed){
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.$orderhed->id.rand(5555,10000);
+        }else{
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.'0'.rand(5555,10000);
+        }
+        if($orderhed){
+            $vno='ACRJV'.$year.'-'.$date.'-H-'.$orderhed->id;
+        }else{
+            $vno='ACRJV'.$year.'-'.$date.'-H-'.'0';
+        }
+
+
+        $allcategory=AccountCategory::get();
+        $allchartofaccount=ChartOfAccount::get();
+        $allsubcategoryone=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
+        $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
+
+        $datasourche=ChartOfAccount::where('maincategory_id','!=',9)->get();
+        $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
+
+        return view('accounts.accounttransection.vouchertypewise.aorcreceablevoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+    }
+    
+
+
+    public function aorcpayblevoucher(){
+
+        
+        $year= Carbon::now()->format('Y');
+        $date= Carbon::now()->format('d');
+        $orderhed=AccountTransectionHead::orderBy('id','DESC')->first();
+        if($orderhed){
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.$orderhed->id.rand(5555,10000);
+        }else{
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.'0'.rand(5555,10000);
+        }
+
+        if($orderhed){
+            $vno='ACPJV'.$year.'-'.$date.'-H-'.$orderhed->id;
+        }else{
+            $vno='ACPJV'.$year.'-'.$date.'-H-'.'0';
+        }
+     
+
+        $allcategory=AccountCategory::get();
+        $allchartofaccount=ChartOfAccount::get();
+        $allsubcategoryone=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
+        $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
+
+        $datasourche=ChartOfAccount::where('maincategory_id','!=',9)->get();
+        $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
+
+        return view('accounts.accounttransection.vouchertypewise.aorcpayblevoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+    }
+
+
+
+    public function adjustmentpayblevoucher(){
+
+        
+        $year= Carbon::now()->format('Y');
+        $date= Carbon::now()->format('d');
+        $orderhed=AccountTransectionHead::orderBy('id','DESC')->first();
+        if($orderhed){
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.$orderhed->id.rand(5555,10000);
+        }else{
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.'0'.rand(5555,10000);
+        }
+
+        if($orderhed){
+                $vno='AJV'.$year.'-'.$date.'-H-'.$orderhed->id;
+         }else{
+                $vno='AJV'.$year.'-'.$date.'-H-'.'0';
+        }
+     
+
+        $allcategory=AccountCategory::get();
+        $allchartofaccount=ChartOfAccount::get();
+        $allsubcategoryone=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
+        $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
+
+        $datasourche=ChartOfAccount::where('maincategory_id','!=',9)->get();
+        $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
+
+        return view('accounts.accounttransection.vouchertypewise.adjustmentpayblevoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+    }
+
+    public function accountopeningvoucher(){
+
+        
+        $year= Carbon::now()->format('Y');
+        $date= Carbon::now()->format('d');
+        $orderhed=AccountTransectionHead::orderBy('id','DESC')->first();
+        if($orderhed){
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.$orderhed->id.rand(5555,10000);
+        }else{
+            $invoice='invoice-'.$year.'-'.$date.'-H-'.'0'.rand(5555,10000);
+        }
+
+        if($orderhed){
+            $vno='AOV'.$year.'-'.$date.'-H-'.$orderhed->id;
+        }else{
+            $vno='AOV'.$year.'-'.$date.'-H-'.'0';
+        }
+     
+
+        $allcategory=AccountCategory::get();
+        $allchartofaccount=ChartOfAccount::get();
+        $allsubcategoryone=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
+        $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
+
+        $datasourche=ChartOfAccount::where('maincategory_id','!=',9)->get();
+        $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
+
+        return view('accounts.accounttransection.vouchertypewise.accountopeningvoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+    }
+
+
+
+    
+    
 
 }

@@ -86,6 +86,11 @@ Route::get('admin/account/transectionhead/cpv/create', [AccountTrasectionControl
 Route::get('admin/account/transectionhead/bpv/create', [AccountTrasectionController::class, 'bankpaymentvoucher'])->name('admin.transection.bpv.create');
 Route::get('admin/account/transectionhead/ftv/create', [AccountTrasectionController::class, 'foundtransfervoucher'])->name('admin.transection.ftv.create');
 Route::get('admin/account/transectionhead/crv/create', [AccountTrasectionController::class, 'cashreceiptvoucher'])->name('admin.transection.crv.create');
+Route::get('admin/account/transectionhead/brv/create', [AccountTrasectionController::class, 'bankreceiptvoucher'])->name('admin.transection.brv.create');
+Route::get('admin/account/transectionhead/acrjv/create', [AccountTrasectionController::class, 'aorcreceablevoucher'])->name('admin.transection.acrjv.create');
+Route::get('admin/account/transectionhead/acpv/create', [AccountTrasectionController::class, 'aorcpayblevoucher'])->name('admin.transection.acpv.create');
+Route::get('admin/account/transectionhead/adpv/create', [AccountTrasectionController::class, 'adjustmentpayblevoucher'])->name('admin.transection.adpv.create');
+Route::get('admin/account/transectionhead/aopv/create', [AccountTrasectionController::class, 'accountopeningvoucher'])->name('admin.transection.aopv.create');
 
 
 
