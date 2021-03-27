@@ -138,12 +138,12 @@
                             <ul id="Accounttransection" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.transection.create*') ? 'active' : '' }}">
                                     <a href="{{route('admin.transection.create')}}">
-                                        <i class="las la-list-alt"></i><span>Add Account Trasection</span>
+                                        <i class="las la-list-alt"></i><span>Add General Trasection</span>
                                     </a>
                                 </li>
                                 <li class="{{ request()->routeIs('admin.transection.index*') ? 'active' : '' }}">
                                     <a href="{{route('admin.transection.index')}}">
-                                        <i class="las la-list-alt"></i><span>All Account Trasection</span>
+                                        <i class="las la-list-alt"></i><span>All General Trasection</span>
                                     </a>
                                 </li>
                                 <li class="{{ request()->routeIs('admin.checkbook.create*') ? 'active' : '' }}">
@@ -171,33 +171,30 @@
                                         <i class="las la-list-alt"></i><span>Cash Receipt Voucher</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="{{route('admin.transection.create')}}">
+                                <li class="{{ request()->routeIs('admin.transection.brv.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.brv.create')}}">
                                         <i class="las la-list-alt"></i><span>Bank Receipt Voucher</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="{{route('admin.transection.create')}}">
+                                <li class="{{ request()->routeIs('admin.transection.acrjv.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.acrjv.create')}}">
                                         <i class="las la-list-alt"></i><span>A/C Receivable Voucher</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="{{route('admin.transection.create')}}">
-                                        <i class="las la-list-alt"></i><span>A/C Payble Voucher</span>
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="{{route('admin.transection.create')}}">
+
+                                <li class="{{ request()->routeIs('admin.transection.acpv.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.acpv.create')}}">
                                         <i class="las la-list-alt"></i><span>A/C Payble Journal Voucher</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="{{route('admin.transection.create')}}">
+                             
+                                <li class="{{ request()->routeIs('admin.transection.adpv.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.adpv.create')}}">
                                         <i class="las la-list-alt"></i><span>Adjustment Journal Voucher</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="{{route('admin.transection.create')}}">
+                                <li class="{{ request()->routeIs('admin.transection.aopv.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.transection.aopv.create')}}">
                                         <i class="las la-list-alt"></i><span>Account Opening Voucher</span>
                                     </a>
                                 </li>
