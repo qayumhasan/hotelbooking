@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Account\AccountSubCategoryController;
 use App\Http\Controllers\Admin\Account\ChartOfAccountController;
 use App\Http\Controllers\Admin\Account\AccountTrasectionController;
 use App\Http\Controllers\Admin\Account\CheckBookController;
+use App\Http\Controllers\Admin\Account\ReportsController;
 
 
 
@@ -60,7 +61,12 @@ Route::post('admin/chartofaccount/update', [ChartOfAccountController::class, 'up
 
 Route::get('admin/account/transectionhead/create', [AccountTrasectionController::class, 'create'])->name('admin.transection.create');
 Route::post('admin/account/transectionhead/create', [AccountTrasectionController::class, 'insertfinal'])->name('admin.transection.create');
+
 Route::get('admin/account/transectionhead/index', [AccountTrasectionController::class, 'index'])->name('admin.transection.index');
+Route::post('admin/account/transectionhead/index', [AccountTrasectionController::class, 'searchdatewise'])->name('admin.transection.index');
+
+Route::get('admin/account/transectionhead/printacchead', [AccountTrasectionController::class, 'printvalueaccount'])->name('adminaccount.print.voucheraccount');
+
 Route::get('admin/account/transectionhead/active/{id}', [AccountTrasectionController::class, 'active']);
 Route::get('admin/account/transectionhead/deactive/{id}', [AccountTrasectionController::class, 'deactive']);
 Route::get('admin/account/transectionhead/edit/{id}', [AccountTrasectionController::class, 'edit']);
@@ -110,3 +116,6 @@ Route::get('/get/admin/headofaccount/all/{account_head}', [AccountTrasectionCont
 Route::get('/get/admin/vouchertype/voucherno/all/{voucher_type}', [AccountTrasectionController::class, 'getvouchertype']);
 Route::get('/get/admin/vouchertype/open/voucher/{invoice}', [AccountTrasectionController::class, 'openvoichertype']);
 Route::get('/get/admin/accounthead/checkbok/all/{account_head}', [AccountTrasectionController::class, 'getcheckbookall']);
+
+// reports controller
+Route::get('Admin/account/transection/reports/datewise', [ReportsController::class, 'datewisereport'])->name('admin.account.reports.datewise');

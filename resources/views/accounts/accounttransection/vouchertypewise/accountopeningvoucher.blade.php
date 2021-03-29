@@ -43,12 +43,12 @@ $current = date("m/d/Y");
                                                     <td><label>Voucher Type:</label></td>
                                                     <td>   
                                                         <select name="voucher" id="voucher_type" class="form-control noradious" disabled>
-                                                            <option value="Acount Opening Voucher">Account Opening Voucher</option>
+                                                            <option value="Account Opening Voucher">Account Opening Voucher</option>
                                                         </select>
                                                         @error('voucher')
                                                             <p style="color:red">{{ $message }}</p>
                                                         @enderror
-                                                        <input type="hidden" id="voucher_name" name="voucher_name" value="Acount Opening Voucher">
+                                                        <input type="hidden" id="voucher_name" name="voucher_name" value="Account Opening Voucher">
                                                      </td>
                                                      <td><span id="plus_icon" style="display:none"><a href="#" id="changeVoucher"><i class="fas fa-plus-square"></i></a></span></td>
                                                      <td></td>
@@ -172,22 +172,21 @@ $current = date("m/d/Y");
                                                         </div>
                                                     </div>
                                                     </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
+                                                <div class="row" style="padding-bottom:15px">
+                                                    <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="fname">Voucher Date: *</label>
                                                                 <input type="text"  id="date" name="date" class="form-control noradious datepicker" value="{{$current}}">
                                                             </div>
                                                         </div>
-                                                </div>
-                                                <div class="row">
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="staticEmail" class="col-form-label">Advice:</label>
+                                                                <label for="" >Advice:</label>
                                                                 <input type="text" name="advice" class="form-control noradious" id="staticEmail" value="">
                                                             </div>
                                                         </div>
                                                 </div>
+                                              
                                                 <div class="row" id="check_r"  style="display:none">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
@@ -203,14 +202,14 @@ $current = date("m/d/Y");
                                         <div class="card shadow-sm shadow-showcase">
                                             <div class="card-body">
                                                 <div class="row">
-                                                        <div class="col-md-12">
+                                                        <!-- <div class="col-md-12">
                                                              <div class="form-group row">
                                                                 <label for="staticEmail" class="col-sm-3 col-form-label">Location:</label>
                                                                 <div class="col-sm-9">
                                                                 <input type="text" class="form-control noradious" id="location" name="location">
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="col-md-6">
                                                             <div class="form-group row">
                                                                 <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
@@ -225,7 +224,7 @@ $current = date("m/d/Y");
                                                                 <div class="col-sm-9">
                                                                     <select name="amount_cate" id="amount_cate" class="form-control noradious">
                                                                         <option value="Debit">Debit</option>
-                                                                        <option value="Cradit">Cradit</option>
+                                                                        <option value="Cradit" selected>Cradit</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
