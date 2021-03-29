@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Housekipping;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use App\Models\HouseKeeping;
 use App\Models\Room;
 use Illuminate\Http\Request;
@@ -68,7 +69,9 @@ class HousekeepingReportController extends Controller
 
     public function employeeWiseHousekeeping()
     {
-        return view('housekipping.report.employee_wise_housekeeping');
+        
+        $employees = Employee::where('status',1)->get();
+        return view('housekipping.report.employee_wise_housekeeping',compact('employees'));
     }
 
     public function employeeWiseGetAjaxData(Request $request)

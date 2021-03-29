@@ -263,11 +263,11 @@
 
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.hotel')}}">
-                        <div class="card card-block card_overlay">
+                        <div class="card card-block card-stretch card-height card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">
                                     <div class="">
-                                        <img src="{{asset('public/backend/assets/admin/front-office.jpg')}}" alt="" />
+                                        <img src="{{asset('public/backend/assets/admin/front-office.jpg')}}" alt="" class="w-100" />
                                     </div>
                                     <div class="mt-4">
                                         <h3 class="mb-1 title-area">Front Office</h3>
@@ -286,11 +286,11 @@
 
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.foodandbeverage.create')}}">
-                        <div class="card card-block card_overlay">
+                        <div class="card card-block card-stretch card-height card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">
                                     <div class="">
-                                        <img src="{{asset('public/backend/assets/admin/foodandbav.jpg')}}" alt="" />
+                                        <img src="{{asset('public/backend/assets/admin/foodandbav.jpg')}}" alt="" class="w-100" />
                                     </div>
                                     <div class="mt-4">
                                         <h3 class="mb-1 title-area">Food & Beverage</h3>
@@ -309,11 +309,11 @@
 
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.housekipping.home')}}">
-                        <div class="card card-block card_overlay">
+                        <div class="card card-block card-stretch card-height card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">
                                     <div class="">
-                                        <img src="{{asset('public/backend/assets/admin/housekeeping.jpg')}}" alt="" />
+                                        <img src="{{asset('public/backend/assets/admin/housekeeping.jpg')}}" alt="" class="w-100" />
                                     </div>
                                     <div class="mt-4">
                                         <h3 class="mb-1 title-area">House Keeping</h3>
@@ -332,11 +332,11 @@
                 
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.restaurant.index')}}">
-                        <div class="card card-block card_overlay">
+                        <div class="card card-block card-stretch card-height card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">
                                     <div class="">
-                                        <img src="{{asset('public/backend/assets/admin/restaurant.jpg')}}" alt="" />
+                                        <img src="{{asset('public/backend/assets/admin/restaurant.jpg')}}" alt="" class="w-100" />
                                     </div>
                                     <div class="mt-4">
                                         <h3 class="mb-1 title-area">Restaurant</h3>
@@ -357,11 +357,11 @@
 
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.payroll.index')}}">
-                        <div class="card card-block card_overlay">
+                        <div class="card card-block card-stretch card-height card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">
                                     <div class="">
-                                        <img src="{{asset('public/backend/assets/admin/payroll.jpg')}}" alt="" />
+                                        <img src="{{asset('public/backend/assets/admin/payroll.jpg')}}" alt="" class="w-100" />
                                     </div>
                                     <div class="mt-4">
                                         <h3 class="mb-1 title-area">Payroll</h3>
@@ -378,11 +378,11 @@
 
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.banquet.index')}}">
-                        <div class="card card-block card_overlay">
+                        <div class="card card-block card-stretch card-height card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">
                                     <div class="">
-                                        <img src="{{asset('public/backend/assets/admin/banquet.jpg')}}" alt="" />
+                                        <img src="{{asset('public/backend/assets/admin/banquet.jpg')}}" alt="" class="w-100" />
                                     </div>
                                     <div class="mt-4">
                                         <h3 class="mb-1 title-area">Banquet</h3>
@@ -401,11 +401,11 @@
 
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.account.home')}}">
-                        <div class="card card-block card_overlay">
+                        <div class="card card-block card-stretch card-height card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">
                                     <div class="">
-                                        <img src="{{asset('public/backend/assets/admin/account.jpg')}}" alt="" />
+                                        <img src="{{asset('public/backend/assets/admin/account.jpg')}}" alt="" class="w-100" />
                                     </div>
                                     <div class="mt-4">
                                         <h3 class="mb-1 title-area">Accounts</h3>
@@ -425,11 +425,11 @@
 
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.inventory.home')}}">
-                        <div class="card card-block card_overlay">
+                        <div class="card card-block card-stretch card-height card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">
                                     <div class="">
-                                        <img src="{{asset('public/backend/assets/admin/inventory.jpg')}}" alt="" />
+                                        <img src="{{asset('public/backend/assets/admin/inventory.jpg')}}" alt="" class="w-100" />
                                     </div>
                                     <div class="mt-4">
                                         <h3 class="mb-1 title-area">Inventory</h3>
@@ -448,11 +448,11 @@
 
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.physicalstock.dashboard')}}">
-                        <div class="card card-block card_overlay">
+                        <div class="card card-block card-stretch card-height card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">
                                     <div class="">
-                                        <img src="{{asset('public/backend/assets/admin/stock.jpg')}}" alt="" />
+                                        <img src="{{asset('public/backend/assets/admin/stock.jpg')}}" alt="" class="w-100" />
                                     </div>
                                     <div class="mt-4">
                                         <h3 class="mb-1 title-area">Stock</h3>

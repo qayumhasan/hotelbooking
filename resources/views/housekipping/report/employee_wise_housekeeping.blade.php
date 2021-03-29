@@ -23,35 +23,36 @@ $time = date("h:i");
                 <div class="card p-4">
 
                     <form id="clean_duration_search">
-                    <div class="form-group row">
-                        <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
-                        <div class="col-sm-2">
-                            <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
-                            <small class="text-danger from_date"></small>
-                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
+                            <div class="col-sm-2">
+                                <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
+                                <small class="text-danger from_date"></small>
+                            </div>
 
-                        <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
-                        <div class="col-sm-2">
-                            <input class="form-control datepicker form-control-sm" name="to_date" type="text">
-                            <small class="text-danger to_date"></small>
-                        </div>
-                        
-                        
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
+                            <div class="col-sm-2">
+                                <input class="form-control datepicker form-control-sm" name="to_date" type="text">
+                                <small class="text-danger to_date"></small>
+                            </div>
 
-                        <label for="inputPassword" class="col-sm-1 col-form-label"><b>Employee:</b></label>
-                        <div class="col-sm-2">
-                        <select class="form-control form-control-sm" id="updatedby" name="keeping_name">
-                                <option value="Qayum Hasan">Qayum Hasan</option>
-                                <option value="Asif Foysal">Asif Foysal</option>
 
-                            </select>
-                            <small class="text-danger room_no"></small>
-                        </div>
 
-                        <div class="col-sm-2">
-                        <button type="Submit" class="btn btn-primary btn-sm" >Search</button>
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Employee:</b></label>
+                            <div class="col-sm-2">
+                                <select class="form-control form-control-sm" id="updatedby" name="keeping_name">
+                                    @foreach($employees as $row)
+                                    <option value="{{$row->employee_name}}">{{$row->employee_name}}</option>
+                                    @endforeach
+
+                                </select>
+                                <small class="text-danger room_no"></small>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <button type="Submit" class="btn btn-primary btn-sm">Search</button>
+                            </div>
                         </div>
-                    </div>
                     </form>
 
                 </div>
@@ -73,7 +74,7 @@ $time = date("h:i");
                     </div>
                     <div class="card-body ">
                         <div class="table-responsive room_ajax_data">
-                            
+
 
 
 
@@ -111,11 +112,9 @@ $time = date("h:i");
 
 
 <script>
-    $('.datepicker').datepicker(
-        {
-            format: 'dd/mm/yyyy',
-        }
-    );
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+    });
 </script>
 
 
@@ -131,34 +130,34 @@ $time = date("h:i");
         $(document).on('submit', '#clean_duration_search', function(e) {
 
             e.preventDefault();
-            
+
             $('.preloader').show();
             $('.room_simple_data').hide();
             $.ajax({
                 type: 'GET',
                 url: "{{ url('/admin/housekepping/employee/wise/ajax/list') }}",
-                data:$('#clean_duration_search').serializeArray(),
+                data: $('#clean_duration_search').serializeArray(),
                 success: function(data) {
                     console.log(data);
                     $('.preloader').hide();
                     $('.room_ajax_data').append(data);
 
                 },
-                error:function(err){
-                        $('.preloader').hide();
-                        if(err.responseJSON.errors.room_no){
-                            $('.room_no').html(err.responseJSON.errors.room_no[0]);
-                        }
-
-                        if(err.responseJSON.errors.to_date){
-                            $('.to_date').html(err.responseJSON.errors.to_date[0]);
-                        }
-                        if(err.responseJSON.errors.from_date){
-                            $('.from_date').html(err.responseJSON.errors.from_date[0]);
-                        }
-                        
-                        
+                error: function(err) {
+                    $('.preloader').hide();
+                    if (err.responseJSON.errors.room_no) {
+                        $('.room_no').html(err.responseJSON.errors.room_no[0]);
                     }
+
+                    if (err.responseJSON.errors.to_date) {
+                        $('.to_date').html(err.responseJSON.errors.to_date[0]);
+                    }
+                    if (err.responseJSON.errors.from_date) {
+                        $('.from_date').html(err.responseJSON.errors.from_date[0]);
+                    }
+
+
+                }
 
             });
         });

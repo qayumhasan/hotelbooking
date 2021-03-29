@@ -512,6 +512,8 @@
             </div>
         </div>
     </footer>
+
+    @include('../layouts/inc/footer_menu')
     <!-- Backend Bundle JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/backend-bundle.min.js"></script>
 
