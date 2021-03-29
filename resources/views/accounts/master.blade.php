@@ -418,6 +418,8 @@
         </div>
     </footer>
 
+    @include('../layouts/inc/footer_menu')
+
         
     
 

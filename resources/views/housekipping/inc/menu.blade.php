@@ -244,7 +244,7 @@
 
                                 <li class="{{ request()->routeIs('admin.housekipping.report.list*') ? 'active' : '' }}">
                                     <a href="{{route('admin.housekipping.report.list')}}">
-                                        <i class="las la-list-alt"></i><span>HouseKipping Report</span>
+                                        <i class="las la-list-alt"></i><span>HouseKeeping Report</span>
                                     </a>
                                 </li>
 

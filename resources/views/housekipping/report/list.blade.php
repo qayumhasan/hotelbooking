@@ -225,7 +225,7 @@ $time = date("h:i");
                                         @if($room->room_status == 3)
                                         <td class="bg_red">Booked</td>
                                         @elseif($room->room_status == 2)
-                                        <td class="bg-navyblue">House Kepping</td>
+                                        <td class="bg-navyblue">House Keeping</td>
                                         @elseif($room->room_status == 1)
                                         <td class="bg-green">Available</td>
                                         @elseif($room->room_status == 4)

@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/backend.css?v=1.0.1">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datepiker.css">
-    
+
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datatables.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/select2.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
@@ -41,6 +41,7 @@
         .form-control {
             border: 1px solid #443f3f;
         }
+      
     </style>
     <!-- loader END -->
     <!-- Wrapper Start -->
@@ -126,7 +127,7 @@
                                         <i class="las la-user-plus"></i><span>Day By Day Calender</span>
                                     </a>
                                 </li>
-                               
+
 
                             </ul>
                         </li>
@@ -236,8 +237,8 @@
                                 </li>
 
 
-                              
-                                
+
+
 
 
                             </ul>
@@ -256,13 +257,13 @@
                                         <i class="las la-user-plus"></i><span>Room Wise Analysis</span>
                                     </a>
                                 </li>
-                                
+
                                 <li class="{{ request()->routeIs('admin.reservation.analysis.room.type.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.reservation.analysis.room.type.report')}}">
                                         <i class="las la-user-plus"></i><span>Room Type Analysis</span>
                                     </a>
                                 </li>
-                                
+
                             </ul>
                         </li>
 
@@ -297,12 +298,12 @@
                                         <i class="las la-user-plus"></i><span>Post To Room</span>
                                     </a>
                                 </li>
-                                
+
                             </ul>
                         </li>
 
 
-                        
+
                         <li class="">
                             <a href="#branch" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <i class="far fa-user"></i><span>Branch</span>
@@ -540,9 +541,9 @@
                                         <i class="las la-list-alt"></i><span>Tax Setting</span>
                                     </a>
                                 </li>
-                              
-                             
-                            
+
+
+
                             </ul>
                         </li>
 
@@ -759,11 +760,19 @@
                     Copyright 2020 <a href="#">DurbarIt</a> All Rights Reserved.
                 </div>
             </div>
+
         </div>
     </footer>
 
-        
-    
+
+
+    @include('../layouts/inc/footer_menu')
+
+
+
+
+
+
 
 
 
@@ -805,7 +814,7 @@
     <!-- Chart Custom JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/chart-custom.js"></script>
 
-   
+
 
     <!-- slider JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/slider.js"></script>
@@ -826,25 +835,29 @@
             case 'success':
 
                 iziToast.success({
-                    message: '{{ Session::get('messege') }}',
+                    message: '{{ Session::get('
+                    messege ') }}',
                     'position': 'topCenter'
                 });
                 brack;
             case 'info':
                 iziToast.info({
-                    message: '{{ Session::get('messege') }}',
+                    message: '{{ Session::get('
+                    messege ') }}',
                     'position': 'topRight'
                 });
                 brack;
             case 'warning':
                 iziToast.warning({
-                    message: '{{ Session::get('messege')}}',
+                    message: '{{ Session::get('
+                    messege ')}}',
                     'position': 'topRight'
                 });
                 break;
             case 'error':
                 iziToast.error({
-                    message: '{{ Session::get('messege')}}',
+                    message: '{{ Session::get('
+                    messege ')}}',
                     'position': 'topRight'
                 });
                 break;
@@ -878,33 +891,29 @@
         $('#datepicker').datepicker();
     </script>
     <script>
-        $('.datepicker').datepicker(
-            {
-                format: 'dd/mm/yyyy',
-            }
-        );
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+        });
     </script>
     <script>
-        $('.datepickernew').datepicker(
-            {
-                format: 'dd-mm-yyyy',
-            }
-        );
+        $('.datepickernew').datepicker({
+            format: 'dd-mm-yyyy',
+        });
     </script>
 
-    
-
-<script>
-    $("#select_room_no").select2({
-        placeholder: '----Select Room No----'
-    });
-</script>
 
 
-<script>
-        $(function () {
-            $(".savepritbtn").on('click', function () {
-                
+    <script>
+        $("#select_room_no").select2({
+            placeholder: '----Select Room No----'
+        });
+    </script>
+
+
+    <script>
+        $(function() {
+            $(".savepritbtn").on('click', function() {
+
                 var mode = 'iframe'; //popup
                 var close = mode == "popup";
                 var options = {
@@ -914,9 +923,9 @@
                 $("div.printableAreasaveprint").printArea(options);
             });
         });
-   </script>
+    </script>
 
-  
+
 
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>
 </body>

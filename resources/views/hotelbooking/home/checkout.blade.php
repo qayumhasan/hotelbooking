@@ -281,13 +281,14 @@ $time = date("h:i");
                                             <tr>
                                                 <th scope="row">Extra Service</th>
                                                 <td class="text-center">
-                                                    <h6>Room No : {{$checkindata->room_no}}({{$checkindata->roomtype->room_type ?? ''}})</h6><br>
+                                                    
 
                                                     @php
                                                     $totalamountextra = 0;
                                                     @endphp
 
                                                     @foreach($checkindata->checkin as $row)
+                                                    <h6>Room No : {{$row->room_no}}</h6><br>
                                                     <div class="border" <p>{{$row->item_name}} {{$row->qty}} pcs</p>
                                                         <p>Rate @ {{$row->rate}} /= per pcs </p>
                                                         <p>Total :$ {{$row->qty * $row->rate}}</p>

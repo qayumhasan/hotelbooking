@@ -101,6 +101,7 @@ class HouseKippingController extends Controller
             $housekeeping->keeping_status=$request->kepping_status;
             $housekeeping->keeping_assign_name=auth()->user()->id;
             $housekeeping->remarks=$request->last_log;
+            $housekeeping->is_active=0;
             $housekeeping->save();
             $notification=array(
                 'messege'=>'HouseKeeping Insert successfully!',
