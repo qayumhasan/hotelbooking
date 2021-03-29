@@ -24,7 +24,7 @@ $current = date("m/d/Y");
                         <div class="header-title">
                             <h4 class="card-title">Account Transection</h4>
                         </div>
-                       <a href="{{route('admin.purchase.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
+                       <a href="{{route('admin.transection.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Transection</span></i></button></a>
                     </div>
                 </div>
                 <form action="{{route('admin.transection.create')}}" method="post">
@@ -50,10 +50,9 @@ $current = date("m/d/Y");
                                                             <option value="Cash Receipt Voucher">Cash Receipt Voucher</option>
                                                             <option value="Bank Receipt Voucher">Bank Receipt Voucher</option>
                                                             <option value="AorC Receivable Journal Voucher">A/C Receivable Journal Voucher</option>
-                                                            
                                                             <option value="AorC Payble Journal Voucher">A/C Payble Journal Voucher</option>
                                                             <option value="Adjustment Journal Voucher">Adjustment Journal Voucher</option>
-                                                            <option value="Acount Opening Voucher">Acount Opening Voucher</option>
+                                                            <option value="Account Opening Voucher">Account Opening Voucher</option>
                                                         </select>
                                                         @error('voucher')
                                                             <p style="color:red">{{ $message }}</p>
@@ -74,6 +73,7 @@ $current = date("m/d/Y");
                                                         <textarea name="narration" class="form-control noradious"></textarea>
                                                     </td>
                                                 </tr>
+                                              
                                             </tbody>
                                             </table>
                                         </div>
@@ -178,22 +178,21 @@ $current = date("m/d/Y");
                                                         </div>
                                                     </div>
                                                     </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
+                                                <div class="row" style="padding-bottom:15px">
+                                                    <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="fname">Voucher Date: *</label>
                                                                 <input type="text"  id="date" name="date" class="form-control noradious datepicker" value="{{$current}}">
                                                             </div>
                                                         </div>
-                                                </div>
-                                                <div class="row">
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="staticEmail" class="col-form-label">Advice:</label>
+                                                                <label for="" >Advice:</label>
                                                                 <input type="text" name="advice" class="form-control noradious" id="staticEmail" value="">
                                                             </div>
                                                         </div>
                                                 </div>
+                                              
                                                 <div class="row" id="check_r"  style="display:none">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
@@ -209,14 +208,14 @@ $current = date("m/d/Y");
                                         <div class="card shadow-sm shadow-showcase">
                                             <div class="card-body">
                                                 <div class="row">
-                                                        <div class="col-md-12">
+                                                        <!-- <div class="col-md-12">
                                                              <div class="form-group row">
                                                                 <label for="staticEmail" class="col-sm-3 col-form-label">Location:</label>
                                                                 <div class="col-sm-9">
                                                                 <input type="text" class="form-control noradious" id="location" name="location">
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="col-md-6">
                                                             <div class="form-group row">
                                                                 <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
@@ -298,6 +297,59 @@ $(document).ready(function() {
    });
 });
 </script>
+<!-- voucher type wise  davit cradit -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#voucher_type').on('change', function(){
+       var voucher_type = $(this).val();
+    
+       if(voucher_type=='Cash Payment Voucher'){
+        $('#amount_cate').empty();
+        $('#amount_cate').append('<option value="Debit">Debit</option>');
+       }else if(voucher_type=='Bank Payment Voucher'){
+        $('#amount_cate').empty();
+        $('#amount_cate').append('<option value="Debit">Debit</option>');
+       }
+       else if(voucher_type=='Cash Receipt Voucher'){
+        $('#amount_cate').empty();
+        $('#amount_cate').append('<option value="Cradit">Cradit</option>');
+       }
+       else if(voucher_type=='Bank Receipt Voucher'){
+        $('#amount_cate').empty();
+        $('#amount_cate').append('<option value="Cradit">Cradit</option>');
+       }
+       else if(voucher_type=='AorC Receivable Journal Voucher'){
+        $('#amount_cate').empty();
+        $('#amount_cate').append('<option value="Debit" selected>Debit</option> <option value="Cradit">Cradit</option>');
+       } else if(voucher_type=='AorC Payble Journal Voucher'){
+        $('#amount_cate').empty();
+        $('#amount_cate').append('<option value="Debit" >Debit</option> <option value="Cradit" selected>Cradit</option>');
+       }
+       else if(voucher_type=='Adjustment Journal Voucher'){
+        $('#amount_cate').empty();
+        $('#amount_cate').append('<option value="Debit" >Debit</option> <option value="Cradit" selected>Cradit</option>');
+       }
+       else if(voucher_type=='Account Opening Voucher'){
+        $('#amount_cate').empty();
+        $('#amount_cate').append('<option value="Debit" >Debit</option> <option value="Cradit" selected>Cradit</option>');
+       }
+       else{
+        $('#amount_cate').empty();
+        $('#amount_cate').append('<option value="Debit" >Debit</option> <option value="Cradit">Cradit</option>');
+       }
+        
+    
+
+   });
+});
+</script>
+
+<!-- voucher type wise davit cradit  end-->
+
+
+
+
 
 <!-- voucher type wise sourh account -->
 <script type="text/javascript">
@@ -556,7 +608,9 @@ $(document).ready(function() {
       var remarks=$("#remarks").val();
       var qty=$("#qty").val();
       var price=$("#price").val();
+
       var account_head=$("#account_head").val();
+
       var account_head_main=$("#account_head_main").val();
       var location=$("#location").val();
       var amount=$("#amount").val();

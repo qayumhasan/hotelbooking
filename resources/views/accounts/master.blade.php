@@ -202,6 +202,26 @@
                             </ul>
                         </li>
 
+                        <li class="">
+                            <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Transection Report</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.account.reports.datewise*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.datewise')}}">
+                                        <i class="las la-list-alt"></i><span>DateWise Transection</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="">
+                                        <i class="las la-list-alt"></i><span> VoucherType Wise Transection</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </nav>
                 <div class="p-3"></div>
@@ -529,7 +549,7 @@
     </script>
      
   
-
+     
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>
 </body>
 

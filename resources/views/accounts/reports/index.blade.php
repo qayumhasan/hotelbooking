@@ -22,12 +22,10 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">All Transaction</h4>
+                        <h4 class="card-title">DateWise Transection Reports</h4>
                      </div>
                      <span class="float-right mr-2">
-                        <a href="{{route('admin.transection.create')}}" class="btn btn-sm bg-primary">
-                           <i class="ri-add-fill"><span class="pl-1">Add New</span></i>
-                        </a>
+                       
                      </span>
                   </div>
                   <form action="{{route('admin.transection.index')}}" method="POST">
@@ -105,9 +103,6 @@ $current = date("m/d/Y");
                                     </tr>
                                  </thead>
                                  <tbody class="text-center">
-
-
-
                               @foreach($alldata as $key => $data)
                               <tr>
                                  <td>{{++$key}}</td>

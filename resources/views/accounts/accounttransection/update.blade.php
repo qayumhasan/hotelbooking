@@ -183,23 +183,19 @@ $current = date("m/d/Y");
                                                     </div>
                                                     </div>
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="fname">Voucher Date: *</label>
                                                                 <input type="text" name="date" id="date" class="form-control noradious datepicker" value="{{$edit->date}}">
                                                             </div>
                                                         </div>
-                                                </div>
-                                                <div class="row">
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="staticEmail" class="col-form-label">Advice:</label>
                                                                 <input type="text" name="advice" class="form-control noradious" value="{{$edit->advice}}">
                                                             </div>
                                                         </div>
                                                 </div>
-                                            
-
                                                     <div class="row" id="check_r" @if($edit->voucher_type=='Bank Payment Voucher')  @elseif($edit->voucher_type=='Bank Receipt Voucher')  @else  style="display:none" @endif>
                                                         <div class="col-md-12">
                                                             <div class="form-group">
@@ -215,14 +211,14 @@ $current = date("m/d/Y");
                                         <div class="card shadow-sm shadow-showcase">
                                             <div class="card-body">
                                                 <div class="row">
-                                                        <div class="col-md-12">
+                                                        <!-- <div class="col-md-12">
                                                              <div class="form-group row">
                                                                 <label for="staticEmail" class="col-sm-3 col-form-label">Location:</label>
                                                                 <div class="col-sm-9">
                                                                 <input type="text" class="form-control noradious" id="location" name="location">
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="col-md-6">
                                                             <div class="form-group row">
                                                                 <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>

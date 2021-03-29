@@ -77,7 +77,13 @@ class AccountTrasectionController extends Controller
         ]);
         $rand_id=rand(666,1999);
         $data = new AccountTransectionDetails;
+
         $data->account_head_details = $request->account_head;
+        $account_hedcode=ChartOfAccount::where('desription_of_account',$request->account_head)->select(['code','code_int','id'])->first();
+
+      
+        $data->account_head_code = $account_hedcode->code;
+
         $data->voucher_no = $request->invoice;
         $data->date = $request->date;
         $data->rand_id = $rand_id;
@@ -114,7 +120,11 @@ class AccountTrasectionController extends Controller
         $data->save();
 
         $newdata = new AccountTransectionDetails;
+
+        $acccode=ChartOfAccount::where('desription_of_account',$request->account_head_main)->select(['code','code_int','id'])->first();
+        
         $newdata->account_head_details = $request->account_head_main;
+        $newdata->account_head_code = $acccode->code;
         $newdata->voucher_no = $request->invoice;
         $newdata->date = $request->date;
         $newdata->rand_id = $rand_id;
@@ -194,13 +204,34 @@ class AccountTrasectionController extends Controller
                 $data->created_at=Carbon::now()->toDateTimeString();
                 $data->entry_by=Auth::user()->id;
 
-                CheckBookTransection::where('id',$check->check_reference)->update([
-                    'status'=>'U',
-                    'voucher_number'=>$request->invoice,
-                    'check_date'=>$request->date,
+        
 
-                    'updated_at'=>Carbon::now()->toDateTimeString(),
-                ]);
+                if($check->dr_amount == NULL){
+                    // return "dr faka";
+                    CheckBookTransection::where('id',$check->check_reference)->update([
+                        'status'=>'U',
+                        'voucher_number'=>$request->invoice,
+                        'check_date'=>$request->date,
+                        'check_amount'=>$check->cr_amount,
+                        'updated_at'=>Carbon::now()->toDateTimeString(),
+                    ]);
+    
+                }elseif($check->cr_amount == NULL){
+                     //return "cr faka";
+                    CheckBookTransection::where('id',$check->check_reference)->update([
+                        'status'=>'U',
+                        'voucher_number'=>$request->invoice,
+                        'check_date'=>$request->date,
+                        'check_amount'=>$check->dr_amount,
+                        'updated_at'=>Carbon::now()->toDateTimeString(),
+                    ]);
+
+                }
+
+
+
+
+
                 $detailsdata=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
                 foreach($detailsdata as $updata){
                     AccountTransectionDetails::where('id',$updata->id)->update([
@@ -337,12 +368,30 @@ class AccountTrasectionController extends Controller
                         'updated_at'=>'NULL',
                     ]);
                 }
-                CheckBookTransection::where('id',$check->check_reference)->update([
-                    'status'=>'U',
-                    'voucher_number'=>$request->invoice,
-                    'check_date'=>$request->date,
-                    'updated_at'=>Carbon::now()->toDateTimeString(),
-                ]);
+                if($check->dr_amount == 'NULL'){
+                    // return "dr faka";
+                    CheckBookTransection::where('id',$check->check_reference)->update([
+                        'status'=>'U',
+                        'voucher_number'=>$request->invoice,
+                        'check_date'=>$request->date,
+                        'check_amount'=>$check->cr_amount,
+                        'updated_at'=>Carbon::now()->toDateTimeString(),
+                    ]);
+    
+                }elseif($check->cr_amount == 'NULL'){
+                    // return "cr faka";
+                    CheckBookTransection::where('id',$check->check_reference)->update([
+                        'status'=>'U',
+                        'voucher_number'=>$request->invoice,
+                        'check_date'=>$request->date,
+                        'check_amount'=>$check->dr_amount,
+                        'updated_at'=>Carbon::now()->toDateTimeString(),
+                    ]);
+
+                }
+            
+
+
                 $detailsdata=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
                 foreach($detailsdata as $updata){
                     AccountTransectionDetails::where('id',$updata->id)->update([
@@ -467,7 +516,7 @@ class AccountTrasectionController extends Controller
             }
             return response()->json($invoice);
 
-        }elseif($voucher_type=='Acount Opening Voucher'){
+        }elseif($voucher_type=='Account Opening Voucher'){
 
             if($orderhed){
                 $invoice='AOV'.$year.'-'.$date.'-H-'.$orderhed->id;
@@ -547,7 +596,7 @@ class AccountTrasectionController extends Controller
             return response()->json($data);
 
 
-        }elseif($voucher_type=='Acount Opening Voucher'){
+        }elseif($voucher_type=='Account Opening Voucher'){
 
             $data=ChartOfAccount::get();
              return response()->json($data);
@@ -602,7 +651,7 @@ class AccountTrasectionController extends Controller
           $data=ChartOfAccount::where('maincategory_id','!=',9)->get();
             return response()->json($data);
 
-        }elseif($voucher_type=='Acount Opening Voucher'){
+        }elseif($voucher_type=='Account Opening Voucher'){
 
            
             $data=ChartOfAccount::get();
@@ -889,7 +938,23 @@ class AccountTrasectionController extends Controller
     }
 
 
+    // search date wise
+    public function searchdatewise(Request $request){
+        $todate=$request->todate;
+        $formdate=$request->formdate;
+        $searchdata=AccountTransectionHead::whereBetween('date', [$request->formdate,$request->todate])->get();
+        return view('accounts.accounttransection.index',compact('searchdata','todate','formdate'));
+    }
 
+    // 
+    public function printvalueaccount(Request $request){
+      
+        $data=AccountTransectionHead::where('id',$request->id)->first();
+        $alldata=AccountTransectionDetails::where('voucher_no',$data->voucher_no)->get();
+        
+        return view('accounts.accounttransection.ajax.allprintdata',compact('data','alldata'));
+
+    }
     
     
 
