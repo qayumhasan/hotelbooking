@@ -18,7 +18,7 @@
                         </li>
                         <li class="">
                             <a href="#guest_entry" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Menu</span>
+                            <i class="fas fa-fw fa-sitemap"></i><span>Menu</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -53,7 +53,7 @@
                     <!-- reports -->
                     <li class="">
                             <a href="#Reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Reports</span>
+                            <i class="fas fa-book-reader"></i><span>Reports</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>

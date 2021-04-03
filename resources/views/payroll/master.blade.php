@@ -61,7 +61,7 @@
                       
                         <li class="">
                             <a href="#menutype" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Employee</span>
+                            <i class="fas fa-users-cog"></i><span>Employee</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -78,7 +78,7 @@
                         </li>
                         <li class="">
                             <a href="#salary" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Salary</span>
+                            <i class="fas fa-money-bill-alt"></i><span>Salary</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -98,7 +98,7 @@
                         </li>
                         <li class="">
                             <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Reports</span>
+                            <i class="fas fa-book-open"></i><span>Reports</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>

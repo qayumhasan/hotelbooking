@@ -63,7 +63,7 @@
 
                         <li class="">
                             <a href="#categoryaccounts" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Category</span>
+                            <i class="fas fa-receipt"></i><span>Category</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -78,7 +78,7 @@
                         </li>
                         <li class="">
                             <a href="#maincategoryaccounts" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>MainCategory</span>
+                            <i class="fas fa-address-book"></i><span>MainCategory</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -93,7 +93,7 @@
                         </li>
                         <li class="">
                             <a href="#subcategoryaccounts" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>SubCategory</span>
+                            <i class="fas fa-closed-captioning"></i><span>SubCategory</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -112,7 +112,7 @@
                         </li>
                         <li class="">
                             <a href="#chartofaccount" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Chart Of Account</span>
+                            <i class="fas fa-chart-area"></i><span>Chart Of Account</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -131,7 +131,7 @@
                         </li>
                         <li class="">
                             <a href="#Accounttransection" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Account Trasection</span>
+                            <i class="fas fa-money-check-alt"></i><span>Account Trasection</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -204,7 +204,7 @@
 
                         <li class="">
                             <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Transection Report</span>
+                            <i class="fas fa-book-open"></i><span>Transection Report</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>

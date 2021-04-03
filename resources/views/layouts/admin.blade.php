@@ -85,7 +85,7 @@
                             @if($permit->active('employee'))
                         <li class=" ">
                             <a href="#employee" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="las la-network-wired iq-arrow-left"></i><span>Employee</span>
+                            <i class="fas fa-users-cog"></i><span>Employee</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -110,7 +110,7 @@
 
                         <li class=" ">
                             <a href="{{route('admin.department.list')}}">
-                                <i class="las la-wrench aiz-side-nav-icon"></i><span>Department</span>
+                            <i class="fa fa-university" aria-hidden="true"></i><span>Department</span>
                             </a>
                         </li>
                         <!-- Department end from here -->
@@ -120,7 +120,7 @@
 
                         <li class=" ">
                             <a href="{{route('admin.addon.manager')}}">
-                                <i class="las la-wrench aiz-side-nav-icon"></i><span>Addon Manager</span>
+                            <i class="fas fa-puzzle-piece"></i><span>Addon Manager</span>
                             </a>
                         </li>
                         <!-- addon manager end from here -->
@@ -128,7 +128,7 @@
                         <!-- pages area start -->
                         <li class=" ">
                             <a href="{{route('page')}}">
-                                <i class="las la-wrench aiz-side-nav-icon"></i><span>Add Pages</span>
+                            <i class="fas fa-file"></i><span>Add Pages</span>
                             </a>
                         </li>
                         <!-- pages area end -->

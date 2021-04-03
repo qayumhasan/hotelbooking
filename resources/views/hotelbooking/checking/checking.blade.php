@@ -692,15 +692,18 @@ $time = date("h:i");
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
 <script language="JavaScript">
-    Webcam.set({
+    var webcam = Webcam.set({
         width: 370,
         height: 320,
         image_format: 'jpeg',
         jpeg_quality: 90
     });
 
-    Webcam.attach('#my_camera');
-    Webcam.attach('#doc_camera');
+    if(webcam){
+        Webcam.attach('#my_camera');
+        Webcam.attach('#doc_camera');
+    }
+
 
     function take_snapshot() {
         Webcam.snap(function(data_uri) {
