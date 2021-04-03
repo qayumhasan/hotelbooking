@@ -18,7 +18,7 @@
                         </li>
                         <li class="">
                             <a href="#guest_entry" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Guest Entry</span>
+                            <i class="fas fa-hiking"></i><span>Guest Entry</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -52,7 +52,7 @@
 
                         <li class="">
                             <a href="#advancebooking" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Advance Booking</span>
+                            <i class="far fa-address-book"></i><span>Advance Booking</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -86,7 +86,7 @@
 
                         <li class="">
                             <a href="#occupancy" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Occupancy Report</span>
+                            <i class="fab fa-adn"></i><span>Occupancy Report</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -121,7 +121,7 @@
                         
                         <li class="">
                             <a href="#distribution" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Distribution Items</span>
+                            <i class="fas fa-truck-moving"></i><span>Distribution Items</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -157,7 +157,7 @@
 
                         <li class="">
                             <a href="#distributionandmantenance" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Mantinance &Distribution Items</span>
+                                <<i class="fas fa-tools"></i><span>Mantinance &Distribution Items</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -196,7 +196,7 @@
 
                         <li class="">
                             <a href="#acquisition" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Order Acquisition</span>
+                            <i class="fas fa-bullhorn"></i><span>Order Acquisition</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -235,7 +235,7 @@
                         
                         <li class="">
                             <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Reports</span>
+                            <i class="fas fa-book-reader"></i><span>Reports</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>

@@ -68,7 +68,7 @@
                         </li>
                         <li class=" ">
                             <a href="#user" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Room</span>
+                            <i class="fas fa-bed"></i><span>Room</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -99,7 +99,7 @@
 
                         <li class=" ">
                             <a href="#advance_booking" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Advance Booking</span>
+                            <i class="fas fa-money-bill-alt"></i><span>Advance Booking</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -135,7 +135,7 @@
 
                         <li class="">
                             <a href="#occupancy" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Occupancy Report</span>
+                                <i class="fas fa-fw fa-calendar-check"></i><span>Occupancy Report</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -169,7 +169,7 @@
 
                         <li class="">
                             <a href="#arrival_departure" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Arrival & Departure Reports</span>
+                                <i class="fas fa-fw fa-plane"></i><span>Arrival & Departure Reports</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -205,7 +205,7 @@
 
                         <li class="">
                             <a href="#housekeepingreport" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>HouseKeeping Report</span>
+                            <i class="fas fa-broom"></i><span>HouseKeeping Report</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -247,7 +247,7 @@
 
                         <li class="">
                             <a href="#reservation" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Reservation Analysis</span>
+                           <i class="fas fa-chart-pie"></i><span>Reservation Analysis</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -270,7 +270,7 @@
 
                         <li class="">
                             <a href="#collectionreport" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Collection Report</span>
+                            <i class="fas fa-box"></i><span>Collection Report</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -306,7 +306,7 @@
 
                         <li class="">
                             <a href="#branch" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Branch</span>
+                            <i class="fas fa-laptop-house"></i><span>Branch</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -325,7 +325,7 @@
                         </li>
                         <li class="">
                             <a href="#floor" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Floor</span>
+                            <i class="fas fa-building"></i><span>Floor</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -339,7 +339,7 @@
                         </li>
                         <li class="">
                             <a href="#unitmaster" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Unit-Master</span>
+                            <i class="fas fa-address-book"></i><span>Unit-Master</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -353,7 +353,7 @@
                         </li>
                         <li class="">
                             <a href="#menucategory" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Menu Category</span>
+                                <i class="fas fa-fw fa-sitemap"></i><span>Menu Category</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -367,7 +367,7 @@
                         </li>
                         <li class="">
                             <a href="#stock-center" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Stock Center</span>
+                            <i class="fas fa-layer-group"></i><span>Stock Center</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -381,7 +381,7 @@
                         </li>
                         <li class="">
                             <a href="#item-entry" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Item Entry</span>
+                               <i class="fas fa-fw fa-images"></i><span>Item Entry</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -415,7 +415,7 @@
                         <!-- table area start from here -->
                         <li class="">
                             <a href="#restaurant_table" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Restaurant Table</span>
+                            <i class="fas fa-concierge-bell"></i><span>Restaurant Table</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -453,7 +453,7 @@
 
                         <li class="">
                             <a href="#supplier" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Supplier</span>
+                            <i class="fab fa-product-hunt"></i><span>Supplier</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -472,7 +472,7 @@
                         </li>
                         <li class="">
                             <a href="#purchase" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Purchase</span>
+                            <i class="fas fa-shopping-cart"></i><span>Purchase</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -492,7 +492,7 @@
 
                         <li class="">
                             <a href="#stocktranfer" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Stock Transfar</span>
+                            <i class="fas fa-dolly-flatbed"></i><span>Stock Transfar</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>

@@ -61,7 +61,7 @@
                         </li>
                         <li class="">
                             <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Booking</span>
+                            <i class="fas fa-bed"></i><span>Booking</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -80,7 +80,7 @@
                         </li>
                         <li class="">
                             <a href="#hall" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Venue</span>
+                            <i class="fas fa-map"></i><span>Venue</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -99,7 +99,7 @@
                         </li>
                         <li class="">
                             <a href="#bookingfor" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Booking For</span>
+                            <i class="fas fa-info"></i><span>Booking For</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -114,7 +114,7 @@
                         </li>
                         <li class="">
                             <a href="#menutype" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                                <i class="far fa-user"></i><span>Menu Type</span>
+                            <i class="fas fa-fw fa-sitemap"></i><span>Menu Type</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
