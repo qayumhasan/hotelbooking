@@ -99,6 +99,9 @@ class EmployeeController extends Controller
         $data->opening_balance = $request->opening_balance;
         $data->balance = $request->balance;
         $data->brance_id = $request->brance_id;
+
+        $data->chart_of_account = $request->chart_of_account;
+        $data->chart_of_acc_code = $request->chart_of_acc_code;
         
         if ($request->hasFile('cv')) {
             $data->cv = $request->file('cv')->store('public/uploads/file');

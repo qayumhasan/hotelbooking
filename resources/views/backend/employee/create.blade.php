@@ -24,7 +24,7 @@
                <div class="iq-card">
                   <div class="iq-card-header d-flex justify-content-between">
                      <div class="iq-header-title">
-                        <h4 class="card-title">Create Employee</h4>
+                        <h4 class="card-title">Create Emee</h4>
                      </div>
                      <span class="float-right mr-2">
                         <a href="{{route('admin.employee.index')}}" class="btn btn-sm bg-primary">
