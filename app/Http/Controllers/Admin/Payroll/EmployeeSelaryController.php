@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use Carbon\Carbon;
 use App\Models\EmployeeSelaryGenerate;
+use App\Models\ChartOfAccount;
 
 class EmployeeSelaryController extends Controller
 {
@@ -14,8 +15,10 @@ class EmployeeSelaryController extends Controller
     	$this->middleware('admin');
     }
     public function index(){
+
         $allemployee=Employee::latest()->get();
-    	return view('payroll.employeeselary.allemployee',compact('allemployee'));
+        $allchartofaccount=ChartOfAccount::where('category_id',2)->get();
+    	return view('payroll.employeeselary.allemployee',compact('allemployee','allchartofaccount'));
     }
     public function store(Request $request){
         
@@ -71,7 +74,8 @@ class EmployeeSelaryController extends Controller
     // 
     public function allemplyesalaryedit($month,$year){
        $alldata=EmployeeSelaryGenerate::where('month',$month)->where('year',$year)->get();
-       return view('payroll.employeeselary.allemployeeselaryupdate',compact('alldata','month','year'));
+       $allchartofaccount=ChartOfAccount::where('category_id',2)->get();
+       return view('payroll.employeeselary.allemployeeselaryupdate',compact('alldata','month','year','allchartofaccount'));
     }
     // update
     public function update(Request $request){

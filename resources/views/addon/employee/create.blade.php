@@ -356,6 +356,8 @@
                                     <div class="form-group">
                                        <label>Opening Balance:</label>
                                        <input type="text" class="form-control" name="opening_balance" placeholder="Opening Balance" />
+                                       <input type="hidden" name="chart_of_account" value="ACCOUNTS PAYABLE - SALARY & ALLOWANCE"/>
+                                       <input type="hidden" name="chart_of_acc_code" value="212-28-0040-0072"/>
                                     </div>
                                  </div>
                                   <div class="col-md-4">

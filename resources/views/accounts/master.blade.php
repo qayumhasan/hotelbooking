@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/backend.css?v=1.0.1">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datepiker.css">
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/select2.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/remixicon/fonts/remixicon.css">
@@ -214,11 +215,19 @@
                                         <i class="las la-list-alt"></i><span>DateWise Transection</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="">
+                                <li class="{{ request()->routeIs('admin.account.reports.vouchertypewise*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.vouchertypewise')}}">
                                         <i class="las la-list-alt"></i><span> VoucherType Wise Transection</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.account.reports.onlydatewise*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.onlydatewise')}}">
+                                        <i class="las la-list-alt"></i><span>Transection Date</span>
+                                    </a>
+                                </li>
+
+
+                               
                             </ul>
                         </li>
 
@@ -464,7 +473,7 @@
     <script src="{{asset('public/backend')}}/assets/js/mapbox-gl.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/mapbox.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/datepiker.js"></script>
-
+    <script src="{{asset('public/backend')}}/assets/js/select2.js"></script>
     <!-- Fullcalender Javascript -->
     <script src="{{asset('public/backend')}}//assets/vendor/fullcalendar/core/main.js"></script>
     <script src="{{asset('public/backend')}}//assets/vendor/fullcalendar/daygrid/main.js"></script>
@@ -547,8 +556,19 @@
     <script>
         $('.datepicker').datepicker();
     </script>
+
+    <script>
+        $("#account_head_main").select2({
+            placeholder: '----Select Name----'
+        });
+    </script>
+     <script>
+        $("#account_head").select2({
+            placeholder: '----Select Name----'
+        });
+    </script>
      
-  
+     
      
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>
 </body>

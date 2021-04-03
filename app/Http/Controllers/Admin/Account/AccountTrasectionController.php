@@ -13,6 +13,7 @@ use App\Models\AccountTransectionDetails;
 use App\Models\AccountTransectionHead;
 use App\Models\CheckBookTransection;
 use App\Models\CheckBookEntry;
+use App\Models\Employee;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -66,7 +67,7 @@ class AccountTrasectionController extends Controller
 
     // transection details insert
     public function transectiondetailsinsert(Request $request){
-         //return $request;
+         return $request;
 
 
        if($request->accounttransecti_id == ''){
@@ -424,13 +425,14 @@ class AccountTrasectionController extends Controller
 
     public function getsourchaccount($account_head){
        
-        $data=ChartOfAccount::where('desription_of_account',$account_head)->first();
+        $data=ChartOfAccount::where('id',$account_head)->first();
         return response()->json($data);
     }
 
     // 
     public function getsaccheadaccount($account_head){
-        $data=ChartOfAccount::where('desription_of_account',$account_head)->first();
+       // return $account_head;
+        $data=ChartOfAccount::where('id',$account_head)->first();
         return response()->json($data);
     }
 
@@ -540,7 +542,7 @@ class AccountTrasectionController extends Controller
     // main load invoice
     public function getcheckbookall($account_head){
        
-        $data=ChartOfAccount::where('desription_of_account',$account_head)->select(['id'])->first();
+        $data=ChartOfAccount::where('id',$account_head)->select(['id'])->first();
         $newdata=CheckBookTransection::where('account_code',$data->id)->get();
         return response()->json($newdata);
        
@@ -686,8 +688,9 @@ class AccountTrasectionController extends Controller
 
         $datasourche=ChartOfAccount::where('category_id',1)->where('maincategory_id',9)->where('subcategoryone_id',17)->get();
         $account_head=ChartOfAccount::where('subcategoryone_id','!=',17)->get();
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
 
-        return view('accounts.accounttransection.vouchertypewise.cashpaymentvoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.cashpaymentvoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
 
     // bank payment

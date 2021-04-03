@@ -116,9 +116,7 @@ $current = date("m/d/Y");
                                  <td>{{$data->designation}}</td>
                                  <td>
                                     <select class="form-control" name="mode_of_payment[]" style="margin:0 auto;">
-                                       <option value="Bank" @if($data->mode_of_payment=='Bank') selected @endif>Bank</option>
-                                       <option value="kash" @if($data->mode_of_payment=='kash') selected @endif>kash</option>
-                                       <option value="NGo" @if($data->mode_of_payment=='NGo') selected @endif>NGo</option>
+                                     <option value="212-28-0040-0072">ACCOUNTS PAYABLE - SALARY & ALLOWANCE</option>
                                     </select>
                                  </td>
                                  <td><input type="hidden" id="totaldays{{$data->id}}" value="30">

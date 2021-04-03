@@ -119,3 +119,10 @@ Route::get('/get/admin/accounthead/checkbok/all/{account_head}', [AccountTrasect
 
 // reports controller
 Route::get('Admin/account/transection/reports/datewise', [ReportsController::class, 'datewisereport'])->name('admin.account.reports.datewise');
+Route::post('Admin/account/transection/reports/datewise', [ReportsController::class, 'datewisereportsearch'])->name('admin.account.reports.datewise');
+Route::get('Admin/account/transection/reports/vouchertypewise', [ReportsController::class, 'vouchertypewise'])->name('admin.account.reports.vouchertypewise');
+Route::post('Admin/account/transection/reports/vouchertypewise', [ReportsController::class, 'vouchertypewisesearch'])->name('admin.account.reports.vouchertypewise');
+
+
+Route::get('Admin/account/transection/reports/date', [ReportsController::class, 'onlydate'])->name('admin.account.reports.onlydatewise');
+Route::post('Admin/account/transection/reports/date', [ReportsController::class, 'onlydatesearch'])->name('admin.account.reports.onlydatewise');

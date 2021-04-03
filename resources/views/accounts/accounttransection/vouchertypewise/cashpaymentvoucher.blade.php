@@ -10,6 +10,17 @@
 .noradious{
     border-radius:0px;
 }
+.select2-selection--single:first-child{
+    width:836px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow:first-child {
+    transform:translateX(50px);
+
+}
+.select2-selection--single >.select2-selection__arrow:first-child{
+    position:relative;
+   
+}
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
@@ -80,12 +91,18 @@ $current = date("m/d/Y");
                                                 <tr>
                                                     <td><label>Sourch Cash:</label></td>
                                                     <td colspan="5">
-                                                        <input type="text" autoComplete="on" id="account_head_main" name="account_head_main" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
+                                                        <!-- <input type="text" autoComplete="on" id="account_head_main" name="account_head_main" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
                                                         <datalist id="ref_in" class="sourch_ajax">
-                                                        @foreach($datasourche as $sorch_ofacc)
-                                                            <option value="{{$sorch_ofacc->desription_of_account}}">{{$sorch_ofacc->desription_of_account}}</option>
-                                                        @endforeach
-                                                        </datalist>
+                                                       
+                                                        </datalist> -->
+
+                                                        <select id="account_head_main" name="account_head_main" class="form-control noradious"> 
+                                                            <option value="">--Select--</option>
+                                                            @foreach($datasourche as $sorch_ofaccgg)
+                                                                <option value="{{$sorch_ofaccgg->id}}">{{$sorch_ofaccgg->desription_of_account}}</option>
+                                                            @endforeach
+                                                        </select>
+
                                                         <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
                                                         <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
                                                         <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
@@ -95,12 +112,16 @@ $current = date("m/d/Y");
                                                 <tr>
                                                     <td><label>Account Head:</label></td>
                                                     <td colspan="5">
-                                                         <input type="text" id="account_head" name="account_head" class="form-control noradious account_head" list="ref_inss" placeholder="Account Head" />
-                                                        <datalist id="ref_inss" class="acchead_ajax">
-                                                        @foreach($account_head as $sorch_ofacc)
-                                                            <option value="{{$sorch_ofacc->desription_of_account}}">{{$sorch_ofacc->desription_of_account}}</option>
-                                                        @endforeach
-                                                        </datalist>
+                                                       
+                                                        <select id="account_head" name="account_head" class="form-control noradious" width="60%"> 
+                                                            <option value="">--Select--</option>
+                                                            @foreach($account_head as $sorch_ofacc)
+                                                            <option value="{{$sorch_ofacc->id}}">{{$sorch_ofacc->desription_of_account}}</option>
+                                                            @endforeach
+                                                            @foreach($allemployee as $employee)
+                                                                <option value="{{$employee->employee_name}}">{{$employee->employee_name}}</option>
+                                                            @endforeach
+                                                        </select>
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
                                                         <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
@@ -489,6 +510,7 @@ $(document).ready(function() {
 $(document).ready(function() {
    $('#account_head_main').on('change', function(){
        var account_head = $(this).val();
+       alert(account_head);
        if(account_head) {
            $.ajax({
                url: "{{  url('/get/admin/sourchofaccount/all/') }}/"+account_head,
@@ -514,7 +536,7 @@ $(document).ready(function() {
 $(document).ready(function() {
    $('#account_head').on('change', function(){
      var account_head = $(this).val();
-     //alert(account_head);
+     alert(account_head);
        if(account_head) {
            $.ajax({
                url: "{{  url('/get/admin/headofaccount/all/') }}/"+account_head,
@@ -769,6 +791,8 @@ function editdata(el) {
 
 
 </script>
+
+
 
                                       
 @endsection
