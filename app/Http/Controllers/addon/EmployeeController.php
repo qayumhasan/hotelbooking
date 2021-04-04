@@ -17,7 +17,7 @@ class EmployeeController extends Controller
     }
     // index
     public function index(){
-    	$allemployee=Employee::OrderBy('id','DESC')->get();
+    	$allemployee=Employee::where('status',1)->OrderBy('id','DESC')->get();
     	return view('addon.employee.index',compact('allemployee'));
     }
     // create
@@ -224,7 +224,10 @@ class EmployeeController extends Controller
     }
     // delete
     public function delete($id){
-        $delete=Employee::where('id',$id)->delete();
+        $delete=Employee::where('id',$id)->update([
+            'status'=>0,
+            'updated_at'=>Carbon::now()->toDateTimeString(),
+        ]);
         if($delete){
             $notification = array(
                 'messege' => 'Employee Delete Success',

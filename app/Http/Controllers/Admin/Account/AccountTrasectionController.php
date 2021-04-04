@@ -17,6 +17,7 @@ use App\Models\Employee;
 use Carbon\Carbon;
 use Session;
 use Auth;
+use DB;
 
 
 
@@ -67,7 +68,7 @@ class AccountTrasectionController extends Controller
 
     // transection details insert
     public function transectiondetailsinsert(Request $request){
-         return $request;
+        //return $request;
 
 
        if($request->accounttransecti_id == ''){
@@ -78,13 +79,9 @@ class AccountTrasectionController extends Controller
         ]);
         $rand_id=rand(666,1999);
         $data = new AccountTransectionDetails;
-
-        $data->account_head_details = $request->account_head;
-        $account_hedcode=ChartOfAccount::where('desription_of_account',$request->account_head)->select(['code','code_int','id'])->first();
-
-      
+        $account_hedcode=DB::table('vchart_of_accounts')->where('code',$request->account_head)->first();
+        $data->account_head_details = $account_hedcode->desription_of_account;
         $data->account_head_code = $account_hedcode->code;
-
         $data->voucher_no = $request->invoice;
         $data->date = $request->date;
         $data->rand_id = $rand_id;
@@ -97,17 +94,17 @@ class AccountTrasectionController extends Controller
         $data->is_active = 0;
 
         if($request->subcategory_codeone==''){
-            $data->subcategory_codeone = $request->acchead_subcate_codeone;
+            $data->subcategory_codeone =$account_hedcode->subcategoryone_code;
         }else{
             $data->subcategory_codeone = $request->subcategory_codeone;
         }
         if($request->subcategory_codetwo==''){
-            $data->subcategory_codetwo = $request->acchead_subcate_codetwo;
+            $data->subcategory_codetwo = $account_hedcode->subcategorytwo_code;
         }else{
             $data->subcategory_codetwo = $request->subcategory_codetwo;
         }
-        $data->category_code = $request->acchead_cate_code;
-        $data->Accountcategory_code = $request->acchead_Accountcate_code;
+        $data->category_code = $account_hedcode->category_code;
+        $data->Accountcategory_code = $account_hedcode->maincategory_code;
         
         
         
@@ -122,10 +119,14 @@ class AccountTrasectionController extends Controller
 
         $newdata = new AccountTransectionDetails;
 
-        $acccode=ChartOfAccount::where('desription_of_account',$request->account_head_main)->select(['code','code_int','id'])->first();
-        
-        $newdata->account_head_details = $request->account_head_main;
+        $acccode=DB::table('vchart_of_accounts')->where('code',$request->account_head_main)->first();
+
+       
+
+        $newdata->account_head_details = $acccode->desription_of_account;
         $newdata->account_head_code = $acccode->code;
+
+        
         $newdata->voucher_no = $request->invoice;
         $newdata->date = $request->date;
         $newdata->rand_id = $rand_id;
@@ -135,11 +136,11 @@ class AccountTrasectionController extends Controller
         $newdata->main_invoice = $request->hiddeninvoice;
         $data->is_active = 0;
         
-        $newdata->category_code = $request->sourch_cate_code;
-        $newdata->Accountcategory_code = $request->sourch_Accountcate_code;
+        $newdata->category_code = $acccode->category_code;
+        $newdata->Accountcategory_code = $acccode->maincategory_code;
 
-        $newdata->subcategory_codeone = $request->sourch_subcate_codeone;
-        $newdata->subcategory_codetwo = $request->sourch_subcate_codetwo;
+        $newdata->subcategory_codeone = $acccode->subcategoryone_code;
+        $newdata->subcategory_codetwo = $acccode->subcategorytwo_code;
         
         if($request->amount_cate == "Debit"){
             $newdata->cr_amount = $request->amount;
@@ -424,16 +425,20 @@ class AccountTrasectionController extends Controller
     }
 
     public function getsourchaccount($account_head){
+
+        $data = DB::table('vchart_of_accounts')->where('code',$account_head)->first();
        
-        $data=ChartOfAccount::where('id',$account_head)->first();
         return response()->json($data);
     }
 
     // 
     public function getsaccheadaccount($account_head){
-       // return $account_head;
-        $data=ChartOfAccount::where('id',$account_head)->first();
+        
+        $data=DB::table('vchart_of_accounts')->where('code',$account_head)->first();
+  
         return response()->json($data);
+    
+       
     }
 
     // 
@@ -541,8 +546,9 @@ class AccountTrasectionController extends Controller
 
     // main load invoice
     public function getcheckbookall($account_head){
-       
-        $data=ChartOfAccount::where('id',$account_head)->select(['id'])->first();
+       //return $account_head;
+        DB::table('vchart_of_accounts');
+        $data=ChartOfAccount::where('code',$account_head)->select(['id'])->first();
         $newdata=CheckBookTransection::where('account_code',$data->id)->get();
         return response()->json($newdata);
        
@@ -720,9 +726,9 @@ class AccountTrasectionController extends Controller
         $datasourche=ChartOfAccount::where('category_id',1)->where('subcategoryone_id',18)->get();
         $account_head=ChartOfAccount::where('subcategoryone_id','!=',18)->get();
 
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
 
-
-        return view('accounts.accounttransection.vouchertypewise.bankpaymentvoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.bankpaymentvoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
 
        // found transfer
@@ -751,10 +757,10 @@ class AccountTrasectionController extends Controller
 
         $datasourche=ChartOfAccount::where('category_id',1)->where('subcategoryone_id',18)->get();
         $account_head=ChartOfAccount::where('subcategoryone_id','!=',18)->get();
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
 
 
-
-        return view('accounts.accounttransection.vouchertypewise.fundtransfervoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.fundtransfervoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
 
      // cash receipt voucher
@@ -782,10 +788,10 @@ class AccountTrasectionController extends Controller
 
         $datasourche=ChartOfAccount::where('category_id',1)->where('maincategory_id',9)->where('subcategoryone_id',17)->get();
         $account_head=ChartOfAccount::where('subcategoryone_id','!=',17)->get();
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
 
 
-
-        return view('accounts.accounttransection.vouchertypewise.cashreceiptvoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.cashreceiptvoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
     
     // 
@@ -813,8 +819,9 @@ class AccountTrasectionController extends Controller
         $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
         $datasourche=ChartOfAccount::where('category_id',1)->where('maincategory_id',9)->where('subcategoryone_id',18)->get();
         $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
 
-        return view('accounts.accounttransection.vouchertypewise.bankreceiptvoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.bankreceiptvoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
     
     public function aorcreceablevoucher(){
@@ -842,8 +849,8 @@ class AccountTrasectionController extends Controller
 
         $datasourche=ChartOfAccount::where('maincategory_id','!=',9)->get();
         $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
-
-        return view('accounts.accounttransection.vouchertypewise.aorcreceablevoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        return view('accounts.accounttransection.vouchertypewise.aorcreceablevoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
     
 
@@ -874,8 +881,8 @@ class AccountTrasectionController extends Controller
 
         $datasourche=ChartOfAccount::where('maincategory_id','!=',9)->get();
         $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
-
-        return view('accounts.accounttransection.vouchertypewise.aorcpayblevoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        return view('accounts.accounttransection.vouchertypewise.aorcpayblevoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
 
 
@@ -906,8 +913,8 @@ class AccountTrasectionController extends Controller
 
         $datasourche=ChartOfAccount::where('maincategory_id','!=',9)->get();
         $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
-
-        return view('accounts.accounttransection.vouchertypewise.adjustmentpayblevoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        return view('accounts.accounttransection.vouchertypewise.adjustmentpayblevoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
 
     public function accountopeningvoucher(){
@@ -936,8 +943,9 @@ class AccountTrasectionController extends Controller
 
         $datasourche=ChartOfAccount::where('maincategory_id','!=',9)->get();
         $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
 
-        return view('accounts.accounttransection.vouchertypewise.accountopeningvoucher',compact('account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.accountopeningvoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
 
 

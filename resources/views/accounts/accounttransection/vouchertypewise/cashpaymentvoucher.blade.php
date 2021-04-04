@@ -91,18 +91,12 @@ $current = date("m/d/Y");
                                                 <tr>
                                                     <td><label>Sourch Cash:</label></td>
                                                     <td colspan="5">
-                                                        <!-- <input type="text" autoComplete="on" id="account_head_main" name="account_head_main" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
-                                                        <datalist id="ref_in" class="sourch_ajax">
-                                                       
-                                                        </datalist> -->
-
                                                         <select id="account_head_main" name="account_head_main" class="form-control noradious"> 
                                                             <option value="">--Select--</option>
                                                             @foreach($datasourche as $sorch_ofaccgg)
-                                                                <option value="{{$sorch_ofaccgg->id}}">{{$sorch_ofaccgg->desription_of_account}}</option>
+                                                                <option value="{{$sorch_ofaccgg->code}}">{{$sorch_ofaccgg->desription_of_account}}</option>
                                                             @endforeach
                                                         </select>
-
                                                         <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
                                                         <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
                                                         <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
@@ -112,14 +106,13 @@ $current = date("m/d/Y");
                                                 <tr>
                                                     <td><label>Account Head:</label></td>
                                                     <td colspan="5">
-                                                       
                                                         <select id="account_head" name="account_head" class="form-control noradious" width="60%"> 
                                                             <option value="">--Select--</option>
                                                             @foreach($account_head as $sorch_ofacc)
-                                                            <option value="{{$sorch_ofacc->id}}">{{$sorch_ofacc->desription_of_account}}</option>
+                                                            <option value="{{$sorch_ofacc->code}}">{{$sorch_ofacc->desription_of_account}}</option>
                                                             @endforeach
                                                             @foreach($allemployee as $employee)
-                                                                <option value="{{$employee->employee_name}}">{{$employee->employee_name}}</option>
+                                                            <option value="{{$employee->employee_id}}">{{$employee->employee_name}}</option>
                                                             @endforeach
                                                         </select>
                                                         <span style="color:red" id="accont_head_err"></span>
@@ -510,7 +503,7 @@ $(document).ready(function() {
 $(document).ready(function() {
    $('#account_head_main').on('change', function(){
        var account_head = $(this).val();
-       alert(account_head);
+       //alert(account_head);
        if(account_head) {
            $.ajax({
                url: "{{  url('/get/admin/sourchofaccount/all/') }}/"+account_head,
@@ -560,26 +553,29 @@ $(document).ready(function() {
 <script>
 $(document).ready(function() {
     $('#additem').on('click', function() {
+
         var vouchertype=$("#voucher_type").val();
         if(vouchertype == ''){
             alert("Please select Voucher Type");
 
         }else{
-           // alert("ok");
+          
       var subcategory_codetwo=$("#subcategory_codetwo").val();
       var subcategory_codeone=$("#subcategory_codeone").val();
       var remarks=$("#remarks").val();
       var qty=$("#qty").val();
       var price=$("#price").val();
+
       var account_head=$("#account_head").val();
       var account_head_main=$("#account_head_main").val();
+            //alert(account_head_main);
       var location=$("#location").val();
       var amount=$("#amount").val();
       var amount_cate=$("#amount_cate").val();
       var invoice=$("#invoice").val();
       var date=$("#date").val();
       var accounttransecti_id=$("#accounttransecti_id").val();
-    //   hidden value
+    //  hidden value
       var sourch_cate_code=$("#sourch_cate_code").val();
       var sourch_Accountcate_code=$("#sourch_Accountcate_code").val();
       var sourch_subcate_codeone=$("#sourch_subcate_codeone").val();

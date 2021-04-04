@@ -112,6 +112,7 @@ Route::get('/get/account/showallstatus/bankentry/{status_show_book_id}', [CheckB
 
 
 Route::get('/get/admin/sourchofaccount/all/{account_head}', [AccountTrasectionController::class, 'getsourchaccount']);
+
 Route::get('/get/admin/headofaccount/all/{account_head}', [AccountTrasectionController::class, 'getsaccheadaccount']);
 Route::get('/get/admin/vouchertype/voucherno/all/{voucher_type}', [AccountTrasectionController::class, 'getvouchertype']);
 Route::get('/get/admin/vouchertype/open/voucher/{invoice}', [AccountTrasectionController::class, 'openvoichertype']);
