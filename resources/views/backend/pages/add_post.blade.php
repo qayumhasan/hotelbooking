@@ -38,7 +38,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="fname">Title: *</label>
-                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" required="required" />
+                                            <input type="text" class="form-control form-control-sm" id="fname" name="fname" placeholder="First Name" required="required" />
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -68,11 +68,11 @@
                                     <div class="col-md-12">
                                         <div class="custom-control custom-radio custom-radio-color-checked custom-control">
                                             <input type="radio" id="customRadio-1" name="customRadio-10" class="custom-control-input bg-primary">
-                                            <label class="custom-control-label" for="customRadio-1"> Publish </label>
+                                            <label class="custom-control-label" for="customRadio-1"> Active </label>
                                         </div>
                                         <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">
                                             <input type="radio" id="customRadio-2" name="customRadio-10" class="custom-control-input bg-warning">
-                                            <label class="custom-control-label" for="customRadio-2"> Draft </label>
+                                            <label class="custom-control-label" for="customRadio-2"> InActive </label>
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <select id="inputState" class="form-control">
+                                        <select id="inputState" class="form-control form-control-sm">
                                             <option selected>Choose...</option>
                                             <option>...</option>
                                         </select>
@@ -177,13 +177,13 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="fname">Seo Title: *</label>
-                                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" required="required" />
+                                                            <input type="text" class="form-control form-control-sm" id="fname" name="fname" placeholder="First Name" required="required" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="lname">Seo Description: *</label>
-                                                            <textarea class="form-control" rows="3"></textarea>
+                                                            <textarea class="form-control form-control-sm" rows="3"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-5">
@@ -212,13 +212,13 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="fname">Facebook Title: *</label>
-                                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" required="required" />
+                                                            <input type="text" class="form-control form-control-sm" id="fname" name="fname" placeholder="First Name" required="required" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="lname">Facebook Description: *</label>
-                                                            <textarea class="form-control" rows="3"></textarea>
+                                                            <textarea class="form-control form-control-sm" rows="3"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-5">
@@ -247,13 +247,13 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="fname">Twitter Title: *</label>
-                                                            <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" required="required" />
+                                                            <input type="text" class="form-control form-control-sm" id="fname" name="fname" placeholder="First Name" required="required" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="lname">Twitter Description: *</label>
-                                                            <textarea class="form-control" rows="3"></textarea>
+                                                            <textarea class="form-control form-control-sm" rows="3"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-5">

@@ -23,22 +23,22 @@
                                  <div class="row">
                                      <div class="col-md-12 form-group">
                                        <label for="emailid" class="control-label">Mobile Number: *</label>
-																			 <input type="text" name="phone" id="email-input" class="form-control" value="">
-		                                	<!-- <select id="multiple" name="phone[]" class="js-states form-control" multiple>
+																			 <input type="text" name="phone" id="email-input" class="form-control form-control-sm" value="">
+		                                	<!-- <select id="multiple" name="phone[]" class="js-states form-control form-control-sm" multiple>
 									                        <option value="01783038818">01783038818</option>
 									                        <option value="01559505992">01559505992</option>
 									                     </select> -->
                                     </div>
                                     <div class="col-md-12 form-group">
                                        <label for="pwd" class="control-label">Sms Type: *</label>
-                                      	<select class="form-control" name="sms_type">
+                                      	<select class="form-control form-control-sm" name="sms_type">
                                       		<option value="Masking">Masking</option>
                                       		<option value="Non-Masking">Non-Masking</option>
                                       	</select>
                                     </div>
                                     <div class="col-md-12 form-group">
                                        <label for="cpwd" class="control-label">Message:*</label>
-                                       <textarea type="text" name="message" class="form-control" placeholder="Your Message"></textarea>
+                                       <textarea type="text" name="message" class="form-control form-control-sm" placeholder="Your Message"></textarea>
                                     </div>
                                  </div>
                                  <button class="btn btn-primary nextBtn btn-lg pull-right" type="submit">Send</button>
@@ -58,7 +58,7 @@
 
                     <div class="panel-body">
                       <div class="form-group pr-1 icon_parent">
-                         <!-- <input type="text" class="form-control" id="filter-text" placeholder="Name Filter"> -->
+                         <!-- <input type="text" class="form-control form-control-sm" id="filter-text" placeholder="Name Filter"> -->
                      </div>
                     <br/>
                     <form class="form-horizontal" role="form" action="#">

@@ -18,7 +18,7 @@
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Department</label>
-                                <input type="text" name="department" class="form-control" id="exampleInputPassword1" placeholder="Department">
+                                <input type="text" name="department" class="form-control form-control-sm" id="exampleInputPassword1" placeholder="Department">
                                 @error('department')
                                 <small class="text-danger">{{$message}}</small>
                                 @enderror
@@ -27,7 +27,7 @@
                                 <label for="exampleInputPassword1">Image</label>
                                 <div class="input-group mb-4">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile02" name="department_image">
+                                        <input type="file" class="custom-file-input form-control-sm" id="inputGroupFile02" name="department_image">
                                         <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
 
                                     </div>
@@ -118,7 +118,7 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Department</label>
                         <input type="hidden" name="id" value="" id="department_id"/>
-                        <input type="text" name="department" class="form-control" id="department" placeholder="Department">
+                        <input type="text" name="department" class="form-control form-control-sm" id="department" placeholder="Department">
                         @error('department')
                         <small class="text-danger">{{$message}}</small>
                         @enderror

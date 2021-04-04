@@ -1,5 +1,5 @@
 @extends('restaurant.chui.master')
-@section('title', 'Category Configuration | '.$seo->meta_title)
+@section('title', 'Menu Category | '.$seo->meta_title)
 @section('content')
 
 

@@ -96,7 +96,7 @@ $current =date("d/m/Y");
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-3">
-                                                                <button type="button" data-toggle="modal" data-target="#addguest" class="btn btn-primary">Add Guest</button>
+                                                                <button type="button" data-toggle="modal" data-target="#addguest" class="btn btn-primary"><i class="fas fa-plus"></i></button>
                                                             </div>
                                                         </div>
                                                     </div>

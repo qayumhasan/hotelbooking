@@ -31,7 +31,7 @@
                            </div>
                            <div class="form-group">
                               <label>User Role:</label>
-                              <select class="form-control" id="selectuserrole" name="user_role">
+                              <select class="form-control form-control-sm" id="selectuserrole" name="user_role">
                                  @foreach($allrole as $data)
                                  <option value="{{$data->id}}">{{$data->role_name}}</option>
                                  @endforeach
@@ -43,7 +43,7 @@
                            </div>
                             <div class="form-group">
                               <label>Employee Id:</label>
-                               <select class="form-control" name="employee_id">
+                               <select class="form-control form-control-sm" name="employee_id">
                                 <option value="">--select--</option>
                                 @foreach($allemployee as $employee)
                                  <option value="{{$employee->id}}">{{$employee->employee_id}}</option>
@@ -52,7 +52,7 @@
                             </div>
                             <div class="form-group">
                                <label>Designation:</label>
-                               <input type="text" name="designation" class="form-control" list="designation" id="designation" placeholder="--select--" />
+                               <input type="text" name="designation" class="form-control form-control-sm" list="designation" id="designation" placeholder="--select--" />
                                <datalist id="designation">
                                 @foreach($designation as $dis)
                                    <option value="{{ $dis }}"></option>
@@ -76,25 +76,25 @@
                               <div class="row">
                                  <div class="form-group col-md-12">
                                     <label for="fname">Name:<span style="color:red">*<span></label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="First Name">
+                                    <input type="text" id="name" name="name" class="form-control form-control-sm" placeholder="First Name">
                                     @error('name')
                                       <div style="color:red">{{ $message }}</div>
                                     @enderror
                                  </div>
                                  <div class="form-group col-md-12">
                                     <label for="cname">Address:</label>
-                                    <input type="text" id="address" name="address" class="form-control" placeholder="Address">
+                                    <input type="text" id="address" name="address" class="form-control form-control-sm" placeholder="Address">
                                  </div>
                                  <div class="form-group col-md-6">
                                     <label for="mobno">Mobile Number:<span style="color:red">*<span></label>
-                                    <input type="text" id="mobile_number" name="phone" class="form-control" placeholder="Mobile Number">
+                                    <input type="text" id="mobile_number" name="phone" class="form-control form-control-sm" placeholder="Mobile Number">
                                     @error('phone')
                                       <div style="color:red">{{ $message }}</div>
                                     @enderror
                                  </div>
                                  <div class="form-group col-md-6">
                                     <label for="email">Email:<span style="color:red">*<span></label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+                                    <input type="email" name="email" class="form-control form-control-sm" id="email" placeholder="Email">
                                     @error('email')
                                       <div style="color:red">{{ $message }}</div>
                                     @enderror
@@ -105,21 +105,21 @@
                               <div class="row">
                                  <div class="form-group col-md-12">
                                     <label for="uname">User Name:<span style="color:red">*<span></label>
-                                    <input type="text" name="username" class="form-control" id="uname" placeholder="User Name">
+                                    <input type="text" name="username" class="form-control form-control-sm" id="uname" placeholder="User Name">
                                      @error('username')
                                     <div style="color:red">{{ $message }}</div>
                                     @enderror
                                  </div>
                                  <div class="form-group col-md-6">
                                     <label for="pass">Password:<span style="color:red">*<span></label>
-                                    <input type="password" name="password" class="form-control" id="pass" placeholder="Password">
+                                    <input type="password" name="password" class="form-control form-control-sm" id="pass" placeholder="Password">
                                      @error('password')
                                      <div style="color:red">{{ $message }}</div>
                                     @enderror
                                  </div>
                                  <div class="form-group col-md-6">
                                     <label for="rpass">Repeat Password:<span style="color:red">*<span></label>
-                                    <input type="password" name="password_confirmation" class="form-control" id="rpass" placeholder="Repeat Password ">
+                                    <input type="password" name="password_confirmation" class="form-control form-control-sm" id="rpass" placeholder="Repeat Password ">
                                      @error('password_confirmation')
                                       <div style="color:red">{{ $message }}</div>
                                     @enderror

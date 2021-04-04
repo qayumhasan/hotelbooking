@@ -19,7 +19,7 @@
                               <div class="form-group row">
                                  <label for="multiple" class="col-sm-2 col-form-label">To:</label>
                                  <div class="col-sm-10">
-                                    <select  id="multiple" class="js-states form-control @error('email') is-invalid @enderror" name="email[]" multiple>
+                                    <select  id="multiple" class="js-states form-control form-control-sm @error('email') is-invalid @enderror" name="email[]" multiple>
                                     	@foreach($subscrivemail as $smail)
                                        <option value="{{$smail->email}}">{{$smail->email}}</option>
                                        @endforeach
@@ -30,13 +30,13 @@
                               <div class="form-group row">
                                  <label for="subject" class="col-sm-2 col-form-label">Subject:</label>
                                  <div class="col-sm-10">
-                                    <input type="text" name="subject" id="subject" class="form-control @error('subject') is-invalid @enderror" placeholder="Subject">
+                                    <input type="text" name="subject" id="subject" class="form-control form-control-sm @error('subject') is-invalid @enderror" placeholder="Subject">
                                  </div>
                               </div>
                               <div class="form-group row">
                                  <label for="subject" class="col-sm-2 col-form-label">Your Message:</label>
                                  <div class="col-md-10">
-                                    <textarea name="send_message" class="textarea form-control @error('send_message') is-invalid @enderror" rows="5" id="editor1"></textarea>
+                                    <textarea name="send_message" class="textarea form-control form-control-sm @error('send_message') is-invalid @enderror" rows="5" id="editor1"></textarea>
                                  </div>
                               </div>
                               <div class="form-group row align-items-center">

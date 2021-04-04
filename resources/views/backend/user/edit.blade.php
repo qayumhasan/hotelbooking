@@ -36,7 +36,7 @@
                            </div>
                            <div class="form-group">
                               <label>User Role:</label>
-                              <select class="form-control" id="selectuserrole" name="user_role">
+                              <select class="form-control form-control-sm" id="selectuserrole" name="user_role">
                                  @foreach($allrole as $role)
                                  <option value="{{$role->id}}" @if($data->user_role == $role->id) selected @endif>{{$role->role_name}}</option>
                                  @endforeach
@@ -48,7 +48,7 @@
                            </div>
                             <div class="form-group">
                               <label>Employee Id:</label>
-                               <select class="form-control" name="employee_id">
+                               <select class="form-control form-control-sm" name="employee_id">
                                 <option value="">--select--</option>
                                 @foreach($allemployee as $employee)
                                  <option value="{{$employee->id}}" @if($data->employee_id==$employee->id) selected @endif>{{$employee->employee_id}}</option>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                <label>Designation:</label>
-                               <input type="text" name="designation" class="form-control" list="designation" id="designation" placeholder="--select--" value="{{$data->designation}}" />
+                               <input type="text" name="designation" class="form-control form-control-sm" list="designation" id="designation" placeholder="--select--" value="{{$data->designation}}" />
                                <datalist id="designation">
                                 @foreach($designation as $dis)
                                    <option value="{{ $dis }}"></option>
@@ -80,7 +80,7 @@
                               <div class="row">
                                  <div class="form-group col-md-12">
                                     <label for="fname">Name:</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="First Name" value="{{$data->name}}">
+                                    <input type="text" id="name" name="name" class="form-control form-control-sm" placeholder="First Name" value="{{$data->name}}">
                                     <input type="hidden" name="id" value="{{$data->id}}">
                                     @error('name')
                                     <span class="alert-danger">{{ $message }}</span>
@@ -88,18 +88,18 @@
                                  </div>
                                  <div class="form-group col-md-12">
                                     <label for="cname">Address:</label>
-                                    <input type="text" id="address" name="address" class="form-control" placeholder="Address"  value="{{$data->address}}">
+                                    <input type="text" id="address" name="address" class="form-control form-control-sm" placeholder="Address"  value="{{$data->address}}">
                                  </div>
                                  <div class="form-group col-md-6">
                                     <label for="mobno">Mobile Number:</label>
-                                    <input type="text" id="mobile_number" name="phone" class="form-control" placeholder="Mobile Number" value="{{$data->phone}}">
+                                    <input type="text" id="mobile_number" name="phone" class="form-control form-control-sm" placeholder="Mobile Number" value="{{$data->phone}}">
                                     @error('phone')
                                     <span class="alert-danger">{{ $message }}</span>
                                     @enderror
                                  </div>
                                  <div class="form-group col-md-6">
                                     <label for="email">Email:</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{$data->email}}">
+                                    <input type="email" name="email" class="form-control form-control-sm" id="email" placeholder="Email" value="{{$data->email}}">
                                     @error('email')
                                     <span class="alert-danger">{{ $message }}</span>
                                     @enderror
@@ -110,7 +110,7 @@
                               <div class="row">
                                  <div class="form-group col-md-12">
                                     <label for="uname">User Name:</label>
-                                    <input type="text" name="username" class="form-control" id="uname" placeholder="User Name" value="{{$data->username}}">
+                                    <input type="text" name="username" class="form-control form-control-sm" id="uname" placeholder="User Name" value="{{$data->username}}">
                                      @error('username')
                                     <span class="alert-danger">{{ $message }}</span>
                                     @enderror

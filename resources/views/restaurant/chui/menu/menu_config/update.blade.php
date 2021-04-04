@@ -1,5 +1,5 @@
 @extends('restaurant.chui.master')
-@section('title', 'Add Room | '.$seo->meta_title)
+@section('title', 'Update Item | '.$seo->meta_title)
 @section('content')
 
 <div class="content-page">
@@ -29,7 +29,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Item Name: *</label>
-                                            <input type="text" class="form-control" id="fname" name="item_name" placeholder="Item Name" value="{{$edit->item_name}}"/>
+                                            <input type="text" class="form-control form-control-sm" id="fname" name="item_name" placeholder="Item Name" value="{{$edit->item_name}}"/>
                                             <input type="hidden" name="id" value="{{$edit->id}}"/>
                                             @error('item_name')
                                                 <div style="color:red">{{ $message }}</div>
@@ -39,7 +39,7 @@
                                      <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Short Name: *</label>
-                                            <input type="text" class="form-control" id="fname" name="short_name" placeholder="Short Name" value="{{$edit->short_name}}"/>
+                                            <input type="text" class="form-control form-control-sm" id="fname" name="short_name" placeholder="Short Name" value="{{$edit->short_name}}"/>
                                             @error('branch_id')
                                                 <div style="color:red">{{ $message }}</div>
                                             @enderror
@@ -49,7 +49,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Category Name: </label>
-                                            <select name="category_name" class="form-control" id="category_name">
+                                            <select name="category_name" class="form-control form-control-sm" id="category_name">
                                                 <option value="">--Select--</option>
                                                 @foreach($category as $cate)
                                                 <option value="{{$cate->id}}" @if($edit->category_name == $cate->id) selected @endif>{{$cate->name}}</option>
@@ -64,7 +64,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Unit Name: </label>
-                                            <select name="unit_name" class="form-control floor" id="unit_name">
+                                            <select name="unit_name" class="form-control form-control-sm floor" id="unit_name">
                                                 <option value="">--Select--</option>
                                                 @foreach($unit as $allunit)
                                                 <option value="{{$allunit->id}}" @if($edit->unit_name == $allunit->id) selected @endif>{{$allunit->name}}</option>
@@ -79,13 +79,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Rate:</label>
-                                            <input type="text" class="form-control" id="fname" name="rate" placeholder="Rate" value="{{$edit->rate}}"/>
+                                            <input type="text" class="form-control form-control-sm" id="fname" name="rate" placeholder="Rate" value="{{$edit->rate}}"/>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Minimum Level:</label>
-                                           <Input type="text" name="min_level" class="form-control" value="{{$edit->min_level}}">
+                                           <Input type="text" name="min_level" class="form-control form-control-sm" value="{{$edit->min_level}}">
                                          
                                         </div>
                                     </div>
