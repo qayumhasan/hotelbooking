@@ -35,7 +35,7 @@ $time = date("h:i");
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
-                                <h4 class="card-title">Issue To Room</h4>
+                                <h4 class="card-title">Issue To Department</h4>
                             </div>
                             <!-- <span class="float-right mr-2">
                                 <a href="#" class="btn btn-sm bg-primary">
@@ -51,8 +51,8 @@ $time = date("h:i");
                                     <small class="text-danger issue_date"></small>
                                 </div>
 
-                                <label for="inputPassword" class="col-sm-1 col-form-label"><b>Department:</b></label>
-                                <div class="col-sm-4">
+                                <label for="inputPassword" class="col-sm-2 col-form-label text-right"><b>Department:</b></label>
+                                <div class="col-sm-3">
                                     <select class="form-control form-control-sm" required id="select_room_no" name="department_id">
 
                                     @foreach($departments as $row)

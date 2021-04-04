@@ -7,13 +7,7 @@
      $newdate=$date->format('m/d/Y');
 
 @endphp
-<style>
-  .form-control {
 
-    border: 1px solid #443f3f;
-
-}
-</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{asset('public/backend/assets/datepicker/css/bootstrap-datepicker3.css')}}">
 <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/izitost.css">
@@ -50,15 +44,15 @@
                                    <div class="col-md-6">
                                      <div class="form-group" id="hasid" style="display: none">
                                          <label>Employee Id:<span style="color:red">*</span></label>
-                                         <input type="text" class="form-control" name="employee_id" placeholder="Employee Id" value=""/>
+                                         <input type="text" class="form-control form-control-sm" name="employee_id" placeholder="Employee Id" value=""/>
                                          @error('employee_id')
                                             <div style="color:red">{{ $message }}</div>
                                         @enderror
                                       </div>
                                       <div class="form-group" id="hasnoid">
                                          <label>Employee Id: <span style="color:red">*</span></label>
-                                         <input type="text" class="form-control" value="{{$employeeid}}" disabled/>
-                                         <input type="hidden" class="form-control" name="employee_newid"  placeholder="Employee Id" value="{{$employeeid}}" disabled/>
+                                         <input type="text" class="form-control form-control-sm" value="{{$employeeid}}" disabled/>
+                                         <input type="hidden" class="form-control form-control-sm" name="employee_newid"  placeholder="Employee Id" value="{{$employeeid}}" disabled/>
 
                                       </div>
 
@@ -66,7 +60,7 @@
                                     <div class="col-md-6">
                                       <div class="form-group">
                                          <label>Date:<span style="color:red">*</span></label>
-                                       <input type="text" name="date" id="follow_up_update" name="follow_date" class="datepicker form-control form-control" value="{{  date('d-m-Y') }}" data-date-format="dd-mm-yyyy">
+                                       <input type="text" name="date" id="follow_up_update" name="follow_date" class="datepicker form-control form-control-sm form-control form-control-sm" value="{{  date('d-m-Y') }}" data-date-format="dd-mm-yyyy">
                                         @error('date')
                                               <div style="color:red">{{ $message }}</div>
                                         @enderror
@@ -75,7 +69,7 @@
                                    <div class="col-md-6">
                                       <div class="form-group">
                                          <label>Empoyee Name: <span style="color:red">*</span></label>
-                                         <input type="text" class="form-control" id="employee_name" name="employee_name" placeholder="Employee Name" value="{{old('employee_name')}}" />
+                                         <input type="text" class="form-control form-control-sm" id="employee_name" name="employee_name" placeholder="Employee Name" value="{{old('employee_name')}}" />
                                         @error('employee_name')
                                             <div style="color:red">{{ $message }}</div>
                                         @enderror
@@ -84,7 +78,7 @@
                                     <div class="col-md-6">
                                       <div class="form-group">
                                          <label>Employee Type: <span style="color:red">*</span></label>
-                                        <input type="text" id="employee_type" name="employee_type" class="form-control" list="productName" placeholder="Employee Type" value="{{old('employee_type')}}" />
+                                        <input type="text" id="employee_type" name="employee_type" class="form-control form-control-sm" list="productName" placeholder="Employee Type" value="{{old('employee_type')}}" />
                                          <datalist id="productName">
                                              <option value="Employee">Employee</option>
                                              <option value="Staff">Staff</option>
@@ -98,7 +92,7 @@
                                    <div class="col-md-6">
                                       <div class="form-group">
                                           <label>District:</label>
-                                          <input type="text" id="district" name="district" class="form-control" list="jjdistrict" placeholder="--select--" />
+                                          <input type="text" id="district" name="district" class="form-control form-control-sm" list="jjdistrict" placeholder="--select--" />
                                          <datalist id="jjdistrict">
                                               @foreach($district as $dis)
                                               <option value="{{$dis->District}}"></option>
@@ -109,7 +103,7 @@
                                    <div class="col-md-6">
                                       <div class="form-group">
                                          <label>Police-Station: </label>
-                                         <select class="form-control" name="police_station" id="police_station">
+                                         <select class="form-control form-control-sm" name="police_station" id="police_station">
                                            <option value="">--Select--</option>
                                          </select>
                                       </div>
@@ -123,19 +117,19 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Father Name: </label>
-                                       <input type="text" class="form-control" name="father_name" placeholder="Father Name"/>
+                                       <input type="text" class="form-control form-control-sm" name="father_name" placeholder="Father Name"/>
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Mother Name: </label>
-                                       <input type="text" class="form-control" name="mother_name" placeholder="Mother Name" />
+                                       <input type="text" class="form-control form-control-sm" name="mother_name" placeholder="Mother Name" />
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Maritial Status:</label>
-                                       <select class="form-control" name="maritial_status">
+                                       <select class="form-control form-control-sm" name="maritial_status">
                                          <option value="UnMarried">UnMarried</option>
                                          <option value="Married">Married</option>
                                        </select>
@@ -144,7 +138,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Gender:</label>
-                                       <select class="form-control" name="gender">
+                                       <select class="form-control form-control-sm" name="gender">
                                          <option value="Male">Male</option>
                                          <option value="Female">Female</option>
                                          <option value="Others">Others</option>
@@ -154,7 +148,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Blood Group: </label>
-                                       <select class="form-control" name="blood_group">
+                                       <select class="form-control form-control-sm" name="blood_group">
                                          <option value="O+">O+</option>
                                          <option value="O-">O-</option>
                                          <option value="A+">A+</option>
@@ -168,7 +162,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Religion: </label>
-                                       <select class="form-control" name="religion">
+                                       <select class="form-control form-control-sm" name="religion">
                                          <option value="Islam">Islam</option>
                                          <option value="Hindu">Hindu</option>
                                          <option value="kristan">kristan</option>
@@ -180,7 +174,7 @@
                                   <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Mobile Number: <span style="color:red">*</span></label>
-                                       <input type="text" class="form-control" id="mobile_number" name="mobile_number" placeholder="Mobile Number" />
+                                       <input type="text" class="form-control form-control-sm" id="mobile_number" name="mobile_number" placeholder="Mobile Number" />
                                        @error('mobile_number')
                                          <div style="color:red">{{ $message }}</div>
                                       @enderror
@@ -189,7 +183,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Family Contact Number: <span style="color:red">*</span></label>
-                                       <input type="text" class="form-control" name="family_mobile_number" placeholder="Family Contact Number" />
+                                       <input type="text" class="form-control form-control-sm" name="family_mobile_number" placeholder="Family Contact Number" />
                                       @error('family_mobile_number')
                                           <div style="color:red">{{ $message }}</div>
                                       @enderror
@@ -198,7 +192,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Email: <span style="color:red">*</span></label>
-                                       <input type="text" class="form-control" id="email" name="email" placeholder="Email" />
+                                       <input type="text" class="form-control form-control-sm" id="email" name="email" placeholder="Email" />
                                        @error('email')
                                           <div style="color:red">{{ $message }}</div>
                                       @enderror
@@ -207,32 +201,32 @@
                                   <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Date Of Birth: </label>
-                                       <input type="date" class="form-control" name="date_of_birth" placeholder="Date Of Birth" />
+                                       <input type="date" class="form-control form-control-sm" name="date_of_birth" placeholder="Date Of Birth" />
                                     </div>
                                  </div>
                                   <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Nationality: </label>
-                                       <input type="text" class="form-control" name="nationality" placeholder="Nationality" />
+                                       <input type="text" class="form-control form-control-sm" name="nationality" placeholder="Nationality" />
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>National Id: </label>
-                                       <input type="text" class="form-control" name="national_id" placeholder="National Id" />
+                                       <input type="text" class="form-control form-control-sm" name="national_id" placeholder="National Id" />
                                     </div>
                                  </div>
 
                                  <div class="col-md-6">
                                     <div class="form-group">
                                        <label>Present Address: </label>
-                                      <textarea class="form-control" name="present_address" placeholder="Present Address"></textarea>
+                                      <textarea class="form-control form-control-sm" name="present_address" placeholder="Present Address"></textarea>
                                     </div>
                                  </div>
                                  <div class="col-md-6">
                                     <div class="form-group">
                                        <label>Permanet Address: </label>
-                                      <textarea class="form-control" name="permanent_address" placeholder="Permanet Address"></textarea>
+                                      <textarea class="form-control form-control-sm" name="permanent_address" placeholder="Permanet Address"></textarea>
                                     </div>
                                  </div>
                                  <div class="col-md-3">
@@ -270,7 +264,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Present Designation:<span style="color:red">*</span></label>
-                                         <input type="text" name="present_designation" class="form-control" list="designation" placeholder="--select--" />
+                                         <input type="text" name="present_designation" class="form-control form-control-sm" list="designation" placeholder="--select--" />
                                        <datalist id="designation">
                                             @foreach($designation as $desi)
                                             <option value="{{$desi}}"></option>
@@ -284,7 +278,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Working Hour: <span style="color:red">*</span></label>
-                                       <input type="text" class="form-control" name="working_hour" placeholder="Working Hour" />
+                                       <input type="text" class="form-control form-control-sm" name="working_hour" placeholder="Working Hour" />
                                        @error('working_hour')
                                          <div style="color:red">{{ $message }}</div>
                                       @enderror
@@ -293,7 +287,7 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Present Salary: <span style="color:red">*</span></label>
-                                       <input type="text" class="form-control" name="present_salary" placeholder="Present Salary" />
+                                       <input type="text" class="form-control form-control-sm" name="present_salary" placeholder="Present Salary" />
                                        @error('present_salary')
                                          <div style="color:red">{{ $message }}</div>
                                       @enderror
@@ -302,55 +296,55 @@
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Previous Company: </label>
-                                       <input type="text" class="form-control" name="previous_company" placeholder="Previous Company"/>
+                                       <input type="text" class="form-control form-control-sm" name="previous_company" placeholder="Previous Company"/>
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Previous Company Address: </label>
-                                       <input type="text" class="form-control" name="previous_company_address" placeholder="Previous Company Address" />
+                                       <input type="text" class="form-control form-control-sm" name="previous_company_address" placeholder="Previous Company Address" />
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Previous Designation: *</label>
-                                       <input type="text" class="form-control" name="previous_designation" placeholder="Previous Designation" />
+                                       <input type="text" class="form-control form-control-sm" name="previous_designation" placeholder="Previous Designation" />
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Previous Salary: </label>
-                                       <input type="text" class="form-control" name="previous_salary" placeholder="Previous Salary" />
+                                       <input type="text" class="form-control form-control-sm" name="previous_salary" placeholder="Previous Salary" />
                                     </div>
                                  </div>
                                   <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Join Date: </label>
-                                       <input type="date" class="form-control" name="previous_join_date" placeholder="Join Date" />
+                                       <input type="date" class="form-control form-control-sm" name="previous_join_date" placeholder="Join Date" />
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>End Date: </label>
-                                       <input type="date" class="form-control" name="previous_end_date" placeholder="End Date" />
+                                       <input type="date" class="form-control form-control-sm" name="previous_end_date" placeholder="End Date" />
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Opening Balance:</label>
-                                       <input type="text" class="form-control" name="opening_balance" placeholder="Opening Balance" />
+                                       <input type="text" class="form-control form-control-sm" name="opening_balance" placeholder="Opening Balance" />
                                     </div>
                                  </div>
                                   <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Balance: </label>
-                                       <input type="text" class="form-control balance" name="balance" placeholder="Balance" id="balance"/>
+                                       <input type="text" class="form-control form-control-sm balance" name="balance" placeholder="Balance" id="balance"/>
                                     </div>
                                  </div>
                                   <div class="col-md-4">
                                     <div class="form-group">
                                        <label>Branch Name: </label>
-                                      <select class="form-control" name="brance_id">
+                                      <select class="form-control form-control-sm" name="brance_id">
                                         <option value="1">durbarit</option>
                                       </select>
                                     </div>

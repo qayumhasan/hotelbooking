@@ -14,6 +14,7 @@ $time = date("h:i");
 
 <div class="content-page">
     <div class="container-fluid">
+    
         <div class="row">
             <div class="col-sm-12 col-lg-12">
                 <div class="card">
@@ -21,7 +22,7 @@ $time = date("h:i");
                         <div class="header-title">
                             <h4 class="card-title">Advance Booking</h4>
                         </div>
-                        <a href=""><button class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Advance Booking</span></i></button></a>
+                        <a href="{{route('admin.advance.booking.report')}}"><button class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Advance Booking</span></i></button></a>
                     </div>
                 </div>
                 <form action="{{route('admin.advance.booking.store')}}" method="POST">
@@ -101,7 +102,7 @@ $time = date("h:i");
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <button type="button" data-toggle="modal" data-target="#addguest" class="btn btn-primary">Add Guest</button>
+                                                    <button type="button" data-toggle="modal" data-target="#addguest" class="btn btn-sm btn-primary "><i class="fas fa-plus m-0"></i></button>
                                                 </div>
                                             </div>
                                         </div>

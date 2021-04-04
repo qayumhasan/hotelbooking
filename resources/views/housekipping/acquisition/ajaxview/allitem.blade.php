@@ -48,7 +48,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="fname">Remarks: *</label>
-                                                        <textarea class="form-control" name="remarks"/></textarea>
+                                                        <textarea class="form-control form-control-sm" name="remarks"/></textarea>
                                                         @error('branch_id')
                                                             <div style="color:red">{{ $message }}</div>
                                                         @enderror
@@ -57,13 +57,13 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="fname">Number Of Item: </label>
-                                                        <input type="text" class="form-control" placeholder="" value="{{ $singlecount }}" disabled/>
+                                                        <input type="text" class="form-control form-control-sm" placeholder="" value="{{ $singlecount }}" disabled/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="fname">Number Of Quantity: </label>
-                                                        <input type="text" class="form-control" value="{{$allqty}}" disabled/>
+                                                        <input type="text" class="form-control form-control-sm" value="{{$allqty}}" disabled/>
                                                         <input type="hidden" name="num_of_item"  value="{{$singlecount}}"/>
                                                         <input type="hidden" name="num_of_qty"  value="{{$allqty}}"/>
                                                         <input type="hidden" name="invoice_no"  value="{{$invoice}}"/>

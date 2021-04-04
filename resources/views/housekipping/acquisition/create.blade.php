@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="header-title">
                                     <h6 class="card-title">
-                                        <input type="date" class="form-control" name="date" value="">
+                                        <input type="date" class="form-control form-control-sm" name="date" value="">
                                     </h6>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Item Name: *</label>
-                                            <input type="text" id="item_name" name="item_name" class="form-control" list="allitem" placeholder="Item" />
+                                            <input type="text" id="item_name" name="item_name" class="form-control form-control-sm" list="allitem" placeholder="Item" />
                                             <input type="hidden" id="i_id" name="i_id"/>
                                             <datalist id="allitem">
                                                 @foreach($allitem as $item)
@@ -50,15 +50,15 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Unit: *</label>
-                                            <input type="text" class="form-control" id="unit_name" name="unit_name" placeholder="unit"/>
-                                            <input type="hidden" class="form-control" id="unit" name="unit" />
+                                            <input type="text" class="form-control form-control-sm" id="unit_name" name="unit_name" placeholder="unit"/>
+                                            <input type="hidden" class="form-control form-control-sm" id="unit" name="unit" />
                                             <input type="hidden" name="invoice_no" value="{{$invoice_id}}" id="invoice_no"/>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Qty: </label>
-                                            <input type="number" class="form-control" id="Qty" name="qty" placeholder="Qty"/>
+                                            <input type="number" class="form-control form-control-sm" id="Qty" name="qty" placeholder="Qty"/>
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-right">

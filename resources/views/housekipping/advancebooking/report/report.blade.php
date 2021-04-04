@@ -1,5 +1,5 @@
 @extends('housekipping.master')
-@section('title', 'All Room | '.$seo->meta_title)
+@section('title', 'Booking Report | '.$seo->meta_title)
 @section('content')
 
 <style>
