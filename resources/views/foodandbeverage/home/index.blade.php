@@ -73,34 +73,7 @@ $time = date("h:i");
 
 <div class="content-page">
    <div class="container-fluid">
-      <div class="row">
-         <div class="col-12">
-            <div class="card">
-               <div class="row">
-                  <div class="col-md-2 text-right">
-                     <label for="">Room Type:</label>
-                  </div>
-                  <div class="col-md-3">
-                     <select name="" id="" class="form-control">
-                        <option value="">--select--</option>
-                        <option value="">Deluxe</option>
-                        <option value="">Deluxe</option>
-                     </select>
-                  </div>
-                  <div class="col-md-2 text-right">
-                     <label for="">Room No:</label>
-                  </div>
-                  <div class="col-md-3">
-                     <select name="" id="" class="form-control">
-                        <option value="">--select--</option>
-                        <option value="">Deluxe</option>
-                        <option value="">Deluxe</option>
-                     </select>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+  
       <div class="row">
          @foreach($rooms as $row)
          <div class="col-md-6 col-lg-4">

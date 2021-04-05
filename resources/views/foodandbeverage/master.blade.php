@@ -54,26 +54,17 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="{{ request()->routeIs('admin.inventory.home*') ? 'active' : '' }}">
-                            <a href="{{route('admin.hotel')}}">
+                        <li class="{{ request()->routeIs('admin.foodandbeverage.create*') ? 'active' : '' }}">
+                            <a href="{{route('admin.foodandbeverage.create')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>
                         <li class="">
-                            <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                            <i class="fas fa-hamburger"></i><span>Food And Beverage</span>
-                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
-                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            <a href="{{route('admin.foodandbeverage.create')}}">
+                                <i class="las la-home"></i><span>Food And Bravarage</span>
                             </a>
-                            <ul id="reports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="">
-                                    <a href="">
-                                        <i class="las la-list-alt"></i><span>Daily Purchase</span>
-                                    </a>
-                                </li>
-                         
-                            </ul>
                         </li>
+                   
                     </ul>
                 </nav>
                 <div class="p-3"></div>

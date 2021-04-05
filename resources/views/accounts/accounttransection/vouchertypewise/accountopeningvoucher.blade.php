@@ -125,7 +125,6 @@ $current = date("m/d/Y");
                                                         <label>Sub Head:</label>
                                                         <input type="checkbox" id="mainsubheadone">
                                                     </td>
-                                                 
                                                     <td class="subheadone" style="display:none">
                                                         <select name="subcategory_codeone" id="subcategory_codeone" class="form-control noradious">
                                                             <option value="">--Select--</option>
@@ -133,7 +132,6 @@ $current = date("m/d/Y");
                                                             <option value="{{$subcate->subcategory_codeone}}">{{$subcate->subcategory_nameone}}</option>
                                                             @endforeach
                                                         </select>
-                                                    
                                                     </td> 
                                                     <td >
                                                         <label>Sub Head-2:</label>
