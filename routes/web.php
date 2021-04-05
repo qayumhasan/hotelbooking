@@ -739,6 +739,9 @@ Route::middleware(['admin'])->prefix(md5('admin/collection/report'))->group(func
 
     Route::get('/ajax/guest/payment/history',[CollectionReportController::class,'ajaxGuestPaymentHistory'])->name('admin.guest.payment.history.ajax');
 
+    
+    // Route::get('/guest/payment/details',[CollectionReportController::class,'paymentDetails'])->name('admin.payment.details');
+
 });
 
 Route::middleware(['admin'])->prefix(md5('admin/invoice/summary'))->group(function(){

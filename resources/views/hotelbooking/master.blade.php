@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/fullcalender.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/Bootstrap-4-Tag-Input-Plugin-jQuery/tagsinput.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/jquery.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 </head>
 
@@ -298,6 +299,8 @@
                                         <i class="las la-user-plus"></i><span>Post To Room</span>
                                     </a>
                                 </li>
+
+                              
 
                             </ul>
                         </li>

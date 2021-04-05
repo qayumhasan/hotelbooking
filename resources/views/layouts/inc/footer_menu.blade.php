@@ -9,8 +9,11 @@
             right: 0;
         }
         .activemenu{
-            background: #00ff40;
+            background: #05bbc9;
             color: white;
+        }
+        .activemenu span{
+            color:white;
         }
     </style>
     <div class="container-fluid">
