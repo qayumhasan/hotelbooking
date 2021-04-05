@@ -175,7 +175,7 @@
                              
                             </li>
                             <li class=" ">
-                                <a href="{{route('admin.banquet.index')}}">
+                                <a href="{{route('admin.banquet.dashboard')}}">
                                     <i class="las la-torah iq-arrow-left"></i><span>Banquet</span>
                                     <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                     <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
@@ -377,7 +377,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-3 col-sm-6">
-                    <a href="{{route('admin.banquet.index')}}">
+                    <a href="{{route('admin.banquet.dashboard')}}">
                         <div class="card card-block card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">

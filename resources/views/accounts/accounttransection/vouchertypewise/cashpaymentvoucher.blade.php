@@ -529,7 +529,7 @@ $(document).ready(function() {
 $(document).ready(function() {
    $('#account_head').on('change', function(){
      var account_head = $(this).val();
-     alert(account_head);
+    // alert(account_head);
        if(account_head) {
            $.ajax({
                url: "{{  url('/get/admin/headofaccount/all/') }}/"+account_head,
