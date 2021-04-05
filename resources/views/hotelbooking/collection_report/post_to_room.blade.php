@@ -36,7 +36,7 @@ $time = date("h:i");
 
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
                             <div class="col-sm-2">
-                                <input class="form-control datepickernew form-control-sm" name="to_date" type="text">
+                                <input class="form-control datepickernew form-control-sm" value="{{$date}}" name="to_date" type="text">
                                 <small class="text-danger to_date"></small>
                             </div>
 
@@ -236,8 +236,8 @@ $time = date("h:i");
                 error: function(err) {
                   
 
-                    if (err.responseJSON.errors.employee) {
-                        $('.employee').html(err.responseJSON.errors.employee[0]);
+                    if (err.responseJSON.errors.guest_name) {
+                        $('.employee').html(err.responseJSON.errors.guest_name[0]);
                     }
 
                     if (err.responseJSON.errors.to_date) {

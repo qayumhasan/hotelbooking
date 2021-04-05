@@ -13,7 +13,12 @@ class HouseKippingController extends Controller
 {
     public function index()
     {
-        return view('housekipping.home.index');
+
+                
+        $roomtypes = RoomType::where('is_active',1)->where('is_deleted',0)->get();
+        $rooms = Room::with('housekeepingreport')->where('is_active',1)->where('is_deleted',0)->where('room_status','!=',3)->get();
+
+        return view('housekipping.home.index',compact('rooms','roomtypes'));
     }
 
     public function reportList()

@@ -1,4 +1,5 @@
 
+            @if(count($postToRooms) > 0)
             @foreach($postToRooms as $row)
             <div class="col-sm-12">
                 <div class="card printableAreasaveprint">
@@ -70,9 +71,16 @@
                     </div>
                 </div>
             </div>
+         
 
 
 
 
 
             @endforeach
+
+            @else
+            <div class="col-sm-12 text-center">
+                <h6 class="text-center">No Data Found!</h6>
+            </div>
+            @endif

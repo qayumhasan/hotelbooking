@@ -19,19 +19,24 @@ class CollectionReportController extends Controller
 
     public function dailyCollection()
     {
-        $employees = Admin::where('is_active',1)->get();
+       $employees = Admin::where('is_active',1)->get();
         return view('hotelbooking.collection_report.daily_collection',compact('employees'));
     }
 
     public function dailyCollectionAjaxReport(Request $request)
     {
+    
+
         $request->validate([
             'from_date'=>'required',
             'to_date'=>'required',
             'employee'=>'required',
         ]);
 
-        $vouchers = Voucher::where('entry_by',$request->employee)->whereBetween('date',[$request->from_date,$request->to_date])->where('type',1)->get();
+
+
+
+        $vouchers = Voucher::where('entry_by',$request->employee)->whereBetween('date',[$request->to_date,$request->from_date])->where('type',1)->get();
 
         return view('hotelbooking.collection_report.ajax.daily_collection_ajax',compact('vouchers'));
     }
@@ -136,6 +141,11 @@ class CollectionReportController extends Controller
 
         return view('hotelbooking.collection_report.ajax.post_to_room_ajax',compact('postToRooms'));
         
+    }
+
+    public function paymentDetails()
+    {
+        return view('hotelbooking.collection_report.payment_details');
     }
 
 

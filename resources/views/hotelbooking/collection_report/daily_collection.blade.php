@@ -25,7 +25,7 @@ $time = date("h:i");
 
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
                             <div class="col-sm-2">
-                                <input class="form-control datepicker form-control-sm" name="to_date" type="text">
+                                <input class="form-control datepicker form-control-sm" name="to_date" type="text" value="{{$date}}">
                                 <small class="text-danger to_date"></small>
                             </div>
 

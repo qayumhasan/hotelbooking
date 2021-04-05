@@ -58,5 +58,9 @@ class Voucher extends Model
         }
     }
 
+    protected $casts = [
+        'date' => 'datetime:d/m/Y',
+    ];
+
 
 }

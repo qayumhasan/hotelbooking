@@ -1,7 +1,7 @@
 @extends('hotelbooking.master')
-@section('title', 'Guest Payment History | '.$seo->meta_title)
+@section('title', 'Payment Details | '.$seo->meta_title)
 @section('content')
-<script src="{{asset('public/backend')}}/assets/js/jquery.js"></script>
+
 
 <div class="content-page">
     <div class="container-fluid">
@@ -14,13 +14,7 @@
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>Guest:</b></label>
                             <div class="col-sm-5">
-                                <select class="form-control form-control-sm guest_name" id="guest_name select_room_no">
-                                    <option disabled selected>---- Select A Guest Name ----</option>
-                                    @foreach($guests as $row)
-                                    <option value="{{$row->id}}">{{$row->guest_name}}</option>
-                                    @endforeach
-
-                                </select>
+                                
                                 <small class="text-danger from_date"></small>
                             </div>
 
@@ -38,7 +32,7 @@
                 <div class="card printableAreasaveprint">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Guest Payment History</h4>
+                            <h4 class="card-title">Payment Details (Cash/Bank)</h4>
                         </div>
                         <!-- <span class="float-right mr-2">
                             <a href="#" class="btn btn-sm bg-primary">
@@ -54,36 +48,17 @@
                                 <thead>
 
                                     <tr>
-                                        <th scope="col">SL</th>
+                                        <th scope="col">Room No.</th>
                                         <th scope="col">Date</th>
-                                        <th scope="col">Guest Name</th>
-                                        <th scope="col">Done By</th>
+                                        <th scope="col">Bill No.</th>
+                                        <th scope="col">Guest</th>
                                         <th scope="col">Cash</th>
                                         <th scope="col">Bank</th>
-                                        <th scope="col">Debt</th>
-                                        <th scope="col">Paid</th>
-                                        <th scope="col">Balance</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($checkinguests as $row)
-                                    <tr>
-                                        <th scope="row">{{$loop->iteration}}</th>
-                                        <td>{{$row->checkin_date}}</td>
-                                        <td>{{$row->guest_name}}</td>
-                                        <td>{{$row->user->username ?? ''}}</td>
-                                        <td>{{$row->cashamount}}</td>
-                                        <td>{{$row->bankamount}}</td>
-                                        <td>{{round($row->checkout->gross_amount ?? '',2)}}</td>
-                                        @php
-                                            $gross_amount = $row->checkout->gross_amount ?? 0 ;
-                                            $paidamount = $row->cashamount + $row->bankamount;
-                                            $balance = $gross_amount - $paidamount;
-                                        @endphp
-                                        <td>{{$paidamount}}</td>
-                                        <td>{{$balance}}</td>
-                                    </tr>
-                                    @endforeach
+                              
                                 </tbody>
                             </table>
 
@@ -120,11 +95,17 @@
     </div>
 </div>
 
+
+<script>
+    $("#select_room_no").select2({
+        placeholder: '----Select Room No----'
+    });
+</script>
+
+
 <script>
     $(document).ready(function(){
-        $('.preloader').hide();
-        $('.guest_name').change(function(e){
-            
+        $('#guest_name').change(function(e){
             $('.guest_ajax_data').empty();
                 var guestID = e.currentTarget.value;
                 $.ajax({
@@ -143,14 +124,6 @@
 
             });
         })
-    });
-</script>
-
-
-
-<script>
-    $("#select_room_no").select2({
-        placeholder: '----Select Room No----'
     });
 </script>
 

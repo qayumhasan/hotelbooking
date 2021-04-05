@@ -39,9 +39,12 @@ class RoomType extends Model
     public function gettotalrevenuesAttribute()
     {
         $totalrevenus = 0;
-        foreach ($this->checkin as $item) {
-            $totalrevenus = $totalrevenus +$item->checkout['gross_amount'];
+        if(count($this->checkin) > 0){
+            foreach ($this->checkin as $item) {
+                $totalrevenus = $totalrevenus +$item->checkout['gross_amount'];
+            }
         }
+      
         return $totalrevenus;
     }
 }

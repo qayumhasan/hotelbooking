@@ -91,20 +91,20 @@ $time = date("h:i");
                                         <td>{{$row->NumberOfBooking}}</td>
                                         <td>{{$row->NumberOfNight}}</td>
                                         @if($row->NumberOfNight !=0)
-                                        <td>{{$row->NumberOfBooking /$row->NumberOfNight}}</td>
+                                        <td>{{round($row->NumberOfBooking /$row->NumberOfNight,2)}}</td>
                                         @else
                                         <td>0</td>
                                         @endif
                                         <td>{{$row->numberofguest}}</td>
                                         <td>{{$row->totalrevenues}}</td>
                                         @if($row->NumberOfNight !=0)
-                                        <td>{{$row->totalrevenues / $row->NumberOfNight}}</td>
+                                        <td>{{round($row->totalrevenues / $row->NumberOfNight,2)}}</td>
                                         @else
                                         <td>0</td>
                                         @endif
 
                                         @if($row->NumberOfBooking !=0)
-                                        <td>{{$row->totalrevenues / $row->NumberOfBooking}}</td>
+                                        <td>{{round($row->totalrevenues / $row->NumberOfBooking,2)}}</td>
                                         @else
                                         <td>0</td>
                                         @endif
@@ -147,9 +147,9 @@ $time = date("h:i");
                                         <th>Total</th>
                                         <th>{{$booking_number}}</th>
                                         <th>{{$total_night}}</th>
-                                        <th>{{$avgnight}}</th>
+                                        <th>{{round($avgnight,2)}}</th>
                                         <th>{{$no_of_guest}}</th>
-                                        <th>{{$accumo_revenue}}</th>
+                                        <th>{{round($accumo_revenue,2)}}</th>
                                         <th>{{$avg_night}}</th>
                                         <th>{{$avg_booking}}</th>
                                         <th>{{$total_revenue}}</th>

@@ -92,7 +92,11 @@ $time = date("h:i");
                                         <td>{{$row->room_no}}</td>
                                         <td>{{$row->NumberOfBooking}}</td>
                                         <td>{{$row->NumberOfNight}}</td>
+                                        @if($row->NumberOfNight != 0)
                                         <td>{{round($row->NumberOfNight / $row->NumberOfBooking,2)}}</td>
+                                        @else
+                                        <td>0</td>
+                                        @endif
                                         <td>{{$row->numberofguest}}</td>
                                         <td>{{$row->totalrevenues}}</td>
                                         @if($row->NumberOfNight != 0)
