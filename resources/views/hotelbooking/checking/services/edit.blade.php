@@ -441,9 +441,9 @@ $time = date("h:i:sa");
                                 <div class="col-sm-8">
                                     <select class="controll-from" id="select_third_party" name="third_party">
                                         <option disabled selected>--- Select Suppliers ---</option>
-                                        <option value="1">Extra Rooms</option>
-                                        <option value="2">Extra Bad</option>
-                                        <option value="3">Wifi</option>
+                                        @foreach($supliers as $row)
+                                            <option value="{{$row->id}}">{{$row->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 @extends('hotelbooking.master')
-@section('title', 'All Room | '.$seo->meta_title)
+@section('title', 'Day By Day Report | '.$seo->meta_title)
 @section('content')
 @php
 date_default_timezone_set("Asia/Dhaka");

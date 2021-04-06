@@ -23,10 +23,12 @@
                                 <thead>
                                 @php
                                     $month = [];
+                                  
                                 @endphp
                                     <tr>
+                                    
                                         <th scope="col">Waiter</th>
-                                        @foreach($employees as $key=>$row)
+                                        @foreach($months as $key=>$row)
                                         <th scope="col">Total Sale {{$key}}</th>
                                         @php
                                             array_push($month,$key);
@@ -37,23 +39,30 @@
                                     </tr>
                                 </thead>
 
-                                <tbody>
-                                    @foreach($employees as $key=>$row)
-                                        @foreach($row as $data)
+                                    <tbody>
+                                  
+                                    @foreach($employees as $data)
+                                    @php
+                                        $monthgroupby = $data->groupBy('month_no');
+                                        $groupbyMonth = $monthgroupby->all();
+                                    @endphp
                                         <tr>
-                                        <th scope="row">{{$data->waiter_id}}</th>
-                                            
-                                            @if($data->month_name == $month[$loop->index])
-                                                <th>{{$data->slae_amount}}</th>
-                                            @else
-                                                <th></th>
-                                                <th>{{$data->slae_amount}}</th>
-                                            @endif
-                                            
+                                            <td>dsad</td>
+                                            @php
+                                                $totalinrow = 0;
+                                            @endphp
+                                            @foreach($groupbyMonth as $row)
+                                            <td>{{$row->sum('slae_amount')}}</td>
+                                            @php
+                                                $totalinrow += $row->sum('slae_amount');
+                                            @endphp
+                                            @endforeach
+                                         
+                                            <td>{{$totalinrow}}</td>
                                         </tr>
-                                        @endforeach
                                     @endforeach
-                                </tbody>
+                                 
+                                    </tbody>
                                 @endif
                             </table>
 

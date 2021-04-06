@@ -12,6 +12,7 @@ use App\Models\HouseKeeping;
 use App\Models\ItemEntry;
 use App\Models\MenuCategory;
 use App\Models\Room;
+use App\Models\Supplier;
 use App\Models\TaxCalculation;
 use App\Models\TaxSetting;
 use App\Traits\calculationTax;
@@ -308,9 +309,10 @@ class CheckingController extends Controller
         $rooms = Room::where('is_active', 1)->where('is_deleted', 0)->get();
         $items = ItemEntry::where('is_active', 1)->where('is_deleted', 0)->get();
         $menucategores = MenuCategory::where('is_active', 1)->where('is_deleted', 0)->get();
+        $supliers = Supplier::where('is_active',1)->where('is_deleted',0)->get();
 
 
-        return view('hotelbooking.checking.services.edit', compact('checkin', 'rooms', 'items', 'menucategores'));
+        return view('hotelbooking.checking.services.edit', compact('checkin', 'rooms', 'items', 'menucategores','supliers'));
     }
 
     public function serviceStore(Request $request)

@@ -404,18 +404,10 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="email">Thru Agent:</label>
                                         <div class="col-sm-9">
-                                            <select class="controll-from" id="exampleFormControlSelect1" name="true_agent">
-                                                <option value="agoda">Agoda</option>
-                                                <option value="booking.com">Booking.com</option>
-                                                <option value="makemytrip">Makemytrip</option>
-                                            </select>
+                                        <input type="text" class="controll-from" name="true_agent">
+                                            
                                         </div>
                                     </div>
-
-
-
-
-
 
                                 </div>
 
