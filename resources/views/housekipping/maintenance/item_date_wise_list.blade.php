@@ -1,5 +1,5 @@
 @extends('housekipping.master')
-@section('title', 'Item Issue Room Wise List | '.$seo->meta_title)
+@section('title', 'Item Issue date Wise List | '.$seo->meta_title)
 @section('content')
 
 @php

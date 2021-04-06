@@ -1,6 +1,6 @@
 <div class="iq-sidebar  sidebar-default ">
             <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="{{route('admin.inventory.home')}}" class="header-logo">
+                <a href="{{route('admin.housekipping.home')}}" class="header-logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal darkmode-logo" alt="logo">
                 </a>
@@ -11,8 +11,8 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="{{ request()->routeIs('admin.inventory.home*') ? 'active' : '' }}">
-                            <a href="{{route('admin.housekipping.person.entry.report')}}">
+                        <li class="{{ request()->routeIs('admin.housekipping.home*') ? 'active' : '' }}">
+                            <a href="{{route('admin.housekipping.home')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>

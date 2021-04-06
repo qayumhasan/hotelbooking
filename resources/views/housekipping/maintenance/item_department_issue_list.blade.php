@@ -1,5 +1,5 @@
 @extends('housekipping.master')
-@section('title', 'All Room | '.$seo->meta_title)
+@section('title', 'Item Department Issue List | '.$seo->meta_title)
 @section('content')
 
 @php

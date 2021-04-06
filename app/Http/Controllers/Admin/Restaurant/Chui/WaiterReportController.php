@@ -14,11 +14,19 @@ class WaiterReportController extends Controller
 
     public function qtrWaiterPerformance()
     {
-        $employees =Emploayee_Sales_Report::whereIn('month_no',[date('n', strtotime('0 month')),date('n', strtotime('-1 month')),date('n', strtotime('-2 month'))])->get();
-        $employees = $employees->groupBy('month_name');
-        $employees = $employees->all();
+        $months =Emploayee_Sales_Report::whereIn('month_no',[date('n', strtotime('0 month')),date('n', strtotime('-1 month')),date('n', strtotime('-2 month'))])->get();
+        $months = $months->groupBy('month_name');
+        $months = $months->all();
 
-        return view('restaurant.chui.waiter_report.waiter_qtr_report',compact('employees'));
+        
+        $employees =Emploayee_Sales_Report::whereIn('month_no',[date('n', strtotime('0 month')),date('n', strtotime('-1 month')),date('n', strtotime('-2 month'))])->get();
+        $employees = $employees->groupBy('waiter_id');
+       
+
+      
+       
+
+        return view('restaurant.chui.waiter_report.waiter_qtr_report',compact('employees','months'));
     }
 
     public function totalWaiterSale()
