@@ -48,6 +48,10 @@ class SupplierController extends Controller
             'mobile'=>$request->mobile,
             'email'=>$request->email,
             'gender'=>$request->gender,
+
+            'account_head'=>$request->account_head,
+            'account_head_code'=>$request->account_head_code,
+
             'is_active'=>$request->is_active,
             'date'=>$request->date,
             'entry_by'=>Auth::user()->id,

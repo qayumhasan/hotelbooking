@@ -119,11 +119,14 @@ Route::get('/get/admin/vouchertype/open/voucher/{invoice}', [AccountTrasectionCo
 Route::get('/get/admin/accounthead/checkbok/all/{account_head}', [AccountTrasectionController::class, 'getcheckbookall']);
 
 // reports controller
-Route::get('Admin/account/transection/reports/datewise', [ReportsController::class, 'datewisereport'])->name('admin.account.reports.datewise');
-Route::post('Admin/account/transection/reports/datewise', [ReportsController::class, 'datewisereportsearch'])->name('admin.account.reports.datewise');
-Route::get('Admin/account/transection/reports/vouchertypewise', [ReportsController::class, 'vouchertypewise'])->name('admin.account.reports.vouchertypewise');
-Route::post('Admin/account/transection/reports/vouchertypewise', [ReportsController::class, 'vouchertypewisesearch'])->name('admin.account.reports.vouchertypewise');
+Route::get('admin/account/transection/reports/datewise', [ReportsController::class, 'datewisereport'])->name('admin.account.reports.datewise');
+Route::post('admin/account/transection/reports/datewise', [ReportsController::class, 'datewisereportsearch'])->name('admin.account.reports.datewise');
+Route::get('admin/account/transection/reports/vouchertypewise', [ReportsController::class, 'vouchertypewise'])->name('admin.account.reports.vouchertypewise');
+Route::post('admin/account/transection/reports/vouchertypewise', [ReportsController::class, 'vouchertypewisesearch'])->name('admin.account.reports.vouchertypewise');
 
 
-Route::get('Admin/account/transection/reports/date', [ReportsController::class, 'onlydate'])->name('admin.account.reports.onlydatewise');
-Route::post('Admin/account/transection/reports/date', [ReportsController::class, 'onlydatesearch'])->name('admin.account.reports.onlydatewise');
+Route::get('admin/account/transection/reports/date', [ReportsController::class, 'onlydate'])->name('admin.account.reports.onlydatewise');
+Route::post('admin/account/transection/reports/date', [ReportsController::class, 'onlydatesearch'])->name('admin.account.reports.onlydatewise');
+
+Route::get('admin/account/transection/reports/employee', [ReportsController::class, 'employeereports'])->name('admin.account.reports.employee');
+Route::post('admin/account/transection/reports/employee', [ReportsController::class, 'employeereportsearch'])->name('admin.account.reports.employee');

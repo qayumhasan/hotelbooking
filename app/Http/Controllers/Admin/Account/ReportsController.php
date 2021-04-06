@@ -52,4 +52,24 @@ class ReportsController extends Controller
         $searchdata=DB::table('vAccountsHeadsLeadgerTbl')->where('date',$request->formdate)->get();
         return view('accounts.reports.onlydate',compact('searchdata','date'));
     }
+
+    // employee all
+    public function employeereports(){
+        $alldata= DB::table('vEmployeeLedger')->get();
+        return view('accounts.reports.employeereports',compact('alldata'));
+    }
+
+    public function employeereportsearch(Request $request){
+        
+        $formdate=$request->formdate;
+        $to_date=$request->todate;
+        $searchdata=DB::table('vEmployeeLedger')->whereBetween('Date', [$formdate, $to_date])->get();
+        dd($searchdata);
+    } 
+
+
+    public function employeenamewise(){
+        $alldata= DB::table('vEmployeeLedger')->get();
+        return view('accounts.reports.employeereportsnamewise',compact('alldata'));
+    }
 }

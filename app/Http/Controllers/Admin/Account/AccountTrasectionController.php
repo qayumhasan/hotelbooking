@@ -14,6 +14,7 @@ use App\Models\AccountTransectionHead;
 use App\Models\CheckBookTransection;
 use App\Models\CheckBookEntry;
 use App\Models\Employee;
+use App\Models\Supplier;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -695,8 +696,9 @@ class AccountTrasectionController extends Controller
         $datasourche=ChartOfAccount::where('category_id',1)->where('maincategory_id',9)->where('subcategoryone_id',17)->get();
         $account_head=ChartOfAccount::where('subcategoryone_id','!=',17)->get();
         $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
 
-        return view('accounts.accounttransection.vouchertypewise.cashpaymentvoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.cashpaymentvoucher',compact('allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
 
     // bank payment
@@ -727,8 +729,9 @@ class AccountTrasectionController extends Controller
         $account_head=ChartOfAccount::where('subcategoryone_id','!=',18)->get();
 
         $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
 
-        return view('accounts.accounttransection.vouchertypewise.bankpaymentvoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.bankpaymentvoucher',compact('allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
 
        // found transfer
@@ -760,7 +763,7 @@ class AccountTrasectionController extends Controller
         $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
 
 
-        return view('accounts.accounttransection.vouchertypewise.fundtransfervoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.fundtransfervoucher',compact('allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
 
      // cash receipt voucher
@@ -789,9 +792,10 @@ class AccountTrasectionController extends Controller
         $datasourche=ChartOfAccount::where('category_id',1)->where('maincategory_id',9)->where('subcategoryone_id',17)->get();
         $account_head=ChartOfAccount::where('subcategoryone_id','!=',17)->get();
         $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
 
 
-        return view('accounts.accounttransection.vouchertypewise.cashreceiptvoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.cashreceiptvoucher',compact('allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
     
     // 
@@ -820,8 +824,9 @@ class AccountTrasectionController extends Controller
         $datasourche=ChartOfAccount::where('category_id',1)->where('maincategory_id',9)->where('subcategoryone_id',18)->get();
         $account_head=ChartOfAccount::where('maincategory_id','!=',9)->get();
         $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
 
-        return view('accounts.accounttransection.vouchertypewise.bankreceiptvoucher',compact('allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.bankreceiptvoucher',compact('allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
     
     public function aorcreceablevoucher(){

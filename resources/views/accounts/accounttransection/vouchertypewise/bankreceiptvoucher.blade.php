@@ -103,6 +103,9 @@ $current = date("m/d/Y");
                                                             @foreach($allemployee as $employee)
                                                             <option value="{{$employee->employee_id}}">{{$employee->employee_name}}</option>
                                                             @endforeach
+                                                            @foreach($allsuplier as $suplier)
+                                                            <option value="{{$suplier->id}}">{{$suplier->name}}</option>
+                                                            @endforeach
                                                         </select>
                                                        
                                                         <span style="color:red" id="accont_head_err"></span>

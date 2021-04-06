@@ -21,6 +21,7 @@
     <link rel='stylesheet' href="{{asset('public/backend')}}/assets/vendor/fullcalendar/list/main.css" />
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/mapbox/mapbox-gl.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/izitost.css">
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/fullcalender.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/Bootstrap-4-Tag-Input-Plugin-jQuery/tagsinput.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
@@ -370,11 +371,7 @@
     <script src="{{asset('public/backend')}}/assets/js/mapbox.js"></script>
     <script src="{{asset('public/backend')}}/assets/js/datepiker.js"></script>
 
-    <!-- Fullcalender Javascript -->
-    <script src="{{asset('public/backend')}}//assets/vendor/fullcalendar/core/main.js"></script>
-    <script src="{{asset('public/backend')}}//assets/vendor/fullcalendar/daygrid/main.js"></script>
-    <script src="{{asset('public/backend')}}/assets/vendor/fullcalendar/timegrid/main.js"></script>
-    <script src="{{asset('public/backend')}}/assets/vendor/fullcalendar/list/main.js"></script>
+    <script src="{{asset('public/backend')}}/assets/js/fullcalender.js"></script>
 
     <!-- SweetAlert JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/sweetalert.js"></script>

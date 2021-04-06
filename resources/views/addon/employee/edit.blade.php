@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('title', 'Edit Employee | '.$seo->meta_title)
 @section('content')
+@php
+date_default_timezone_set("asia/dhaka");
+$current = date("m/d/Y");
+@endphp
 <style>
   .form-control form-control-sm {
 
@@ -54,7 +58,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                        <label>Date:*</label>
-                                     <input type="text" name="date" id="follow_up_update" required name="follow_date" class="datepicker form-control form-control-sm" value="{{  date('d-m-Y') }}" data-date-format="dd-mm-yyyy">
+                                     <input type="text" name="date" class="datepicker form-control form-control-sm" value="{{ $current }}" >
                                       @error('date')
                                           <div class="alert-danger">{{ $message }}</div>
                                       @enderror
