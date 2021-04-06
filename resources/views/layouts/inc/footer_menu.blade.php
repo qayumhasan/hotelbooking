@@ -84,8 +84,8 @@
                             </a>
 
                         </li>
-                        <li class="{{ request()->routeIs('admin.banquet.index*') ? 'activemenu' : '' }}">
-                            <a href="{{route('admin.banquet.index')}}">
+                        <li class="{{ request()->routeIs('admin.banquet.dashboard*') ? 'activemenu' : '' }}">
+                            <a href="{{route('admin.banquet.dashboard')}}">
                                 <i class="las la-torah iq-arrow-left"></i><span>Banquet</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>

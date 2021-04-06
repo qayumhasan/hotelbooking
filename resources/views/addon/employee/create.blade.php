@@ -3,9 +3,8 @@
 @section('title', 'Create Employee | '.$seo->meta_title)
 @section('content')
 @php
-    $date=Carbon\Carbon::now();
-     $newdate=$date->format('m/d/Y');
-
+date_default_timezone_set("asia/dhaka");
+$current = date("m/d/Y");
 @endphp
 <style>
   .form-control form-control-sm {
@@ -14,6 +13,10 @@
   
 }
 </style>
+@php
+date_default_timezone_set("asia/dhaka");
+$current = date("m/d/Y");
+@endphp
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{asset('public/backend/assets/datepicker/css/bootstrap-datepicker3.css')}}">
 <div class="content-page">
@@ -75,7 +78,7 @@
                                   <div class="col-md-6">
                                     <div class="form-group">
                                        <label>Date:*</label>
-                                     <input type="text" name="date" id="follow_up_update" required name="follow_date" class="datepicker form-control form-control-sm form-control form-control-sm-sm" value="{{  date('d-m-Y') }}" data-date-format="dd-mm-yyyy">
+                                     <input type="text" name="date"  class="datepicker form-control form-control-sm form-control form-control-sm-sm" value="{{ $current }}">
                                       @error('date')
                                           <div class="alert-danger">{{ $message }}</div>
                                       @enderror

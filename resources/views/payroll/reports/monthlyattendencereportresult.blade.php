@@ -96,16 +96,16 @@ select.form-control {
                                  <td>{{$employee->employee_name}}</td>
                                  <td>@if($jan){{$jan->number_of_working_days}} @else 0 @endif</td>
                                  <td>@if($feb){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($mar){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($apr){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($may){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($jun){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($jul){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($aug){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($sep){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($oct){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($nov){{$feb->number_of_working_days}} @else 0 @endif</td>
-                                 <td>@if($dec){{$feb->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($mar){{$mar->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($apr){{$apr->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($may){{$may->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($jun){{$jun->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($jul){{$jul->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($aug){{$aug->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($sep){{$sep->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($oct){{$oct->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($nov){{$nov->number_of_working_days}} @else 0 @endif</td>
+                                 <td>@if($dec){{$dec->number_of_working_days}} @else 0 @endif</td>
                                
                                
                               </tr>

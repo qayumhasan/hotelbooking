@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/remixicon/fonts/remixicon.css">
     <link rel="stylesheet" href="{{asset('public/backend')}}/assets/vendor/@icon/dripicons/dripicons.css">
-
+    <link rel="stylesheet" href="{{asset('public/backend')}}/assets/css/datepiker.css">
     <link rel='stylesheet' href="{{asset('public/backend')}}/assets/vendor/fullcalendar/core/main.css" />
     <link rel='stylesheet' href="{{asset('public/backend')}}/assets/vendor/fullcalendar/daygrid/main.css" />
     <link rel='stylesheet' href="{{asset('public/backend')}}/assets/vendor/fullcalendar/timegrid/main.css" />
@@ -736,9 +736,12 @@
         
     }        
 </script>
+<script src="{{asset('public/backend')}}/assets/js/datepiker.js"></script>
+    <script>
+        $('.datepicker').datepicker();
+    </script>
     <!-- app JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>
 </body>
 

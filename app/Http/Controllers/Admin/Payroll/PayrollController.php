@@ -12,12 +12,12 @@ class PayrollController extends Controller
     	$this->middleware('admin');
     }
     public function index(){
-        
-    	return view('payroll.home.index');
+        $allemployee=Employee::where('status',1)->latest()->get();
+    	return view('payroll.home.index',compact('allemployee'));
     }
     // allemployee
     public function allemployee(){
-        $allemployee=Employee::latest()->get();
+        $allemployee=Employee::where('status',1)->latest()->get();
         return view('payroll.employee.allemployee',compact('allemployee'));
     }
 }

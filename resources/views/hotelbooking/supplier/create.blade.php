@@ -44,6 +44,8 @@ $current = date("m/d/Y");
                                         <div class="form-group">
                                             <label for="fname">Title: *</label>
                                             <input type="text" class="form-control" name="title" placeholder="Title"/>
+                                            <input type="hidden"  name="account_head" value="Accounts Payable - Purchase"/>
+                                            <input type="hidden"  name="account_head_code" value="212-28-0040-10132"/>
                                             @error('title')
                                                 <div style="color:red">{{ $message }}</div>
                                             @enderror
