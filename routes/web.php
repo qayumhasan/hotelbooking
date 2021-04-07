@@ -321,6 +321,7 @@ Route::get('/get/doublehistory/invoice/{kot_id}', [FoodAndBeverageController::cl
 
 // -----------------------------------------------------------Banquet-------------------------------------------------------------------------------------------------------------
 Route::get('admin/banquet/index', [BanquetController::class, 'index'])->name('admin.banquet.dashboard');
+Route::get('admin/get/banquet', [BanquetController::class, 'getBanqueet'])->name('admin.get.banquet.data');
 // BanquetBookingController
 Route::get('admin/banquet/booking/create', [BanquetBookingController::class, 'create'])->name('admin.banquet.create');
 Route::post('admin/banquet/booking/update/{id}', [BanquetBookingController::class, 'update'])->name('admin.banquet.update');
