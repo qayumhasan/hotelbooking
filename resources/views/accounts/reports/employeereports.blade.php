@@ -10,6 +10,8 @@
 .form-control {
     height: 32px;
 }
+
+
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
@@ -29,27 +31,37 @@ $current = date("m/d/Y");
                      </span>
                   </div>
                   <form action="{{route('admin.account.reports.employee')}}" method="POST">
-                  <div class="card-header d-flex justify-content-center">
+                  <div class="card-header d-flex justify-content-center row">
                      
                         @csrf
                      <div class="col-md-2">
                            <div class="form-group">
                                  <label for="fname">From Date:</label>
-                                 <input type="text"  id="date" name="formdate" class="form-control noradious datepicker" @if(isset($formdate))  value="{{$formdate}}" @else value="{{$current}}" @endif >
+                                 <input type="text"  id="formdate" style="color:#f1dddd" name="formdate" class="formdate form-control noradious datepicker" @if(isset($formdate))  value="{{$formdate}}" style="color:#000"  @else value="{{$current}}" @endif >
                            </div>
                      </div>
                      <div class="col-md-2">
                            <div class="form-group">
                                  <label for="fname">To Date:</label>
-                                 <input type="text"  id="date" name="todate" class="form-control noradious datepicker"  @if(isset($todate))  value="{{$todate}}" @else value="{{$current}}" @endif>
+                                 <input type="text"  id="todate"  style="color:#f1dddd" name="todate" class="todate form-control noradious datepicker"  @if(isset($to_date))  value="{{$to_date}}" style="color:#000" @else value="{{$current}}" @endif>
                                  
                            </div>
+                     </div>
+                     <div class="col-md-1">
+                         <div class="form-group mt-4">
+                           <input type="checkbox" class="" id="no_date" name="no_date" value="1">
+                         </div>
                      </div>
                     
                      <div class="col-md-3">
                            <div class="form-group">
                                  <label for="fname">Name: *</label>
-                                 <input type="text" name="name" class="form-control noradious">
+                                 <select name="employee_name" id="employee_report" class="form-control noradious">
+                                    <option value="">--select--</option>
+                                    @foreach($allemployee as $employee)
+                                    <option value="{{$employee->employee_id}}" >{{$employee->employee_name}}</option>
+                                    @endforeach
+                                 </select>
                            </div>
                      </div>
                      <div class="col-md-3">
@@ -59,7 +71,6 @@ $current = date("m/d/Y");
                   <form>
                   <div class="card-body">
                      <div class="table-responsive">
-                       
                               @if(isset($searchdata))
                               <table  class="table table-striped table-bordered" >
                                  <thead class="text-center">
@@ -78,26 +89,34 @@ $current = date("m/d/Y");
                                  </thead>
                                  <tbody class="text-center">
                                  @php
-                                    $totaldavitamount=0;
-                                    $totalcreditamount=0;
+                                 
+                                    $totaltransectionamount=0;
                                     $totalbalance=0;
+                                    $minibalance=0;
+                                   
                                  @endphp
                                  @foreach($searchdata as $key => $sdata)
                                  <tr>
                                        <td>{{++$key}}</td>
-                                       <td>{{$sdata->VoucherNo}}</td>
-                                       <td>{{$sdata->VoucherType}}</td>
-                                       <td>{{$sdata->date}}</td>
+                                       <td>{{$sdata->EmployeeID}}</td>
+                                       <td>{{$sdata->EmployeeName}}</td>
+                                       <td>{{$sdata->TransecrionID}}</td>
                                     
-                                       <td>{{$sdata->Accounts}}</td>
-                                       <td>{{$sdata->Code}}</td>
-                                       <td>{{$sdata->DabitAmount}}</td>
-                                       <td>{{$sdata->CreditAmount}}</td>
-                                       <td>{{$sdata->Balance}}</td>
+                                       <td>{{$sdata->TransectionType}}</td>
+                                       <td>{{$sdata->Date}}</td>
+                                       <td>{{$sdata->OpeningBalance}}</td>
+                                       <td>{{$sdata->TransectionAmount}}</td>
+                                       
+                                       @php
+                                       
+                                          $minibalance = $minibalance + ($sdata->Balance);
+                                       @endphp
+                                       <td>{{ $minibalance }}</td>
+                                 
                                  </tr>
                                   @php
-                                     $totaldavitamount=$totaldavitamount + $sdata->DabitAmount ;
-                                     $totalcreditamount=$totalcreditamount + $sdata->CreditAmount ;
+                                    
+                                     $totaltransectionamount=$totaltransectionamount + $sdata->TransectionAmount ;
                                      $totalbalance = $totalbalance +( $sdata->Balance) ;
                                     @endphp
                                  @endforeach
@@ -110,8 +129,8 @@ $current = date("m/d/Y");
                                        <td></td>
                                        <td></td>
                                        <td></td>
-                                       <td>Total: {{ $totaldavitamount }}</td>
-                                       <td>Total: {{ $totalcreditamount }}</td>
+                                       <td></td>
+                                       <td>Total: {{ $totaltransectionamount }}</td>
                                        <td>Total: {{ $totalbalance }}</td>
                                     </tr>
                                  </tfoot>
@@ -144,7 +163,9 @@ $current = date("m/d/Y");
                                  <td>{{$data->Date}}</td>
                                  <td>{{$data->OpeningBalance}}</td>
                                  <td>{{$data->TransectionAmount}}</td>
-                                 <td>{{$data->Balance}}</td>
+
+                                 
+                                 <td>{{$data->Balance }}</td>
                                  
                               </tr>
                               @endforeach
@@ -230,6 +251,22 @@ $(document).ready(function() {
         });
 
     });
+});
+</script>
+<script>
+   $(document).ready(function() {
+    $('#no_date').on('click', function(e) {
+       
+       if(e.target.checked){
+         document.getElementById("formdate").style.color = "#000";
+      document.getElementById("todate").style.color = "#000";
+       }else{
+         document.getElementById("formdate").style.color = "#f1dddd";
+         document.getElementById("todate").style.color = "#f1dddd";
+       }
+      
+
+   });
 });
 </script>
 

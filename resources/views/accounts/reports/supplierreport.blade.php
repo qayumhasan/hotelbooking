@@ -10,6 +10,8 @@
 .form-control {
     height: 32px;
 }
+
+
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
@@ -22,26 +24,44 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">DateWise Transection Reports</h4>
+                        <h4 class="card-title">Supplier Transection Reports</h4>
                      </div>
                      <span class="float-right mr-2">
                        
                      </span>
                   </div>
-                  <form action="{{route('admin.account.reports.employee')}}" method="POST">
-                  <div class="card-header d-flex justify-content-center">
+                  <form action="{{route('admin.account.reports.supplier')}}" method="POST">
+                  <div class="card-header d-flex justify-content-center row">
                      
                         @csrf
-                     <div class="col-md-3">
+                     <div class="col-md-2">
                            <div class="form-group">
-                                 <label for="fname">From Date: *</label>
-                                 <input type="text"  id="date" name="formdate" class="form-control noradious datepicker" @if(isset($formdate))  value="{{$formdate}}" @else value="{{$current}}" @endif >
+                                 <label for="fname">From Date:</label>
+                                 <input type="text"  id="formdate" style="color:#f1dddd" name="formdate" class="formdate form-control noradious datepicker" @if(isset($formdate))  value="{{$formdate}}" style="color:#000"  @else value="{{$current}}" @endif >
                            </div>
                      </div>
+                     <div class="col-md-2">
+                           <div class="form-group">
+                                 <label for="fname">To Date:</label>
+                                 <input type="text"  id="todate"  style="color:#f1dddd" name="todate" class="todate form-control noradious datepicker"  @if(isset($to_date))  value="{{$to_date}}" style="color:#000" @else value="{{$current}}" @endif>
+                                 
+                           </div>
+                     </div>
+                     <div class="col-md-1">
+                         <div class="form-group mt-4">
+                           <input type="checkbox" class="" id="no_date" name="no_date" value="1">
+                         </div>
+                     </div>
+                    
                      <div class="col-md-3">
                            <div class="form-group">
-                                 <label for="fname">To Date: *</label>
-                                 <input type="text"  id="date" name="todate" class="form-control noradious datepicker"  @if(isset($todate))  value="{{$todate}}" @else value="{{$current}}" @endif>
+                                 <label for="fname">Name: *</label>
+                                 <select name="employee_name" id="employee_report" class="form-control noradious">
+                                    <option value="">--select--</option>
+                                    @foreach($allsupplier as $employee)
+                                    <option value="{{$employee->id}}" >{{$employee->name}}</option>
+                                    @endforeach
+                                 </select>
                            </div>
                      </div>
                      <div class="col-md-3">
@@ -51,45 +71,41 @@ $current = date("m/d/Y");
                   <form>
                   <div class="card-body">
                      <div class="table-responsive">
-                       
                               @if(isset($searchdata))
                               <table  class="table table-striped table-bordered" >
                                  <thead class="text-center">
                                     <tr>
-                                       <th>#</th>
+                                        <th>#</th>
                                        <th>ID</th>
                                        <th>Name</th>
+                                       <th>Date</th>
                                        <th>TransectionID</th>
                                        <th>TransectionType</th>
-                                       <th>Date</th>
-                                       <th>OpeningBalance</th>
-                                       <th>TransectionAmount</th>
                                        <th>Balance</th>
                                       
                                     </tr>
                                  </thead>
                                  <tbody class="text-center">
                                  @php
-                                    $totaldavitamount=0;
-                                    $totalcreditamount=0;
+                                 
+                                    $totaltransectionamount=0;
                                     $totalbalance=0;
                                  @endphp
                                  @foreach($searchdata as $key => $sdata)
                                  <tr>
                                        <td>{{++$key}}</td>
-                                       <td>{{$sdata->VoucherNo}}</td>
-                                       <td>{{$sdata->VoucherType}}</td>
-                                       <td>{{$sdata->date}}</td>
+                                       <td>{{$sdata->SupplirID}}</td>
+                                       <td>{{$sdata->SuplierName}}</td>
+                                       <td>--</td>
+                                       <td>{{$sdata->TransectionID}}</td>
                                     
-                                       <td>{{$sdata->Accounts}}</td>
-                                       <td>{{$sdata->Code}}</td>
-                                       <td>{{$sdata->DabitAmount}}</td>
-                                       <td>{{$sdata->CreditAmount}}</td>
-                                       <td>{{$sdata->Balance}}</td>
+                                       <td>{{$sdata->TransectionType}}</td>
+                                       <td>{{$sdata->balance}}</td>
+                                 
                                  </tr>
                                   @php
-                                     $totaldavitamount=$totaldavitamount + $sdata->DabitAmount ;
-                                     $totalcreditamount=$totalcreditamount + $sdata->CreditAmount ;
+                                    
+                                     $totaltransectionamount=$totaltransectionamount + $sdata->TransectionAmount ;
                                      $totalbalance = $totalbalance +( $sdata->Balance) ;
                                     @endphp
                                  @endforeach
@@ -102,8 +118,8 @@ $current = date("m/d/Y");
                                        <td></td>
                                        <td></td>
                                        <td></td>
-                                       <td>Total: {{ $totaldavitamount }}</td>
-                                       <td>Total: {{ $totalcreditamount }}</td>
+                                       <td></td>
+                                       <td>Total: {{ $totaltransectionamount }}</td>
                                        <td>Total: {{ $totalbalance }}</td>
                                     </tr>
                                  </tfoot>
@@ -115,31 +131,28 @@ $current = date("m/d/Y");
                                        <th>#</th>
                                        <th>ID</th>
                                        <th>Name</th>
+                                       <th>Date</th>
                                        <th>TransectionID</th>
                                        <th>TransectionType</th>
-                                       <th>Date</th>
-                                       <th>OpeningBalance</th>
-                                       <th>TransectionAmount</th>
                                        <th>Balance</th>
                                       
                                     </tr>
                                  </thead>
                                  <tbody class="text-center">
-                              @foreach($alldata as $key => $data)
-                              <tr>
-                                 <td>{{++$key}}</td>
-                                 <td>{{$data->EmployeeID}}</td>
-                                 <td>{{$data->EmployeeName}}</td>
-                                 <td>{{$data->TransecrionID}}</td>
-                               
-                                 <td>{{$data->TransectionType}}</td>
-                                 <td>{{$data->Date}}</td>
-                                 <td>{{$data->OpeningBalance}}</td>
-                                 <td>{{$data->TransectionAmount}}</td>
-                                 <td>{{$data->Balance}}</td>
-                                 
-                              </tr>
-                              @endforeach
+                                    @foreach($alldata as $key => $data)
+                                    <tr>
+
+                                       <td>{{++$key}}</td>
+                                       <td>{{$data->SupplirID}}</td>
+                                       <td>{{$data->SuplierName}}</td>
+                                       <td>--</td>
+                                       <td>{{$data->TransectionID}}</td>
+                                      
+                                       <td>{{$data->TranscationType}}</td>
+                                       <td>{{$data->balance}}</td>
+                                       
+                                    </tr>
+                                    @endforeach
                                  </tbody>
                                </table>
 
@@ -148,7 +161,7 @@ $current = date("m/d/Y");
                      </div>
                   </div>
                   <div class="card-body text-center">
-                     <a href="" class="btn btn-success">Print</a>
+                     <a class="btn btn-success savepritbtn">Print</a>
                   </div>
                </div>
             </div>
@@ -222,6 +235,22 @@ $(document).ready(function() {
         });
 
     });
+});
+</script>
+<script>
+   $(document).ready(function() {
+    $('#no_date').on('click', function(e) {
+       
+       if(e.target.checked){
+         document.getElementById("formdate").style.color = "#000";
+      document.getElementById("todate").style.color = "#000";
+       }else{
+         document.getElementById("formdate").style.color = "#f1dddd";
+         document.getElementById("todate").style.color = "#f1dddd";
+       }
+      
+
+   });
 });
 </script>
 
