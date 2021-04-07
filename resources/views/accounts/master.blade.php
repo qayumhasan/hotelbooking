@@ -229,19 +229,19 @@
                         </li>
                         <li class="">
                             <a href="#eereports" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                            <i class="fas fa-book-open"></i><span>Employee Transection Reports</span>
+                            <i class="fas fa-book-open"></i><span> Reports</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
                             <ul id="eereports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.account.reports.employee*') ? 'active' : '' }}">
                                     <a href="{{route('admin.account.reports.employee')}}">
-                                        <i class="las la-list-alt"></i><span>Date Wise</span>
+                                        <i class="las la-list-alt"></i><span>Employee Reports</span>
                                     </a>
                                 </li>
-                                <li class="{{ request()->routeIs('admin.account.reports.vouchertypewise*') ? 'active' : '' }}">
-                                    <a href="{{route('admin.account.reports.vouchertypewise')}}">
-                                        <i class="las la-list-alt"></i><span>Employee Name Wise</span>
+                                <li class="{{ request()->routeIs('admin.account.reports.supplier*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.supplier')}}">
+                                        <i class="las la-list-alt"></i><span>Supplier Reports</span>
                                     </a>
                                 </li>
                                 
@@ -581,6 +581,12 @@
     </script>
      <script>
         $("#account_head").select2({
+            placeholder: '----Select Name----'
+        });
+    </script>
+
+    <script>
+        $("#employee_report").select2({
             placeholder: '----Select Name----'
         });
     </script>

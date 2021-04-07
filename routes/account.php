@@ -130,3 +130,6 @@ Route::post('admin/account/transection/reports/date', [ReportsController::class,
 
 Route::get('admin/account/transection/reports/employee', [ReportsController::class, 'employeereports'])->name('admin.account.reports.employee');
 Route::post('admin/account/transection/reports/employee', [ReportsController::class, 'employeereportsearch'])->name('admin.account.reports.employee');
+
+Route::get('admin/account/transection/reports/supplier', [ReportsController::class, 'supllierreprt'])->name('admin.account.reports.supplier');
+Route::post('admin/account/transection/reports/supplier', [ReportsController::class, 'supllierreprtsearch'])->name('admin.account.reports.supplier');
