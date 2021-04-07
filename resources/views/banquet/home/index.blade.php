@@ -13,6 +13,8 @@ $current =date("Y-m-d");
                             <div class="header-title">
                                 <h4 class="card-title">Advance Booking Calender</h4>
                             </div>
+
+                
                             <!-- <span class="float-right mr-2">
                                 <a href="#" class="btn btn-sm bg-primary">
                                     <i class="ri-add-fill"><span class="pl-1">Add Room</span></i>
@@ -53,12 +55,12 @@ $current =date("Y-m-d");
         });
         $.ajax({
             type: 'get',
-            url: "{{ url('/admin/advance/report/get') }}",
+            url: "{{ route('admin.get.banquet.data') }}",
             data:$('#search_calender').serializeArray(),
 
             success: function(data) {
+                
                 console.log(data);
-
 
                 var initialLocaleCode = 'en';
                 var localeSelectorEl = document.getElementById('locale-selector');
@@ -77,65 +79,65 @@ $current =date("Y-m-d");
                     navLinks: true, // can click day/week names to navigate views
                     editable: true,
                     dayMaxEvents: true, // allow "more" link when too many events
-                    // events:data.data,
+                    events:data.data,
                     
-                    events: [
+                    // events: [
                         
-                        {
-                            title: 'All Day Event',
-                            start: '2021-01-01'
-                        },
-                        {
-                            title: 'Long Event',
-                            start: '2021-01-07',
-                            end: '2021-01-10'
-                        },
-                        {
-                            groupId: 999,
-                            title: 'Repeating Event',
-                            start: '2021-01-09T16:00:00'
-                        },
-                        {
-                            groupId: 999,
-                            title: 'Repeating Event',
-                            start: '2021-01-16T16:00:00'
-                        },
-                        {
-                            title: 'Conference',
-                            start: '2021-01-11',
-                            end: '2021-01-13'
-                        },
-                        {
-                            title: 'Meeting',
-                            start: '2021-01-12T10:30:00',
-                            end: '2021-01-12T12:30:00'
-                        },
-                        {
-                            title: 'Lunch',
-                            start: '2020-09-12T12:00:00'
-                        },
-                        {
-                            title: 'Meeting',
-                            start: '2020-09-12T14:30:00'
-                        },
-                        {
-                            title: 'Happy Hour',
-                            start: '2020-09-12T17:30:00'
-                        },
-                        {
-                            title: 'Dinner',
-                            start: '2020-09-12T20:00:00'
-                        },
-                        {
-                            title: 'Birthday Party',
-                            start: '2020-09-13T07:00:00'
-                        },
-                        {
-                            title: 'Click for Google',
-                            url: 'http://google.com/',
-                            start: '2020-09-28'
-                        }
-                    ]
+                    //     {
+                    //         title: 'All Day Event',
+                    //         start: '2021-01-01'
+                    //     },
+                    //     {
+                    //         title: 'Long Event',
+                    //         start: '2021-01-07',
+                    //         end: '2021-01-10'
+                    //     },
+                    //     {
+                    //         groupId: 999,
+                    //         title: 'Repeating Event',
+                    //         start: '2021-01-09T16:00:00'
+                    //     },
+                    //     {
+                    //         groupId: 999,
+                    //         title: 'Repeating Event',
+                    //         start: '2021-01-16T16:00:00'
+                    //     },
+                    //     {
+                    //         title: 'Conference',
+                    //         start: '2021-01-11',
+                    //         end: '2021-01-13'
+                    //     },
+                    //     {
+                    //         title: 'Meeting',
+                    //         start: '2021-01-12T10:30:00',
+                    //         end: '2021-01-12T12:30:00'
+                    //     },
+                    //     {
+                    //         title: 'Lunch',
+                    //         start: '2020-09-12T12:00:00'
+                    //     },
+                    //     {
+                    //         title: 'Meeting',
+                    //         start: '2020-09-12T14:30:00'
+                    //     },
+                    //     {
+                    //         title: 'Happy Hour',
+                    //         start: '2020-09-12T17:30:00'
+                    //     },
+                    //     {
+                    //         title: 'Dinner',
+                    //         start: '2020-09-12T20:00:00'
+                    //     },
+                    //     {
+                    //         title: 'Birthday Party',
+                    //         start: '2020-09-13T07:00:00'
+                    //     },
+                    //     {
+                    //         title: 'Click for Google',
+                    //         url: 'http://google.com/',
+                    //         start: '2020-09-28'
+                    //     }
+                    // ]
                 });
 
                 calendar.render();

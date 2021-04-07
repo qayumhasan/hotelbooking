@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Banquet extends Model
 {
     use HasFactory;
+
+    public function venue()
+    {
+        return $this->belongsTo(Venue::class);
+    }
 }
