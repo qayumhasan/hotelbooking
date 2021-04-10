@@ -62,7 +62,7 @@ $time = date("h:i");
                     </div>
                 </div>
 
-                <form action="{{route('admin.checkin.store')}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('admin.checkin.store')}}" id="checkingdata" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
@@ -958,6 +958,8 @@ $time = date("h:i");
         });
     }
 </script>
+
+
 
 
 

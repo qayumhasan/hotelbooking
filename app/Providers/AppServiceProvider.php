@@ -8,6 +8,7 @@ use App\Models\Seo;
 use App\Models\Addon;
 use App\Models\ImageManager;
 use App\Models\CompanyInformation;
+use App\Models\Currency;
 use App\Traits\NumberToWord;
 
 class AppServiceProvider extends ServiceProvider
@@ -41,5 +42,8 @@ class AppServiceProvider extends ServiceProvider
         view()->share('companyinformation', $companyinformation);
         $numberToWord = new NumberToWord();
         view()->share('numToWord', $numberToWord);
+
+        $currency = Currency::where('is_default',1)->first(); 
+        view()->share('currency', $currency);
     }
 }

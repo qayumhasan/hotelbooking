@@ -259,6 +259,11 @@
 
             items.element.additem.insertAdjacentHTML('afterend', newhtml);
             $('#itemalert').hide();
+
+
+            $('#item_name').val('');
+            $('#item_qty').val('');
+            $('#item_unit').val('');
         }
 
 
