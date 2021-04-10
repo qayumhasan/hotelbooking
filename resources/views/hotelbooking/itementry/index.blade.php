@@ -1,6 +1,7 @@
-@extends('hotelbooking.master')
-@section('title', 'All Item | '.$seo->meta_title)
+@extends('inventory.master')
+@section('title', 'All Item|'.$seo->meta_title)
 @section('content')
+
  <div class="content-page">
       <div class="container-fluid">
          <div class="row">

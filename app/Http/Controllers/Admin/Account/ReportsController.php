@@ -99,28 +99,28 @@ class ReportsController extends Controller
 
     public function supllierreprtsearch(Request $request){
         if($request->no_date){
-            return "ok";
+            //return "ok";
             $validated = $request->validate([
-                'employee_name' => 'required',
+                'supplier_name' => 'required',
             ]);
             $formdate=$request->formdate;
             $to_date=$request->todate;
-            $employee_id=$request->employee_name;
+            $employee_id=$request->supplier_name;
             $searchdata=DB::table('vSupplierLedger')->where('SupplirID',$employee_id)->whereBetween('Date', [$formdate, $to_date])->get();
             $allsupplier=Supplier::where('is_deleted',0)->where('is_active',1)->select(['name','id'])->get();
             
-            return view('accounts.reports.supplierreport',compact('searchdata','allemployee','formdate','to_date'));
+            return view('accounts.reports.supplierreport',compact('searchdata','allsupplier','formdate','to_date'));
         }else{
            
             $validated = $request->validate([
-                'employee_name' => 'required',
+                'supplier_name' => 'required',
               
             ]);
-            $employee_id=$request->employee_name;
+            $employee_id=$request->supplier_name;
             $searchdata=DB::table('vSupplierLedger')->where('SupplirID',$employee_id)->get();
             $allsupplier=Supplier::where('is_deleted',0)->where('is_active',1)->select(['name','id'])->get();
             
-            return view('accounts.reports.supplierreport',compact('searchdata','allemployee'));
+            return view('accounts.reports.supplierreport',compact('searchdata','allsupplier'));
         }
        
        

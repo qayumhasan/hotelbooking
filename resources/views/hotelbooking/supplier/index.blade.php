@@ -1,4 +1,5 @@
-@extends('hotelbooking.master')
+
+@extends('layouts.admin')
 @section('title', 'All Supplier | '.$seo->meta_title)
 @section('content')
  <div class="content-page">

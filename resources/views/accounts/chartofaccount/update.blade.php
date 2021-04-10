@@ -33,11 +33,11 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    
+                                <div class="col-md-1"></div>
                                      <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Category Name: *</label>
-                                            <select name="category_name" class="form-control" id="category_name">
+                                            <select name="category_name" class="form-control" id="category_name" disabled>
                                                 <option value="">--Select--</option>
                                                 @foreach($allcategory as $cate)
                                                 <option value="{{$cate->id}}" @if($edit->category_id == $cate->id) selected @endif>{{$cate->category_name}}</option>
@@ -49,10 +49,18 @@
                                           
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">Category Code: *</label>
+                                            <input type="text" class="form-control" id="catecategory_code" value="{{$edit->category_code}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-1"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Main Category Name: </label>
-                                            <select name="maincategory_name" class="form-control" id="maincategory_name">
+                                            <select name="maincategory_name" class="form-control" id="maincategory_name" disabled>
                                             @php
                                                 $allmaincategory=App\Models\AccountMainCategory::where('is_deleted',0)->where('is_active',1)->where('category_id',$edit->category_id)->get();
                                             @endphp
@@ -68,10 +76,18 @@
                                           
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">MainCategory Code:</label>
+                                            <input type="text" class="form-control" id="maincatecategory_code"  value="{{$edit->maincategory_code}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-1"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">SubCategory Name One: </label>
-                                            <select name="subcateone" class="form-control floor" id="subcateone">
+                                            <select name="subcateone" class="form-control floor" id="subcateone" disabled>
                                              @php
                                                 $allsubcategoryone=App\Models\AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->where('maincategory_id',$edit->maincategory_id)->get();
                                             @endphp
@@ -87,13 +103,21 @@
                                           
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">SubCategory One Code:</label>
+                                            <input type="text" class="form-control" id="subcatecategory_codeone" value="{{$edit->subcategoryone_code}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-1"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">SubCategory Name Two: </label>
                                             @php
                                                 $allsubcategorytwo=App\Models\AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->where('subcategoryone_id',$edit->subcategoryone_id)->get();
                                             @endphp
-                                            <select name="subcate_two" class="form-control" id="subcate_two">
+                                            <select name="subcate_two" class="form-control" id="subcate_two" disabled>
                                                 @foreach($allsubcategorytwo as $sucatetwo)
                                                 <option value="{{$sucatetwo->id}}" @if($edit->subcategorytwo_id == $sucatetwo->id) selected @endif>{{$sucatetwo->subcategory_nametwo}}</option>
                                                 @endforeach
@@ -106,6 +130,14 @@
                                           
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">SubCategory Two Code:</label>
+                                            <input type="text" class="form-control" value="{{$edit->subcategorytwo_code}}" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-1"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Description Of Account: *</label>
@@ -116,6 +148,13 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">Description Of Account Code:</label>
+                                            <input type="text" class="form-control" value="{{$edit->code}}" disabled>
+                                        </div>
+                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>

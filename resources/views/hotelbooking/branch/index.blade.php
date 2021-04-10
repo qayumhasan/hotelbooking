@@ -1,5 +1,5 @@
-@extends('hotelbooking.master')
-@section('title', 'All Branch | '.$seo->meta_title)
+@extends('layouts.admin')
+@section('title', 'Branch| '.$seo->meta_title)
 @section('content')
  <div class="content-page">
       <div class="container-fluid">

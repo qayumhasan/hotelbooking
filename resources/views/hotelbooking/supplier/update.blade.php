@@ -1,4 +1,5 @@
-@extends('hotelbooking.master')
+
+@extends('layouts.admin')
 @section('title', 'Update Supplier | '.$seo->meta_title)
 @section('content')
 <style>

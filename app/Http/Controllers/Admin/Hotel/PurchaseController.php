@@ -397,7 +397,7 @@ class PurchaseController extends Controller
             'name' => 'required',
             'mobile' => 'required',
         ]);
-        $insert=Supplier::insert([
+        $insert=Supplier::insertGetId([
             'title'=>$request->title,
             'name'=>$request->name,
             'print_name'=>$request->print_name,
@@ -413,10 +413,18 @@ class PurchaseController extends Controller
             'email'=>$request->email,
             'gender'=>$request->gender,
             'is_active'=>$request->is_active,
+
+            'account_head'=>'Accounts Payable - Purchase',
+            'account_code'=>'212-28-0040-10132',
+
             'date'=>$request->date,
             'entry_by'=>Auth::user()->id,
             'entry_date'=>Carbon::now()->toDateTimeString(),
             'created_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+
+        $update=Supplier::where('id',$insert)->update([
+            'supplier_id'=>'supplier-'.$insert,
         ]);
 
         if($insert){

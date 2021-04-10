@@ -1,4 +1,4 @@
-@extends('hotelbooking.master')
+@extends('restaurant.chui.master')
 @section('title', 'All Room | '.$seo->meta_title)
 @section('content')
 <div class="content-page">

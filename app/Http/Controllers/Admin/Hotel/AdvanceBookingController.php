@@ -47,28 +47,30 @@ class AdvanceBookingController extends Controller
             'city' => 'required',
         ]);
 
-        $guest = new Guest();
-        $guest->title = $request->title;
-        $guest->guest_name = $request->guest_name;
-        $guest->print_name = $request->print_name;
-        $guest->gender = $request->gender;
-        $guest->city = $request->city;
-        $guest->company_name = $request->company_name;
-        $guest->mobile = $request->mobile;
-        $guest->email = $request->email;
-        $guest->entry_by = Auth::user()->id;
-  
+        $insert=Guest::insertGetId([
+            'title'=>$request->title,
+            'guest_name'=>$request->guest_name,
+            'print_name'=>$request->print_name,
+            'gender'=>$request->gender,
+            'city'=>$request->city,
+            'company_name'=>$request->company_name,
+            'mobile'=>$request->mobile,
+            'email'=>$request->email,
+            'account_head'=>"Accounts Receivable-Clients",
+            'account_head_code'=>"18-16-0024-20132",
+            'entry_by'=>Auth::user()->id,
+        ]);
+
+        $update=Guest::where('id', $insert)->update([
+            'guest_id'=>'guest-'.$insert,
+        ]);
         
-        if ($guest->save()) {
+        if($insert){
             $guests = Guest::where('is_active',1)->where('is_deleted',0)->get();
             return response()->json($guests);
         }
 
-        // if ($guest->save()) {
-        //     return response()->json([
-        //         'message' => 'Guest Store Successfully!',
-        //     ]);
-        // }
+        
     }
 
     public function advanceBookingStore(Request $request)

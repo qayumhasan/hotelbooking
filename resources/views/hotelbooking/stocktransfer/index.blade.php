@@ -1,4 +1,4 @@
-@extends('hotelbooking.master')
+@extends('inventory.master')
 @section('title', 'All StockTransfer | '.$seo->meta_title)
 @section('content')
  <div class="content-page">

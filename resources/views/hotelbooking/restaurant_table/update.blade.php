@@ -1,5 +1,5 @@
-@extends('hotelbooking.master')
-@section('title', 'Update Room | '.$seo->meta_title)
+@extends('restaurant.chui.master')
+@section('title', 'Update Table | '.$seo->meta_title)
 @section('content')
 <style>
 .form-control {

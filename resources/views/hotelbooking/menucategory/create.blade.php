@@ -1,4 +1,4 @@
-@extends('hotelbooking.master')
+@extends('inventory.master')
 @section('title', 'Create Menu Category | '.$seo->meta_title)
 @section('content')
 <style>

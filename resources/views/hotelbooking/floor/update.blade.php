@@ -1,5 +1,5 @@
-@extends('hotelbooking.master')
-@section('title', 'Update Floor | '.$seo->meta_title)
+@extends('layouts.admin')
+@section('title', 'Update Floor| '.$seo->meta_title)
 @section('content')
 <style>
 .form-control {

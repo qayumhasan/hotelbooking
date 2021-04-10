@@ -1,6 +1,7 @@
-@extends('hotelbooking.master')
-@section('title', 'update Item | '.$seo->meta_title)
+@extends('inventory.master')
+@section('title', 'Update Item|'.$seo->meta_title)
 @section('content')
+
 <style>
 .form-control {
     height: 32px;

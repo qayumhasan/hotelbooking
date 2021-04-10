@@ -1,4 +1,5 @@
-@extends('hotelbooking.master')
+@extends('layouts.admin')
+@section('title', 'Update Branch| '.$seo->meta_title)
 @section('content')
 <style>
 .form-control {

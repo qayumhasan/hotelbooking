@@ -1,4 +1,5 @@
-@extends('hotelbooking.master')
+@extends('layouts.admin')
+@section('title', 'Create Branch| '.$seo->meta_title)
 @section('content')
 <style>
 .form-control {
@@ -16,7 +17,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Add Branch</h4>
+                            <h4 class="card-title">Create Branch</h4>
                         </div>
                        <a href="{{route('admin.branch.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Branch</span></i></button></a>
                     </div>

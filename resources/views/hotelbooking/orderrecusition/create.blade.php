@@ -1,5 +1,5 @@
-@extends('hotelbooking.master')
-@section('title', 'Add Order Recusition | '.$seo->meta_title)
+@extends('inventory.master')
+@section('title', 'Create Order Recusition|'.$seo->meta_title)
 @section('content')
 <style>
 .form-control {

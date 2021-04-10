@@ -56,12 +56,15 @@ $current = date("m/d/Y");
                      <div class="col-md-3">
                            <div class="form-group">
                                  <label for="fname">Name: *</label>
-                                 <select name="employee_name" id="employee_report" class="form-control noradious">
+                                 <select name="supplier_name" id="employee_report" class="form-control noradious">
                                     <option value="">--select--</option>
                                     @foreach($allsupplier as $employee)
                                     <option value="{{$employee->id}}" >{{$employee->name}}</option>
                                     @endforeach
                                  </select>
+                                 @error('supplier_name')
+                                    <div style="color:red">{{ $message }}</div>
+                                 @enderror
                            </div>
                      </div>
                      <div class="col-md-3">
@@ -80,6 +83,7 @@ $current = date("m/d/Y");
                                        <th>Name</th>
                                        <th>Date</th>
                                        <th>TransectionID</th>
+                                       <th>TransectionAmount</th>
                                        <th>TransectionType</th>
                                        <th>Balance</th>
                                       
@@ -96,23 +100,23 @@ $current = date("m/d/Y");
                                        <td>{{++$key}}</td>
                                        <td>{{$sdata->SupplirID}}</td>
                                        <td>{{$sdata->SuplierName}}</td>
-                                       <td>--</td>
+                                       <td>{{$sdata->Date}}</td>
                                        <td>{{$sdata->TransectionID}}</td>
-                                    
-                                       <td>{{$sdata->TransectionType}}</td>
+                                       <td>{{$sdata->TranscationType}}</td>
+                                       <td>{{$sdata->TransectionAmount}}</td>
                                        <td>{{$sdata->balance}}</td>
                                  
                                  </tr>
                                   @php
                                     
                                      $totaltransectionamount=$totaltransectionamount + $sdata->TransectionAmount ;
-                                     $totalbalance = $totalbalance +( $sdata->Balance) ;
+                                     $totalbalance = $totalbalance +( $sdata->balance) ;
                                     @endphp
                                  @endforeach
                                  </tbody>
                                  <tfoot>
                                     <tr>
-                                       <td></td>
+                                  
                                        <td></td>
                                        <td></td>
                                        <td></td>
@@ -134,6 +138,7 @@ $current = date("m/d/Y");
                                        <th>Date</th>
                                        <th>TransectionID</th>
                                        <th>TransectionType</th>
+                                       <th>TransectionAmount</th>
                                        <th>Balance</th>
                                       
                                     </tr>
@@ -145,10 +150,11 @@ $current = date("m/d/Y");
                                        <td>{{++$key}}</td>
                                        <td>{{$data->SupplirID}}</td>
                                        <td>{{$data->SuplierName}}</td>
-                                       <td>--</td>
+                                       <td>{{$data->Date}}</td>
                                        <td>{{$data->TransectionID}}</td>
                                       
                                        <td>{{$data->TranscationType}}</td>
+                                       <td>{{$data->TransectionAmount}}</td>
                                        <td>{{$data->balance}}</td>
                                        
                                     </tr>
