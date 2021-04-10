@@ -84,7 +84,7 @@ $time = date("h:i");
                   <div class="header-title">
                      <h4 class="card-title">{{$row->room_type}}</h4>
                   </div>
-                  <button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-sm bg-primary"><span class="pl-1">USD {{$row->price}}</span>
+                  <button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-sm bg-primary"><span class="pl-1">Start From {!!$currency->symbol ?? ' '!!} {{$row->price}}</span>
                   </button>
                </div>
             </div>
@@ -122,7 +122,7 @@ $time = date("h:i");
                         <div class="service">
                            <ul>
                               <li class="text-color-service">Available</li>
-                              <li> {{$row->tariff}}</li>
+                              <li> {!!$currency->symbol ?? ' '!!} {{$row->tariff}}</li>
                               <li>{{$row->flortype->name ?? ' '}}</li>
                            </ul>
                         </div>
