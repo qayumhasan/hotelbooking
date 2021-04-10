@@ -101,11 +101,15 @@ $current = date("m/d/Y");
                                                             <option value="{{$sorch_ofacc->code}}">{{$sorch_ofacc->desription_of_account}}</option>
                                                             @endforeach
                                                             @foreach($allemployee as $employee)
-                                                            <option value="{{$employee->employee_id}}">{{$employee->employee_name}}</option>
+                                                            <option value="{{$employee->employee_id}}">{{$employee->employee_name}} (Employee)</option>
                                                             @endforeach
                                                             @foreach($allsuplier as $suplier)
-                                                            <option value="{{$suplier->id}}">{{$suplier->name}}</option>
+                                                            <option value="{{$suplier->supplier_id}}">{{$suplier->name}} (Supplier)</option>
                                                             @endforeach
+                                                            @foreach($allguest as $guest)
+                                                            <option value="{{$guest->guest_id}}">{{$guest->guest_name}} (Guest)</option>
+                                                            @endforeach
+                                                            
                                                         </select>
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">

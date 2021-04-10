@@ -1,4 +1,4 @@
-@extends('hotelbooking.master')
+@extends('restaurant.chui.master')
 @section('title', 'Add Restaurant Table | '.$seo->meta_title)
 @section('content')
 <style>

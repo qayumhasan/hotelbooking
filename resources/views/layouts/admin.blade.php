@@ -132,9 +132,61 @@
                             </a>
                         </li>
                         <!-- pages area end -->
+                   
+                        <li class="">
+                            <a href="#branch" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-laptop-house"></i><span>Branch</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="branch" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.branch.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.branch.index')}}">
+                                        <i class="las la-user-plus"></i><span>All Branch</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.branch.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.branch.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Branch</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                         <li class="">
+                            <a href="#floor" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-building"></i><span>Floor</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="floor" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.floor.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.floor.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Floor</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-
-
+                        <li class="">
+                            <a href="#supplier" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fab fa-product-hunt"></i><span>Supplier</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="supplier" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.supplier.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.supplier.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Supplier</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.supplier.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.supplier.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Supplier</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
                         <li class=" ">
                             <a href="#settings" class="collapsed" data-toggle="collapse" aria-expanded="false">
                                 <i class="fas fa-cogs"></i><span>Settings</span>
@@ -169,6 +221,7 @@
                                 </li>
                             </ul>
                         </li>
+                    
 
 
                     </ul>

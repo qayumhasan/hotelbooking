@@ -15,6 +15,7 @@ use App\Models\CheckBookTransection;
 use App\Models\CheckBookEntry;
 use App\Models\Employee;
 use App\Models\Supplier;
+use App\Models\Guest;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -793,9 +794,10 @@ class AccountTrasectionController extends Controller
         $account_head=ChartOfAccount::where('subcategoryone_id','!=',17)->get();
         $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
         $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allguest=Guest::where('is_deleted',0)->orderBy('id','DESC')->get();
 
 
-        return view('accounts.accounttransection.vouchertypewise.cashreceiptvoucher',compact('allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.cashreceiptvoucher',compact('allguest','allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
     
     // 

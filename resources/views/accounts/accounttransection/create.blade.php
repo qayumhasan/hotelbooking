@@ -236,7 +236,7 @@ $current = date("m/d/Y");
                                                             </div>
                                                         </div>
                                                         <div class="col-md-2 ">
-                                                            <a id="additem" class="btn-sm" style="padding: 10px;background: red; color: #151515; cursor:pointer">Add</a>
+                                                            <a id="additem" class="btn-sm" style="padding: 10px;background: #afaaaa;color: #ffffff;cursor: pointer;">Add</a>
                                                         </div>
                                                 </div>
                                             </div>

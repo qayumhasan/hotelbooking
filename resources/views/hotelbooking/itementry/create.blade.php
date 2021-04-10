@@ -1,6 +1,7 @@
-@extends('hotelbooking.master')
-@section('title', 'Add Item | '.$seo->meta_title)
+@extends('inventory.master')
+@section('title', 'Create Item|'.$seo->meta_title)
 @section('content')
+
 <style>
 .form-control {
     height: 32px;

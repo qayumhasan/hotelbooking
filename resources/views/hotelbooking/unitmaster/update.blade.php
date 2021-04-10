@@ -1,4 +1,4 @@
-@extends('hotelbooking.master')
+@extends('inventory.master')
 @section('title', 'Update Unit | '.$seo->meta_title)
 @section('content')
 <style>

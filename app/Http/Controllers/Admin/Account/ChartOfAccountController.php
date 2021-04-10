@@ -105,19 +105,44 @@ class ChartOfAccountController extends Controller
         $data=AccountMainCategory::where('is_deleted',0)->where('is_active',1)->where('category_id',$cate_id)->get();
         return response()->json($data);
     }
+
+    //get main code
+    public function getmaincatecode($cate_id){
+        //return "ok";
+        $code=AccountCategory::where('is_deleted',0)->where('is_active',1)->where('id',$cate_id)->select(['category_code'])->first();
+        return response()->json($code);
+    } 
+    
     // subcateone
     public function subcateone($maincate_id){
         $data=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->where('maincategory_id',$maincate_id)->get();
         return response()->json($data);
     }
+    
+    public function getcatemaincode($maincate_id){
+        $code=AccountMainCategory::where('is_deleted',0)->where('is_active',1)->where('id',$maincate_id)->select(['maincategory_code'])->first();
+        return response()->json($code);
+    }
+
+
     // sub cate two
     public function subcatetwo($subcateone_id){
         $data=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->where('subcategoryone_id',$subcateone_id)->get();
        
         return response()->json($data);
     }
-
-
+    public function getsubcateonecode($subcateone_id){
+        $data=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->where('id',$subcateone_id)->select(['subcategory_codeone'])->first();
+       
+        return response()->json($data);
+    }
+    
+    public function getsubcatetwocode($subcateone_id){
+        $data=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->where('id',$subcateone_id)->select(['subcategory_codetwo'])->first();
+       
+        return response()->json($data);
+    }
+    
 
     public function active($id){
         //return "ok";
@@ -228,41 +253,14 @@ class ChartOfAccountController extends Controller
     // update
     public function update(Request $request){
         $validated = $request->validate([
-            'category_name' => 'required',
             'desription_of_account' => 'required',
-            'maincategory_name' => 'required',
-            'subcateone' => 'required',
-            'subcate_two' => 'required',
         ]);
-        $category=AccountCategory::where('id',$request->category_name)->select(['category_name','category_code'])->first();
-        $maincategory=AccountMainCategory::where('id',$request->maincategory_name)->select(['maincategory_name','maincategory_code'])->first();
-        $subcategoryone=AccountSubCategoryOne::where('id',$request->subcateone)->select(['subcategory_nameone','subcategory_codeone'])->first();
-        $subcategorytwo=AccountSubCategoryTwo::where('id',$request->subcate_two)->select(['subcategory_nametwo','subcategory_codetwo'])->first();
-
         $insert=ChartOfAccount::where('id',$request->id)->update([
             'desription_of_account'=>$request->desription_of_account,
-            'category_id'=>$request->category_name,
-            'category_name'=>$category->category_name,
-            'category_code'=>$category->category_code,
-            'maincategory_id'=>$request->maincategory_name,
-            'maincategory_name'=>$maincategory->maincategory_name,
-            'maincategory_code'=>$maincategory->maincategory_code,
-            'subcategoryone_id'=>$request->subcateone,
-            'subcategoryone_name'=>$subcategoryone->subcategory_nameone,
-            'subcategoryone_code'=>$subcategoryone->subcategory_codeone,
-            'subcategorytwo_id'=>$request->subcate_two,
-            'subcategorytwo_name'=>$subcategorytwo->subcategory_nametwo,
-            'subcategorytwo_code'=>$subcategorytwo->subcategory_codetwo,
-    
             'is_active'=>$request->is_active,
             'updated_at'=>Carbon::now()->toDateString(),
             'updated_by'=>Auth::user()->id,
 
-        ]);
-        $resturl =str_pad($request->id, 4, '0', STR_PAD_LEFT);
-        ChartOfAccount::where('id',$request->id)->update([
-            'code'=>$maincategory->maincategory_code.'-'.$subcategoryone->subcategory_codeone.'-'.$subcategorytwo->subcategory_codetwo.'-'.$resturl,
-            'code_int'=>$maincategory->maincategory_code.$subcategoryone->subcategory_codeone.$subcategorytwo->subcategory_codetwo.$resturl,
         ]);
 
         if($insert) {

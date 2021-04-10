@@ -59,6 +59,156 @@
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>
+                       
+
+                         <li class="">
+                            <a href="#item-entry" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                               <i class="fas fa-fw fa-images"></i><span>Item Entry</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="item-entry" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.itementry.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.itementry.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Item</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.itementry.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.itementry.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Item</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.ordercusition.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.ordercusition.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Order Recusition</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.ordercusition.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.ordercusition.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Order Recusition</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#order_recu" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                               <i class="fas fa-fw fa-images"></i><span>Order Recusition</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="order_recu" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                         
+                                <li class="{{ request()->routeIs('admin.ordercusition.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.ordercusition.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Order Recusition</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.ordercusition.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.ordercusition.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Order Recusition</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#purchase" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-shopping-cart"></i><span>Purchase</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="purchase" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.purchase.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.purchase.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Purchase</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.purchase.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.purchase.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Purchase</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#stocktranfer" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-dolly-flatbed"></i><span>Stock Transfar</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="stocktranfer" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.stocktransfer.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stocktransfer.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Stock Transfar</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.stocktransfer.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stocktransfer.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Stock Transfar</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#purchaseorder" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="far fa-user"></i><span>Purchase Order</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="purchaseorder" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.purchaseorder.index*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.purchaseorder.index')}}">
+                                        <i class="las la-list-alt"></i><span>All Purchase Order</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.purchaseorder.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.purchaseorder.create')}}">
+                                        <i class="las la-list-alt"></i><span>Add Purchase Order</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#unitmaster" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-address-book"></i><span>Unit-Master</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="unitmaster" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.unit.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.unit.create')}}">
+                                        <i class="las la-list-alt"></i><span>All Unit-Master</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#menucategory" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                                <i class="fas fa-fw fa-sitemap"></i><span>Menu Category</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="menucategory" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.menucategory.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.menucategory.create')}}">
+                                        <i class="las la-list-alt"></i><span>All Menu Category</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#stock-center" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-layer-group"></i><span>Stock Center</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="stock-center" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.stockcenter.create*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.stockcenter.create')}}">
+                                        <i class="las la-list-alt"></i><span>All Stock Center</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="">
                             <a href="#reports" class="collapsed" data-toggle="collapse" aria-expanded="false">
                             <i class="fas fa-book-reader"></i><span>Reports</span>
@@ -93,6 +243,9 @@
                                 </li>
                             </ul>
                         </li>
+
+
+
                     </ul>
                 </nav>
                 <div class="p-3"></div>

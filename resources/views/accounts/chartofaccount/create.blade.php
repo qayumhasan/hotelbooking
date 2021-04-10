@@ -33,8 +33,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                  
-                                     <div class="col-md-6">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Category Name: *</label>
                                             <select name="category_name" class="form-control" id="category_name">
@@ -42,14 +42,21 @@
                                                 @foreach($allcategory as $cate)
                                                 <option value="{{$cate->id}}">{{$cate->category_name}}</option>
                                                 @endforeach
-                                               
                                             </select>
                                             @error('category_name')
                                                 <div style="color:red">{{ $message }}</div>
                                             @enderror
-                                          
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">Category Code: *</label>
+                                            <input type="text" class="form-control" id="catecategory_code" disabled>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-1"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">Main Category Name: </label>
@@ -66,6 +73,14 @@
                                           
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">MainCategory Code:</label>
+                                            <input type="text" class="form-control" id="maincatecategory_code"  disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-1"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">SubCategory Name One: </label>
@@ -82,13 +97,19 @@
                                           
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">SubCategory One Code:</label>
+                                            <input type="text" class="form-control" id="subcatecategory_codeone" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-1"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="fname">SubCategory Name Two: </label>
                                             <select name="subcate_two" class="form-control" id="subcate_two">
                                                 <option value="">--Select--</option>
-                                                
-                                               
                                             </select>
                                             @error('subcate_two')
                                                 <div style="color:red">{{ $message }}</div>
@@ -96,7 +117,15 @@
                                           
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="fname">SubCategory Two Code:</label>
+                                            <input type="text" class="form-control" id="subcatecategory_codetwo" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-9">
                                         <div class="form-group">
                                             <label for="fname">Description Of Account: *</label>
                                             <input type="text" class="form-control"  name="desription_of_account" placeholder="Description Of Account"/>
@@ -105,6 +134,7 @@
                                             @enderror
                                         </div>
                                     </div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -181,6 +211,28 @@
          }
 
      });
+    //  get code
+    $('select[name="category_name"]').on('change', function(){
+         var cate_id = $(this).val();
+            //alert(cate_id);
+         if(cate_id) {
+             $.ajax({
+                 url: "{{  url('/get/account/maincategory/code/') }}/"+cate_id,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+
+                        $('#catecategory_code').val(data.category_code);
+                      
+                     }
+             });
+         } else {
+           
+         }
+
+     });
+
+
     //  subacte one
     $('select[name="maincategory_name"]').on('change', function(){
          var maincate_id = $(this).val();
@@ -191,7 +243,6 @@
                  type:"GET",
                  dataType:"json",
                  success:function(data) {
-
                         $('#subcateone').empty();
                         $('#subcateone').append(' <option value="">--Select--</option>');
                         $.each(data,function(index,districtObj){
@@ -199,8 +250,23 @@
                        });
                      }
              });
-         } else {
-           
+         } 
+
+     });
+
+     $('select[name="maincategory_name"]').on('change', function(){
+         var maincate_id = $(this).val();
+            //alert(maincate_id);
+         if(maincate_id) {
+             $.ajax({
+                 url: "{{  url('/get/account/subcategoryone/code/') }}/"+maincate_id,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+
+                    $('#maincatecategory_code').val(data.maincategory_code);
+                }
+             });
          }
 
      });
@@ -224,6 +290,41 @@
              });
          } else {
            
+         }
+
+     });
+    //  
+    $('select[name="subcateone"]').on('change', function(){
+         var subcateone_id = $(this).val();
+          
+         if(subcateone_id) {
+             $.ajax({
+                 url: "{{  url('/get/account/subcategorytwo/code/') }}/"+subcateone_id,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+
+                    $('#subcatecategory_codeone').val(data.subcategory_codeone);
+                }
+             });
+         }
+
+     });
+
+    //  
+    $('select[name="subcate_two"]').on('change', function(){
+         var subcateone_id = $(this).val();
+          //alert("ok");
+         if(subcateone_id) {
+             $.ajax({
+                 url: "{{  url('/get/account/subcategorythree/code/') }}/"+subcateone_id,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+
+                    $('#subcatecategory_codetwo').val(data.subcategory_codetwo);
+                }
+             });
          }
 
      });

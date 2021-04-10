@@ -84,17 +84,26 @@ class CheckingController extends Controller
 
         $check = Guest::where('guest_name',$request->guest_name)->first();
         if(!$check){
-            $guest = new Guest();
-            $guest->guest_name = $request->guest_name;
-            $guest->title = $request->person_title;
-            $guest->print_name = $request->print_name;
-            $guest->gender = $request->gender;
-            $guest->company_name = $request->company_name;
-            $guest->city = $request->city;
-            $guest->mobile = $request->mobile;
-            $guest->email = $request->email;
-            $guest->date = Carbon::now();
-            $guest->save();
+            //return $request;
+            $insert=Guest::insertGetId([
+                'title'=>$request->person_title,
+                'guest_name'=>$request->guest_name,
+                'print_name'=>$request->print_name,
+                'gender'=>$request->gender,
+                'city'=>$request->city,
+                'company_name'=>$request->company_name,
+                'mobile'=>$request->mobile,
+                'email'=>$request->email,
+                'account_head'=>"Accounts Receivable-Clients",
+                'account_head_code'=>"18-16-0024-20132",
+                'entry_by'=>Auth::user()->id,
+                'date'=>Carbon::now()->toDateTimeString(),
+            ]);
+    
+            $update=Guest::where('id', $insert)->update([
+                'guest_id'=>'guest-'.$insert,
+            ]);
+            
         }else{
 
             $notification = array(

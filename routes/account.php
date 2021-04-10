@@ -49,8 +49,16 @@ Route::get('admin/accounts/subcategorytwo/delete/{id}', [AccountSubCategoryContr
 Route::get('admin/chartofaccount/create', [ChartOfAccountController::class, 'create'])->name('admin.chartofaccount.create');
 Route::post('admin/chartofaccount/create', [ChartOfAccountController::class, 'store'])->name('admin.chartofaccount.create');
 Route::get('/get/account/maincategory/all/{cate_id}', [ChartOfAccountController::class, 'maincate']);
+// cate code get
+Route::get('/get/account/maincategory/code/{cate_id}', [ChartOfAccountController::class, 'getmaincatecode']);
+// cate code get end
 Route::get('/get/account/subcategoryone/all/{maincate_id}', [ChartOfAccountController::class, 'subcateone']);
+Route::get('/get/account/subcategoryone/code/{maincate_id}', [ChartOfAccountController::class, 'getcatemaincode']);
+
 Route::get('/get/account/subcategorytwo/all/{subcateone_id}', [ChartOfAccountController::class, 'subcatetwo']);
+Route::get('/get/account/subcategorytwo/code/{subcateone_id}', [ChartOfAccountController::class, 'getsubcateonecode']);
+Route::get('/get/account/subcategorythree/code/{subcateone_id}', [ChartOfAccountController::class, 'getsubcatetwocode']);
+
 Route::get('admin/chartofaccount/index', [ChartOfAccountController::class, 'index'])->name('admin.chartofaccount.index');
 
 Route::get('admin/chartofaccount/active/{id}', [ChartOfAccountController::class, 'active']);

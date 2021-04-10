@@ -33,7 +33,7 @@ class SupplierController extends Controller
             'name' => 'required',
             'mobile' => 'required',
         ]);
-        $insert=Supplier::insert([
+        $insert=Supplier::insertGetId([
             'title'=>$request->title,
             'name'=>$request->name,
             'print_name'=>$request->print_name,
@@ -50,13 +50,16 @@ class SupplierController extends Controller
             'gender'=>$request->gender,
 
             'account_head'=>$request->account_head,
-            'account_head_code'=>$request->account_head_code,
+            'account_code'=>$request->account_head_code,
 
             'is_active'=>$request->is_active,
             'date'=>$request->date,
             'entry_by'=>Auth::user()->id,
             'entry_date'=>Carbon::now()->toDateTimeString(),
             'created_at'=>Carbon::now()->toDateTimeString(),
+        ]);
+        $update=Supplier::where('id',$insert)->update([
+            'supplier_id'=>'supplier-'.$insert,
         ]);
 
         if($insert){

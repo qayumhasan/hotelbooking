@@ -62,6 +62,9 @@ $current = date("m/d/Y");
                                     <option value="{{$employee->employee_id}}" >{{$employee->employee_name}}</option>
                                     @endforeach
                                  </select>
+                                 @error('employee_name')
+                                    <div style="color:red">{{ $message }}</div>
+                                 @enderror
                            </div>
                      </div>
                      <div class="col-md-3">
