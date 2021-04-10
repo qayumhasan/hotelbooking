@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EmailController;
+use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\BulkSmsController;
 use App\Http\Controllers\Admin\Hotel\HotelManageController;
 use App\Http\Controllers\Admin\Hotel\BranchController;
@@ -754,6 +755,15 @@ Route::middleware(['admin'])->prefix(md5('admin/post/to/room'))->group(function(
     Route::get('/list',[CollectionReportController::class,'postToRoomList'])->name('admin.post.to.room.report');
     Route::get('/invoice/{id}',[CollectionReportController::class,'postToRoomInvoice'])->name('admin.post.to.room.invoice.print');
     Route::post('/post/to/room',[CollectionReportController::class,'postToRoomAjaxList'])->name('admin.post.to.room.ajax.report');
+});
+
+
+Route::middleware((['admin']))->prefix(md5('admin/currency'))->group(function(){
+   Route::get('/',[CurrencyController::class,'index'])->name('currency');
+   Route::post('/store',[CurrencyController::class,'store'])->name('admin.currency.store');
+   Route::get('/status/{id}',[CurrencyController::class,'status'])->name('admin.currency.status');
+   Route::post('/update',[CurrencyController::class,'update'])->name('admin.currency.update');
+   Route::get('/delete/{id}',[CurrencyController::class,'delete'])->name('admin.currency.delete');
 });
 
 

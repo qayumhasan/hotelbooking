@@ -85,7 +85,7 @@
                             @if($permit->active('employee'))
                         <li class=" ">
                             <a href="#employee" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                            <i class="fas fa-users-cog"></i><span>Employee</span>
+                                <i class="fas fa-users-cog"></i><span>Employee</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -110,7 +110,7 @@
 
                         <li class=" ">
                             <a href="{{route('admin.department.list')}}">
-                            <i class="fa fa-university" aria-hidden="true"></i><span>Department</span>
+                                <i class="fa fa-university" aria-hidden="true"></i><span>Department</span>
                             </a>
                         </li>
                         <!-- Department end from here -->
@@ -120,7 +120,7 @@
 
                         <li class=" ">
                             <a href="{{route('admin.addon.manager')}}">
-                            <i class="fas fa-puzzle-piece"></i><span>Addon Manager</span>
+                                <i class="fas fa-puzzle-piece"></i><span>Addon Manager</span>
                             </a>
                         </li>
                         <!-- addon manager end from here -->
@@ -128,10 +128,19 @@
                         <!-- pages area start -->
                         <li class=" ">
                             <a href="{{route('page')}}">
-                            <i class="fas fa-file"></i><span>Add Pages</span>
+                                <i class="fas fa-file"></i><span>Add Pages</span>
                             </a>
                         </li>
                         <!-- pages area end -->
+
+
+                        <!-- Currency area start -->
+                        <li class=" ">
+                            <a href="{{route('currency')}}">
+                            <i class="far fa-money-bill-alt"></i><span>Add Currency</span>
+                            </a>
+                        </li>
+                        <!-- Currency area end -->
 
 
 
@@ -173,7 +182,7 @@
 
                     </ul>
                 </nav>
-             
+
                 <div class="p-3"></div>
             </div>
         </div>
@@ -433,7 +442,7 @@
         @yield('content')
 
         <!-- Media manager model start from here -->
-        
+
         <div class="modal fade" id="imageuploadmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
@@ -448,14 +457,14 @@
 
                     </div>
 
-                   
+
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary uploadbtn" data-toggle="modal" data-target="#imageuploadbtn" data-whatever="@mdo"><i class="fa fa-upload"></i>Upload Image</button>
                         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                         <button type="button" class="btn btn-primary" id="usefile" data-dismiss="modal">Use File</button>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -474,20 +483,20 @@
                     </div>
                     <div class="modal-body">
                         <form action="{{route('admin.media.file.upload')}}" id="store_media_form" method="post" enctype="multipart/form-data">
-                        @csrf
+                            @csrf
                             <div class="custom-file mb-3">
                                 <input type="file" class="custom-file-input" id="customFile" name="image">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                 <small class="header_error text-danger"></small>
                             </div>
                             <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Upload Image</button>
-                    </div>
-                            
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Upload Image</button>
+                            </div>
+
                         </form>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -615,7 +624,7 @@
         });
     </script>
 
-<script>
+    <script>
         window.onload = function() {
             $.ajaxSetup({
                 headers: {
@@ -625,118 +634,117 @@
             $.ajax({
                 type: 'get',
                 url: "{{ route('admin.media.file.show') }}",
-                
+
                 success: function(data) {
 
-                  
+
                     $('#showImage').html(data);
-                    
+
 
                 }
             });
         };
     </script>
 
-<script>
-        $(document).ready(function () {
+    <script>
+        $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $(document).on('submit', '#store_media_form', function(e){
+            $(document).on('submit', '#store_media_form', function(e) {
                 e.preventDefault();
-                
+
                 var url = $(this).attr('action');
                 var type = $(this).attr('method');
                 var request = $(this).serialize();
                 console.log(request);
                 $.ajax({
-                    url:url,
-                    type:type,
-                    data:new FormData(this),
+                    url: url,
+                    type: type,
+                    data: new FormData(this),
                     contentType: false,
                     cache: false,
                     processData: false,
-                    success:function(data){
+                    success: function(data) {
                         //log(data);
                         $('#showImage').html(data);
                         $('#imageuploadbtn').modal('hide');
-                         setInterval(function() {
-                        // window.location = "{{ url()->current() }}";
-                    }, 700);
-                        
+                        setInterval(function() {
+                            // window.location = "{{ url()->current() }}";
+                        }, 700);
+
                     },
-                    error:function(err){
-                       
-                        
-                        if(err.responseJSON.errors.image){
+                    error: function(err) {
+
+
+                        if (err.responseJSON.errors.image) {
                             $('.header_error').html('The image field is required');
 
                         }
-                        
+
                     }
                 });
             });
         });
-    </script> 
+    </script>
 
 
-<!-- pagination area start -->
+    <!-- pagination area start -->
 
-<script>
-        $(document).ready(function () {
+    <script>
+        $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $(document).on('click', '.pagination-item', function(e){
+            $(document).on('click', '.pagination-item', function(e) {
                 e.preventDefault();
-                
+
                 var url = $(this).attr('href');
-                
+
                 console.log(url);
                 $.ajax({
-                    url:url,
-                    type:"get",
-                    success:function(data){
+                    url: url,
+                    type: "get",
+                    success: function(data) {
                         //log(data);
                         $('#showImage').html(data);
                         $('#imageuploadbtn').modal('hide');
-                        
-                        
+
+
                     },
-                  
+
                 });
             });
         });
-    </script> 
+    </script>
 
-    
-<script>
-    
-    function deleteImg(el){
-        $(el).closest('.img_item').remove();
-        // console.dir($(el)[0].children[2].style.display="block");
-        var id =$(el).attr("data-id");
-        $.ajaxSetup({
+
+    <script>
+        function deleteImg(el) {
+            $(el).closest('.img_item').remove();
+            // console.dir($(el)[0].children[2].style.display="block");
+            var id = $(el).attr("data-id");
+            $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
                 type: 'GET',
-                url: "{{ url('admin/media/manager/delete') }}/" +id,
-				
+                url: "{{ url('admin/media/manager/delete') }}/" + id,
+
                 success: function(data) {
                     $('#showImage').html(data);
                 }
             });
-        
-    }        
-</script>
-<script src="{{asset('public/backend')}}/assets/js/datepiker.js"></script>
+
+        }
+    </script>
+    <script src="{{asset('public/backend')}}/assets/js/datepiker.js"></script>
     <script>
         $('.datepicker').datepicker();
     </script>
