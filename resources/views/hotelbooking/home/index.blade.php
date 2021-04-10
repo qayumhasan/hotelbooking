@@ -63,7 +63,7 @@ $time = date("h:i");
    }
 
    .bg-menu {
-      background: #E7E9E6;
+      
       color: #1D627E;
       font-weight: bold;
       cursor: pointer;
