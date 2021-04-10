@@ -53,7 +53,7 @@ $time = date("h:i");
                                             <td>{{$row->checkout->checkout_date ?? ''}}</td>
                                             <td>{{$row->guest_name}}</td>
                                             <td>{{$row->city}}</td>
-                                            <td>{{$row->company}}</td>
+                                            <td>{{$row->company_name}}</td>
                                             <td>{{$row->room_no}} ({{$row->roomtype->room_type ?? ''}})</td>
                                             <td>{{$row->additional_room_day ?? ''}}</td>
                                         </tr>

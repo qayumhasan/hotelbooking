@@ -223,6 +223,7 @@ $time = date("h:i");
 
     document.querySelector('#add_to_grid').addEventListener('click', function(e) {
 
+        
         function getAllValue() {
             return {
                 itemname: items.element.itemname.selectedOptions[0].innerHTML,
@@ -253,7 +254,16 @@ $time = date("h:i");
 
             items.element.additem.insertAdjacentHTML('afterend', newhtml);
             $('#itemalert').hide();
+
+
+            
+            
+            $('#item_name').val('');
+            $('#item_qty').val('');
+            $('#item_unit').val('');
+             
         }
+
 
 
 

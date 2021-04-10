@@ -39,6 +39,7 @@ class ArrivalDepartureReportController extends Controller
         $checkouts = Checkout::with('checkin')->where('is_active',1)->get();
         return view('hotelbooking.arrival_departture_report.pending_invoice_report',compact('checkouts'));
     }
+    
 
     public function pendingInvoiceReportCreate($booking_no)
     {
