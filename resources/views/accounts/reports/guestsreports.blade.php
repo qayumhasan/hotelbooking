@@ -24,13 +24,13 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Employee Transection Reports</h4>
+                        <h4 class="card-title">Guest Transection Reports</h4>
                      </div>
                      <span class="float-right mr-2">
                        
                      </span>
                   </div>
-                  <form action="{{route('admin.account.reports.guest')}}" method="POST">
+                  <form action="{{route('admin.account.reports.guests')}}" method="POST">
                   <div class="card-header d-flex justify-content-center row">
                      
                         @csrf
@@ -58,8 +58,8 @@ $current = date("m/d/Y");
                                  <label for="fname">Name: *</label>
                                  <select name="employee_name" id="employee_report" class="form-control noradious">
                                     <option value="">--select--</option>
-                                    @foreach($allemployee as $employee)
-                                    <option value="{{$employee->employee_id}}" >{{$employee->employee_name}}</option>
+                                    @foreach($allguest as $employee)
+                                    <option value="{{$employee->guest_id}}" >{{$employee->guest_name}}</option>
                                     @endforeach
                                  </select>
                                  @error('employee_name')
@@ -84,7 +84,6 @@ $current = date("m/d/Y");
                                        <th>TransectionID</th>
                                        <th>TransectionType</th>
                                        <th>Date</th>
-                                       <th>OpeningBalance</th>
                                        <th>TransectionAmount</th>
                                        <th>Balance</th>
                                       
@@ -101,31 +100,26 @@ $current = date("m/d/Y");
                                  @foreach($searchdata as $key => $sdata)
                                  <tr>
                                        <td>{{++$key}}</td>
-                                       <td>{{$sdata->EmployeeID}}</td>
-                                       <td>{{$sdata->EmployeeName}}</td>
-                                       <td>{{$sdata->TransecrionID}}</td>
-                                    
+                                       <td>{{$sdata->GuestID}}</td>
+                                       <td>{{$sdata->GuestName}}</td>
+                                       <td>{{$sdata->TransectionID}}</td>
                                        <td>{{$sdata->TransectionType}}</td>
                                        <td>{{$sdata->Date}}</td>
-                                       <td>{{$sdata->OpeningBalance}}</td>
                                        <td>{{$sdata->TransectionAmount}}</td>
-                                       
                                        @php
-                                       
                                           $minibalance = $minibalance + ($sdata->Balance);
                                        @endphp
                                        <td>{{ $minibalance }}</td>
                                  
                                  </tr>
                                   @php
-                                    
                                      $totaltransectionamount=$totaltransectionamount + $sdata->TransectionAmount ;
                                      $totalbalance = $totalbalance +( $sdata->Balance) ;
                                     @endphp
                                  @endforeach
                                  </tbody>
                                  <tfoot>
-                                    <tr>
+                                    <tr>   
                                        <td></td>
                                        <td></td>
                                        <td></td>
@@ -133,7 +127,6 @@ $current = date("m/d/Y");
                                        <td></td>
                                        <td></td>
                                        <td></td>
-                                       <td>Total: {{ $totaltransectionamount }}</td>
                                        <td>Total: {{ $totalbalance }}</td>
                                     </tr>
                                  </tfoot>
@@ -148,7 +141,6 @@ $current = date("m/d/Y");
                                        <th>TransectionID</th>
                                        <th>TransectionType</th>
                                        <th>Date</th>
-                                       <th>OpeningBalance</th>
                                        <th>TransectionAmount</th>
                                        <th>Balance</th>
                                       
@@ -158,18 +150,13 @@ $current = date("m/d/Y");
                               @foreach($alldata as $key => $data)
                               <tr>
                                  <td>{{++$key}}</td>
-                                 <td>{{$data->EmployeeID}}</td>
-                                 <td>{{$data->EmployeeName}}</td>
-                                 <td>{{$data->TransecrionID}}</td>
-                               
+                                 <td>{{$data->GuestID}}</td>
+                                 <td>{{$data->GuestName}}</td>
+                                 <td>{{$data->TransectionID}}</td>
                                  <td>{{$data->TransectionType}}</td>
                                  <td>{{$data->Date}}</td>
-                                 <td>{{$data->OpeningBalance}}</td>
                                  <td>{{$data->TransectionAmount}}</td>
-
-                                 
                                  <td>{{$data->Balance }}</td>
-                                 
                               </tr>
                               @endforeach
                                  </tbody>

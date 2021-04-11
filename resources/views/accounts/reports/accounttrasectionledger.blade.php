@@ -24,13 +24,13 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Employee Transection Reports</h4>
+                        <h4 class="card-title">Guest Transection Reports</h4>
                      </div>
                      <span class="float-right mr-2">
                        
                      </span>
                   </div>
-                  <form action="{{route('admin.account.reports.guest')}}" method="POST">
+                  <form action="{{route('admin.account.reports.accounttransection')}}" method="POST">
                   <div class="card-header d-flex justify-content-center row">
                      
                         @csrf
@@ -55,11 +55,11 @@ $current = date("m/d/Y");
                     
                      <div class="col-md-3">
                            <div class="form-group">
-                                 <label for="fname">Name: *</label>
+                                 <label for="fname">Chart Of Account: *</label>
                                  <select name="employee_name" id="employee_report" class="form-control noradious">
                                     <option value="">--select--</option>
-                                    @foreach($allemployee as $employee)
-                                    <option value="{{$employee->employee_id}}" >{{$employee->employee_name}}</option>
+                                    @foreach($allledger as $ledger)
+                                    <option value="{{$ledger->code}}" >{{$ledger->desription_of_account}}</option>
                                     @endforeach
                                  </select>
                                  @error('employee_name')
@@ -78,102 +78,93 @@ $current = date("m/d/Y");
                               <table  class="table table-striped table-bordered" >
                                  <thead class="text-center">
                                     <tr>
-                                       <th>#</th>
-                                       <th>ID</th>
-                                       <th>Name</th>
-                                       <th>TransectionID</th>
-                                       <th>TransectionType</th>
+                                    <th>#</th>
+                                       <th>Code</th>
+                                       <th>Head Name</th>
+                                       <th>Category</th>
+                                       <th>MainCategory</th>
+                                      
                                        <th>Date</th>
-                                       <th>OpeningBalance</th>
-                                       <th>TransectionAmount</th>
-                                       <th>Balance</th>
+                                       <th>Credit Amount</th>
+                                       <th>Davit Amount</th>
                                       
                                     </tr>
                                  </thead>
                                  <tbody class="text-center">
                                  @php
                                  
-                                    $totaltransectionamount=0;
-                                    $totalbalance=0;
-                                    $minibalance=0;
+                                    $cr_amont=0;
+                                    $dr_amount=0;
+                                   
                                    
                                  @endphp
                                  @foreach($searchdata as $key => $sdata)
                                  <tr>
-                                       <td>{{++$key}}</td>
-                                       <td>{{$sdata->EmployeeID}}</td>
-                                       <td>{{$sdata->EmployeeName}}</td>
-                                       <td>{{$sdata->TransecrionID}}</td>
-                                    
-                                       <td>{{$sdata->TransectionType}}</td>
-                                       <td>{{$sdata->Date}}</td>
-                                       <td>{{$sdata->OpeningBalance}}</td>
-                                       <td>{{$sdata->TransectionAmount}}</td>
-                                       
-                                       @php
-                                       
-                                          $minibalance = $minibalance + ($sdata->Balance);
-                                       @endphp
-                                       <td>{{ $minibalance }}</td>
+
+                                    <td>{{++$key}}</td>
+                                    <td>{{$sdata->AccountHeadCode}}</td>
+                                    <td>{{$sdata->AccountTransection}}</td>
+                                    <td>{{$sdata->CategoryName}}</td>
+                                    <td>{{$sdata->MainCategoryName}}</td>
+                                   
+                                    <td>{{$sdata->Date}}</td>
+                                    <td>{{$sdata->CreditAmount}}</td>
+                                    <td>{{$sdata->DavitAmount }}</td>
                                  
                                  </tr>
-                                  @php
-                                    
-                                     $totaltransectionamount=$totaltransectionamount + $sdata->TransectionAmount ;
-                                     $totalbalance = $totalbalance +( $sdata->Balance) ;
-                                    @endphp
+                                 @php
+                                 $cr_amont= $cr_amont +$sdata->CreditAmount;
+                                 $dr_amount= $dr_amount +$sdata->DavitAmount;
+                                 @endphp
                                  @endforeach
                                  </tbody>
                                  <tfoot>
-                                    <tr>
+                                    <tr>   
+                                       
                                        <td></td>
                                        <td></td>
                                        <td></td>
                                        <td></td>
                                        <td></td>
                                        <td></td>
-                                       <td></td>
-                                       <td>Total: {{ $totaltransectionamount }}</td>
-                                       <td>Total: {{ $totalbalance }}</td>
+                                       <td>Cr-Total: {{$cr_amont}}</td>
+                                       <td>Dr-Total: {{$dr_amount}}</td>
                                     </tr>
                                  </tfoot>
                                </table>
                               @else
-                              <table id="datatable" class="table data-table table-striped table-bordered" >
-                                 <thead class="text-center">
-                                    <tr>
-                                       <th>#</th>
-                                       <th>ID</th>
-                                       <th>Name</th>
-                                       <th>TransectionID</th>
-                                       <th>TransectionType</th>
-                                       <th>Date</th>
-                                       <th>OpeningBalance</th>
-                                       <th>TransectionAmount</th>
-                                       <th>Balance</th>
-                                      
-                                    </tr>
-                                 </thead>
-                                 <tbody class="text-center">
-                              @foreach($alldata as $key => $data)
-                              <tr>
-                                 <td>{{++$key}}</td>
-                                 <td>{{$data->EmployeeID}}</td>
-                                 <td>{{$data->EmployeeName}}</td>
-                                 <td>{{$data->TransecrionID}}</td>
-                               
-                                 <td>{{$data->TransectionType}}</td>
-                                 <td>{{$data->Date}}</td>
-                                 <td>{{$data->OpeningBalance}}</td>
-                                 <td>{{$data->TransectionAmount}}</td>
-
-                                 
-                                 <td>{{$data->Balance }}</td>
-                                 
-                              </tr>
-                              @endforeach
-                                 </tbody>
-                               </table>
+                                 <table id="datatable" class="table data-table table-striped table-bordered" >
+                                    <thead class="text-center">
+                                       <tr>
+                                          <th>#</th>
+                                          <th>Code</th>
+                                          <th>Head Name</th>
+                                          <th>Category</th>
+                                          <th>MainCategory</th>
+                                         
+                                          <th>Date</th>
+                                          <th>Credit Amount</th>
+                                          <th>Davit Amount</th>
+                                          
+                                       
+                                       </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                 @foreach($alldata as $key => $data)
+                                 <tr>
+                                    <td>{{++$key}}</td>
+                                    <td>{{$data->AccountHeadCode}}</td>
+                                    <td>{{$data->AccountTransection}}</td>
+                                    <td>{{$data->CategoryName}}</td>
+                                    <td>{{$data->MainCategoryName}}</td>
+                                   
+                                    <td>{{$data->Date}}</td>
+                                    <td>{{$data->CreditAmount}}</td>
+                                    <td>{{$data->DavitAmount }}</td>
+                                 </tr>
+                                 @endforeach
+                                    </tbody>
+                                 </table>
 
                               @endif
                           

@@ -9,11 +9,11 @@ class Checkin extends Model
 {
     use HasFactory;
 
-    public function getGuestNameAttribute()
-    {
+    // public function getGuestNameAttribute()
+    // {
 
-        return $this->attributes['title'] . " " . $this->attributes['guest_name'];
-    }
+    //     return $this->attributes['title'] . " " . $this->attributes['guest_name'];
+    // }
 
     public function user()
     {

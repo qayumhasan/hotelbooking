@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Supplier;
+use App\Models\Guest;
 use DB;
 
 class ReportsController extends Controller
@@ -125,6 +126,83 @@ class ReportsController extends Controller
        
        
     } 
+
+
+
+    //Guest Report
+    public function guestreports(){
+
+        $allguest=Guest::orderBy('id','DESC')->get();
+        $alldata=DB::table('vGuestLedger')->get();
+
+        return view('accounts.reports.guestsreports',compact('allguest','alldata'));
+    } 
+
+    //search
+    public function guestreportssearch(Request $request){
+        if($request->no_date){
+            $validated = $request->validate([
+                'employee_name' => 'required',
+            ]);
+            $formdate=$request->formdate;
+            $to_date=$request->todate;
+            $employee_id=$request->employee_name;
+            $searchdata=DB::table('vGuestLedger')->where('GuestID',$employee_id)->whereBetween('Date', [$formdate, $to_date])->get();
+            $allguest=Guest::orderBy('id','DESC')->get();
+            
+            return view('accounts.reports.supplierreport',compact('searchdata','allguest','formdate','to_date'));
+        }else{
+           
+            $validated = $request->validate([
+                'employee_name' => 'required',
+              
+            ]);
+            $employee_id=$request->employee_name;
+            $searchdata=DB::table('vGuestLedger')->where('GuestID',$employee_id)->get();
+           
+            $allguest=Guest::orderBy('id','DESC')->get();
+            
+            return view('accounts.reports.guestsreports',compact('searchdata','allguest'));
+        }
+    }
+
+    // 
+    public function accounttrasectionledger(){
+        $allledger=DB::table('vchart_of_accounts')->select(['code','desription_of_account'])->get();
+        $alldata=DB::table('vAccountTransectionLedger')->get();
+        return view('accounts.reports.accounttrasectionledger',compact('allledger','alldata'));
+    }
+
+    // search
+    public function accounttrasectionledgersearch(Request $request){
+
+        if($request->no_date){
+            $validated = $request->validate([
+                'employee_name' => 'required',
+            ]);
+            $formdate=$request->formdate;
+            $to_date=$request->todate;
+            $employee_id=$request->employee_name;
+            $searchdata=DB::table('vAccountTransectionLedger')->where('AccountHeadCode',$employee_id)->whereBetween('Date', [$formdate, $to_date])->get();
+            $allledger=DB::table('vchart_of_accounts')->select(['code','desription_of_account'])->get();
+            
+            return view('accounts.reports.accounttrasectionledger',compact('searchdata','allledger','formdate','to_date'));
+        }else{
+           
+            $validated = $request->validate([
+                'employee_name' => 'required',
+              
+            ]);
+            $employee_id=$request->employee_name;
+            $searchdata=DB::table('vAccountTransectionLedger')->where('AccountHeadCode',$employee_id)->get();
+           
+            $allledger=DB::table('vchart_of_accounts')->select(['code','desription_of_account'])->get();
+            
+            return view('accounts.reports.accounttrasectionledger',compact('searchdata','allledger'));
+        }
+
+    }
+
 
 
   

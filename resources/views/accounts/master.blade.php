@@ -244,6 +244,19 @@
                                         <i class="las la-list-alt"></i><span>Supplier Reports</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.account.reports.guests*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.guests')}}">
+                                        <i class="las la-list-alt"></i><span>Guest Reports</span>
+                                    </a>
+                                </li>
+
+                                <li class="{{ request()->routeIs('admin.account.reports.accounttransection*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.accounttransection')}}">
+                                        <i class="las la-list-alt"></i><span>Account Reports</span>
+                                    </a>
+                                </li>
+
+                                
                                 
                             </ul>
                         </li>

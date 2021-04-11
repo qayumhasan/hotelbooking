@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 use Image;
 use App\Models\Admin;
 use App\Models\Employee;
+use App\Models\Guest;
+use App\Models\Room;
+use App\Models\Supplier;
 use Auth;
 
 class AdminController extends Controller
@@ -17,7 +20,16 @@ class AdminController extends Controller
     	$this->middleware('admin');
     }
     public function index(){
-    	return view('backend.home.index');
+		$availableRoom=Room::where('room_status',1)->where('is_deleted',0)->where('is_active',1)->count();
+		$houseKippingRoom=Room::where('room_status',2)->where('is_deleted',0)->where('is_active',1)->count();
+		$bookingRoom=Room::where('room_status',3)->where('is_deleted',0)->where('is_active',1)->count();
+		$maintanceRoom=Room::where('room_status',4)->where('is_deleted',0)->where('is_active',1)->count();
+		$employee=Employee::where('status',1)->count();
+		$guest=Guest::where('is_active',1)->where('is_deleted',0)->count();
+		$supplier=Supplier::where('is_active',1)->where('is_deleted',0)->count();
+		$user=Admin::where('status',1)->where('is_deleted',0)->count();
+
+    	return view('backend.home.index',compact('availableRoom','houseKippingRoom','bookingRoom','maintanceRoom','employee','guest','supplier','user'));
     }
     // create register
     public function create(){
