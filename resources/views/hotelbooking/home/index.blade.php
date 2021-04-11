@@ -192,6 +192,8 @@ $time = date("h:i");
                               <li>{{$row->checkin['company_name'] ?? ''}}</li>
                            </ul>
                         </div>
+
+                        
                      </div>
                      <div class="col-6">
                         <ul class="list-group pt-1 bg-menu">

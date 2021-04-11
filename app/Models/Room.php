@@ -48,6 +48,11 @@ class Room extends Model
         return $this->hasOne('App\Models\HouseKeepingGuestEntry','room_id','id');
     }
 
+    public function guestentrycrosscheck()
+    {
+        return $this->hasOne('App\Models\HouseKeepingGuestEntry','room_id','id')->where('is_active',1);
+    }
+
     public function checkindata()
     {
         return $this->hasMany('App\Models\Checkin','room_id','id');

@@ -60,9 +60,9 @@
     </div>
     <div class="col-md-12 text-right mb=-2">
         <hr>
-        <p style="font-size:11px">Net Amount: {{$orderhead->total_amount}}</p>
+        <p style="font-size:11px">Net Amount:{!!$currency->symbol ?? ' '!!} {{$orderhead->total_amount}}</p>
         <hr>
-        <p style="font-size:11px">Gross Amount:{{$orderhead->gross_amount}} </p>
+        <p style="font-size:11px">Gross Amount:{!!$currency->symbol ?? ' '!!} {{$orderhead->gross_amount}} </p>
     </div>
 
     <div class="col-md-6 text-left">

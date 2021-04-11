@@ -190,13 +190,7 @@
                         
 
 
-                        <!-- Currency area start -->
-                        <li class=" ">
-                            <a href="{{route('currency')}}">
-                            <i class="far fa-money-bill-alt"></i><span>Add Currency</span>
-                            </a>
-                        </li>
-                        <!-- Currency area end -->
+              
 
 
 
@@ -232,6 +226,14 @@
                                         <i class="las la-id-card"></i><span>Bulk Sms Send</span>
                                     </a>
                                 </li>
+
+                                          <!-- Currency area start -->
+                        <li class=" ">
+                            <a href="{{route('currency')}}">
+                            <i class="far fa-money-bill-alt"></i><span>Currency</span>
+                            </a>
+                        </li>
+                        <!-- Currency area end -->
                             </ul>
                         </li>
                     
