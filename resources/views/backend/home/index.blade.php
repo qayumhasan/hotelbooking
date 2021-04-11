@@ -9,187 +9,127 @@
                         <div class="navbar-breadcrumb">
                             <h4 class="mb-0">Welcome To Dashboard</h4>
                         </div>
-                        <div class="">
-                            <a class="button btn btn-skyblue button-icon" target="_blank" href="#">Facebook<i
-                                    class="ml-2 ri-arrow-down-s-fill"></i></a>
-                            <a class="button btn btn-primary ml-2 button-icon rounded-small" target="_blank" href="#"><i
-                                    class="ri-add-line m-0"></i></a>
-                           
-                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="card card-block card-stretch card-height">
-                    <div class="card-header border-none">
-                        <div class="header-title">
-                            <h4 class="card-title">Lead Breakdown (Today)</h4>
+                <!--  -->
+                <div class="col-md-6 col-lg-3">
+                  <div class="card card-block card-stretch card-height bg-success rounded">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <div class="icon iq-icon-box rounded iq-bg-success rounded shadow" data-wow-delay="0.2s"> <i class="fa fa-bed" aria-hidden="true"></i>
+                           </div>
+                           <div class="iq-text">
+                              <h6 class="text-white">Available Room</h6>
+                              <h3 class="text-white">{{$availableRoom}}</h3>
+                           </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="layout-1-chart-01"></div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="row">
-                    <div class="col-md-4">
-                        <div class="card card-block card-stretch card-height">
-                            <div class="card-body">
-                                <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                    <h3 class="text-danger">17%</h3>
-                                    <div class="bg-danger icon iq-icon-box-2 mr-2 rounded">
-                                        <i class="lar la-hand-pointer"></i>
-                                    </div>
-                                </div>
-                                <h4>Clicked 7,3672</h4>
-                                <div class="mt-1">
-                                <p class="mb-0">Unclicked 352,735</p>
-                                </div>
-                                <div class="iq-progress-bar mt-3">
-                                <span class="bg-danger" data-percent="55"></span>
-                                </div>
-                            </div>
+                     </div>
+                  </div>
+               </div>
+              
+                <div class="col-md-6 col-lg-3">
+                  <div class="card card-block card-stretch card-height bg-primary rounded">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <div class="icon iq-icon-box rounded iq-bg-primary rounded shadow" data-wow-delay="0.2s"> <i class="fa fa-bed" aria-hidden="true"></i>
+                           </div>
+                           <div class="iq-text">
+                              <h6 class="text-white">Housekeeping Room</h6>
+                              <h3 class="text-white">{{$houseKippingRoom}}</h3>
+                           </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-block card-stretch card-height">
-                            <div class="card-body">
-                                <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-primary">67%</h3>
-                                <div class="bg-primary icon iq-icon-box-2 mr-2 rounded">
-                                    <i class="lar la-folder-open"></i>
-                                </div>
-                                </div>
-                                <h4>Opened 8,7678</h4>
-                                <div class="mt-1">
-                                <p class="mb-0">Unopened 126,035</p>
-                                </div>
-                                <div class="iq-progress-bar mt-3">
-                                <span class="bg-primary" data-percent="67"></span>
-                                </div>
-                            </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6 col-lg-3">
+                  <div class="card card-block card-stretch card-height bg-warning rounded">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <div class="icon iq-icon-box rounded iq-bg-warning rounded shadow" data-wow-delay="0.2s"> <i class="fa fa-bed" aria-hidden="true"></i>
+                           </div>
+                           <div class="iq-text">
+                              <h6 class="text-white">Maintenance Room</h6>
+                              <h3 class="text-white">{{$maintanceRoom}}</h3>
+                           </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-block card-stretch card-height">
-                            <div class="card-body">
-                                <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-orange">42%</h3>
-                                <div class="bg-orange icon iq-icon-box-2 mr-2 rounded">
-                                    <i class="las la-desktop"></i>
-                                </div>
-                                </div>
-                                <h4>Subscribes 8,376</h4>
-                                <div class="mt-1">
-                                <p class="mb-0">Unclicked 352,735</p>
-                                </div>
-                                <div class="iq-progress-bar mt-3">
-                                <span class="bg-orange" data-percent="55" ></span>
-                                </div>
-                            </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6 col-lg-3">
+                  <div class="card card-block card-stretch card-height bg-danger rounded">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <div class="icon iq-icon-box rounded iq-bg-danger rounded shadow" data-wow-delay="0.2s"><i class="fa fa-bed" aria-hidden="true"></i>
+                           </div>
+                           <div class="iq-text">
+                              <h6 class="text-white">Booking Room</h6>
+                              <h3 class="text-white">{{$bookingRoom}}</h3>
+                           </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-block card-stretch card-height">
-                            <div class="card-body">
-                                <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-skyblue">33%</h3>
-                                <div class="bg-skyblue icon iq-icon-box-2 mr-2 rounded">
-                                    <i class="las la-exclamation-triangle"></i>
-                                </div>
-                                </div>
-                                <h4>18 Complains</h4>
-                                <div class="mt-1">
-                                    <p class="mb-0">Unclicked 457,735</p>
-                                </div>
-                                <div class="iq-progress-bar mt-3">
-                                <span class="bg-skyblue" data-percent="33"></span>
-                                </div>
-                            </div>
+                     </div>
+                  </div>
+               </div>
+               <!--  -->
+               <div class="col-md-6 col-lg-3">
+                  <div class="card card-block card-stretch card-height">
+                     <div class="card-body bg-primary-light rounded">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <div class="rounded iq-card-icon bg-primary"><i class="fa fa-users" aria-hidden="true"></i>
+                           </div>
+                           <div class="text-right">
+                              <h2 class="mb-0"><span class="counter">{{$employee}}</span></h2>
+                              <h5 class="">Employee</h5>
+                           </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-block card-stretch card-height">
-                            <div class="card-body">
-                                <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-success">85%</h3>
-                                <div class="bg-success icon iq-icon-box-2 mr-2 rounded">
-                                    <i class="las la-circle-notch"></i>
-                                </div>
-                                </div>
-                                <h4>Total CTR</h4>
-                                <div class="mt-1">
-                                    <p class="mb-0">Unclicked 652,735</p>
-                                </div>
-                                <div class="iq-progress-bar mt-3">
-                                <span class="bg-success" data-percent="33"></span>
-                                </div>
-                            </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6 col-lg-3">
+                  <div class="card card-block card-stretch card-height">
+                     <div class="card-body bg-warning-light rounded">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <div class="rounded iq-card-icon bg-warning"><i class="fa fa-user" aria-hidden="true"></i>
+                           </div>
+                           <div class="text-right">
+                              <h2 class="mb-0"><span class="counter">{{$user}}</span></h2>
+                              <h5 class="">User</h5>
+                           </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card card-block card-stretch card-height">
-                            <div class="card-body">
-                                <div class="top-block d-flex align-items-center justify-content-between mb-3">
-                                <h3 class="text-info">92%</h3>
-                                <div class="bg-info icon iq-icon-box-2 mr-2 rounded">
-                                    <i class="lar la-envelope"></i>
-                                </div>
-                                </div>
-                                <h4>Sent 272,2824</h4>
-                                <div class="mt-1">
-                                <p class="mb-0">Unsent 682,735</p>
-                                </div>
-                                <div class="iq-progress-bar mt-3">
-                                <span class="bg-info" data-percent="85"></span>
-                                </div>
-                            </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6 col-lg-3">
+                  <div class="card card-block card-stretch card-height">
+                     <div class="card-body bg-danger-light rounded">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <div class="rounded iq-card-icon bg-danger"><i class="fa fa-user-circle" aria-hidden="true"></i>
+                           </div>
+                           <div class="text-right">
+                              <h2 class="mb-0"><span class="counter">{{$supplier}}</span></h2>
+                              <h5 class="">Supplier</h5>
+                           </div>
                         </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-header border-none">
-                            <div class="header-title">
-                                <h4 class="card-title">Conversation(6 days)</h4>
-                            </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6 col-lg-3">
+                  <div class="card card-block card-stretch card-height">
+                     <div class="card-body bg-info-light rounded">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <div class="rounded iq-card-icon bg-info"><i class="fa fa-user-secret" aria-hidden="true"></i>
+                           </div>
+                           <div class="text-right">
+                              <h2 class="mb-0"><span class="counter">{{$guest}}</span></h2>
+                              <h5 class="">Guest</h5>
+                           </div>
                         </div>
-                        <div class="card-body">
-                            <div id="layout-1-chart-02"></div>
-                            <div class="row mt-4">
-                                <div class="col-md-6 mb-md-0 mb-3 text-center">
-                                <div class="progress progress-round mx-auto primary conversation-bar" data-percent="76">
-                                    <span class="progress-left">
-                                        <span class="progress-bar"></span>
-                                    </span>
-                                    <span class="progress-right">
-                                        <span class="progress-bar"></span>
-                                    </span>
-                                    <div class="progress-value text-primary">76%</div>
-                                </div>
-                                    <div class="progress-value mt-4">
-                                        <h4>Impressions</h4>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 text-center">
-                                <div class="progress progress-round goal-progress mx-auto orange conversation-bar" data-percent="82">
-                                    <span class="progress-left">
-                                        <span class="progress-bar"></span>
-                                    </span>
-                                    <span class="progress-right">
-                                        <span class="progress-bar"></span>
-                                    </span>
-                                    <div class="progress-value text-orange">92%</div>
-                                </div>
-                                    <div class="progress-value mt-4">
-                                        <h4>Total Clicks</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+               </div>
+
+                <!--  -->
+              
+              
                 <div class="col-lg-8">
                     <div class="card card-block card-stretch card-height">
                         <div class="card-header border-none">
@@ -202,88 +142,83 @@
                     </div>
                     </div>
                 </div>
-                <div class="col-lg-8">
-                    <div class="card card-block card-stretch card-height">
-                    <div class="card-body">
-                        <div id="layout-1-chart-04"></div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card card-block card-stretch card-height">
-                    <div class="card-header border-none">
-                        <div class="header-title">
-                            <h4 class="card-title">Fans By Ages : Fb Page</h4>
+                <div class="col-lg-4 d-flex flex-wrap p-0">
+                  <div class="col-md-6">
+                     <div class="card card-block card-stretch card-height rounded">
+                        <div class="card-body">
+                           <div class="row">
+                              <div class="col-lg-12 mb-2 d-flex justify-content-between">
+                                 <div class="icon iq-icon-box rounded bg-primary rounded shadow" data-wow-delay="0.2s"> <i class="las la-users"></i>
+                                 </div>
+                              </div>
+                              <div class="col-lg-12 mt-3">
+                                 <h6 class="card-title text-uppercase text-secondary mb-0">Customer</h6>
+                                 <span class="h2 mb-0 counter d-inline-block w-100">60,586</span>
+                              </div>
+                           </div>
+                           <p class="mb-0 mt-3"> <span class="badge badge-primary mr-2"><i class="ri-arrow-up-fill"></i> 3.48%</span>
+                           </p>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="layout-1-chart-05"></div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="card card-block card-stretch card-height">
-                    <div class="card-header border-none">
-                        <div class="header-title">
-                            <h4 class="card-title">Facebook Daily Likes</h4>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="card card-block card-stretch card-height rounded">
+                        <div class="card-body">
+                           <div class="row">
+                              <div class="col-lg-12 mb-2 d-flex justify-content-between">
+                                 <div class="icon iq-icon-box rounded bg-warning rounded shadow" data-wow-delay="0.2s"> <i class="las la-balance-scale"></i>
+                                 </div>
+                              </div>
+                              <div class="col-lg-12 mt-3">
+                                 <h6 class="card-title text-uppercase text-secondary mb-0">Sales</h6>
+                                 <span class="h2 mb-0 counter d-inline-block w-100">80,586</span>
+                              </div>
+                           </div>
+                           <p class="mb-0 mt-3"> <span class="badge badge-warning mr-2"><i class="ri-arrow-up-fill"></i> 3.48%</span>
+                           </p>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="iq-details">
-                            <h5 class="title">Page Profile</h5>
-                            <div class="iq-progress-bar bg-primary-light mt-2">
-                                <span class="bg-primary iq-progress progress-1" data-percent="49" >
-                                <span class="progress-text-one bg-primary">49%</span>
-                                </span>
-                            </div>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="card card-block card-stretch card-height rounded">
+                        <div class="card-body">
+                           <div class="row">
+                              <div class="col-lg-12 mb-2 d-flex justify-content-between">
+                                 <div class="icon iq-icon-box rounded bg-info rounded shadow" data-wow-delay="0.2s"> <i class="las la-plus-circle"></i>
+                                 </div>
+                              </div>
+                              <div class="col-lg-12 mt-3">
+                                 <h6 class="card-title text-uppercase text-secondary mb-0">Profit</h6>
+                                 <span class="h2 mb-0 d-inline-block w-100"><span class="counter">80</span>%</span>
+                              </div>
+                           </div>
+                           <p class="mb-0 mt-3"> <span class="badge badge-info mr-2"><i class="ri-arrow-up-fill"></i> 3.48%</span>
+                           </p>
                         </div>
-                        <div class="iq-details mt-4">
-                            <h5 class="title">Favorite</h5>
-                            <div class="iq-progress-bar bg-orange-light mt-2">
-                                <span class="bg-orange iq-progress progress-1" data-percent="92" >
-                                <span class="progress-text-one bg-orange">92%</span>
-                                </span>
-                            </div>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="card card-block card-stretch card-height">
+                        <div class="card-body">
+                           <div class="row">
+                              <div class="col-lg-12 mb-2 d-flex justify-content-between">
+                                 <div class="icon iq-icon-box rounded bg-danger rounded shadow" data-wow-delay="0.2s"> <i class="las la-minus-circle"></i>
+                                 </div>
+                              </div>
+                              <div class="col-lg-12 mt-3">
+                                 <h6 class="card-title text-uppercase text-secondary mb-0">Loss</h6>
+                                 <span class="h2 mb-0 d-inline-block w-100"><span class="counter">15</span>%</span>
+                              </div>
+                           </div>
+                           <p class="mb-0 mt-3"> <span class="badge badge-danger mr-2"><i class="ri-arrow-up-fill"></i> 3.48%</span>
+                           </p>
                         </div>
-                        <div class="iq-details mt-4">
-                            <h4 class="title">Like Story</h4>
-                            <div class="iq-progress-bar bg-skyblue-light mt-2">
-                                <span class="bg-skyblue iq-progress progress-1" data-percent="39" >
-                                <span class="progress-text-one bg-skyblue">39%</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="iq-details mt-4">
-                            <h5 class="title">External Connect</h5>
-                            <div class="iq-progress-bar bg-info-light mt-2">
-                                <span class="bg-info iq-progress progress-1" data-percent="69" >
-                                <span class="progress-text-one bg-info">69%</span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="iq-details mt-4">
-                            <h5 class="title">Recommended Page</h5>
-                            <div class="iq-progress-bar bg-danger-light mt-2">
-                                <span class="bg-danger iq-progress progress-1" data-percent="69" >
-                                <span class="progress-text-one bg-danger">69%</span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="card card-block card-stretch card-height">
-                    <div class="card-header border-none">
-                        <div class="header-title">
-                            <h4 class="card-title">Facebook Overview</h4>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="layout-1-chart-06"></div>
-                    </div>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+               </div>
+               
+
+               
             </div>
             <!-- Page end  -->
         </div>
