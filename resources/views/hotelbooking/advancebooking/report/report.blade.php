@@ -1,5 +1,5 @@
 @extends('hotelbooking.master')
-@section('title', 'All Room | '.$seo->meta_title)
+@section('title', 'Advance Booking | '.$seo->meta_title)
 @section('content')
 
 <style>

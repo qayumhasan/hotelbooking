@@ -32,6 +32,10 @@
                         <input type="time" required name="service_time" class="controll-from" id="service_time">
                     </div>
                 </div>
+
+
+        
+
                 <div class=" row">
                     <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label">Services Category:</label>
                     <div class="col-sm-8">

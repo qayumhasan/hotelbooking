@@ -268,7 +268,7 @@ $time = date("h:i");
 
                                                         <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
                                                     </td>
-                                                    <td class="text-center">$ {{ $row->additional_room_amount}}</td>
+                                                    <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $row->additional_room_amount}}</td>
                                                     @php
                                                     $totalroomamount = $totalroomamount + $row->additional_room_amount;
                                                     @endphp
@@ -311,7 +311,7 @@ $time = date("h:i");
 
                                                         <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
                                                     </td>
-                                                    <td class="text-center">$ {{ $totalamountroom}}</td>
+                                                    <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $totalamountroom}}</td>
 
                                                     @php
                                                     $totalroomamount = $totalroomamount + $totalamountroom;
@@ -338,7 +338,7 @@ $time = date("h:i");
                                                     @foreach($checkindata->checkin as $row)
                                                     <div class="border" <p>{{$row->item_name}} {{$row->qty}} pcs</p>
                                                         <p>Rate @ {{$row->rate}} /= per pcs </p>
-                                                        <p>Total :$ {{$row->qty * $row->rate}}</p>
+                                                        <p>Total :{!!$currency->symbol ?? ' '!!} {{$row->qty * $row->rate}}</p>
                                                     </div>
 
                                                     @php
@@ -346,7 +346,7 @@ $time = date("h:i");
                                                     @endphp
                                                     @endforeach
                                                 </td>
-                                                <td class="text-center">$ {{$totalamountextra}}</td>
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalamountextra}}</td>
                                             </tr>
 
                                             @php
@@ -373,7 +373,7 @@ $time = date("h:i");
 
 
                                                 </td>
-                                                <td class="text-center">$ {{$totalfandb}}</td>
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalfandb}}</td>
                                             </tr>
                                             @php
                                             $restaurant = 0;
@@ -394,7 +394,7 @@ $time = date("h:i");
 
                                                     @endforeach
                                                 </td>
-                                                <td class="text-center">$ {{ $restaurant}}</td>
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $restaurant}}</td>
                                             </tr>
 
                                         </tbody>
@@ -445,7 +445,7 @@ $time = date("h:i");
                                                 @endif
                                                 <td>{{ucfirst($row->debit)}}</td>
                                                 <td>Booking</td>
-                                                <td class="text-center">$ {{$row->amount}}</td>
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->amount}}</td>
                                                 <td class="text-center">
 
                                                     <a href="{{route('admin.checkout.invoice_edit',$row->id)}}" class="badge bg-primary-light mr-2 mouse_pointer editinvoice" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="lar la-edit"></i></a>
@@ -590,18 +590,18 @@ $time = date("h:i");
 
                                             <tr>
                                                 <th class="text-right" scope="row" colspan="5">Net Amount</th>
-                                                <th class="text-center">$ {{round($checkout->net_amount,2)}}</th>
+                                                <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->net_amount,2)}}</th>
                                             </tr>
 
                                             <tr>
                                                 <th class="text-right" scope="row" colspan="5">Discount Amount</th>
-                                                <th class="text-center">$ {{round($checkout->discount_amount,2)}}</th>
+                                                <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->discount_amount,2)}}</th>
                                             </tr>
 
 
                                             <tr>
                                                 <th class="text-right" scope="row" colspan="5">Gross Amount</th>
-                                                <th class="text-center">$ {{round($checkout->gross_amount,2)}}</th>
+                                                <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->gross_amount,2)}}</th>
                                             </tr>
 
                                             @php
@@ -609,7 +609,7 @@ $time = date("h:i");
                                             @endphp
                                             <tr>
                                                 <th class="text-right" scope="row" colspan="5">OutStanding Amount</th>
-                                                <th class="text-center">$
+                                                <th class="text-center">{!!$currency->symbol ?? ' '!!}
                                                     {{round($paybleAmount,2)}}
                                                 </th>
                                             </tr>
@@ -859,7 +859,7 @@ $time = date("h:i");
                                             @endforeach
                                         </td>
 
-                                        <td>$ {{$totalroom}}</td>
+                                        <td>{!!$currency->symbol ?? ' '!!} {{$totalroom}}</td>
 
                                         @endif
 
@@ -869,18 +869,18 @@ $time = date("h:i");
                                     @endphp
                                     <tr>
                                         <th colspan="2" class="text-right">Room Discount</th>
-                                        <td>{{$discount}}</td>
+                                        <td>{!!$currency->symbol ?? ' '!!} {{$discount}}</td>
                                     </tr>
                                     <tr>
                                         <th colspan="2" class="text-right">Total Room Amount</th>
-                                        <td>{{$checkout->room_amount}}</td>
+                                        <td> {!!$currency->symbol ?? ' '!!} {{$checkout->room_amount}}</td>
                                     </tr>
 
 
 
                                     <tr>
                                         <th colspan="2" class="text-right">Advance Amount</th>
-                                        <td>{{$checkout->voucher_amount}}</td>
+                                        <td> {!!$currency->symbol ?? ' '!!} {{$checkout->voucher_amount}}</td>
                                     </tr>
                                     <tr>
                                         <th colspan="2" class="text-right">Total Amount</th>
@@ -888,7 +888,7 @@ $time = date("h:i");
                                         $amount = $data['amount'];
                                         $totalamount = $amount - $checkindata->voucher_amount;
                                         @endphp
-                                        <td>{{$amount}}</td>
+                                        <td> {!!$currency->symbol ?? ' '!!} {{$amount}}</td>
                                     </tr>
 
                                 </tbody>
@@ -1118,7 +1118,7 @@ $time = date("h:i");
 
                                 <tr class="calc-row">
                                     <td colspan="2">Total</td>
-                                    <td>$ {{$totalfandb + $restaurant}}</td>
+                                    <td>{!!$currency->symbol ?? ' '!!} {{$totalfandb + $restaurant}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1297,7 +1297,7 @@ $time = date("h:i");
 
                                 <tr class="calc-row">
                                     <td colspan="2">Total</td>
-                                    <td>$ {{ $totalamountextra}}</td>
+                                    <td>{!!$currency->symbol ?? ' '!!} {{ $totalamountextra}}</td>
                                 </tr>
                             </tbody>
                         </table>

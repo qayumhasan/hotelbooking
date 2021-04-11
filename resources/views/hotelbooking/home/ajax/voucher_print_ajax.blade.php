@@ -133,13 +133,13 @@
                     <td>Refund</td>
                     @endif
                     <td id="unit">Booking</td>
-                    <td class="text-center">$ {{$voucher->amount}}</td>
+                    <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$voucher->amount}}</td>
                 </tr>
 
 
                 <tr class="calc-row">
                     <td  class="text-center"colspan="2">Total</td>
-                    <td class="text-center">$ {{$voucher->amount}}</td>
+                    <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$voucher->amount}}</td>
                 </tr>
             </tbody>
         </table>

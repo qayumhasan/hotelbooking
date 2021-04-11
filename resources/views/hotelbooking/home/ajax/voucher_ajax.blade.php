@@ -38,10 +38,10 @@ $time = date("h:i");
                                 </div>
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-3 text-center">
-                                    Debit(KHS)
+                                    Debit({!!$currency->name ?? ' '!!})
                                 </div>
                                 <div class="col-sm-3 text-center">
-                                    Credit(KHS)
+                                    Credit({!!$currency->name ?? ' '!!})
                                 </div>
 
                             </div>

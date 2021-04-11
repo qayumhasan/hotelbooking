@@ -384,7 +384,7 @@ $time = date("h:i:sa");
                             <div class=" row">
                                 <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label">Services Category:</label>
                                 <div class="col-sm-8">
-                                    <select class="controll-from" name="service_category" required>
+                                    <select class="controll-from" name="service_category" id="category" required>
                                         <option disabled selected>---Select Category----</option>
                                         @foreach($menucategores as $row)
                                             <option value="{{$row->id}}">{{$row->name}}</option>
@@ -1165,6 +1165,39 @@ $time = date("h:i:sa");
             });
         });
     });
+</script>
+
+<script>
+    var category = document.querySelector('#category');
+    category.addEventListener('change',function(e){
+        var id = e.target.value;
+
+        $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'get',
+                url: "{{ url('/admin/service/list/') }}/"+id,
+                
+                success: function(data) {
+                 console.log(data);
+
+                 $('#service_category').empty();
+                 if(data.length > 0){
+                    $('#service_category').append(' <option value="0">--Please Select Your Item--</option>');
+                    $.each(data,function(index,itemobj){
+                        $('#service_category').append('<option value="' + itemobj.id + '">'+itemobj.item_name+'</option>');
+                    });
+                 }else{
+                    $('#service_category').append(' <option> No Data Found!</option>');
+                 }
+                  
+                }
+            });
+
+    })
 </script>
 
 

@@ -269,6 +269,7 @@ class AdminController extends Controller
    }
 //    select from 
    public function Select(){
+	   
 	   return view('layouts.mainfile');
    }
 

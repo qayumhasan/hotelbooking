@@ -27,14 +27,14 @@ $time = date("h:i");
                     <form id="search_guest_entry_report_check">
                         <div class="form-group row">
 
-                            
 
 
-                        <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
-                        <div class="col-sm-2">
-                            <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
-                            <small class="text-danger from_date"></small>
-                        </div>
+
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
+                            <div class="col-sm-2">
+                                <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
+                                <small class="text-danger from_date"></small>
+                            </div>
 
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>Shift:</b></label>
                             <div class="col-sm-2">
@@ -85,28 +85,34 @@ $time = date("h:i");
                                         <th scope="col">Varified By</th>
                                     </tr>
                                 </thead>
-                                @if(count($guestentresChecks) > 0)
+
                                 <tbody>
+                                    @if(count($guestentresChecks) > 0)
                                     @foreach($guestentresChecks as $row)
+
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
-                                        <td>{{$row->room->checkin->booking_no?? ''}}</td>
+                                        <td>{{$row->checkin->booking_no?? ''}}</td>
 
-                                        <td>{{$row->room->checkin->guest_name?? ''}}</td>
-                                        <td>{{$row->room->room_no?? ''}}</td>
+                                        <td>{{$row->checkin->guest_name?? ''}}</td>
+                                        <td>{{$row->room_no?? ''}}</td>
                                         <td>{{$row->entry_date}}</td>
-                                        
-                                        <td>{{$row->room->checkin->number_of_person?? ''}}</td>
-                                        <td>{{$row->no_of_pax}}</td>
-                                        <td>{{$row->varifiedby->username?? ''}}</td>
+
+                                        <td>{{$row->checkin->number_of_person?? ''}}</td>
+                                        <td>{{$row->guestentrycrosscheck->no_of_pax}}</td>
+                                        <td>{{$row->guestentrycrosscheck->varifiedby->username?? ''}}</td>
                                     </tr>
                                     @endforeach
+                                    @else
+                                    <tr>
+                                        <th colspan="8" class="text-center" >No Data Found!</th>
+                                    </tr>
+                                    
+                                    @endif
                                 </tbody>
-                                @else
-                                <h4>No Data Found!</h4>
-                                @endif
 
-                                
+
+
 
 
                             </table>
@@ -137,11 +143,9 @@ $time = date("h:i");
     });
 </script>
 <script>
-    $('.datepicker').datepicker(
-        {
-            format: 'dd/mm/yyyy',
-        }
-    );
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+    });
 </script>
 
 <script>

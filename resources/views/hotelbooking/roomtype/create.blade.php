@@ -128,7 +128,7 @@
                                                         <td>{{$data->room_type}}</td>
                                                         <td>{{$data->price}}</td>
                                                         <td>{{$data->block}}</td>
-                                                        <td>{{$data->branch_id}}</td>
+                                                        <td>{{$data->branch->branch_name ?? ''}}</td>
                                                         <td>
                                                         @if($data->is_active==1)
                                                         <span class="btn btn-success btn-sm">Active<span>

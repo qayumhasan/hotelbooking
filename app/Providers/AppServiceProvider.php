@@ -43,7 +43,10 @@ class AppServiceProvider extends ServiceProvider
         $numberToWord = new NumberToWord();
         view()->share('numToWord', $numberToWord);
 
-        $currency = Currency::where('is_default',1)->first(); 
+        $currency = cache()->remember('currency',60*60*24,function(){
+            return Currency::where('is_default',1)->first(); 
+        });
+
         view()->share('currency', $currency);
     }
 }

@@ -779,3 +779,5 @@ Route::get('test',[MediaManagerController::class, 'test']);
 
 Route::get('admin/checkout/invoice/tax/data/delete/{id}',[CheckingController::class,'deleteTaxData']);
 Route::get('admin/checkin/get/guest/info/{id}',[CheckingController::class,'guestInfo']);
+
+Route::get('/admin/service/list/{id}',[CheckingController::class,'serviceList']);
