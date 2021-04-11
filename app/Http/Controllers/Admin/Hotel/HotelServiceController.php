@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Checkin;
 use App\Models\HouseKeeping;
+use App\Models\HouseKeepingGuestEntry;
 use App\Models\Room;
 use Session;
 use Auth;
@@ -70,6 +71,12 @@ class HotelServiceController extends Controller
             $checkindata->updated_date =Carbon::now();
             $checkindata->save();
        }
+
+    // remove from housekeeping guest entry
+
+    $guestEntry = HouseKeepingGuestEntry::where('room_id',$request->room_id)->where('is_active',1)->first();
+    $guestEntry->is_active = 0;
+    $guestEntry->save();
 
 
     //    add new booking in housekeeping

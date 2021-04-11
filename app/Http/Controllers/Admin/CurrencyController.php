@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Cache;
 
 class CurrencyController extends Controller
 {
@@ -29,14 +30,22 @@ class CurrencyController extends Controller
         if($request->is_default == 1){
             $inactive = Currency::where('is_default','1')->update(
                 [
-                    'is_default'=>'NULL',
+                    'is_default'=>NULL,
                 ]
             );
         }
+
+        
+        Cache::forget('currency');
         $currency = new Currency();
         $currency->name = $request->name;
         $currency->symbol = $request->symbol;
-        $currency->is_default = $request->is_default;
+        if($request->is_default == 0){
+            $currency->is_default = NULL;
+        }else{
+            $currency->is_default = 1;
+        }
+        
         $currency->save();
 
         $notification = array(
@@ -51,10 +60,11 @@ class CurrencyController extends Controller
     public function status($id)
     {
 
+        Cache::forget('currency');
        $status = Currency::findOrFail($id);
-        if($status->is_default == '1'){    
+        if($status->is_default == 1){    
 
-            $status->is_default = 'NULL';
+            $status->is_default = NULL;
             $status->save();
                 $notification = array(
                     'messege' => 'Currency Status In Active Successfully!',
@@ -62,12 +72,12 @@ class CurrencyController extends Controller
                     );
                 return redirect()->back()->with($notification);
         }else{
-            $inactive = Currency::where('is_default','1')->update(
+            $inactive = Currency::where('is_default',1)->update(
                 [
-                    'is_default'=>'NULL',
+                    'is_default'=>NULL,
                 ]
             );
-            $status->is_default = '1';
+            $status->is_default = 1;
             $status->save();
                 $notification = array(
                     'messege' => 'Currency Status Active Successfully!',
@@ -97,10 +107,11 @@ class CurrencyController extends Controller
             
         ]);
 
+        Cache::forget('currency');
         if($request->is_default == 1){
             $inactive = Currency::where('is_default','1')->update(
                 [
-                    'is_default'=>'NULL',
+                    'is_default'=>NULL,
                 ]
             );
         }
@@ -111,7 +122,11 @@ class CurrencyController extends Controller
         $currency = Currency::findOrFail($request->id);
         $currency->name = $request->name;
         $currency->symbol = $request->symbol;
-        $currency->is_default = $request->is_default;
+        if($request->is_default == 0){
+            $currency->is_default = NULL;
+        }else{
+            $currency->is_default = 1;
+        }
         $currency->save();
 
         $notification = array(
@@ -127,6 +142,7 @@ class CurrencyController extends Controller
     public function delete($id)
     {
         $currency = Currency::findOrFail($id);
+        
         if($currency){
             $currency->delete();
             $notification = array(

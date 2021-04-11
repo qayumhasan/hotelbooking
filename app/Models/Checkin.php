@@ -75,6 +75,17 @@ class Checkin extends Model
 
         return array_sum($amount);
     }
+
+    public function getgenderdataAttribute()
+    {
+        
+        if($this->gender == 1){
+            return "Male";
+        }elseif($this->gender == 2){
+            return "Female";
+        }
+    }
+
     public function getbankamountAttribute()
     {
         $amount =$this->vouchers->map(function($item){

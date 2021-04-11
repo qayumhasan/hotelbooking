@@ -59,7 +59,7 @@
         <div class="col-md-12 text-right mb=-2">
             <hr>
             <p style="font-size:11px">Number Of Quentity: <b>{{$orderhead->number_of_qty}}</b></p>
-            <p style="font-size:11px">Gross Amount: <b>{{$orderhead->total_amount}}</b> </p>
+            <p style="font-size:11px">Gross Amount: <b>{!!$currency->symbol ?? ' '!!} {{$orderhead->total_amount}}</b> </p>
         </div>
     </div>
 

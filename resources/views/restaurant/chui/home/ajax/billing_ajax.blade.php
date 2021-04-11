@@ -217,7 +217,7 @@ $time = date("h:i");
                             <tr>
 
                                 <th colspan="5" class="text-right">Discount Amount</th>
-                                <td id="discount_amount">$ {{round($resgross->discount_amount,2)}}</td>
+                                <td id="discount_amount">{!!$currency->symbol ?? ' '!!} {{round($resgross->discount_amount,2)}}</td>
 
                             </tr>
 
@@ -225,7 +225,7 @@ $time = date("h:i");
                             <tr>
 
                                 <th colspan="5" class="text-right">Gross Amount</th>
-                                <td id="gross_amount">$ {{round($resgross->gross_amount,2)}}</td>
+                                <td id="gross_amount">{!!$currency->symbol ?? ' '!!} {{round($resgross->gross_amount,2)}}</td>
 
                             </tr>
 

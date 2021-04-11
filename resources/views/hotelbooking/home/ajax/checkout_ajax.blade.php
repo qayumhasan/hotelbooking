@@ -35,7 +35,7 @@
 
                                     <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
                                 </td>
-                                <td class="text-center">$ {{ $row->additional_room_amount}}</td>
+                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $row->additional_room_amount}}</td>
                                 @php
                                 $totalroomamount = $totalroomamount + $row->additional_room_amount;
                                 @endphp
@@ -82,7 +82,7 @@
                                 </td>
 
 
-                                <td class="text-center">$ {{ $row->tarif * (int)$date}}</td>
+                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $row->tarif * (int)$date}}</td>
 
                                 @php
                                 $totalroomamount = $totalroomamount + $row->tarif * (int)$date;
@@ -113,7 +113,7 @@
                                     @foreach($checkindata->checkin as $row)
                                     <div class="border" <p>{{$row->item_name}} {{$row->qty}} pcs</p>
                                         <p>Rate @ {{$row->rate}} /= per pcs </p>
-                                        <p>Total :$ {{$row->qty * $row->rate}}</p>
+                                        <p>Total :{!!$currency->symbol ?? ' '!!} {{$row->qty * $row->rate}}</p>
                                     </div>
 
                                     @php
@@ -121,7 +121,7 @@
                                     @endphp
                                     @endforeach
                                 </td>
-                                <td class="text-center">$ {{$totalamountextra}}</td>
+                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalamountextra}}</td>
                             </tr>
 
                             @php
@@ -148,7 +148,7 @@
 
 
                                 </td>
-                                <td class="text-center">$ {{$totalfandb}}</td>
+                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalfandb}}</td>
                             </tr>
                             @php
                             $restaurant = 0;
@@ -169,7 +169,7 @@
 
                                     @endforeach
                                 </td>
-                                <td class="text-center">$ {{ $restaurant}}</td>
+                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $restaurant}}</td>
                             </tr>
 
                         </tbody>
@@ -213,7 +213,7 @@
                             <td>Receipt</td>
                             <td>{{ucfirst($row->debit)}}</td>
                             <td>Booking</td>
-                            <td class="text-center">$ {{$row->amount}}</td>
+                            <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->amount}}</td>
                         </tr>
 
                         @php
@@ -230,7 +230,7 @@
 
                         <tr>
                             <th class="text-right" scope="row" colspan="5">Net Amount</th>
-                            <th class="text-center">$ {{ (int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant }}</th>
+                            <th class="text-center">{!!$currency->symbol ?? ' '!!} {{ (int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant }}</th>
                         </tr>
 
                         <tr>

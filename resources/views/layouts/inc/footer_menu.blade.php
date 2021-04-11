@@ -69,7 +69,7 @@
 
 
                         <li class="{{ request()->routeIs('admin.chui.restaurant*') ? 'activemenu' : '' }}">
-                            <a href="{{route('admin.restaurant.index')}}">
+                            <a href="{{route('admin.chui.restaurant')}}">
                                 <i class="lab la-uikit iq-arrow-left"></i><span>Restaurant</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>

@@ -159,7 +159,7 @@
 
 
                             <li class=" ">
-                                <a href="{{route('admin.restaurant.index')}}">
+                                <a href="{{route('admin.chui.restaurant')}}">
                                     <i class="lab la-uikit iq-arrow-left"></i><span>Restaurant</span>
                                     <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                     <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
@@ -331,7 +331,7 @@
 
                 
                 <div class="col-md-6 col-lg-3 col-sm-6">
-                    <a href="{{route('admin.restaurant.index')}}">
+                    <a href="{{route('admin.chui.restaurant')}}">
                         <div class="card card-block card_overlay">
                             <div class="card-body p-0">
                                 <div class="top-block-one text-center">

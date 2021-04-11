@@ -144,9 +144,8 @@ $time = date("h:i");
                                                     <td>
                                                         <div class="col-12">
                                                             <input type="text" class="controll-from" id="pwd1" name="adv_guest_name" placeholder="Enter Guest Name">
-
-
                                                         </div>
+
                                                     </td>
                                                 </tr>
                                                 <tr class="advance_booking">
@@ -192,13 +191,14 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Guest Name <small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" required autofocus id="guestname" onblur="getGuestData(this)" onkeyup="enterPrintName(this)" name="guest_name" list="datalistOptions" placeholder="Enter Guest Name">
+                                            <input type="text" class="controll-from" required autofocus id="guestname" onchange="getGuestData(this)" onkeyup="enterPrintName(this)" name="guest_name" list="datalistOptions" placeholder="Enter Guest Name">
                                             <datalist id="datalistOptions">
                                                 @foreach($guests as $row)
                                                 <option value="{{$row->guest_name}}">
                                                     @endforeach
                                             </datalist>
                                         </div>
+
                                     </div>
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Print Name <small class="text-danger">*</small></label>
@@ -206,6 +206,7 @@ $time = date("h:i");
                                             <input type="text" class="controll-from" required id="printname" name="print_name" placeholder="Enter Print Name">
                                         </div>
                                     </div>
+
 
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="email">Gender<small class="text-danger">*</small></label>
@@ -280,6 +281,10 @@ $time = date("h:i");
                                         <div class="col-sm-9">
                                             <input type="text" class="controll-from" required name="id_no" id="pwd1" placeholder="Enter ID No">
                                         </div>
+                                    </div>
+
+                                    <div class="form-check d-none">
+                                        <input class="form-check-input" name="is_old" type="checkbox" value="1" id="is_old">
                                     </div>
 
 
@@ -404,8 +409,8 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="email">Thru Agent:</label>
                                         <div class="col-sm-9">
-                                        <input type="text" class="controll-from" name="true_agent">
-                                            
+                                            <input type="text" class="controll-from" name="true_agent">
+
                                         </div>
                                     </div>
 
@@ -691,7 +696,7 @@ $time = date("h:i");
         jpeg_quality: 90
     });
 
-    if(webcam){
+    if (webcam) {
         Webcam.attach('#my_camera');
         Webcam.attach('#doc_camera');
     }
@@ -931,28 +936,28 @@ $time = date("h:i");
             url: "{{ url('/admin/checkin/get/guest/info') }}/" + guestname,
 
             success: function(data) {
-                if(data.guest_name){
-                    
-                    swal({
-                    title: "One Guest Name Found!",
-                    text: "Please!Choose Another Name!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        // $('#printname').val(data.print_name);
-                        // $('#company_name').val(data.company_name);
-                        // $('#city').val(data.city);
-                        // $('#mobile').val(data.mobile);
-                        // $('#email').val(data.email);
-                        // $('#guestgender').val(data.gender).selected;
+                if (data.guest_name) {
 
-                    } else {
-                        swal("Ok!");
-                    }
-                });
+                    swal({
+                            title: "One Guest Name Found!",
+                            text: "Please!Choose Another Name!",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                $('#printname').val(data.print_name);
+                                $('#company_name').val(data.company_name);
+                                $('#city').val(data.city);
+                                $('#mobile').val(data.mobile);
+                                $('#email').val(data.email);
+                                $('#is_old').prop('checked', true);
+                                $('#guestgender').val(data.gender).selected;
+                            } else {
+                                swal("Ok!");
+                            }
+                        });
                 }
             }
         });

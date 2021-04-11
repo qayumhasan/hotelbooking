@@ -14,6 +14,12 @@ class RoomType extends Model
         return $this->hasMany(Room::class,'room_type','id')->where('is_active',1)->where('is_deleted',0);
     }
 
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
     public function checkin()
     {
         return $this->hasMany('App\Models\Checkin','room_type','id');

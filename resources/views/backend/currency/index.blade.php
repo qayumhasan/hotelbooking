@@ -41,7 +41,7 @@
                                 <select class="form-control form-control-sm" name="is_default">
                                     <option disabled selected>------Select A Type------</option>
                                     <option value="1">Active</option>
-                                    <option value="NULL">InActive</option>
+                                    <option value="0">InActive</option>
                                 </select>
 
                                 @error('type')
@@ -162,7 +162,7 @@
                                 <select class="form-control form-control-sm" name="is_default" id="type">
                                     <option disabled selected>------Select A Type------</option>
                                     <option value="1">Active</option>
-                                    <option value="NULL">InActive</option>
+                                    <option value="0">InActive</option>
                                 </select>
 
                                 @error('type')
@@ -194,7 +194,12 @@
             $('#currency_id').val(data.id);
             $('#name').val(data.name);
             $('#symbol').val(data.symbol);
-            $('#type').val(data.is_default).selected;
+            if(data.is_default == 1){
+                $('#type').val('1').selected;
+            }else{
+                $('#type').val('0').selected;
+            }
+            
 
 
         });
