@@ -90,10 +90,13 @@ $current = date("m/d/Y");
                                                 <tr>
                                                     <td><label>Sourch Cash:</label></td>
                                                     <td colspan="5">
-                                                        <input type="text" autoComplete="on" id="account_head_main" name="account_head_main" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
-                                                        <datalist id="ref_in" class="sourch_ajax">
+
+                                                        <select id="account_head_main" name="account_head_main" class="form-control noradious"> 
+
+                                                            <option value="">--Select--</option>
                                                           
-                                                        </datalist>
+                                                        </select><br>
+                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_sourch"></span>
                                                         <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
                                                         <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
                                                         <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
@@ -103,10 +106,14 @@ $current = date("m/d/Y");
                                                 <tr>
                                                     <td><label>Account Head:</label></td>
                                                     <td colspan="5">
-                                                         <input type="text" id="account_head" name="account_head" class="form-control noradious account_head" list="ref_inss" placeholder="Account Head" />
-                                                        <datalist id="ref_inss" class="acchead_ajax">
-                                                            
-                                                        </datalist>
+
+                                                        <select id="account_head" name="account_head" class="form-control noradious" width="60%"> 
+
+                                                            <option value="">--Select--</option>
+                                                        
+                                                        </select>
+                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_head"></span>
+
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
                                                         <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
@@ -208,14 +215,6 @@ $current = date("m/d/Y");
                                         <div class="card shadow-sm shadow-showcase">
                                             <div class="card-body">
                                                 <div class="row">
-                                                        <!-- <div class="col-md-12">
-                                                             <div class="form-group row">
-                                                                <label for="staticEmail" class="col-sm-3 col-form-label">Location:</label>
-                                                                <div class="col-sm-9">
-                                                                <input type="text" class="form-control noradious" id="location" name="location">
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
                                                         <div class="col-md-6">
                                                             <div class="form-group row">
                                                                 <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
@@ -366,11 +365,11 @@ $(document).ready(function() {
                success:function(data) {
                    
                 //console.log(data);
-                        $('#ref_in').empty();
-                        $('#ref_in').append(' <option>--select--</option>');
+                        $('#account_head_main').empty();
+                        $('#account_head_main').append(' <option>--select--</option>');
                         $.each(data,function(index,districtObj){
                           
-                         $('#ref_in').append('<option value="' + districtObj.desription_of_account + '">'+districtObj.desription_of_account+'</option>');
+                         $('#account_head_main').append('<option value="' + districtObj.code + '">'+districtObj.desription_of_account+'</option>');
                        });
                     
                 }
@@ -396,11 +395,11 @@ $(document).ready(function() {
                dataType:"json",
                success:function(data) {
                    
-                        console.log(data);
-                        $('#ref_inss').empty();
-                        $('#ref_inss').append(' <option>--select--</option>');
+                        //console.log(data);
+                        $('#account_head').empty();
+                        $('#account_head').append(' <option>--select--</option>');
                         $.each(data,function(index,districtObj){
-                         $('#ref_inss').append('<option value="' + districtObj.desription_of_account + '">'+districtObj.desription_of_account+'</option>');
+                         $('#account_head').append('<option value="' + districtObj.code + '">'+districtObj.desription_of_account+'</option>');
                        });
                     
                 }
@@ -446,9 +445,6 @@ $(document).ready(function() {
 });
 </script>
 
-
-
-</script>
 <script type="text/javascript">
 $(document).ready(function() {
    $('#changeVoucher').on('click', function(){
@@ -829,6 +825,57 @@ function editdata(el) {
 	}
 
 
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+$(document).ready(function() {
+   $('#account_head_main').on('change', function(){
+       var source_account = $(this).val();
+        //alert(source_account);
+       if(source_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/source_account/current/blance/') }}/"+source_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_sourch').html("Current Balance:" +data);
+                    
+                    
+                }
+           });
+       }
+
+   });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+   $('#account_head').on('change', function(){
+       var head_account = $(this).val();
+        //alert(head_account);
+       if(head_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/head_account/current/blance/') }}/"+head_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_head').html("Current Balance: " +data);
+                    
+                    
+                }
+           });
+       }
+
+   });
+});
 </script>
 
                                       

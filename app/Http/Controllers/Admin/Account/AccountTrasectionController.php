@@ -94,6 +94,7 @@ class AccountTrasectionController extends Controller
         $data->main_invoice = $request->hiddeninvoice;
         $data->check_reference = $request->cheque_reference;
         $data->is_active = 0;
+        $data->entry_by = Auth::user()->id;
 
         if($request->subcategory_codeone==''){
             $data->subcategory_codeone =$account_hedcode->subcategoryone_code;
@@ -143,6 +144,7 @@ class AccountTrasectionController extends Controller
 
         $newdata->subcategory_codeone = $acccode->subcategoryone_code;
         $newdata->subcategory_codetwo = $acccode->subcategorytwo_code;
+        $newdata->entry_by = Auth::user()->id;
         
         if($request->amount_cate == "Debit"){
             $newdata->cr_amount = $request->amount;
@@ -193,23 +195,17 @@ class AccountTrasectionController extends Controller
         $check=AccountTransectionDetails::where('voucher_no',$request->invoice)->first();
         if($check){
               
-            
                 $data = new AccountTransectionHead;
                 $data->voucher_type=$request->voucher_name;
                 $data->voucher_no=$request->invoice;
                 $data->date=$request->date;
                 $data->reference=$request->reference;
-
                 $data->cheque_reference=$check->check_reference;
-
                 $data->narration=$request->narration;
                 $data->advice=$request->advice;
                 $data->main_invoice=$request->hiddeninvoice;
                 $data->created_at=Carbon::now()->toDateTimeString();
                 $data->entry_by=Auth::user()->id;
-
-        
-
                 if($check->dr_amount == NULL){
                     // return "dr faka";
                     CheckBookTransection::where('id',$check->check_reference)->update([
@@ -231,11 +227,6 @@ class AccountTrasectionController extends Controller
                     ]);
 
                 }
-
-
-
-
-
                 $detailsdata=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
                 foreach($detailsdata as $updata){
                     AccountTransectionDetails::where('id',$updata->id)->update([
@@ -762,7 +753,7 @@ class AccountTrasectionController extends Controller
         $datasourche=ChartOfAccount::where('category_id',1)->where('subcategoryone_id',18)->get();
         $account_head=ChartOfAccount::where('subcategoryone_id','!=',18)->get();
         $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
-
+        $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
 
         return view('accounts.accounttransection.vouchertypewise.fundtransfervoucher',compact('allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
@@ -973,7 +964,26 @@ class AccountTrasectionController extends Controller
         return view('accounts.accounttransection.ajax.allprintdata',compact('data','alldata'));
 
     }
-    
+    public function getsourchaccountBalance($source_account){
+        //return $source_account;
+        $sourchAmount=0;
+        $allledger=DB::table('vAccountsHeadsLeadgerTbl')->where('Code',$source_account)->select(['Balance'])->get();
+        foreach($allledger as $ledger){
+            $sourchAmount=$sourchAmount + $ledger->Balance ;
+        }
+        return response()->json($sourchAmount);
+        
+    }
+
+    // 
+    public function getheadaccountBalance($head_account){
+        $headaccount=0;
+        $allledger=DB::table('vAccountsHeadsLeadgerTbl')->where('Code',$head_account)->select(['Balance'])->get();
+        foreach($allledger as $ledger){
+            $headaccount=$headaccount + $ledger->Balance ;
+        }
+        return response()->json($headaccount);
+    }
     
 
 }

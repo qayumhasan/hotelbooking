@@ -444,6 +444,7 @@ $time = date("h:i");
                                     </div>
                                 </div>
                                 <hr>
+                                 
                                 <div class="card-body">
                                     <div class="row">
                                     <div class="col-md-12">
@@ -457,6 +458,7 @@ $time = date("h:i");
                                             </div>
                                     </div>
                                 </div>
+                                <hr>
                                 <hr>
                                 <div class="card-header d-flex justify-content-between asif">
                                     <div class="header-title">

@@ -87,6 +87,8 @@ $current = date("m/d/Y");
                                                                 <option value="{{$sorch_ofaccgg->code}}">{{$sorch_ofaccgg->desription_of_account}}</option>
                                                             @endforeach
                                                         </select>
+                                                        <br>
+                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_sourch"></span>
                                                         <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
                                                         <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
                                                         <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
@@ -108,6 +110,8 @@ $current = date("m/d/Y");
                                                             <option value="{{$suplier->id}}">{{$suplier->name}}</option>
                                                             @endforeach
                                                         </select>
+                                                        <br>
+                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_head"></span>
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
                                                         <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
@@ -776,6 +780,50 @@ function editdata(el) {
 
 
 </script>
+<script>
+$(document).ready(function() {
+   $('#account_head_main').on('change', function(){
+       var source_account = $(this).val();
+        //alert(source_account);
+       if(source_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/source_account/current/blance/') }}/"+source_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_sourch').html("Current Balance:" +data);
+                    
+                    
+                }
+           });
+       }
 
+   });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+   $('#account_head').on('change', function(){
+       var head_account = $(this).val();
+        //alert(head_account);
+       if(head_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/head_account/current/blance/') }}/"+head_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_head').html("Current Balance: " +data);
+                    
+                    
+                }
+           });
+       }
+
+   });
+});
+</script>
                                       
 @endsection

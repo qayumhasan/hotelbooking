@@ -18,7 +18,7 @@
                         <div class="header-title">
                             <h4 class="card-title">Add Chart Of Account</h4>
                         </div>
-                       <a href="{{route('admin.itementry.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Chart Of Account</span></i></button></a>
+                       <a href="{{route('admin.chartofaccount.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Chart Of Account</span></i></button></a>
                     </div>
                 </div>
                 <form action="{{route('admin.chartofaccount.create')}}" method="POST">

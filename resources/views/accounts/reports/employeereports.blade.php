@@ -30,7 +30,7 @@ $current = date("m/d/Y");
                        
                      </span>
                   </div>
-                  <form action="{{route('admin.account.reports.guest')}}" method="POST">
+                  <form action="{{route('admin.account.reports.employee')}}" method="POST">
                   <div class="card-header d-flex justify-content-center row">
                      
                         @csrf

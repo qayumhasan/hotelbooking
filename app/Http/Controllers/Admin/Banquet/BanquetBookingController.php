@@ -486,6 +486,11 @@ class BanquetBookingController extends Controller
         $data->total_net_amount = $request->total_net_amount;
         $data->is_active = $request->is_active;
 
+        $data->account_head_code = '18-16-0024-20132';
+        $data->account_head_name = 'Accounts Receivable-Clients';
+
+        $data->bunquet_guest_id='Banquet'.'-'.$request->guest_name.'-'.$request->booking_no;
+
         if ($request->hasFile('pdf')) {
             $data->banquet_file = $request->file('pdf')->store('public/uploads/banquet/file/');
         }
@@ -495,7 +500,7 @@ class BanquetBookingController extends Controller
                 'messege' => 'Banquet Insert Success!',
                 'alert-type' =>'success'
                 );
-          return redirect()->back()->with($notification);
+          return redirect()->route('admin.banquet.payment',$request->booking_no)->with($notification);
         }else{
             $notification = array(
                 'messege' => 'Banquet Insert Success!',
@@ -505,6 +510,11 @@ class BanquetBookingController extends Controller
         }
     }
     //
+
+    public function banquetpayment($bunquet_id){
+        $booking_number=$bunquet_id;
+        return view('banquet.booking.payment',compact('booking_number'));
+    }
 
 
 

@@ -792,6 +792,50 @@ function editdata(el) {
 </script>
 
 
+<script>
+$(document).ready(function() {
+   $('#account_head_main').on('change', function(){
+       var source_account = $(this).val();
+        //alert(source_account);
+       if(source_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/source_account/current/blance/') }}/"+source_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_sourch').html("Current Balance:" +data);
+                    
+                    
+                }
+           });
+       }
 
+   });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+   $('#account_head').on('change', function(){
+       var head_account = $(this).val();
+        //alert(head_account);
+       if(head_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/head_account/current/blance/') }}/"+head_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_head').html("Current Balance: " +data);
+                    
+                    
+                }
+           });
+       }
+
+   });
+});
+</script>
                                       
 @endsection
