@@ -91,14 +91,24 @@ class CheckingController extends Controller
                 'print_name' => $request->print_name,
                 'gender' => $request->gender,
                 'city' => $request->city,
+                'address' =>$request->address,
+                'nationality' =>$request->nationality,
+                'date_of_birth' =>$request->date_of_birth,
                 'company_name' => $request->company_name,
+                'doc_type' => $request->doc_type,
+                'id_no' => $request->id_no,
+                'file_no' => $request->file_no,
                 'mobile' => $request->mobile,
                 'email' => $request->email,
                 'account_head' => "Accounts Receivable-Clients",
                 'account_head_code' => "18-16-0024-20132",
+                'client_img' => "18-16-0024-20132",
                 'entry_by' => Auth::user()->id,
                 'date' => Carbon::now()->toDateTimeString(),
             ]);
+
+        }else{
+            $guestID = $request->guest_id;
         }
 
 
@@ -154,7 +164,14 @@ class CheckingController extends Controller
         $checkin->children_no = $request->children_no;
         $checkin->is_occupy = 1;
 
+        if(isset($insert)){
+            $checkin->guest_id = $insert;
+            $guestdata = Guest::findOrFail($insert);
+        }else{
+            $checkin->guest_id =$guestID;
+        }
 
+      
 
 
         if ($request->hasFile('client_img')) {
@@ -162,6 +179,10 @@ class CheckingController extends Controller
             $imagename = rand(111111, 9999999) . '.' . $client_img->getClientOriginalExtension();
             Image::make($client_img)->resize(600, 400)->save(base_path('public/uploads/checkin/' . $imagename), 100);
             $checkin->client_img = $imagename;
+            if(isset($guestdata)){
+                $guestdata->client_img = $imagename;
+                $guestdata->save();
+            }
         }
 
         if ($request->hasFile('id_proof_img')) {
@@ -169,6 +190,10 @@ class CheckingController extends Controller
             $imagename = rand(111111, 9999999) . '.' . $id_proof_img->getClientOriginalExtension();
             Image::make($id_proof_img)->resize(600, 400)->save(base_path('public/uploads/checkin/' . $imagename), 100);
             $checkin->id_proof_imag = $imagename;
+            if(isset($guestdata)){
+                $guestdata->id_proof_imag = $imagename;
+                $guestdata->save();
+            }
         }
 
         $checkin->save();
@@ -542,8 +567,11 @@ class CheckingController extends Controller
                 // remove from housekeeping guest entry
 
                 $guestEntry = HouseKeepingGuestEntry::where('room_id', $request->room_id)->where('is_active', 1)->first();
+                if($guestEntry){
+                    
                 $guestEntry->is_active = 0;
                 $guestEntry->save();
+                }
 
                 // add amount and day in checkin
 
@@ -891,5 +919,22 @@ class CheckingController extends Controller
     {
         return $items = ItemEntry::where('category_name',$id)->where('is_active',1)->where('is_deleted',0)->get();
 
+    }
+
+
+    public function guestNameList()
+    {
+        $guests = Guest::where('is_active',1)->where('is_deleted',0)->get();
+        return view('hotelbooking.checking.ajax.guest_list',compact('guests'));
+    }
+
+    public function guestCheckinDetails($id)
+    {
+        
+        $checkinInfo = Checkin::with('checkout')->where('guest_id',$id)->where('is_occupy',0)->get();
+        if(count($checkinInfo) >0){
+            return view('hotelbooking.checking.ajax.guest_checkin_details',compact('checkinInfo'));
+        }
+        
     }
 }

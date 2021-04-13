@@ -14,7 +14,7 @@ $time = date("h:i");
 
 <div class="content-page">
     <div class="container-fluid">
-    
+
         <div class="row">
             <div class="col-sm-12 col-lg-12">
                 <div class="card">
@@ -44,6 +44,7 @@ $time = date("h:i");
                                                 @endphp
                                                 <label>Booking ID: {{$bookingid}}</label>
                                                 <input type="hidden" value="{{$bookingid}}" name="booking_id" />
+                                                <input type="hidden" value="{!!$currency->symbol ?? ' '!!}" id="symbol"/>
 
                                             </div>
                                         </div>
@@ -64,14 +65,14 @@ $time = date("h:i");
                                             <div class="form-group row">
                                                 <label for="staticEmail" class="col-sm-3 col-form-label">CheckIn Date:</label>
                                                 <div class="col-sm-5">
-                                                    <input type="text" required value="{{$current}}" name="checkindate" class="form-control datepicker form-control-sm" id="checkindate" >
+                                                    <input type="text" required value="{{$current}}" name="checkindate" class="form-control datepicker form-control-sm" id="checkindate">
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <input type="time" required name="checkintime" class="form-control form-control-sm" value="{{$time}}">
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label for="staticEmail" class="col-sm-4 col-form-label">CheckOut Date:</label>
@@ -193,11 +194,7 @@ $time = date("h:i");
                                             <div class="form-group row">
                                                 <label for="staticEmail" class="col-sm-3 col-form-label">Thru Agent :</label>
                                                 <div class="col-sm-6">
-                                                    <select class="form-control form-control-sm" id="exampleFormControlSelect1" name="thru_agent">
-                                                        <option value="agoda">Agoda</option>
-                                                        <option value="booking.com">Booking.com</option>
-                                                        <option value="makemytrip">Makemytrip</option>
-                                                    </select>
+                                                    <input type="text" name="thru_agent" class="form-control form-control-sm">
                                                 </div>
                                             </div>
                                         </div>
@@ -393,9 +390,13 @@ $time = date("h:i");
 
 
 <script>
+    var roomdata = [];
 
-    $(document).ready(function(){
-        $('#guest_name_data').keypress(function(e){
+    var isdata = false;
+
+
+    $(document).ready(function() {
+        $('#guest_name_data').keypress(function(e) {
             console.log(e.target.value);
             $('#print_name_data').val(e.target.value);
         });
@@ -416,6 +417,10 @@ $time = date("h:i");
 
         var rooms = [];
         roomtype.addEventListener('change', function(event) {
+
+
+
+
             $('#room_section').show();
             var id = event.target.value;
             rooms = [];
@@ -441,13 +446,25 @@ $time = date("h:i");
 
                         data.forEach(function(item, index) {
 
-                            var html = '<div class="form-check delete_rooms"><input class="form-check-input" onclick="selectedRoom(this)" type="checkbox" value="%value%" id="defaultCheck1"><input type="hidden" value="%tarrif%"><label class="form-check-label" for="defaultCheck1">%room_no%( %room_type% )</label></div>';
+                            var html = '<div class="form-check delete_rooms"><input class="form-check-input" onclick="selectedRoom(this)" type="checkbox" value="%value%" id="checkeditem%id%"><input type="hidden" value="%tarrif%"><label class="form-check-label" for="defaultCheck1">%room_no%( %room_type% )</label></div>';
                             var newhtml = html.replace('%room_no%', item.room_no);
                             var newhtml = newhtml.replace('%room_type%', item.roomtype.room_type);
                             var newhtml = newhtml.replace('%value%', item.id);
                             var newhtml = newhtml.replace('%tarrif%', item.tariff);
+                            var newhtml = newhtml.replace('%id%', item.id);
                             roomsetup.insertAdjacentHTML('afterend', newhtml);
                         })
+
+
+
+                        roomdata.forEach(function(item) {
+                            var checkteditem = document.querySelector('#checkeditem' + item.id);
+                            if (checkteditem) {
+                                checkteditem.checked = true;
+                                checkteditem.disabled = true;
+                            }
+
+                        });
 
                     }
 
@@ -463,12 +480,19 @@ $time = date("h:i");
 
     })();
 
+
     var total = 0;
+
+
+
 
     function selectedRoom(el) {
 
+
+
         var room = [];
         if (el.checked == true) {
+            
             rooms.getRooms.filter(function(element) {
 
 
@@ -477,11 +501,34 @@ $time = date("h:i");
                     if (ele.id == el.value) {
                         room.push(ele);
 
-
-
+                        var dublicatitem = roomdata.find(function(item) {
+                            return ele.id === item.id;
+                        })
+                        if (!dublicatitem) {
+                            // if not found
+                            roomdata.push(ele);
+                            
+                        } else {
+                            
+                        }
                     }
                 })
+
             });
+
+
+            // var roomitem = [];
+            // roomdata.forEach(function(items) {
+            //     items.forEach(function(item) {
+            //         roomitem.push(item);
+            //     })
+            // })
+
+            // var dublicatitem = roomitem.find(function(item) {
+            //     return room[0].id === item.id;
+            // })
+
+
 
         } else if (el.checked == false) {
 
@@ -490,6 +537,12 @@ $time = date("h:i");
             var tarriffnew = parseInt(el.nextElementSibling.value);
             total = total - tarriffnew;
             document.querySelector('#totaltariff').innerHTML = total;
+
+            var deletedublicat = roomdata.filter(function(item) {
+                return el.value != item.id;
+            })
+
+            roomdata = deletedublicat;
 
         }
 
@@ -501,45 +554,49 @@ $time = date("h:i");
         var checkin = document.querySelector('#checkindate');
         var checkout = document.querySelector('#checkoutdate');
 
-        if(checkin.value && checkout.value){
+        if (checkin.value && checkout.value) {
             var checkindate = checkin.value;
             var checkoutdate = checkout.value;
-            
+
 
 
             $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: 'get',
-            url: "{{ url('/admin/advance/booking/check') }}/" + room_id,
-            data:{
-                checkin:checkindate,
-                checkout:checkoutdate,
-            },
-            success: function(data) {
-                console.log(data);
-                if (!data) {
-                    addRoom(room);
-                } else {
-                    var message = 'Sorry! This Room is Booked from %checkindate% to %checkoutdate%';
-
-                    var newmassage = message.replace('%checkindate%',data.checkindate);
-                    var newmassage = newmassage.replace('%checkoutdate%',data.checkoutdate);
-                    iziToast.warning({
-                        position: 'topCenter',
-                        // message: 'Sorry! This Room is Booked with given Date and Time!',
-                        message: newmassage,
-                    });
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }
-        });
+            });
+            $.ajax({
+                type: 'get',
+                url: "{{ url('/admin/advance/booking/check') }}/" + room_id,
+                data: {
+                    checkin: checkindate,
+                    checkout: checkoutdate,
+                },
+                success: function(data) {
+
+                    if (!data) {
+
+                        
+                            addRoom(room);
+                        
+
+                    } else {
+                        var message = 'Sorry! This Room is Booked from %checkindate% to %checkoutdate%';
+
+                        var newmassage = message.replace('%checkindate%', data.checkindate);
+                        var newmassage = newmassage.replace('%checkoutdate%', data.checkoutdate);
+                        iziToast.warning({
+                            position: 'topCenter',
+                            // message: 'Sorry! This Room is Booked with given Date and Time!',
+                            message: newmassage,
+                        });
+                    }
+                }
+            });
 
 
 
-        }else{
+        } else {
             checkin.focus();
             checkout.focus();
 
@@ -550,16 +607,19 @@ $time = date("h:i");
         }
 
 
+
+
     }
 
 
+ 
 
     function addRoom(room) {
 
-
-
+        var symbol = document.querySelector('#symbol').value;
+        
         var roomelement = document.querySelector('#selectedroom');
-        var html = '<tr class="deletedelement" id="deletedelement%deletedid%"><td>%room% (%room_type%)</td><td>$ %tariff% <input type="hidden" class="counttotal" value="%price%"/></td><td><span class="text-center" onclick="deleteroom(this)"><i class="fa fa-trash" aria-hidden="true"></i><input type="hidden" class="deducttotal" value="%detuctprice%"/> <input type="hidden" name="room[]" value="%room_id%" </span></td></tr>';
+        var html = '<tr class="deletedelement" id="deletedelement%deletedid%"><td>%room% (%room_type%)</td><td>%symbol% %tariff% <input type="hidden" class="counttotal" value="%price%"/></td><td><span class="text-center" onclick="deleteroom(this)"><i class="fa fa-trash" aria-hidden="true"></i><input type="hidden" class="deducttotal" value="%detuctprice%"/> <input type="hidden" name="room[]" value="%room_id%" </span></td></tr>';
 
 
         var newhtml = html.replace('%room%', room[0].room_no);
@@ -569,18 +629,33 @@ $time = date("h:i");
         var newhtml = newhtml.replace('%price%', room[0].tariff);
         var newhtml = newhtml.replace('%detuctprice%', room[0].tariff);
         var newhtml = newhtml.replace('%room_id%', room[0].id);
+        var newhtml = newhtml.replace('%symbol%', symbol);
         roomelement.insertAdjacentHTML('afterend', newhtml);
 
 
         var count = document.querySelectorAll('.counttotal');
         var tarriff = parseInt(count[0].attributes[2].value);
         total = total + tarriff;
-        document.querySelector('#totaltariff').innerHTML = total;
+        document.querySelector('#totaltariff').innerHTML =symbol+' '+ total;
 
 
     }
 
     function deleteroom(el) {
+
+        var room_id = el.children[2].value;
+
+        var checkteditem = document.querySelector('#checkeditem' +  room_id);
+                            if (checkteditem) {
+                                checkteditem.checked = false;
+                                checkteditem.disabled = false;
+                            }
+        var deletedublicat = roomdata.filter(function(item) {
+                return room_id != item.id;
+            })
+
+            roomdata = deletedublicat;
+        
 
         var deducttariff = parseInt(el.children[1].value);
         total = total - deducttariff;
@@ -610,18 +685,18 @@ $time = date("h:i");
                 type: type,
                 data: request,
                 success: function(data) {
-                  
+
                     $('#addguest').modal('hide');
 
                     $('#select_guest_name').empty();
                     $('#select_guest_name').append(' <option value="0">--Please Guest Name--</option>');
-                    $.each(data,function(index,divisionobj){
-                        
-                        $('#select_guest_name').append('<option value="' + divisionobj.id + '">'+divisionobj.guest_name+'</option>');
+                    $.each(data, function(index, divisionobj) {
+
+                        $('#select_guest_name').append('<option value="' + divisionobj.id + '">' + divisionobj.guest_name + '</option>');
                     });
 
                     // toastr.success('Guest Insert Succssfully!');
-                    
+
                     //log(data);
 
                     //     $('.loading_button').hide();

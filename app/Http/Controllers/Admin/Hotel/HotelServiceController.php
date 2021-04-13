@@ -39,6 +39,7 @@ class HotelServiceController extends Controller
     // incomplate
     public function SingleCheckoutRequest(Request $request){
 
+        
         $request->validate([
             'room_id'=>'required',
 
@@ -46,6 +47,7 @@ class HotelServiceController extends Controller
         $current=date("d-m-Y");
         
        $checkindata=Checkin::where('booking_no',$request->booking_no)->where('room_id',$request->room_id)->first();
+
         $origin = new DateTime($checkindata->checkin_date);
         $target=Carbon::parse("{$request->date}")->toFormattedDateString();
         $target = new DateTime($target);
@@ -58,6 +60,7 @@ class HotelServiceController extends Controller
 
        $totalamountroom = (int)$day * $checkindata->tarif;
 
+       
     //    insert aditional room information on checckin
        if($checkindata){
 
@@ -75,8 +78,12 @@ class HotelServiceController extends Controller
     // remove from housekeeping guest entry
 
     $guestEntry = HouseKeepingGuestEntry::where('room_id',$request->room_id)->where('is_active',1)->first();
-    $guestEntry->is_active = 0;
-    $guestEntry->save();
+
+    if($guestEntry){
+        $guestEntry->is_active = 0;
+        $guestEntry->save();  
+    }
+   
 
 
     //    add new booking in housekeeping

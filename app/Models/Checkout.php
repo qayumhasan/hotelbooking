@@ -15,6 +15,11 @@ class Checkout extends Model
         return $this->hasOne('App\Models\Admin','id','entry_by');
     }
 
+    public function room()
+    {
+        return $this->hasOne('App\Models\Room','id','prime_room');
+    }
+
     
     /**
      * Get the phone associated with the user.

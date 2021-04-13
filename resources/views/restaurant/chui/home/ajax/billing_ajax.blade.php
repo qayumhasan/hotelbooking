@@ -493,6 +493,15 @@ $time = date("h:i");
                             item += '</select> </div> </th><td scope ="col" id="getroomdata"></td> </tr>';
                             $('#payment_mode_insert').append(item);
 
+                        }else{
+                            iziToast.success({
+                                message: 'No Booked Room Found!',
+                                'position': 'topCenter'
+                            });
+
+                            $('#payment_mode').val(1).selected;
+
+
                         }
 
 
