@@ -24,13 +24,13 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Account Transection Reports</h4>
+                        <h4 class="card-title">Cash And Bank Transection Reports</h4>
                      </div>
                      <span class="float-right mr-2">
                        
                      </span>
                   </div>
-                  <form action="{{route('admin.account.reports.accounttransection')}}" method="POST">
+                  <form action="{{route('admin.account.reports.cashbank')}}" method="POST">
                   <div class="card-header d-flex justify-content-center row">
                      
                         @csrf
@@ -107,7 +107,7 @@ $current = date("m/d/Y");
                                     <td>{{$sdata->CategoryName}}</td>
                                     <td>{{$sdata->MainCategoryName}}</td>
                                    
-                                    <td>{{$sdata->Date}}</td>
+                                    <td>{{$sdata->date}}</td>
                                     <td>{{$sdata->CreditAmount}}</td>
                                     <td>{{$sdata->DavitAmount }}</td>
                                  
@@ -158,7 +158,7 @@ $current = date("m/d/Y");
                                     <td>{{$data->CategoryName}}</td>
                                     <td>{{$data->MainCategoryName}}</td>
                                    
-                                    <td>{{$data->Date}}</td>
+                                    <td>{{$data->date}}</td>
                                     <td>{{$data->CreditAmount}}</td>
                                     <td>{{$data->DavitAmount }}</td>
                                  </tr>

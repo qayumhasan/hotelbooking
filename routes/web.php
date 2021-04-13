@@ -424,6 +424,7 @@ Route::post('get/allcateitem/all/{booking_no}', [BanquetBookingController::class
 Route::post('get/allcateitem/delete', [BanquetBookingController::class, 'getallcateitemdelete'])->name('get.categoryitemdelete.delete');
 Route::post('admin/banquet/insert', [BanquetBookingController::class, 'banquetinsert'])->name('admin.banquet.store');
 Route::post('get/allamount/banquet/', [BanquetBookingController::class, 'getallamountsection'])->name('get.banquet.allamount');
+Route::get('admin/banquet/payment/voucher/{bunquet_id}', [BanquetBookingController::class, 'banquetpayment'])->name('admin.banquet.payment');
 
 
 

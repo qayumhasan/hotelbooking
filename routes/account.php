@@ -149,3 +149,9 @@ Route::post('admin/account/transection/reports/guest', [ReportsController::class
 
 Route::get('admin/account/transection/reports/accounttransection', [ReportsController::class, 'accounttrasectionledger'])->name('admin.account.reports.accounttransection');
 Route::post('admin/account/transection/reports/accounttransection', [ReportsController::class, 'accounttrasectionledgersearch'])->name('admin.account.reports.accounttransection');
+
+Route::get('admin/account/transection/reports/cashbank', [ReportsController::class, 'cashandbankreports'])->name('admin.account.reports.cashbank');
+Route::post('admin/account/transection/reports/cashbank', [ReportsController::class, 'cashandbankreportssearch'])->name('admin.account.reports.cashbank');
+
+Route::get('/get/admin/source_account/current/blance/{source_account}', [AccountTrasectionController::class, 'getsourchaccountBalance']);
+Route::get('/get/admin/head_account/current/blance/{head_account}', [AccountTrasectionController::class, 'getheadaccountBalance']);

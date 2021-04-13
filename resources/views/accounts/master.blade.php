@@ -255,7 +255,12 @@
                                         <i class="las la-list-alt"></i><span>Account Reports</span>
                                     </a>
                                 </li>
-
+                                <li class="{{ request()->routeIs('admin.account.reports.cashbank*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.cashbank')}}">
+                                        <i class="las la-list-alt"></i><span>Cash & Bank Reports</span>
+                                    </a>
+                                </li>
+                                
                                 
                                 
                             </ul>

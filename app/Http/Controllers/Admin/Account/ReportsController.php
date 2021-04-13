@@ -202,7 +202,42 @@ class ReportsController extends Controller
         }
 
     }
+// reports
+    public function cashandbankreports(){
+        $allledger=DB::table('vchart_of_accounts')->where('maincategory_id',9)->get();
+        $alldata=DB::table('vCashAndBankTransection')->get();
+        return view('accounts.reports.cashandbanktransectionreport',compact('alldata','allledger'));
+    }
+    // 
 
+    public function cashandbankreportssearch(Request $request){
+
+       if($request->no_date){
+            $validated = $request->validate([
+                'employee_name' => 'required',
+            ]);
+            $formdate=$request->formdate;
+            $to_date=$request->todate;
+            $employee_id=$request->employee_name;
+            $searchdata=DB::table('vCashAndBankTransection')->where('AccountHeadCode',$employee_id)->whereBetween('date', [$formdate, $to_date])->get();
+            $allledger=DB::table('vchart_of_accounts')->where('maincategory_id',9)->get();
+            
+            return view('accounts.reports.cashandbanktransectionreport',compact('searchdata','allledger','formdate','to_date'));
+        }else{
+            $validated = $request->validate([
+                'employee_name' => 'required',
+              
+            ]);
+            $employee_id=$request->employee_name;
+            $searchdata=DB::table('vCashAndBankTransection')->where('AccountHeadCode',$employee_id)->get();
+           
+            $allledger=DB::table('vchart_of_accounts')->where('maincategory_id',9)->get();
+            
+            return view('accounts.reports.cashandbanktransectionreport',compact('searchdata','allledger'));
+        }
+
+
+    }
 
 
   
