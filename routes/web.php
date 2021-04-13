@@ -781,3 +781,7 @@ Route::get('admin/checkout/invoice/tax/data/delete/{id}',[CheckingController::cl
 Route::get('admin/checkin/get/guest/info/{id}',[CheckingController::class,'guestInfo']);
 
 Route::get('/admin/service/list/{id}',[CheckingController::class,'serviceList']);
+
+Route::get('/admin/guest/details/{id}',[CheckingController::class,'guestCheckinDetails']);
+
+Route::get('/admin/guest/name/list',[CheckingController::class,'guestNameList'])->name('admin.guest.name.list');

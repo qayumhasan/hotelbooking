@@ -21,7 +21,14 @@ class CreateGuestsTable extends Migration
             $table->string('gender');
             $table->string('company_name')->nullable();
             $table->string('city');
+            $table->string('address')->nullable();
+            $table->string('nationality')->nullable();
+            $table->string('date_of_birth')->nullable();
+            $table->string('doc_type')->nullable();
+            $table->string('id_no')->nullable();
+            $table->string('file_no')->nullable();
             $table->string('mobile');
+            $table->string('client_img')->nullable();
             $table->string('email')->nullable();
 
             $table->string('date',40)->nullable();

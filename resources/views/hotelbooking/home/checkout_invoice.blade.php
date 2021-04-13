@@ -763,6 +763,7 @@ $time = date("h:i");
                             .items td.cost {
                                 text-align: "."center;
                             }
+                            
                         </style>
                         </head>
 
@@ -853,9 +854,6 @@ $time = date("h:i");
                                             $totaltarif = (int)$row->additional_room_day * (int)$row->tarif;
                                             $totalroom = $totalroom + $totaltarif;
                                             @endphp
-
-
-
                                             @endforeach
                                         </td>
 

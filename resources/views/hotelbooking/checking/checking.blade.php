@@ -47,6 +47,11 @@ $time = date("h:i");
     #rooms {
         overflow: scroll;
     }
+
+    .old_guest {
+        cursor: pointer;
+        text-decoration: underline;
+    }
 </style>
 <div class="content-page">
     <div class="container-fluid">
@@ -167,9 +172,16 @@ $time = date("h:i");
                             <!-- Guest Registration Form -->
 
                             <div class="card shadow-sm shadow-showcase">
-                                <div class="card-header d-flex justify-content-between">
-                                    <div class="header-title">
-                                        <h4 class="card-title">Guest Registration Form</h4>
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="header-title">
+                                                <h4 class="card-title">Guest Registration Form</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span>If returning guest? <a class="old_guest" id="showguestname" data-toggle="modal" data-target="#guestlist" data-whatever="@getbootstrap">Click to search</a></span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -178,7 +190,7 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="email">Title:</label>
                                         <div class="col-sm-9">
-                                            <select class="controll-from" id="exampleFormControlSelect1" name="person_title">
+                                            <select class="controll-from" id="person_title" name="person_title">
                                                 <option value="Mr.">Mr.</option>
                                                 <option value="Miss">Miss</option>
                                                 <option value="M/s">M/S</option>
@@ -191,12 +203,8 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Guest Name <small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" required autofocus id="guestname" onchange="getGuestData(this)" onkeyup="enterPrintName(this)" name="guest_name" list="datalistOptions" placeholder="Enter Guest Name">
-                                            <datalist id="datalistOptions">
-                                                @foreach($guests as $row)
-                                                <option value="{{$row->guest_name}}">
-                                                    @endforeach
-                                            </datalist>
+                                            <input type="text" class="controll-from" required autofocus id="guestname" name="guest_name" onkeyup="enterPrintName(this)" list="datalistOptions" placeholder="Enter Guest Name">
+
                                         </div>
 
                                     </div>
@@ -228,7 +236,7 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Address<small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" required id="pwd1" placeholder="Enter Address" name="address">
+                                            <input type="text" class="controll-from" required id="address" placeholder="Enter Address" name="address">
                                         </div>
                                     </div>
 
@@ -248,7 +256,7 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Nationality<small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" name="nationality" required id="pwd1" placeholder="Enter Nationality">
+                                            <input type="text" class="controll-from" name="nationality" required id="nationality" placeholder="Enter Nationality">
                                         </div>
                                     </div>
 
@@ -261,14 +269,14 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Date of Birth</label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="controll-from" id="dofdatepicker" name="date_of_birth" placeholder="Enter Date of Birth">
+                                            <input type="text" class="controll-from datepicker" id="dofdatepicker" name="date_of_birth" placeholder="Enter Date of Birth">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="email">Document Type<small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <select class="controll-from" id="exampleFormControlSelect1" name="doc_type" required>
+                                            <select class="controll-from" id="doc_type" name="doc_type" required>
                                                 <option value="passport">Passport</option>
                                                 <option value="admit_card">Admit Card</option>
                                                 <option value="bank_passbook">bank passbook</option>
@@ -279,12 +287,13 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">ID No<small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="controll-from" required name="id_no" id="pwd1" placeholder="Enter ID No">
+                                            <input type="text" class="controll-from" required name="id_no" id="id_no" placeholder="Enter ID No">
                                         </div>
                                     </div>
 
                                     <div class="form-check d-none">
                                         <input class="form-check-input" name="is_old" type="checkbox" value="1" id="is_old">
+                                        <input type="text" name="guest_id" value="" id="guestID" />
                                     </div>
 
 
@@ -307,7 +316,7 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">File No <small class="text-danger">*</small></label>
                                         <div class="col-sm-9">
-                                            <input type="number" class="controll-from" name="file_no" required id="pwd1" placeholder="Enter File No">
+                                            <input type="number" class="controll-from" name="file_no" required id="file_no" placeholder="Enter File No">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -486,7 +495,7 @@ $time = date("h:i");
                                         <div class="col-md-6">
                                             <p>Upload Client Image:</p>
                                             <div class="custom-file mb-3">
-                                                <input type="file" class="custom-file-input" id="customFile" name="client_img" required>
+                                                <input type="file" class="custom-file-input" id="client_img" name="client_img" required>
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
                                             </div>
                                             <span class="btn btn-warning" data-toggle="modal" data-target="#client_img"> Take a Image</span>
@@ -510,6 +519,9 @@ $time = date("h:i");
 
 
 
+                        </div>
+                        <div class="col-md-12" id="guestcheckindetails">
+                        
                         </div>
                     </div>
 
@@ -604,6 +616,27 @@ $time = date("h:i");
 
 
 
+<!-- Old Guest List -->
+
+
+<div class="modal fade" id="guestlist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Guest Name List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="guest_name_list">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
@@ -683,7 +716,7 @@ $time = date("h:i");
     </div>
 </div>
 
-<input type="text" id="except_room_id" value="{{$room->id}}" />
+<input type="hidden" id="except_room_id" value="{{$room->id}}" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
@@ -963,6 +996,89 @@ $time = date("h:i");
         });
     }
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('#showguestname').click(function(e) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            $.ajax({
+                type: 'get',
+                url: "{{route('admin.guest.name.list')}}",
+
+                success: function(data) {
+                    $('#guest_name_list').empty();
+                    $('#guest_name_list').append(data);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    function getuserData(e) {
+        var modal = $(e)
+        var data = modal.data('whatever');
+        console.log(data);
+        $('#guestID').val(data.id);
+        $('#guestname').val(data.guest_name);
+        $('#printname').val(data.print_name);
+        $('#company_name').val(data.company_name);
+        $('#city').val(data.city);
+        $('#address').val(data.address);
+        $('#nationality').val(data.nationality);
+        $('#dofdatepicker').val(data.date_of_birth);
+        $('#id_no').val(data.id_no);
+        $('#file_no').val(data.file_no);
+        $('#file_no').val(data.file_no);
+        $('#client_img').prop('required', false);
+
+        $('#mobile').val(data.mobile);
+        $('#email').val(data.email);
+        $('#is_old').prop('checked', true);
+        $('#guestgender').val(data.gender).selected;
+        $('#person_title').val(data.title).selected;
+        $('#doc_type').val(data.doc_type).selected;
+
+
+        $('#guestlist').modal('hide');
+
+
+        var id = data.id;
+        showguestinfo(id);
+
+
+    }
+
+    function showguestinfo(id) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+        $.ajax({
+            type: 'get',
+            url: "{{url('/admin/guest/details')}}/" + id,
+
+            success: function(data) {
+                console.log(data);
+
+                $('#guestcheckindetails').empty();
+                $('#guestcheckindetails').append(data);
+            }
+        });
+    }
+</script>
+
+
 
 
 
