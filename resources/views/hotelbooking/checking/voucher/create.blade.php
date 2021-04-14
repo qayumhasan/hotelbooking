@@ -44,17 +44,20 @@ $current = date("m/d/Y");
 
                                         <div class="col-md-12">
 
-                                            <table class="table table-borderless">
-                                                <tbody>
+                                        
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                               
+                                                <tr>
+                                                    <td><label>Narration:</label></td>
+                                                    <td colspan="5">
+                                                     <input type="hidden" id="voucher_name" name="voucher_name" value="Cash Receipt Voucher">
+                                                     <input type="hidden" name="reference" value="{{$guestname->booking_no}}">
+                                                        <textarea name="narration" class="form-control noradious"></textarea>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
 
-                                                    <tr>
-                                                        <td><label>Narration:</label></td>
-                                                        <td colspan="5">
-                                                            <input type="hidden" id="voucher_name" name="voucher_name" value="Cash Receipt Voucher">
-                                                            <textarea name="narration" class="form-control noradious"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -666,13 +669,16 @@ $current = date("m/d/Y");
     }
 </script>
 
-<script>
-    function editdata(el) {
 
-        $.post('{{route('get.alldatatransection.edit')}}', {
-                _token: '{{ csrf_token() }}',
-                item_id: el.value
-            },
+
+
+
+
+
+<script>
+function editdata(el) {
+       
+        $.post('{{route('get.alldatatransection.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
             function(data) {
                 // console.log(data)
 

@@ -236,8 +236,65 @@ class ReportsController extends Controller
             return view('accounts.reports.cashandbanktransectionreport',compact('searchdata','allledger'));
         }
 
+    }
+
+    public function userTransection(){
+        $alluser=DB::table('admins')->get();
+        $alldata=DB::table('vUserLogLedger')->get();
+        return view('accounts.reports.usertransectionreport',compact('alluser','alldata'));
+    }
+
+    public function userTransectionsearch(Request $request){
+        if($request->no_date){
+            $validated = $request->validate([
+                'username_name' => 'required',
+            ]);
+            $formdate=$request->formdate;
+            $to_date=$request->todate;
+            $username_id=$request->username_name;
+
+            $searchdata=DB::table('vUserLogLedger')->where('UserID',$username_id)->whereBetween('date', [$formdate, $to_date])->get();
+
+            $alluser=DB::table('admins')->get();
+            
+            return view('accounts.reports.usertransectionreport',compact('username_id','searchdata','alluser','formdate','to_date'));
+        }else{
+            $validated = $request->validate([
+                'username_name' => 'required',
+              
+            ]);
+            $username_id=$request->username_name;
+            $searchdata=DB::table('vUserLogLedger')->where('UserID',$username_id)->get();
+            
+           
+            $alluser=DB::table('admins')->get();
+            
+            return view('accounts.reports.usertransectionreport',compact('username_id','searchdata','alluser'));
+        }
+    }
+
+
+    public function uservouchetypewise(){
+       
+        $allvoucher=DB::table('vUserLogLedger')->select(['VoucherType'])->get();
+        $alldata=DB::table('vUserLogLedger')->get();
+        return view('accounts.reports.uservouchertypewise',compact('allvoucher','alldata'));
+    }
+
+    // 
+    public function uservouchetypewisesearch(Request $request){
+
+        $validated = $request->validate([
+            'username_name' => 'required',
+          
+        ]);
+        $voucher_name=$request->username_name;
+        $searchdata=DB::table('vUserLogLedger')->where('VoucherType',$voucher_name)->get();
+        $allvoucher=DB::table('vUserLogLedger')->select(['VoucherType'])->get();
+        return view('accounts.reports.uservouchertypewise',compact('voucher_name','searchdata','allvoucher'));
 
     }
+
 
 
   

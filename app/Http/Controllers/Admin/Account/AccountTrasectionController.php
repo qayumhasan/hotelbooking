@@ -317,8 +317,13 @@ class AccountTrasectionController extends Controller
     }
 
     public function delete($id){
+        date_default_timezone_set("asia/dhaka");
+        $current = date("m/d/Y");
+
         $delete=AccountTransectionHead::where('id',$id)->update([
             'is_deleted'=>1,
+            'deleted_by'=>Auth::user()->id,
+            'deleted_date'=>$current,
             'updated_at'=>Carbon::now()->toDateTimeString(),
         ]);
         if($delete){
@@ -346,15 +351,13 @@ class AccountTrasectionController extends Controller
                 $data->voucher_no=$request->invoice;
                 $data->date=$request->date;
                 $data->reference=$request->reference;
-
                 $data->cheque_reference=$check->check_reference;
-
                 $data->narration=$request->narration;
                 $data->advice=$request->advice;
                 $data->main_invoice=$request->hiddeninvoice;
-                $data->created_at=Carbon::now()->toDateTimeString();
-                $data->entry_by=Auth::user()->id;
-
+                $data->updated_at=Carbon::now()->toDateTimeString();
+                $data->updated_by=Auth::user()->id;
+                $data->updated_date=$request->date;
                 $checkbookcheck=CheckBookTransection::where('voucher_number',$request->invoice)->first();
                 if($checkbookcheck){
                     CheckBookTransection::where('voucher_number',$request->invoice)->update([

@@ -106,6 +106,11 @@ class CheckingController extends Controller
                 'entry_by' => Auth::user()->id,
                 'date' => Carbon::now()->toDateTimeString(),
             ]);
+            
+            $update=Guest::where('id', $insert)->update([
+                'guest_id'=>'guest-'.$insert,
+            ]);
+            
 
             $update=Guest::where('id', $insert)->update([
                 'guest_id'=>'guest-'.$insert,

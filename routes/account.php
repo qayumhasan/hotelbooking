@@ -129,6 +129,7 @@ Route::get('/get/admin/accounthead/checkbok/all/{account_head}', [AccountTrasect
 // reports controller
 Route::get('admin/account/transection/reports/datewise', [ReportsController::class, 'datewisereport'])->name('admin.account.reports.datewise');
 Route::post('admin/account/transection/reports/datewise', [ReportsController::class, 'datewisereportsearch'])->name('admin.account.reports.datewise');
+
 Route::get('admin/account/transection/reports/vouchertypewise', [ReportsController::class, 'vouchertypewise'])->name('admin.account.reports.vouchertypewise');
 Route::post('admin/account/transection/reports/vouchertypewise', [ReportsController::class, 'vouchertypewisesearch'])->name('admin.account.reports.vouchertypewise');
 
@@ -155,3 +156,10 @@ Route::post('admin/account/transection/reports/cashbank', [ReportsController::cl
 
 Route::get('/get/admin/source_account/current/blance/{source_account}', [AccountTrasectionController::class, 'getsourchaccountBalance']);
 Route::get('/get/admin/head_account/current/blance/{head_account}', [AccountTrasectionController::class, 'getheadaccountBalance']);
+
+Route::get('admin/account/transection/reports/usertransection', [ReportsController::class, 'userTransection'])->name('admin.account.reports.userTransection');
+Route::post('admin/account/transection/reports/usertransection', [ReportsController::class, 'userTransectionsearch'])->name('admin.account.reports.userTransection');
+
+Route::get('admin/account/transection/reports/uservoucher', [ReportsController::class, 'uservouchetypewise'])->name('admin.account.reports.uservouchertype');
+Route::post('admin/account/transection/reports/uservoucher', [ReportsController::class, 'uservouchetypewisesearch'])->name('admin.account.reports.uservouchertype');
+

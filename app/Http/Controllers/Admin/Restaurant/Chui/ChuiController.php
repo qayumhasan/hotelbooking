@@ -511,6 +511,7 @@ class ChuiController extends Controller
     {
 
         
+        
 
 
         $kothead = Restaurant_Order_head::where('invoice_no', $request->invoice_no)->first();
