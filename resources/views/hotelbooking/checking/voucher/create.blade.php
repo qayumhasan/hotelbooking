@@ -50,6 +50,7 @@ $current = date("m/d/Y");
                                                     <td><label>Narration:</label></td>
                                                     <td colspan="5">
                                                      <input type="hidden" id="voucher_name" name="voucher_name" value="Cash Receipt Voucher">
+                                                     <input type="hidden" name="reference" value="{{$guestname->booking_no}}">
                                                         <textarea name="narration" class="form-control noradious"></textarea>
                                                     </td>
                                                 </tr>
@@ -656,8 +657,12 @@ $(document).ready(function() {
 
 </script>
 
-<script>
 
+
+
+
+
+<script>
 function editdata(el) {
        
         $.post('{{route('get.alldatatransection.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
