@@ -150,31 +150,36 @@ class CalculationTax{
 
             if($request->calculation_on == 1){
 
-                $checkout->decrement('room_amount',$request->amount);  
+                // $checkout->decrement('room_amount',$request->amount);  
                 $checkout->decrement('gross_amount',$request->amount);  
+                $checkout->decrement('outstanding_amount',$request->amount);  
                 $checkout->increment('discount_amount',$request->amount);  
 
 
             }elseif($request->calculation_on == 2){
 
-                $checkout->decrement('fb_amount',$request->amount);  
+                // $checkout->decrement('fb_amount',$request->amount);  
                 $checkout->decrement('gross_amount',$request->amount);  
+                $checkout->decrement('outstanding_amount',$request->amount);  
                 $checkout->increment('discount_amount',$request->amount);  
 
             }elseif($request->calculation_on == 3){
 
                 $checkout->decrement('gross_amount',$request->amount); 
+                $checkout->decrement('outstanding_amount',$request->amount); 
                 $checkout->increment('discount_amount',$request->amount);   
 
             }elseif($request->calculation_on == 4){
 
-                $checkout->decrement('net_amount',$request->amount);  
+                // $checkout->decrement('net_amount',$request->amount);  
                 $checkout->decrement('gross_amount',$request->amount);  
+                $checkout->decrement('outstanding_amount',$request->amount);  
                 $checkout->increment('discount_amount',$request->amount);  
 
             }elseif($request->calculation_on == 5){
 
                 $checkout->decrement('gross_amount',$request->amount); 
+                $checkout->decrement('outstanding_amount',$request->amount); 
                 $checkout->increment('discount_amount',$request->amount);   
             }
 
@@ -183,27 +188,32 @@ class CalculationTax{
 
             if($request->calculation_on == 1){
 
-                $checkout->increment('room_amount',$request->amount);  
+                // $checkout->increment('room_amount',$request->amount);  
                 $checkout->increment('gross_amount',$request->amount);  
+                $checkout->increment('outstanding_amount',$request->amount);  
 
             }elseif($request->calculation_on == 2){
 
-                $checkout->increment('fb_amount',$request->amount);  
+                // $checkout->increment('fb_amount',$request->amount);  
                 $checkout->increment('gross_amount',$request->amount);  
+                $checkout->increment('outstanding_amount',$request->amount);  
 
             }elseif($request->calculation_on == 3){
 
                 $checkout->decrement('discount_amount',$request->amount);  
                 $checkout->increment('gross_amount',$request->amount);  
+                $checkout->increment('outstanding_amount',$request->amount);  
 
             }elseif($request->calculation_on == 4){
 
-                $checkout->increment('net_amount',$request->amount);  
+                // $checkout->increment('net_amount',$request->amount);  
                 $checkout->increment('gross_amount',$request->amount);  
+                $checkout->increment('outstanding_amount',$request->amount);  
 
             }elseif($request->calculation_on == 5){
 
                 $checkout->increment('gross_amount',$request->amount);  
+                $checkout->increment('outstanding_amount',$request->amount);  
             }
         }
     }

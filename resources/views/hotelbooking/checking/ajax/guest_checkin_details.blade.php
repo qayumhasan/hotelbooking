@@ -25,7 +25,7 @@
                     <td>{{$row->date}}</td>
                     <td>{{$row->booking_no}}</td>
                     <td>{{$row->checkin_date}} -To- {{$row->checkout->checkout_date ?? ''}}</td>
-                    <td>{!!$currency->symbol ?? ' '!!} {{$row->checkout->gross_amount ?? ''}}</td>
+                    <td>{!!$currency->symbol ?? ' '!!} {{round($row->checkout->gross_amount ?? '',2)}}</td>
                     <td>hh</td>
                     <td>{{$row->checkout->room->room_no ?? ''}}</td>
                     <td>

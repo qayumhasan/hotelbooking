@@ -112,6 +112,10 @@ class CheckingController extends Controller
             ]);
             
 
+            $update=Guest::where('id', $insert)->update([
+                'guest_id'=>'guest-'.$insert,
+            ]);
+
         }else{
             $guestID = $request->guest_id;
         }
@@ -276,6 +280,13 @@ class CheckingController extends Controller
                 $checkin->female_no = $request->female_no;
                 $checkin->children_no = $request->children_no;
                 $checkin->is_occupy = 1;
+
+                if(isset($insert)){
+                    $checkin->guest_id = $insert;
+                    $guestdata = Guest::findOrFail($insert);
+                }else{
+                    $checkin->guest_id =$guestID;
+                }
 
 
 
@@ -538,11 +549,6 @@ class CheckingController extends Controller
 
     public function bookingCheckoutStore(Request $request)
     {
-
-
-
-
-
         $request->validate([
             'checkoutDate' => 'required',
             'checkout_time' => 'required',
@@ -609,8 +615,12 @@ class CheckingController extends Controller
             $checkout->restaurant_amount = $request->restaurant;
 
             $checkout->voucher_amount = $request->advance_amount;
+
             $checkout->net_amount = $request->net_amount;
+
             $checkout->gross_amount = $request->net_amount;
+            
+            $checkout->outstanding_amount = $request->outstanding_amount;
 
 
             $checkout->additional_room = $request->safsda;
@@ -783,46 +793,56 @@ class CheckingController extends Controller
 
             if ($taxupdate->calculation_on == 1) {
 
-                $checkout->increment('room_amount', $taxupdate->amount);
+                // $checkout->increment('room_amount', $taxupdate->amount);
+                $checkout->increment('outstanding_amount',$taxupdate->amount);  
                 $checkout->increment('gross_amount', $taxupdate->amount);
                 $checkout->decrement('discount_amount', $taxupdate->amount);
             } elseif ($taxupdate->calculation_on == 2) {
-                $checkout->increment('fb_amount', $taxupdate->amount);
+                // $checkout->increment('fb_amount', $taxupdate->amount);
                 $checkout->increment('gross_amount', $taxupdate->amount);
+                $checkout->increment('outstanding_amount',$taxupdate->amount);
                 $checkout->decrement('discount_amount', $taxupdate->amount);
             } elseif ($taxupdate->calculation_on == 3) {
 
-                $checkout->increment('discount_amount', $taxupdate->amount);
+                // $checkout->increment('discount_amount', $taxupdate->amount);
                 $checkout->increment('gross_amount', $taxupdate->amount);
+                $checkout->increment('outstanding_amount',$taxupdate->amount);
                 $checkout->decrement('discount_amount', $taxupdate->amount);
             } elseif ($taxupdate->calculation_on == 4) {
-                $checkout->increment('net_amount', $taxupdate->amount);
+                // $checkout->increment('net_amount', $taxupdate->amount);
                 $checkout->increment('gross_amount', $taxupdate->amount);
+                $checkout->increment('outstanding_amount',$taxupdate->amount);
                 $checkout->decrement('discount_amount', $taxupdate->amount);
             } elseif ($taxupdate->calculation_on == 5) {
 
                 $checkout->increment('gross_amount', $taxupdate->amount);
+                $checkout->increment('outstanding_amount',$taxupdate->amount);
                 $checkout->decrement('discount_amount', $taxupdate->amount);
             }
         } elseif ($taxupdate->effect == 'Add') {
 
             if ($taxupdate->calculation_on == 1) {
 
-                $checkout->decrement('room_amount', $taxupdate->amount);
+                // $checkout->decrement('room_amount', $taxupdate->amount);
                 $checkout->decrement('gross_amount', $taxupdate->amount);
+                $checkout->decrement('outstanding_amount',$taxupdate->amount);
             } elseif ($taxupdate->calculation_on == 2) {
-                $checkout->decrement('fb_amount', $taxupdate->amount);
+                // $checkout->decrement('fb_amount', $taxupdate->amount);
                 $checkout->decrement('gross_amount', $taxupdate->amount);
+                $checkout->decrement('outstanding_amount',$taxupdate->amount);
             } elseif ($taxupdate->calculation_on == 3) {
 
                 $checkout->decrement('discount_amount', $taxupdate->amount);
                 $checkout->decrement('gross_amount', $taxupdate->amount);
+                $checkout->decrement('outstanding_amount',$taxupdate->amount);
             } elseif ($taxupdate->calculation_on == 4) {
-                $checkout->decrement('net_amount', $taxupdate->amount);
+                // $checkout->decrement('net_amount', $taxupdate->amount);
                 $checkout->decrement('gross_amount', $taxupdate->amount);
+                $checkout->decrement('outstanding_amount',$taxupdate->amount);
             } elseif ($taxupdate->calculation_on == 5) {
 
                 $checkout->decrement('gross_amount', $taxupdate->amount);
+                $checkout->decrement('outstanding_amount',$taxupdate->amount);
             }
         }
     }
