@@ -55,7 +55,7 @@ class Checkin extends Model
      */
     public function vouchers()
     {
-        return $this->hasMany(Voucher::class, 'booking_no', 'booking_no')->orderby('type', 'DESC');
+        return $this->hasMany(AccountTransectionHead::class, 'reference','booking_no')->where('is_active',1)->where('is_deleted',0);
     }
 
 

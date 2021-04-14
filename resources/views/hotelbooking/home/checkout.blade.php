@@ -188,92 +188,92 @@ $time = date("h:i");
                                 <div class="col-md-12 p-2">
                                     <table class="table table-bordered">
                                         <tbody>
-                                            
+
 
                                             <tr>
                                                 <th scope="row">Room Charge</th>
 
-                                            @php
+                                                @php
                                                 $totalroomamount = 0;
-                                            @endphp
+                                                @endphp
 
                                                 @foreach($addi_checkins as $row)
                                                 <td class="text-center">
-                                                    
+
                                                     <!-- if room alreay checkout -->
                                                     @if($row->is_occupy == 0)
-                                                    <tr class="text-center">
-                                                        <td></td>
-                                                        <td>
-                                                            <h6>Room No : {{$row->room_no}}</h6><br>
+                                            <tr class="text-center">
+                                                <td></td>
+                                                <td>
+                                                    <h6>Room No : {{$row->room_no}}</h6><br>
 
-                                                            <span>{{$row->checkin_date}} - {{$row->add_room_checkout_date}} = {{$row->additional_room_day}} days</span> </br>
-
-
-                                                            <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
-                                                        </td>
-                                                        <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $row->additional_room_amount}}</td>
-                                                        @php   
-                                                            $totalroomamount = $totalroomamount + $row->additional_room_amount;                                           
-                                                        @endphp
-                                                        @endif
-                                                        <!-- if room alreay checkout -->
+                                                    <span>{{$row->checkin_date}} - {{$row->add_room_checkout_date}} = {{$row->additional_room_day}} days</span> </br>
 
 
-
-
-                                                        <!-- if room alreay not checkout -->
-                                                        @if($row->is_occupy == 1)
-
-                                                        <!-- calculate day and amount  -->
-
-                                                        @php
-                                                            $origin = new DateTime(Carbon\Carbon::parse("{$row->checkin_date}")->toFormattedDateString());
-                                                            $target=Carbon\Carbon::parse("{$current}")->toFormattedDateString();
-                                                            $target = new DateTime($target);
-
-                                                            $interval =$origin->diff($target);
-
-                                                            $date =abs($interval->format('%R%a'));
-                                                            $date = $date > 0 ? $date : 1;
-
-
-                                                            $totalamountroom = $date > 0 ?(int)$date * $checkindata->tarif : $checkindata->tarif;
-
-                                                        @endphp
-
-                                                        <!-- calculate day and amount  -->
-                                                        <!-- hidden room id -->
-
-                                                        <input type="hidden" name="non_checkout_room[]" value="{{$row->room_id}}"/>
-                                                        
-                                                        <input type="hidden" name="non_checkout_room_day" value="{{(int)$date}} "/>
-                                                        <td class="text-center">
-                                                            
-                                                            <h6>Room No : {{$row->room_no}}</h6><br>
-
-                                                              <span>{{$origin->format('d F Y')}} - {{date('d F Y')}} = {{(int)$date}} days</span><br>
-
-
-                                                            <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
-                                                        </td>
-
-
-                                                        <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $row->tarif * (int)$date}}</td>
-
-                                                        @php   
-                                                            $totalroomamount = $totalroomamount + $row->tarif * (int)$date;                                           
-                                                        @endphp
-                                                        @endif
-                                                        <!-- if room alreay not checkout -->
+                                                    <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
+                                                </td>
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $row->additional_room_amount}}</td>
+                                                @php
+                                                $totalroomamount = $totalroomamount + $row->additional_room_amount;
+                                                @endphp
+                                                @endif
+                                                <!-- if room alreay checkout -->
 
 
 
-                                                        </td>
-                                                    </tr>
+
+                                                <!-- if room alreay not checkout -->
+                                                @if($row->is_occupy == 1)
+
+                                                <!-- calculate day and amount  -->
+
+                                                @php
+                                                $origin = new DateTime(Carbon\Carbon::parse("{$row->checkin_date}")->toFormattedDateString());
+                                                $target=Carbon\Carbon::parse("{$current}")->toFormattedDateString();
+                                                $target = new DateTime($target);
+
+                                                $interval =$origin->diff($target);
+
+                                                $date =abs($interval->format('%R%a'));
+                                                $date = $date > 0 ? $date : 1;
+
+
+                                                $totalamountroom = $date > 0 ?(int)$date * $checkindata->tarif : $checkindata->tarif;
+
+                                                @endphp
+
+                                                <!-- calculate day and amount  -->
+                                                <!-- hidden room id -->
+
+                                                <input type="hidden" name="non_checkout_room[]" value="{{$row->room_id}}" />
+
+                                                <input type="hidden" name="non_checkout_room_day" value="{{(int)$date}} " />
+                                                <td class="text-center">
+
+                                                    <h6>Room No : {{$row->room_no}}</h6><br>
+
+                                                    <span>{{$origin->format('d F Y')}} - {{date('d F Y')}} = {{(int)$date}} days</span><br>
+
+
+                                                    <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
+                                                </td>
+
+
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $row->tarif * (int)$date}}</td>
+
+                                                @php
+                                                $totalroomamount = $totalroomamount + $row->tarif * (int)$date;
+                                                @endphp
+                                                @endif
+                                                <!-- if room alreay not checkout -->
+
+
+
+                                                </td>
+                                            </tr>
                                             </td>
                                             @endforeach
-                                            
+
 
 
                                             </tr>
@@ -281,7 +281,7 @@ $time = date("h:i");
                                             <tr>
                                                 <th scope="row">Extra Service</th>
                                                 <td class="text-center">
-                                                    
+
 
                                                     @php
                                                     $totalamountextra = 0;
@@ -374,7 +374,7 @@ $time = date("h:i");
                                             <th scope="col">Type</th>
                                             <th scope="col">Mode</th>
                                             <th scope="col">Against</th>
-                                            <th scope="col">Amount</th>
+                                            <th class="text-center" scope="col">Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -391,40 +391,52 @@ $time = date("h:i");
                                             <td>Receipt</td>
                                             <td>{{ucfirst($row->debit)}}</td>
                                             <td>Booking</td>
-                                            <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->amount}}</td>
+                                            <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->details->cr_amount ?? ''}}</td>
+
+
                                         </tr>
 
                                         @php
-                                        $totaladvance = $totaladvance + $row->amount;
+                                        $totaladvance = $totaladvance + $row->details->cr_amount;
                                         @endphp
                                         @endforeach
 
                                         @endif
-                                        <tr>
+                                        <!-- <tr>
                                             <th class="text-right" scope="row" colspan="5">Tax Amount</th>
                                             <th class="text-center">0</th>
-                                        </tr>
+                                        </tr> -->
 
 
                                         <tr>
                                             <th class="text-right" scope="row" colspan="5">Net Amount</th>
                                             <th class="text-center">{!!$currency->symbol ?? ' '!!} {{ (int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant }}</th>
                                         </tr>
+                                        @php
+                                            $totalamount = ((int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant) - $totaladvance;
+                                        @endphp
+                                       
 
                                         <tr>
-                                            <th class="text-right" scope="row" colspan="5">Blance Amount</th>
+                                       
+                                            <th class="text-right" scope="row" colspan="5">Blance Amount
+                                                {{$totalamount < 0 ?'(Refund)':'(Payable)'}}</th>
                                             <th class="text-center">{!!$currency->symbol ?? ' '!!}
                                                 {{ ((int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant) - $totaladvance }}
                                             </th>
                                         </tr>
 
+                                        @php
+                                        $totalinword = abs(((int)$totalroomamount + (int)$totalamountextra + (int)$totalfandb + (int)$restaurant) - $totaladvance) ;
+
+                                        $totalamount = abs(((int)$totalroomamount + (int)$totalamountextra + (int)$totalfandb + (int)$restaurant)) ;
+                                        @endphp
+
 
 
                                     </tbody>
                                 </table>
-                                @php
-                                $totalinword = abs(((int)$totalroomamount + (int)$totalamountextra + (int)$totalfandb + (int)$restaurant) - $totaladvance) ;
-                                @endphp
+
 
                                 <!-- hidden data -->
                                 <input type="hidden" id="room_id" value="{{$checkindata->room_id}}" name="room_id">
@@ -434,12 +446,14 @@ $time = date("h:i");
                                 <input type="hidden" value="{{(int)$totalfandb}}" name="fb_bservice">
                                 <input type="hidden" value="{{(int)$restaurant}}" name="restaurant">
                                 <input type="hidden" value="{{(int)$totaladvance}}" name="advance_amount">
-                                <input type="hidden" value="{{(int)$totalinword}}" name="net_amount">
+
+                                <input type="hidden" value="{{(int)$totalamount}}" name="net_amount">
+                                <input type="hidden" value="{{ ((int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant) - $totaladvance }}" name="outstanding_amount">
                                 <!-- hidden data -->
 
 
-
-                                <h5 class="text-right mr-auto"><strong>In Word:</strong> <code>{{$numToWord->numberTowords($totalinword)}}</code></h5>
+                                    
+                                 <h5 class="text-right mr-auto"><strong>In Word{{$totalamount < 0 ?'(Refund)':'(Payable)'}}:</strong> <code>{{$numToWord->numberTowords($totalinword)}}</code></h5>
 
                             </div>
 

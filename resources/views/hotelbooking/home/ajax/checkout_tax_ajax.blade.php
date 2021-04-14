@@ -30,35 +30,35 @@
     @endif
 
     <tr>
-        <th class="text-right" scope="row" colspan="5">Net Amount</th>
-        <th class="text-center">$ {{round($checkout->net_amount,2)}}</th>
+        <th class="text-right" scope="row" colspan="5">Total Amount</th>
+        <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->net_amount,2)}}</th>
     </tr>
 
     <tr>
         <th class="text-right" scope="row" colspan="5">Discount Amount</th>
-        <th class="text-center">$ {{round($checkout->discount_amount,2)}}</th>
+        <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->discount_amount,2)}}</th>
     </tr>
 
 
     <tr>
-        <th class="text-right" scope="row" colspan="5">Gross Amount</th>
-        <th class="text-center">$ {{round($checkout->gross_amount,2)}}</th>
+        <th class="text-right" scope="row" colspan="5">Net Amount</th>
+        <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->gross_amount,2)}}</th>
     </tr>
 
     @php
-    $paybleAmount =$checkout->gross_amount;
+    $paybleAmount =$checkout->outstanding_amount;
     @endphp
     <tr>
-        <th class="text-right" scope="row" colspan="5">OutStanding Amount</th>
-        <th class="text-center">$
+        <th class="text-right" scope="row" colspan="5">{{$paybleAmount < 0 ?'Refund':'Payable'}}</th>
+        <th class="text-center">{!!$currency->symbol ?? ' '!!}
             {{round($paybleAmount,2)}}
         </th>
     </tr>
     <tr>
-        <th class="text-right" scope="row" colspan="5">Payable Amount (In Word):</th>
+        <th class="text-right" scope="row" colspan="5">{{$paybleAmount < 0 ?'Refund':'Payable'}} (In Word):</th>
         <td class="text-center">
 
-            <code>{{$numToWord->numberTowords($paybleAmount)}}</code>
+            <code>{{$numToWord->numberTowords(abs($paybleAmount))}}</code>
         </td>
         <td></td>
 
@@ -66,13 +66,6 @@
 </tbody>
 
 <script>
-    
-
-
-        
-
-
-
     $(document).ready(function() {
         $('.tax_edit').click(function(e) {
             $('#tax_update').show();
@@ -92,10 +85,10 @@
 
     $(document).ready(function() {
         $('#tax_update').click(function() {
-        
+
 
             var element = $('#invoice_form').serializeArray();
-            
+
 
             $.ajaxSetup({
                 headers: {
@@ -130,32 +123,32 @@
         })
     });
 
-    function delete_row(em){
+    function delete_row(em) {
 
         $(em).closest('.delelement').remove();
 
         var modal = $(em);
         var data = modal.data('whatever');
-    
+
 
         $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-            $.ajax({
-                type: 'get',
-                url: "{{url('admin/checkout/invoice/tax/data/delete')}}/"+data,
-                success: function(data) {
+        $.ajax({
+            type: 'get',
+            url: "{{url('admin/checkout/invoice/tax/data/delete')}}/" + data,
+            success: function(data) {
 
-                    $('#tax_details_amount').empty();
-                    $('#tax_details_amount').append(data);
+                $('#tax_details_amount').empty();
+                $('#tax_details_amount').append(data);
 
-                }
-            });
+            }
+        });
 
 
-		
-	}
+
+    }
 </script>

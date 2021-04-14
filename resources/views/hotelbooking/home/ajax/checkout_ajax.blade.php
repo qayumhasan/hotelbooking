@@ -180,95 +180,109 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-12">
-                <div class="checkout_details bg-secondary p-3">
-                    <h5 class="text-white">Advance</h5>
-                </div>
-            </div>
+                            <div class="col-sm-12">
+                                <div class="checkout_details bg-secondary p-3">
+                                    <h5 class="text-white">Advance</h5>
+                                </div>
+                            </div>
 
-            <div class="col-sm-12 mt-4">
+                            <div class="col-sm-12 mt-4">
 
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Voucher No</th>
-                            <th scope="col">Voucher Date</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Mode</th>
-                            <th scope="col">Against</th>
-                            <th scope="col">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Voucher No</th>
+                                            <th scope="col">Voucher Date</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Mode</th>
+                                            <th scope="col">Against</th>
+                                            <th class="text-center" scope="col">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                        @php
-                        $totaladvance = 0;
-                        @endphp
-                        @if(count($checkindata->vouchers) > 0)
-                        @foreach($checkindata->vouchers as $row)
+                                        @php
+                                        $totaladvance = 0;
+                                        @endphp
+                                        @if(count($checkindata->vouchers) > 0)
+                                        @foreach($checkindata->vouchers as $row)
 
-                        <tr>
-                            <th scope="row">{{$row->voucher_no}}</th>
-                            <td>{{$row->date}}</td>
-                            <td>Receipt</td>
-                            <td>{{ucfirst($row->debit)}}</td>
-                            <td>Booking</td>
-                            <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->amount}}</td>
-                        </tr>
-
-                        @php
-                        $totaladvance = $totaladvance + $row->amount;
-                        @endphp
-                        @endforeach
-
-                        @endif
-                        <tr>
-                            <th class="text-right" scope="row" colspan="5">Tax Amount</th>
-                            <th class="text-center">0</th>
-                        </tr>
+                                        <tr>
+                                            <th scope="row">{{$row->voucher_no}}</th>
+                                            <td>{{$row->date}}</td>
+                                            <td>Receipt</td>
+                                            <td>{{ucfirst($row->debit)}}</td>
+                                            <td>Booking</td>
+                                            <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->details->cr_amount ?? ''}}</td>
 
 
-                        <tr>
-                            <th class="text-right" scope="row" colspan="5">Net Amount</th>
-                            <th class="text-center">{!!$currency->symbol ?? ' '!!} {{ (int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant }}</th>
-                        </tr>
+                                        </tr>
 
-                        <tr>
-                            <th class="text-right" scope="row" colspan="5">Blance Amount</th>
-                            <th class="text-center">$
-                                {{ ((int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant) - $totaladvance }}
-                            </th>
-                        </tr>
+                                        @php
+                                        $totaladvance = $totaladvance + $row->details->cr_amount;
+                                        @endphp
+                                        @endforeach
+
+                                        @endif
+                                        <!-- <tr>
+                                            <th class="text-right" scope="row" colspan="5">Tax Amount</th>
+                                            <th class="text-center">0</th>
+                                        </tr> -->
 
 
+                                        <tr>
+                                            <th class="text-right" scope="row" colspan="5">Net Amount</th>
+                                            <th class="text-center">{!!$currency->symbol ?? ' '!!} {{ (int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant }}</th>
+                                        </tr>
+                                        @php
+                                            $totalamount = ((int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant) - $totaladvance;
+                                        @endphp
+                                       
 
-                    </tbody>
-                </table>
-                @php
-                $totalinword = abs(((int)$totalroomamount + (int)$totalamountextra + (int)$totalfandb + (int)$restaurant) - $totaladvance) ;
-                @endphp
+                                        <tr>
+                                       
+                                            <th class="text-right" scope="row" colspan="5">Blance Amount
+                                                {{$totalamount < 0 ?'(Refund)':'(Payable)'}}</th>
+                                            <th class="text-center">{!!$currency->symbol ?? ' '!!}
+                                                {{ ((int)$totalroomamount +  (int)$totalamountextra +  (int)$totalfandb + (int)$restaurant) - $totaladvance }}
+                                            </th>
+                                        </tr>
 
-                <!-- hidden data -->
-                <input type="hidden" id="room_id" value="{{$checkindata->room_id}}" name="room_id">
-                <input type="hidden" value="{{$checkindata->booking_no}}" name="booking_no">
-                <input type="hidden" value="{{(int)$totalroomamount}}" name="room_total_amount">
-                <input type="hidden" value="{{(int)$totalamountextra}}" name="extra_service">
-                <input type="hidden" value="{{(int)$totalfandb}}" name="fb_bservice">
-                <input type="hidden" value="{{(int)$restaurant}}" name="restaurant">
-                <input type="hidden" value="{{(int)$totaladvance}}" name="advance_amount">
-                <input type="hidden" value="{{(int)$totalinword}}" name="net_amount">
-                <!-- hidden data -->
+                                        @php
+                                        $totalinword = abs(((int)$totalroomamount + (int)$totalamountextra + (int)$totalfandb + (int)$restaurant) - $totaladvance) ;
+
+                                        $totalamount = abs(((int)$totalroomamount + (int)$totalamountextra + (int)$totalfandb + (int)$restaurant)) ;
+                                        @endphp
 
 
 
-                <h5 class="text-right mr-auto"><strong>In Word:</strong> <code>{{$numToWord->numberTowords($totalinword)}}</code></h5>
+                                    </tbody>
+                                </table>
 
-            </div>
+
+                                <!-- hidden data -->
+                                <input type="hidden" id="room_id" value="{{$checkindata->room_id}}" name="room_id">
+                                <input type="hidden" value="{{$checkindata->booking_no}}" name="booking_no">
+                                <input type="hidden" value="{{(int)$totalroomamount}}" name="room_total_amount">
+                                <input type="hidden" value="{{(int)$totalamountextra}}" name="extra_service">
+                                <input type="hidden" value="{{(int)$totalfandb}}" name="fb_bservice">
+                                <input type="hidden" value="{{(int)$restaurant}}" name="restaurant">
+                                <input type="hidden" value="{{(int)$totaladvance}}" name="advance_amount">
+
+                                <input type="hidden" value="{{(int)$totalamount}}" name="net_amount">
+                                <input type="hidden" value="{{(int)$totalinword}}" name="outstanding_amount">
+                                <!-- hidden data -->
 
 
-            <button type="submit" class="btn btn-primary mx-auto">Check Out & Generate Invoice</button>
+                                    
+                                 <h5 class="text-right mr-auto"><strong>In Word{{$totalamount < 0 ?'(Refund)':'(Payable)'}}:</strong> <code>{{$numToWord->numberTowords($totalinword)}}</code></h5>
 
-        </div>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary mx-auto">Check Out & Generate Invoice</button>
+
+                        </div>
 
     </div>
 </div>

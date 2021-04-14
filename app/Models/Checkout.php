@@ -36,7 +36,7 @@ class Checkout extends Model
 
     public function voucherData()
     {
-        return $this->hasMany('App\Models\Voucher','booking_no','booking_no');
+        return $this->hasMany('App\Models\AccountTransectionHead','booking_no','reference')->where('is_active',1)->where('is_deleted',0);
     }
 
     public function taxdetails()
