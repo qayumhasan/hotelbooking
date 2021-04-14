@@ -438,14 +438,10 @@ $time = date("h:i");
                                             <tr>
                                                 <th scope="row">{{$row->voucher_no}}</th>
                                                 <td>{{$row->date}}</td>
-                                                @if($row->type == 1)
-                                                <td>Recept</td>
-                                                @elseif($row->type == 0)
-                                                <td>Refund</td>
-                                                @endif
+                                                <td></td>
                                                 <td>{{ucfirst($row->debit)}}</td>
                                                 <td>Booking</td>
-                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->amount}}</td>
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->details->cr_amount ?? ''}}</td>
                                                 <td class="text-center">
 
                                                     <a href="{{route('admin.checkout.invoice_edit',$row->id)}}" class="badge bg-primary-light mr-2 mouse_pointer editinvoice" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="lar la-edit"></i></a>
@@ -589,7 +585,7 @@ $time = date("h:i");
                                             @endif
 
                                             <tr>
-                                                <th class="text-right" scope="row" colspan="5">Net Amount</th>
+                                                <th class="text-right" scope="row" colspan="5">Total Amount</th>
                                                 <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->net_amount,2)}}</th>
                                             </tr>
 
@@ -600,24 +596,24 @@ $time = date("h:i");
 
 
                                             <tr>
-                                                <th class="text-right" scope="row" colspan="5">Gross Amount</th>
+                                                <th class="text-right" scope="row" colspan="5">Net Amount</th>
                                                 <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->gross_amount,2)}}</th>
                                             </tr>
 
                                             @php
-                                            $paybleAmount =$checkout->gross_amount;
+                                            $paybleAmount =$checkout->outstanding_amount;
                                             @endphp
                                             <tr>
-                                                <th class="text-right" scope="row" colspan="5">OutStanding Amount</th>
+                                                <th class="text-right" scope="row" colspan="5">{{$paybleAmount < 0 ?'Refund':'Payable'}}</th>
                                                 <th class="text-center">{!!$currency->symbol ?? ' '!!}
                                                     {{round($paybleAmount,2)}}
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th class="text-right" scope="row" colspan="5">Payable Amount (In Word):</th>
+                                                <th class="text-right" scope="row" colspan="5">{{$paybleAmount < 0 ?'Refund':'Payable'}} (In Word):</th>
                                                 <td class="text-center">
 
-                                                    <code>{{$numToWord->numberTowords($paybleAmount)}}</code>
+                                                    <code>{{$numToWord->numberTowords(abs($paybleAmount))}}</code>
                                                 </td>
                                                 <td></td>
 

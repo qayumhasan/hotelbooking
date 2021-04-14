@@ -70,18 +70,19 @@ class AccountTrasectionController extends Controller
 
     // transection details insert
     public function transectiondetailsinsert(Request $request){
-        //return $request;
+        // return $request;
 
 
        if($request->accounttransecti_id == ''){
            //return "faka";
         $validated = $request->validate([
-            'account_head' => 'required',
+            
             'amount' => 'required',
         ]);
         $rand_id=rand(666,1999);
         $data = new AccountTransectionDetails;
         $account_hedcode=DB::table('vchart_of_accounts')->where('code',$request->account_head)->first();
+       
         $data->account_head_details = $account_hedcode->desription_of_account;
         $data->account_head_code = $account_hedcode->code;
         $data->voucher_no = $request->invoice;
@@ -191,7 +192,7 @@ class AccountTrasectionController extends Controller
 
     // final account transection 
     public function insertfinal(Request $request){
-      // return $request;
+      
         $check=AccountTransectionDetails::where('voucher_no',$request->invoice)->first();
         if($check){
               
