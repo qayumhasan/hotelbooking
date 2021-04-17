@@ -320,6 +320,10 @@ Route::get('/get/kothistory/data/{checkin_id}', [FoodAndBeverageController::clas
 Route::get('/get/singlehistory/invoice/{checkin_id}', [FoodAndBeverageController::class, 'getsinglehistoryprint']);
 Route::get('/get/doublehistory/invoice/{kot_id}', [FoodAndBeverageController::class, 'getdoublehistoryprint']);
 
+Route::get('admin/foodandbeverage/pending/order', [FoodAndBeverageController::class, 'pendingorder'])->name('admin.foodandbeverage.pending');
+Route::get('admin/foodandbeverage/compareOrder', [FoodAndBeverageController::class, 'compareOrder'])->name('admin.foodandbeverage.compareOrder');
+Route::get('admin/foodandbeverage/kothistory', [FoodAndBeverageController::class, 'kothistoryordercom'])->name('admin.foodandbeverage.kothistory');
+
 // -----------------------------------------------------------Banquet-------------------------------------------------------------------------------------------------------------
 Route::get('admin/banquet/index', [BanquetController::class, 'index'])->name('admin.banquet.dashboard');
 Route::get('admin/get/banquet', [BanquetController::class, 'getBanqueet'])->name('admin.get.banquet.data');

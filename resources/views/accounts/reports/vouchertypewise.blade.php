@@ -30,7 +30,6 @@ $current = date("m/d/Y");
                   </div>
                   <form action="{{route('admin.account.reports.vouchertypewise')}}" method="POST">
                   <div class="card-header d-flex justify-content-center">
-                     
                         @csrf
                      <div class="col-md-3">
                            <div class="form-group">

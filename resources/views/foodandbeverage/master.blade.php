@@ -60,10 +60,31 @@
                             </a>
                         </li>
                         <li class="">
-                            <a href="{{route('admin.foodandbeverage.create')}}">
-                                <i class="las la-home"></i><span>Food And Bravarage</span>
+                            <a href="{{route('admin.foodandbeverage.kothistory')}}">
+                                <i class="las la-list-alt"></i><span>Kot History</span>
                             </a>
                         </li>
+                        <li class=" ">
+                            <a href="#user" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-bed"></i><span>Order</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="user" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="">
+                                    <a href="{{route('admin.foodandbeverage.pending')}}">
+                                        <i class="las la-list-alt"></i><span>Pending Order</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.foodandbeverage.compareOrder')}}">
+                                        <i class="las la-list-alt"></i><span>Complate Order</span>
+                                    </a>
+                                </li>
+                              
+                            </ul>
+                        </li>
+                       
                    
                     </ul>
                 </nav>

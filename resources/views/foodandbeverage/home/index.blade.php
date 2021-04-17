@@ -431,7 +431,7 @@ $time = date("h:i");
    <script>
         $(function () {
             $(".savepritbtn").on('click', function () {
-                alert("ok");
+                //alert("ok");
                 var mode = 'iframe'; //popup
                 var close = mode == "popup";
                 var options = {

@@ -55,7 +55,7 @@
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
                         <li class="{{ request()->routeIs('admin.inventory.home*') ? 'active' : '' }}">
-                            <a href="{{route('admin.hotel')}}">
+                            <a href="{{route('admin.inventory.home')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>

@@ -341,4 +341,22 @@ class FoodAndBeverageController extends Controller
         $alldatadetails=KitchenOrderDetails::where('invoice_id',$alldata->invoice_id)->where('kot_status',1)->where('is_deleted',0)->latest()->get();
         return view('foodandbeverage.home.ajaxview.doublehistoryprintinvoice',compact('alldata','alldatadetails'));
     }
+
+
+
+    public function pendingorder(){
+        $alldata=KitchenOrderDetails::where('kot_status',1)->where('billing_status',0)->get();
+        return view('foodandbeverage.allfoodandbravarage.pendingorder',compact('alldata'));
+    }
+
+    public function compareOrder(){
+        $alldata=KitchenOrderDetails::where('kot_status',1)->where('billing_status',1)->get();
+        return view('foodandbeverage.allfoodandbravarage.complate',compact('alldata'));
+    }
+
+    public function kothistoryordercom(){
+        $alldata=KitchenOrderHead::where('is_deleted',0)->orderBy('id','DESC')->get();
+        return view('foodandbeverage.allfoodandbravarage.kothistory',compact('alldata'));
+
+    }
 }
