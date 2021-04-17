@@ -16,7 +16,14 @@
         <td>{{$row->guest_name}}</td>
         <td>{{$row->city}}</td>
         <td>{{$row->mobile}}</td>
-        <td>
+        @php
+          $balance = DB::table('vGuestLedger')->where('GuestID',$row->guest_id)->first();
+        @endphp
+        @if($balance)
+        <td>{{$balance->Balance}}</td>
+        @else
+        <td>NULL</td>
+        @endif
         <td class="text-center"><button type="button" class="btn btn-sm btn-primary" onclick="getuserData(this)" data-whatever="{{$row}}"><i class="fas fa-check m-0"></i></button></td>
     </tr>
 @endforeach

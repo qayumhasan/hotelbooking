@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 use Image;
 use PDF;
 
@@ -52,6 +53,7 @@ class CheckingController extends Controller
     {
 
 
+        
 
         $request->validate([
             'guest_name' => 'required',
@@ -75,6 +77,19 @@ class CheckingController extends Controller
             'client_img' => 'required',
             'id_proof_img' => 'required',
         ]);
+
+        if(isset($request->booking_type)){
+
+            if(!isset($request->add_room_price)){
+                $notification = array(
+                    'messege' => 'Additional Room Can not Selected!',
+                    'alert-type' => 'error'
+                );
+
+                return redirect()->back()->with($notification);
+            }
+            
+        }
 
 
         $room = Room::findOrFail($request->room_id);
@@ -957,6 +972,7 @@ class CheckingController extends Controller
     {
         
         $checkinInfo = Checkin::with('checkout')->where('guest_id',$id)->where('is_occupy',0)->get();
+
         if(count($checkinInfo) >0){
             return view('hotelbooking.checking.ajax.guest_checkin_details',compact('checkinInfo'));
         }
