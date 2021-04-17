@@ -749,13 +749,19 @@ $time = date("h:i:sa");
 
                     </div>
 
+                    @php
+                        $rooms = $rooms->where('room_status','!=',3)->where('room_status',1);
+                        $roomdata = $rooms->all(); 
+                    @endphp
 
                     <div class="form-group row">
                         <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">New Room No:</label>
                         <div class="col-sm-7">
                             <select required class="form-control form-control-sm" id="newroom" name="newroom">
                                 <option disabled selected>---Select Room---</option>
-                                @foreach($rooms as $row)
+                                @foreach($roomdata as $row)
+
+                          
                                 <option value="{{$row->id}}">{{$row->room_no}} ({{$row->roomtype->room_type}})</option>
                                 @endforeach
                             </select>

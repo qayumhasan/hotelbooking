@@ -17,6 +17,8 @@ class CheckinUpdateController extends Controller
     }
     public function roomChange(Request $request)
     {
+
+        
         $request->validate([
             'shift_date'=>'required',
             'sift_time'=>'required',
@@ -26,6 +28,7 @@ class CheckinUpdateController extends Controller
         ]);
         $room = Room::findOrFail($request->newroom);
         $oldroom = Room::where('room_no',$request->room_no)->first();
+
         $checkin=Checkin::findOrFail($request->checkin_id);
         $checkin->change_date = $request->shift_date;
         $checkin->change_time = $request->sift_time;
