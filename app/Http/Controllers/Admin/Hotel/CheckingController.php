@@ -54,6 +54,7 @@ class CheckingController extends Controller
 
 
         
+        
 
         $request->validate([
             'guest_name' => 'required',
@@ -78,7 +79,7 @@ class CheckingController extends Controller
             'id_proof_img' => 'required',
         ]);
 
-        if(isset($request->booking_type)){
+        if(isset($request->booking_type) && $request->booking_type == 2){
 
             if(!isset($request->add_room_price)){
                 $notification = array(
