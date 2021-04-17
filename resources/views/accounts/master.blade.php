@@ -44,7 +44,7 @@
 
         <div class="iq-sidebar  sidebar-default ">
             <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="" class="header-logo">
+                <a href="{{route('admin.account.home')}}" class="header-logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal darkmode-logo" alt="logo">
                 </a>
@@ -57,7 +57,7 @@
                     <ul id="iq-sidebar-toggle" class="iq-menu">
 
                         <li class="">
-                            <a href="">
+                            <a href="{{route('admin.account.home')}}">
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>
@@ -615,6 +615,11 @@
 
     <script>
         $("#employee_report").select2({
+            placeholder: '----Select Name----'
+        });
+    </script>
+      <script>
+        $("#vouchersearch").select2({
             placeholder: '----Select Name----'
         });
     </script>

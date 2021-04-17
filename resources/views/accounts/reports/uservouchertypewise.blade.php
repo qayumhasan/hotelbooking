@@ -9,6 +9,7 @@
 <style>
 .form-control {
     height: 32px;
+    wodth: 50%;
 }
 
 
@@ -35,22 +36,52 @@ $current = date("m/d/Y");
                      
                         @csrf
             
-                    
-                     <div class="col-md-3">
+                        <div class="col-md-2">
+                           <div class="form-group">
+                                 <label for="fname">From Date:</label>
+                                 <input type="text"  id="formdate" style="color:#f1dddd" name="formdate" class="formdate form-control noradious datepicker" @if(isset($formdate))  value="{{$formdate}}" style="color:#000"  @else value="{{$current}}" @endif >
+                           </div>
+                     </div>
+                     <div class="col-md-2">
+                           <div class="form-group">
+                                 <label for="fname">To Date:</label>
+                                 <input type="text"  id="todate"  style="color:#f1dddd" name="todate" class="todate form-control noradious datepicker"  @if(isset($to_date))  value="{{$to_date}}" style="color:#000" @else value="{{$current}}" @endif>
+                                 
+                           </div>
+                     </div>
+                     <div class="col-md-1">
+                         <div class="form-group mt-4">
+                           <input type="checkbox" class="" id="no_date" name="no_date" value="1">
+                         </div>
+                     </div>
+                     <div class="col-md-2">
+                           <div class="form-group">
+                                 <label for="fname">User Name: *</label>
+                                 <select name="username_name" id="employee_report" class="form-control noradious">
+                                    <option value="">--select--</option>
+                                    @foreach($alluser as $user)
+                                    <option value="{{$user->id}}" @if(isset($usernamename)) @if($usernamename == $user->id) selected @endif @endif>{{$user->name}}</option>
+                                    @endforeach
+                                 </select>
+                                 @error('username_name')
+                                    <div style="color:red;font-size:10px">{{ $message }}</div>
+                                 @enderror
+                           </div>
+                     </div>
+
+                     <div class="col-md-2">
                            <div class="form-group">
                                  <label for="fname">Voucher Type: *</label>
-                                 <select name="username_name" id="employee_report" class="form-control noradious">
+                                 <select name="voucher" id="vouchersearch" class="form-control noradious">
                                     <option value="">--select--</option>
                                     @foreach($allvoucher->unique('VoucherType') as $voucher)
                                     <option value="{{$voucher->VoucherType}}" @if(isset($voucher_name)) @if($voucher_name == $voucher->VoucherType) selected @endif @endif>{{$voucher->VoucherType}}</option>
                                     @endforeach
                                  </select>
-                                 @error('username_name')
-                                    <div style="color:red">{{ $message }}</div>
-                                 @enderror
+                              
                            </div>
                      </div>
-                     <div class="col-md-3">
+                     <div class="col-md-2">
                           <button type="submit" class="btn btn-success">Search</button>
                      </div>
                   </div>
@@ -68,7 +99,6 @@ $current = date("m/d/Y");
                                        <th>Remarks</th>
                                        <th>Date</th>
                                        <th>TransectionAmount</th>
-                                      
                                        <th>ActionType</th>
                                       
                                     </tr>
@@ -79,12 +109,15 @@ $current = date("m/d/Y");
                                  <tr>
                                        <td>{{++$key}}</td>
                                        <td>{{$sdata->VoucherNO}}</td>
-                                       <td>{{$sdata->UserID}}</td>
+                                       @php
+                                          $username=App\Models\Admin::where('id',$sdata->UserID)->select(['name'])->first();
+                                          
+                                       @endphp
+                                       <td>{{$username->name}}</td>
                                        <td>{{$sdata->VoucherType}}</td>
                                        <td>{{$sdata->Remarks}}</td>
                                        <td>{{$sdata->Date}}</td>
                                        <td>{{$sdata->TransectionAmount}}</td>
-                                      
                                        <td>{{$sdata->ActionType}}</td>
                                  
                                  </tr>
@@ -115,7 +148,6 @@ $current = date("m/d/Y");
                                        <th>Remarks</th>
                                        <th>Date</th>
                                        <th>TransectionAmount</th>
-                                      
                                        <th>ActionType</th>
                                       
                                     </tr>
@@ -126,7 +158,11 @@ $current = date("m/d/Y");
 
                                        <td>{{++$key}}</td>
                                        <td>{{$data->VoucherNO}}</td>
-                                       <td>{{$data->UserID}}</td>
+                                       @php
+                                          $username=App\Models\Admin::where('id',$data->UserID)->select(['name'])->first();
+
+                                       @endphp
+                                       <td>{{$username->name}}</td>
                                        <td>{{$data->VoucherType}}</td>
                                        <td>{{$data->Remarks}}</td>
                                        <td>{{$data->Date}}</td>

@@ -76,7 +76,7 @@
                             <ul id="user" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.room.index*') ? 'active' : '' }}">
                                     <a href="{{route('admin.room.index')}}">
-                                        <i class="las la-user-plus"></i><span>All Room</span>
+                                        <i class="las la-list-alt"></i><span>All Room</span>
                                     </a>
                                 </li>
                                 <li class="{{ request()->routeIs('admin.room.create*') ? 'active' : '' }}">
@@ -107,25 +107,25 @@
                             <ul id="advance_booking" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.advance.booking') ? 'active' : '' }}">
                                     <a href="{{route('admin.advance.booking')}}">
-                                        <i class="las la-user-plus"></i><span>Advance Booking</span>
+                                        <i class="las la-list-alt"></i><span>Advance Booking</span>
                                     </a>
                                 </li>
 
                                 <li class="{{ request()->routeIs('admin.advance.booking.report') ? 'active' : '' }}">
                                     <a href="{{route('admin.advance.booking.report')}}">
-                                        <i class="las la-user-plus"></i><span>Advance Reports</span>
+                                        <i class="las la-list-alt"></i><span>Advance Reports</span>
                                     </a>
                                 </li>
 
                                 <li class="{{ request()->routeIs('admin.advance.booking.calender') ? 'active' : '' }}">
                                     <a href="{{route('admin.advance.booking.calender')}}">
-                                        <i class="las la-user-plus"></i><span>Booking Calender</span>
+                                        <i class="las la-list-alt"></i><span>Booking Calender</span>
                                     </a>
                                 </li>
 
                                 <li class="{{ request()->routeIs('admin.advance.booking.calender.daybyday') ? 'active' : '' }}">
                                     <a href="{{route('admin.advance.booking.calender.daybyday')}}">
-                                        <i class="las la-user-plus"></i><span>Day By Day Calender</span>
+                                        <i class="las la-list-alt"></i><span>Day By Day Calender</span>
                                     </a>
                                 </li>
 
@@ -255,13 +255,13 @@
                             <ul id="reservation" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.reservation.analysis.room.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.reservation.analysis.room.report')}}">
-                                        <i class="las la-user-plus"></i><span>Room Wise Analysis</span>
+                                        <i class="las la-list-alt"></i><span>Room Wise Analysis</span>
                                     </a>
                                 </li>
 
                                 <li class="{{ request()->routeIs('admin.reservation.analysis.room.type.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.reservation.analysis.room.type.report')}}">
-                                        <i class="las la-user-plus"></i><span>Room Type Analysis</span>
+                                        <i class="las la-list-alt"></i><span>Room Type Analysis</span>
                                     </a>
                                 </li>
 
@@ -278,25 +278,25 @@
                             <ul id="collectionreport" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.daily.collection.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.daily.collection.report')}}">
-                                        <i class="las la-user-plus"></i><span>Daily Collection</span>
+                                        <i class="las la-list-alt"></i><span>Daily Collection</span>
                                     </a>
                                 </li>
 
                                 <li class="{{ request()->routeIs('admin.guest.payment.history*') ? 'active' : '' }}">
                                     <a href="{{route('admin.guest.payment.history')}}">
-                                        <i class="las la-user-plus"></i><span>Guest Payment History</span>
+                                        <i class="las la-list-alt"></i><span>Guest Payment History</span>
                                     </a>
                                 </li>
 
                                 <li class="{{ request()->routeIs('admin.invoice.summary.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.invoice.summary.report')}}">
-                                        <i class="las la-user-plus"></i><span>Invoice Summary</span>
+                                        <i class="las la-list-alt"></i><span>Invoice Summary</span>
                                     </a>
                                 </li>
 
                                 <li class="{{ request()->routeIs('admin.post.to.room.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.post.to.room.report')}}">
-                                        <i class="las la-user-plus"></i><span>Post To Room</span>
+                                        <i class="las la-list-alt"></i><span>Post To Room</span>
                                     </a>
                                 </li>
 

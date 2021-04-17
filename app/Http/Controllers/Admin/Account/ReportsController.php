@@ -278,7 +278,8 @@ class ReportsController extends Controller
        
         $allvoucher=DB::table('vUserLogLedger')->select(['VoucherType'])->get();
         $alldata=DB::table('vUserLogLedger')->get();
-        return view('accounts.reports.uservouchertypewise',compact('allvoucher','alldata'));
+        $alluser=DB::table('admins')->get();
+        return view('accounts.reports.uservouchertypewise',compact('allvoucher','alldata','alluser'));
     }
 
     // 
@@ -286,12 +287,42 @@ class ReportsController extends Controller
 
         $validated = $request->validate([
             'username_name' => 'required',
-          
         ]);
-        $voucher_name=$request->username_name;
-        $searchdata=DB::table('vUserLogLedger')->where('VoucherType',$voucher_name)->get();
-        $allvoucher=DB::table('vUserLogLedger')->select(['VoucherType'])->get();
-        return view('accounts.reports.uservouchertypewise',compact('voucher_name','searchdata','allvoucher'));
+      
+        if($request->no_date && $request->voucher){
+            $formdate=$request->formdate;
+            $to_date=$request->todate;
+            $voucher_name=$request->voucher;
+            $usernamename=$request->username_name;
+            $searchdata=DB::table('vUserLogLedger')->where('VoucherType',$voucher_name)->where('UserID',$usernamename)->whereBetween('Date', [$formdate, $to_date])->get();
+            $allvoucher=DB::table('vUserLogLedger')->select(['VoucherType'])->get();
+            $alluser=DB::table('admins')->get();
+            return view('accounts.reports.uservouchertypewise',compact('voucher_name','searchdata','allvoucher','alluser','usernamename'));
+
+        }elseif($request->no_date){
+            $formdate=$request->formdate;
+            $to_date=$request->todate;
+            $usernamename=$request->username_name;
+            $searchdata=DB::table('vUserLogLedger')->where('UserID',$usernamename)->whereBetween('Date', [$formdate, $to_date])->get();
+            $allvoucher=DB::table('vUserLogLedger')->select(['VoucherType'])->get();
+            $alluser=DB::table('admins')->get();
+            return view('accounts.reports.uservouchertypewise',compact('searchdata','allvoucher','alluser','usernamename'));
+        }elseif($request->voucher){
+            $voucher_name=$request->voucher;
+            $usernamename=$request->username_name;
+            $searchdata=DB::table('vUserLogLedger')->where('UserID',$usernamename)->where('VoucherType',$voucher_name)->get();
+            $allvoucher=DB::table('vUserLogLedger')->select(['VoucherType'])->get();
+            $alluser=DB::table('admins')->get();
+            return view('accounts.reports.uservouchertypewise',compact('usernamename','voucher_name','searchdata','allvoucher','alluser'));
+        }else{
+            $usernamename=$request->username_name;
+            $searchdata=DB::table('vUserLogLedger')->where('UserID',$usernamename)->get();
+            $allvoucher=DB::table('vUserLogLedger')->select(['VoucherType'])->get();
+            $alluser=DB::table('admins')->get();
+            return view('accounts.reports.uservouchertypewise',compact('usernamename','searchdata','allvoucher','alluser'));
+        }
+
+       
 
     }
 
