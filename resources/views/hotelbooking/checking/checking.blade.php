@@ -898,7 +898,7 @@ $time = date("h:i");
 
     function addchoosroom(rooms, value) {
         rooms.forEach(function(room) {
-            var html = '<tr id="%id%" class="addroomdata"><th>%room_no%</th><td>%room_type% </td><td><input type="number" class="controll-from" name="add_room_price[]" value="%price%"></td><td><input type="text" class="controll-from" required name="add_room_guest[]" ><input type="hidden" class="controll-from" name="add_room_id[]" value="%room_id%"></td></tr>';
+            var html = '<tr id="%id%" class="addroomdata"><th>%room_no%</th><td>%room_type% </td><td><input type="number" class="controll-from" name="add_room_price[]" value="%price%"></td><td><input type="text" class="controll-from" name="add_room_guest[]" ><input type="hidden" class="controll-from" name="add_room_id[]" value="%room_id%"></td></tr>';
 
             var newhtml = html.replace('%room_no%', room.room_no);
             var newhtml = newhtml.replace('%id%', 'addchoosroom' + value);
@@ -1037,7 +1037,7 @@ $time = date("h:i");
         $('#id_no').val(data.id_no);
         $('#file_no').val(data.file_no);
         $('#file_no').val(data.file_no);
-        $('#client_img').prop('required', false);
+        // $('#client_img').prop('required', false);
 
         $('#mobile').val(data.mobile);
         $('#email').val(data.email);
@@ -1077,6 +1077,8 @@ $time = date("h:i");
         });
     }
 </script>
+
+
 
 
 

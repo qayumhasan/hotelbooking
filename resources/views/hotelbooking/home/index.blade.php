@@ -187,9 +187,9 @@ $time = date("h:i");
                      <div class="col-6 p-0">
                         <div class="service">
                            <ul>
-                              <li class="text-color-service">{{$row->checkin['guestname'] ?? ''}}</li>
-                              <li>{{$row->checkin['mobile'] ?? ''}}</li>
-                              <li>{{$row->checkin['company_name'] ?? ''}}</li>
+                              <li class="text-color-service">{{$row->checkin->guestname}}</li>
+                              <li>{{$row->checkin->mobile }}</li>
+                              <li>{{$row->checkin->company_name}}</li>
                            </ul>
                         </div>
 

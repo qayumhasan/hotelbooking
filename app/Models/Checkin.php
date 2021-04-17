@@ -25,6 +25,11 @@ class Checkin extends Model
         return $this->hasOne('App\Models\RoomType', 'id', 'room_type');
     }
 
+    public function guest()
+    {
+        return $this->hasOne('App\Models\Guest', 'id', 'guest_id');
+    }
+
     /**
      * Get the user that owns the phone.
      */

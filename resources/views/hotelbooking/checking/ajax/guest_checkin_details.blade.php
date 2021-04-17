@@ -35,6 +35,23 @@
                     <i class="fas fa-star-half-alt"></i>
                     <i class="fas fa-star-half-alt"></i>
                     </td>
+                    @php
+                        $balance = DB::table('vGuestLedger')->where('GuestID',$row->guest->guest_id)->first();
+                    @endphp
+                    @if($balance)
+                        @if($balance->Balance > 0)
+                            <td>{{$balance->TransectionAmount}}</td>
+                        @else
+                            <td>-</td>
+                        @endif
+
+                        @if($balance->Balance < 0)
+                            <td>{{$balance->TransectionAmount}}</td>
+                        @else
+                            <td>-</td>
+                        @endif
+                        <td>{{$balance->TransectionAmount}}</td>
+                    @endif
                 </tr>
                 @endforeach
             @else
