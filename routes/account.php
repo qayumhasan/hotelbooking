@@ -163,3 +163,5 @@ Route::post('admin/account/transection/reports/usertransection', [ReportsControl
 Route::get('admin/account/transection/reports/uservoucher', [ReportsController::class, 'uservouchetypewise'])->name('admin.account.reports.uservouchertype');
 Route::post('admin/account/transection/reports/uservoucher', [ReportsController::class, 'uservouchetypewisesearch'])->name('admin.account.reports.uservouchertype');
 
+Route::get('admin/account/transection/demo', [ReportsController::class, 'demo']);
+
