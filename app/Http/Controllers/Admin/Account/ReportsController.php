@@ -14,7 +14,9 @@ class ReportsController extends Controller
     public function __construct(){
         $this->middleware('admin');
     }
-
+    public function demo(){
+        return view('accounts.accounttransection.demo');
+    }
 
     public function datewisereport(){
         
