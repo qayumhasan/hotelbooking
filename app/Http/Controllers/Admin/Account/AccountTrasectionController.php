@@ -546,7 +546,7 @@ class AccountTrasectionController extends Controller
        //return $account_head;
         DB::table('vchart_of_accounts');
         $data=ChartOfAccount::where('code',$account_head)->select(['id'])->first();
-        $newdata=CheckBookTransection::where('account_code',$data->id)->get();
+        $newdata=CheckBookTransection::where('account_code',$data->id)->where('status','B')->get();
         return response()->json($newdata);
        
     }

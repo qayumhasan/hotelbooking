@@ -182,6 +182,7 @@ return array(
     'App\\Models\\TaxSetting' => $baseDir . '/app/Models/TaxSetting.php',
     'App\\Models\\UnitMaster' => $baseDir . '/app/Models/UnitMaster.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
+    'App\\Models\\UserRole' => $baseDir . '/app/Models/UserRole.php',
     'App\\Models\\Venue' => $baseDir . '/app/Models/Venue.php',
     'App\\Models\\Voucher' => $baseDir . '/app/Models/Voucher.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

@@ -604,23 +604,23 @@
 
     <script>
         $("#account_head_main").select2({
-            placeholder: '----Select Name----'
+            placeholder: '--Select--'
         });
     </script>
      <script>
         $("#account_head").select2({
-            placeholder: '----Select Name----'
+            placeholder: '--Select--'
         });
     </script>
 
     <script>
         $("#employee_report").select2({
-            placeholder: '----Select Name----'
+            placeholder: '--Select Name--'
         });
     </script>
       <script>
         $("#vouchersearch").select2({
-            placeholder: '----Select Name----'
+            placeholder: '--Select--'
         });
     </script>
      

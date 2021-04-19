@@ -165,8 +165,8 @@ $time = date("h:i");
 
                     <div class="form-group row">
                         <div class="col-sm-2"></div>
-                        <label for="inputPassword" class="col-sm-2 col-form-label">Search By Room Type :</label>
-                        <div class="col-sm-6">
+                        <label for="inputPassword" class="col-sm-2 col-form-label text-right">Search By Room Type :</label>
+                        <div class="col-sm-4">
                             <select class="form-control form-control-sm" id="room_type">
 
                                 <option selected disabled>---Room Type----</option>

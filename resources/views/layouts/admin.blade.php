@@ -77,6 +77,11 @@
                                         <i class="las la-list-alt"></i><span>User List</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.userrole.permission*') ? 'active' : '' }} ">
+                                    <a href="{{route('admin.userrole.permissionnew')}}">
+                                        <i class="las la-list-alt"></i><span>Role Permission</span>
+                                    </a>
+                                </li>
 
                             </ul>
 

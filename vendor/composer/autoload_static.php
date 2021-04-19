@@ -829,6 +829,7 @@ class ComposerStaticInit9d0ceddde57908b4a917f6065e2cc85c
         'App\\Models\\TaxSetting' => __DIR__ . '/../..' . '/app/Models/TaxSetting.php',
         'App\\Models\\UnitMaster' => __DIR__ . '/../..' . '/app/Models/UnitMaster.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\UserRole' => __DIR__ . '/../..' . '/app/Models/UserRole.php',
         'App\\Models\\Venue' => __DIR__ . '/../..' . '/app/Models/Venue.php',
         'App\\Models\\Voucher' => __DIR__ . '/../..' . '/app/Models/Voucher.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

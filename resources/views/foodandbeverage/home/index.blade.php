@@ -650,7 +650,7 @@ $(document).ready(function() {
             },
 
             success: function(data) {
-                  $(".waiter_name").val("");
+                  
                   $(".itemname").val("");
                   $(".qty").val(1);
                   $(".i_id").val("");

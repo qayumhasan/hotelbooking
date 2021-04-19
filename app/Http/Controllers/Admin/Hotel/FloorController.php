@@ -30,7 +30,7 @@ class FloorController extends Controller
     // store
     public function store(Request $request){
         $validated = $request->validate([
-            'name' => 'required|unique:floors|max:30',
+            'name' => 'required',
         ]);
         $insert=Floor::insert([
             'name'=>$request->name,
@@ -134,7 +134,6 @@ class FloorController extends Controller
         $validatedData = $request->validate([
             'name' =>  [
                 'required',
-                Rule::unique('floors')->ignore($request->id),
             ],
            
         ]);

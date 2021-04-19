@@ -12,6 +12,7 @@ use App\Models\Employee;
 use App\Models\Guest;
 use App\Models\Room;
 use App\Models\Supplier;
+use App\Models\UserRole;
 use Auth;
 
 class AdminController extends Controller
@@ -34,7 +35,7 @@ class AdminController extends Controller
     // create register
     public function create(){
 
-    	$allrole=AdminRole::select(['id','role_name'])->orderBy('id','DESC')->get();
+    	$allrole=UserRole::select(['id','role_name'])->orderBy('id','DESC')->get();
     	$allemployee=Employee::orderBy('id','DESC')->get();
     	$designation=Admin::select(['designation'])->pluck('designation')->unique();
     	return view('backend.user.create',compact('allrole','allemployee','designation'));
@@ -95,7 +96,8 @@ class AdminController extends Controller
     // edit
     public function edit($id){
     	$data=Admin::where('id',$id)->first();
-    	$allrole=AdminRole::select(['id','role_name'])->orderBy('id','DESC')->get();
+		$allrole=UserRole::select(['id','role_name'])->orderBy('id','DESC')->get();
+
     	$allemployee=Employee::orderBy('id','DESC')->get();
     	$designation=Admin::select(['designation'])->pluck('designation')->unique();
     	return view('backend.user.edit',compact('data','allrole','allemployee','designation'));
