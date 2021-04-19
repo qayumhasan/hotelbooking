@@ -88,13 +88,22 @@
             margin-right: 10px;
             
         }
+        .card.card-block.card_overlay.asifvai {
+    background: #f0f7ff;
+}
+.white-bg-menu .iq-menu-horizontal .iq-sidebar-menu .iq-menu>li {
+    margin-right: 45px;
+}
 
     </style>
     <!-- loader END -->
     <!-- Wrapper Start -->
     <div class="wrapper">
 
-  
+                @php
+                    $roleid=Auth::user()->user_role;
+                    $access=App\Models\UserRole::where('id',$roleid)->first();
+                @endphp
            
 
         <div class="bg-analytic-horizontal mb-5">
@@ -112,7 +121,9 @@
                                 <i class="las la-bars wrapper-menu"></i>
                             </div>
                         </div>
-                        <ul id="iq-sidebar-toggle menu_area" class="iq-menu d-flex mn-center slick_slider">
+                        <ul id="iq-sidebar-toggle menu_area" class="iq-menu d-flex mn-center">
+
+                        @if($access->admin==1)
                             <li class=" ">
                                 <a href="{{url('admin/dashboard')}}">
                                     <i class="las la-home"></i><span>Admin</span>
@@ -120,14 +131,9 @@
                                     <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                                 </a>
                             </li>
+                        @endif
 
-
-
-
-
-
-
-                            
+                        @if($access->front_office==1)
                             <li class=" ">
                                 <a href="{{route('admin.hotel')}}">
                                     <i class="lab la-uikit iq-arrow-left"></i><span>Front Office</span>
@@ -136,8 +142,8 @@
                                 </a>
                                
                             </li>
-
-
+                        @endif
+                        @if($access->food_beverage==1)
                             <li class=" ">
                                 <a href="{{route('admin.foodandbeverage.create')}}">
                                     <i class="las la-network-wired iq-arrow-left"></i><span>Food & Beverage</span>
@@ -146,6 +152,8 @@
                                 </a>
                          
                             </li>
+                            @endif
+                            @if($access->house_kipping==1)
                             <li class=" ">
                                 <a href="{{route('admin.housekipping.home')}}">
                                     <i class="las la-torah iq-arrow-left"></i><span>House Keeping</span>
@@ -154,10 +162,11 @@
                                 </a>
                            
                             </li>
+                            @endif
 
 
 
-
+                            @if($access->restuarent==1)
                             <li class=" ">
                                 <a href="{{route('admin.chui.restaurant')}}">
                                     <i class="lab la-uikit iq-arrow-left"></i><span>Restaurant</span>
@@ -166,6 +175,8 @@
                                 </a>
                              
                             </li>
+                            @endif
+                            @if($access->payroll==1)
                             <li class=" ">
                                 <a href="{{route('admin.payroll.index')}}">
                                     <i class="las la-network-wired iq-arrow-left"></i><span>Payroll</span>
@@ -174,6 +185,8 @@
                                 </a>
                              
                             </li>
+                            @endif
+                            @if($access->banquet==1)
                             <li class=" ">
                                 <a href="{{route('admin.banquet.dashboard')}}">
                                     <i class="las la-torah iq-arrow-left"></i><span>Banquet</span>
@@ -182,9 +195,10 @@
                                 </a>
                              
                             </li>
+                            @endif
 
 
-
+                            @if($access->accounts==1)
                             <li class=" ">
                                 <a href="{{route('admin.account.home')}}">
                                     <i class="lab la-uikit iq-arrow-left"></i><span>Accounts</span>
@@ -193,6 +207,8 @@
                                 </a>
                               
                             </li>
+                            @endif
+                            @if($access->inventory==1)
                             <li class=" ">
                                 <a href="{{route('admin.inventory.home')}}">
                                     <i class="las la-network-wired iq-arrow-left"></i><span>Inventory</span>
@@ -201,6 +217,9 @@
                                 </a>
                               
                             </li>
+                            @endif
+
+                            @if($access->stock==1)
                             <li class=" ">
                                 <a href="{{route('admin.physicalstock.dashboard')}}">
                                     <i class="las la-torah iq-arrow-left"></i><span>Stock</span>
@@ -209,6 +228,7 @@
                                 </a>
                                
                             </li>
+                            @endif
 
 
 
@@ -233,12 +253,9 @@
 
 
             <div class="row">
-
-
-
-
-
-                <div class="col-md-6 col-lg-3 col-sm-6">
+               
+               @if($access->admin==1)
+                   <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{url('admin/dashboard')}}">
                         <div class="card card-block card_overlay">
                             <div class="card-body p-0">
@@ -254,13 +271,33 @@
 
                                 </div>
                             </div>
-                        </div>
+                            </div>
+                        </a>
+                    </div>
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/admin.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                        <h3 class="mb-1 title-area"><i class="fa fa-times" style="color:red"></i>Admin</h3>
+                                    </div>
+                                </div>
+                                <div class="overlay">
 
-                    </a>
-                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </a>
+                    </div>
+                @endif
 
 
-
+                @if($access->front_office==1)
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.hotel')}}">
                         <div class="card card-block card_overlay">
@@ -281,9 +318,33 @@
 
                     </a>
                 </div>
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="#">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/front-office.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                    
+                                        <h3 class="mb-1 title-area"><i class="fa fa-times" style="color:red"></i> Front Office</h3> 
+                                       
+                                    </div>
+                                </div>
+                                <div class="overlay">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+                @endif
 
 
-
+                @if($access->food_beverage==1)
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.foodandbeverage.create')}}">
                         <div class="card card-block card_overlay">
@@ -304,9 +365,31 @@
 
                     </a>
                 </div>
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/foodandbav.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                        <h3 class="mb-1 title-area"><i class="fa fa-times" style="color:red"></i> Food & Beverage</h3>
+                                    </div>
+                                </div>
+                                <div class="overlay">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+                @endif
 
 
-
+                @if($access->house_kipping==1)
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.housekipping.home')}}">
                         <div class="card card-block card_overlay">
@@ -327,9 +410,32 @@
 
                     </a>
                 </div>
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="#">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/housekeeping.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                        <h3 class="mb-1 title-area"><i class="fa fa-times" style="color:red"></i> House Keeping</h3>
+                                    </div>
+                                </div>
+                                <div class="overlay">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+
+                @endif
 
 
-                
+                @if($access->restuarent==1)
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.chui.restaurant')}}">
                         <div class="card card-block card_overlay">
@@ -347,14 +453,35 @@
                                 </div>
                             </div>
                         </div>
+                    </a>
+                </div>
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="#">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/restaurant.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                        <h3 class="mb-1 title-area"><i class="fa fa-times" style="color:red"></i> Restaurant</h3>
+                                    </div>
+                                </div>
+                                <div class="overlay">
 
+                                </div>
+                            </div>
+                        </div>
                     </a>
                 </div>
 
+                @endif
 
 
 
 
+                @if($access->payroll==1)
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.payroll.index')}}">
                         <div class="card card-block card_overlay">
@@ -375,7 +502,28 @@
 
                     </a>
                 </div>
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="#">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/payroll.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                        <h3 class="mb-1 title-area"><i class="fa fa-times" style="color:red"></i> Payroll</h3>
+                                    </div>
+                                </div>
+                                <div class="overlay">
 
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @endif
+                @if($access->banquet==1)
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.banquet.dashboard')}}">
                         <div class="card card-block card_overlay">
@@ -396,9 +544,31 @@
 
                     </a>
                 </div>
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="#">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/banquet.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                        <h3 class="mb-1 title-area"><i class="fa fa-times" style="color:red"></i> Banquet</h3>
+                                    </div>
+                                </div>
+                                <div class="overlay">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+                @endif
 
 
-
+                @if($access->accounts==1)
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.account.home')}}">
                         <div class="card card-block card_overlay">
@@ -419,10 +589,33 @@
 
                     </a>
                 </div>
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/account.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                        <h3 class="mb-1 title-area"><i class="fa fa-times" style="color:red"></i> Accounts</h3>
+                                    </div>
+                                </div>
+                                <div class="overlay">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+
+                @endif
 
 
 
-
+                @if($access->inventory==1)
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.inventory.home')}}">
                         <div class="card card-block card_overlay">
@@ -444,8 +637,31 @@
                     </a>
                 </div>
 
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="#">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/inventory.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                        <h3 class="mb-1 title-area"><i class="fa fa-times" style="color:red"></i> Inventory</h3>
+                                    </div>
+                                </div>
+                                <div class="overlay">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+                @endif
 
 
+                @if($access->stock==1)
                 <div class="col-md-6 col-lg-3 col-sm-6">
                     <a href="{{route('admin.physicalstock.dashboard')}}">
                         <div class="card card-block card_overlay">
@@ -463,9 +679,30 @@
                                 </div>
                             </div>
                         </div>
-
                     </a>
                 </div>
+                @else
+                <div class="col-md-6 col-lg-3 col-sm-6">
+                    <a href="#">
+                        <div class="card card-block card_overlay asifvai">
+                            <div class="card-body p-0">
+                                <div class="top-block-one text-center">
+                                    <div class="">
+                                        <img src="{{asset('public/backend/assets/admin/stock.jpg')}}" alt="" />
+                                    </div>
+                                    <div class="mt-4">
+                                        <h3 class="mb-1 title-area"> <i class="fa fa-times" style="color:red"></i> Stock</h3>
+                                    </div>
+                                </div>
+                                <div class="overlay">
+
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                @endif
 
 
 

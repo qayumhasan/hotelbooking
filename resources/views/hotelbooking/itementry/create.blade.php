@@ -98,14 +98,26 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <!-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox custom-checkbox-color-check custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input bg-success" id="customCheck-2" checked="">
-                                                <label class="custom-control-label" for="customCheck-2">Stock Center</label>
-                                            </div>
+                                    <div class="col-md-6 p-4">
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" id="" name="direct_stock">
+                                            <label class="form-check-label" for="invalidCheck2">
+                                            Is Direct Stock Deduct?
+                                            </label>
                                         </div>
-                                    </div> -->
+                                        </div>
+
+                                        <div class="col-md-6 p-4">
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" id="" name="add_vat">
+                                            <label class="form-check-label" for="invalidCheck2">
+                                                Vat Added On Bill
+                                            </label>
+                                        </div>
+                                        </div>
+
                                 </div>
                             </div>
 

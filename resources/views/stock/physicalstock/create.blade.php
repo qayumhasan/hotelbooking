@@ -14,6 +14,15 @@ $current = date("m/d/Y");
 .card-header.d-flex.justify-content-between.asif {
     background-color: #c1b8b8;
 }
+
+
+button.editcat.badge.bg-primary-light {
+    border: none;
+}
+button.badge.bg-danger-light {
+    border: antiquewhite;
+}
+
 </style>
 <div class="content-page">
     <div class="container-fluid">
@@ -75,6 +84,7 @@ $current = date("m/d/Y");
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
+                                            
                                                 <label for="fname">Item Name: </label>
                                                 <input type="text" class="form-control itemname"  name="itemname" list="brow" id="itemname"/>
                                                 <input type="hidden" class="i_id"  name="i_id" id="i_id"/>
@@ -85,6 +95,7 @@ $current = date("m/d/Y");
                                                     @endforeach
                                                 </datalist> 
                                                 <div style="color:red" id="item_err"></div>
+
                                             </div>
                                         </div>
                                      

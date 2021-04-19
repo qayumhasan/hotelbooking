@@ -38,6 +38,7 @@ use App\Http\Controllers\Admin\Hotel\RestaurantTableController;
 use App\Http\Controllers\Admin\Hotel\HotelServiceController;
 use App\Http\Controllers\Admin\Stock\PhysicalStockController;
 use App\Http\Controllers\Admin\Stock\StockReportController;
+use App\Http\Controllers\Admin\UserRoleController;
 
 
 
@@ -790,3 +791,8 @@ Route::get('/admin/service/list/{id}',[CheckingController::class,'serviceList'])
 Route::get('/admin/guest/details/{id}',[CheckingController::class,'guestCheckinDetails']);
 
 Route::get('/admin/guest/name/list',[CheckingController::class,'guestNameList'])->name('admin.guest.name.list');
+
+Route::get('admin/userrole/manage',[UserRoleController::class,'index'])->name('admin.userrole.permissionnew');
+Route::post('admin/userrole/manage/update',[UserRoleController::class,'update'])->name('admin.userrole.permission');
+
+

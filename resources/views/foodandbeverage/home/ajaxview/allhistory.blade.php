@@ -16,7 +16,7 @@
                                                    <thead class="text-center">
                                                       <tr>
                                                          
-                                                         <th>Kot ID</th>
+                                                         <th>Kot Invoice</th>
                                                          <th>Item Name</th>
                                                          <th>Qty</th>
                                                          <th>Amount</th>
@@ -27,7 +27,7 @@
                                                    <tbody class="text-center">
                                                     @foreach($alldatadetails as $key => $aldata)
                                                             <tr class="remove_data">
-                                                                <td>{{$aldata->id}}</td>
+                                                                <td>{{$aldata->invoice_id}}</td>
                                                                 <td>{{$aldata->item_name}}</td>
                                                                 <td>{{$aldata->qty}}</td>
                                                                 <td>{{$aldata->amount}}</td>

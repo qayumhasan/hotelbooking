@@ -128,7 +128,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="custom-control custom-radio custom-radio-color-checked custom-control">
-                                                <input type="radio" name="menu_type" id="customRadio-1" class="custom-control-input bg-primary" value="Food">
+                                                <input type="radio" name="menu_type" id="customRadio-1" class="custom-control-input bg-primary" value="Food" checked>
                                                 <label class="custom-control-label" for="customRadio-1"> Food </label>
                                             </div>
                                             <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">
@@ -162,7 +162,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="custom-control custom-radio custom-radio-color-checked custom-control">
-                                                <input type="radio" name="is_active" id="customRadio-8" class="custom-control-input bg-primary" value="1">
+                                                <input type="radio" name="is_active" id="customRadio-8" class="custom-control-input bg-primary" value="1" checked>
                                                 <label class="custom-control-label" for="customRadio-8"> Active </label>
                                             </div>
                                             <div class="custom-control custom-radio custom-radio-color-checked custom-control mt-1">

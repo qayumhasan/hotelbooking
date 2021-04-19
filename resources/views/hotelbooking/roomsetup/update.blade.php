@@ -66,7 +66,7 @@
                                             @endphp
                                             <select name="room_type" class="form-control" id="room_type">
                                                 @foreach($allroomtype as $roomtype)
-                                                    <option value="{{$roomtype->id}}">{{$roomtype->room_type}}</option>
+                                                    <option value="{{$roomtype->id}}" @if($edit->room_type == $roomtype->id) selected @endif >{{$roomtype->room_type}}</option>
                                                 @endforeach
                                             </select>
                                             @error('room_type')
@@ -83,7 +83,7 @@
                                             @endphp
                                             <select name="floor" class="form-control floor" id="floor">
                                                 @foreach($allfloor as $floor)
-                                                <option value="{{$floor->id}}">{{$floor->name}}</option>
+                                                <option value="{{$floor->id}}"  @if($edit->floor == $floor->id) selected @endif>{{$floor->name}}</option>
                                                 @endforeach
                                             </select>
                                             @error('floor')

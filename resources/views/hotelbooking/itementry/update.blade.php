@@ -94,6 +94,26 @@
                                          
                                         </div>
                                     </div>
+                                    <div class="col-md-6 p-4">
+
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="1" id="" {{$edit->is_stock == 1 ?'checked':''}} name="direct_stock">
+    <label class="form-check-label" for="invalidCheck2">
+      Is Direct Stock Deduct?
+    </label>
+</div>
+</div>
+
+<div class="col-md-6 p-4">
+
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" value="1" id="" {{$edit->is_vat == 1 ?'checked':''}} name="add_vat">
+    <label class="form-check-label" for="invalidCheck2">
+        Vat Added On Bill
+    </label>
+</div>
+</div>
+
                                 </div>
                             </div>
 
