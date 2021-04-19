@@ -71,17 +71,14 @@
                                         <th scope="row">{{$loop->iteration}}</th>
                                         <td>{{$row->checkin_date}}</td>
                                         <td>{{$row->guest_name}}</td>
-                                        <td>{{$row->user->username ?? ''}}</td>
+                                        <td>{{$row->admin->username ?? ''}}</td>
                                         <td>{{$row->cashamount}}</td>
                                         <td>{{$row->bankamount}}</td>
-                                        <td>{{round($row->checkout->gross_amount ?? '',2)}}</td>
-                                        @php
-                                            $gross_amount = $row->checkout->gross_amount ?? 0 ;
-                                            $paidamount = $row->cashamount + $row->bankamount;
-                                            $balance = $gross_amount - $paidamount;
-                                        @endphp
-                                        <td>{{$paidamount}}</td>
-                                        <td>{{$balance}}</td>
+                                        <td>{{round($row->gross_amount ?? '',2)}}</td>
+                                  
+                                        <td>{{$row->voucher_amount}}</td>
+                                        <td>{{$row->outstanding_amount}}</td>
+                                        
                                     </tr>
                                     @endforeach
                                 </tbody>

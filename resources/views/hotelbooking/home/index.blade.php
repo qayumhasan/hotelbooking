@@ -678,7 +678,7 @@ $time = date("h:i");
             url: url,
             data:data,
             success: function(data) {
-               
+               console.log(data);
                $('#checkinhistoryadd').append(data);
             }
          });

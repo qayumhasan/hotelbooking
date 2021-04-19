@@ -94,12 +94,12 @@
                 <div class=" row third_party" id="third_party_area_main">
                     <label for="inputPassword3" class="col-sm-4 col-form-label text-center control-label"></label>
                     <div class="col-sm-8">
-                        <select class="controll-from" id="third_party_item" name="third_party">
-                            <option disabled selected>--- Select Suppliers ---</option>
-                            <option value="1">Extra Rooms</option>
-                            <option value="2">Extra Bad</option>
-                            <option value="3">Wifi</option>
-                        </select>
+                    <select class="controll-from" id="third_party_item" name="third_party">
+                        <option disabled selected>--- Select Suppliers ---</option>
+                        @foreach($supliers as $row)
+                            <option value="{{$row->id}}">{{$row->name}}</option>
+                        @endforeach
+                    </select>
                     </div>
                 </div>
 
@@ -191,6 +191,7 @@
     $('.editbtn').click(function(e) {
 
         var data = $(this).data("id");
+        console.log(data);
         $('#service_date').val(data.service_date);
         $('#service_id').val(data.id);
         $('#service_no').val(data.service_no);

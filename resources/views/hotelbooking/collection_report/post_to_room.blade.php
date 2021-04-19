@@ -120,12 +120,12 @@ $time = date("h:i");
                                         <td>Durbar-Restaturant</td>
                                         <td>{{$row->checkin->room_no ?? ''}}</td>
                                         <td>{{$row->orderDetail->waiter->employee_name ?? ''}}</td>
-                                        <td class="text-center" colspan="2">{{$row->gross_amount}}</td>
+                                        <td class="text-center" colspan="2">{!!$currency->symbol ?? ' '!!} {{round($row->gross_amount,2)}}</td>
 
                                     </tr>
                                     <tr>
                                         <th class="text-right" colspan="6">Booking Total:</th>
-                                        <td class="text-center" colspan="2">{{$row->gross_amount}}</td>
+                                        <td class="text-center" colspan="2">{!!$currency->symbol ?? ' '!!} {{round($row->gross_amount,2)}}</td>
                                     </tr>
 
                                 </tbody>

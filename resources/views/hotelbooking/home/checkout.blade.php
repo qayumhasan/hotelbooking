@@ -248,6 +248,7 @@ $time = date("h:i");
                                                 <input type="hidden" name="non_checkout_room[]" value="{{$row->room_id}}" />
 
                                                 <input type="hidden" name="non_checkout_room_day" value="{{(int)$date}} " />
+                                                
                                                 <td class="text-center">
 
                                                     <h6>Room No : {{$row->room_no}}</h6><br>
@@ -273,6 +274,8 @@ $time = date("h:i");
                                             </tr>
                                             </td>
                                             @endforeach
+
+
 
 
 

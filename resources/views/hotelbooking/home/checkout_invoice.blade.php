@@ -12,7 +12,8 @@ $time = date("h:i");
         color: white;
         cursor: pointer;
     }
-    .mouse_pointer{
+
+    .mouse_pointer {
         cursor: pointer;
     }
 
@@ -115,7 +116,7 @@ $time = date("h:i");
 
 <!-- print invoice -->
 
-    
+
 <div class="modal fade" id="printvoucer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -126,7 +127,7 @@ $time = date("h:i");
                 </button>
             </div>
             <div class="modal-body" id="showinvoiceprint">
-                
+
             </div>
             <div class="modal-footer">
                 <div class="invoice-footer">
@@ -424,7 +425,7 @@ $time = date("h:i");
                                                 <th scope="col">Mode</th>
                                                 <th scope="col">Against</th>
                                                 <th class="text-center" scope="col">Amount</th>
-                                                <th  class="text-center"  scope="col">Action</th>
+                                                <th class="text-center" scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -759,7 +760,6 @@ $time = date("h:i");
                             .items td.cost {
                                 text-align: "."center;
                             }
-                            
                         </style>
                         </head>
 
@@ -822,68 +822,51 @@ $time = date("h:i");
                                 </tr>
                             </table>
                             <br>
-                            <table class="table table-bordered">
+                            <table class="w-100 table-bordered p-4">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Details</th>
+                                        <th class="text-center">Details</th>
                                         <th>Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($checkins as $row)
                                     <tr>
-
-                                        <td>Rooms</td>
-                                        @php
-                                        (float)$totalroom = 0;
-                                        @endphp
-                                        @if(count($checkins))
-
-                                        <td>
-                                            @foreach($checkins as $row)
-                                            <div class="room card text-center">
-                                                <h6>Room No : 670</h6>
-                                                <span>{{$row->checkin_date}} - {{$row->add_room_checkout_date}} = {{$row->additional_room_day}} day </span>
-                                                <span>Tariff@ {{$row->tarif}}/= Per Day</span>
-                                            </div>
-                                            @php
-                                            $totaltarif = (int)$row->additional_room_day * (int)$row->tarif;
-                                            $totalroom = $totalroom + $totaltarif;
-                                            @endphp
-                                            @endforeach
-                                        </td>
-
-                                        <td>{!!$currency->symbol ?? ' '!!} {{$totalroom}}</td>
-
+                                        @if($loop->iteration == 1)
+                                        <th scope="row">Rooms</th>
+                                        @else
+                                        <th></th>
                                         @endif
+                                        <td class="text-center">
+                                            <h6>Room No: - {{$row->room_no}}</h6>
+                                            <p>{{$row->checkin_date}}- To -{{$row->checkout->checkout_date ?? ''}} = {{$row->additional_room_day}} days</p>
 
+                                            <p>Tariff @ {!!$currency->symbol ?? ' '!!} {{$row->tarif}}</p>
+                                        </td>
+                                        <td class="text-center d-block">{!!$currency->symbol ?? ' '!!} {{$row->additional_room_day * $row->tarif}}</td>
                                     </tr>
-                                    @php
-                                    $discount =$totalroom - $checkout->room_amount;
-                                    @endphp
-                                    <tr>
-                                        <th colspan="2" class="text-right">Room Discount</th>
-                                        <td>{!!$currency->symbol ?? ' '!!} {{$discount}}</td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="2" class="text-right">Total Room Amount</th>
-                                        <td> {!!$currency->symbol ?? ' '!!} {{$checkout->room_amount}}</td>
-                                    </tr>
+                                    @endforeach
 
-
-
+                                    @foreach($checkingservices as $row)
                                     <tr>
-                                        <th colspan="2" class="text-right">Advance Amount</th>
-                                        <td> {!!$currency->symbol ?? ' '!!} {{$checkout->voucher_amount}}</td>
+                                        
+                                        @if($loop->iteration == 1)
+                                        <th>Extra Service</th>
+                                        @else
+                                        <th></th>
+                                        @endif
+                                        <td class="text-center">
+                                            <h6>Room No: {{$row->room_no}}</h6>
+                                            <p>{{$row->item_name}} {{$row->qty}} pcs</p>
+                                            <p>Rate @{{$row->rate}}</p>
+                                            <p>Total: {!!$currency->symbol ?? ' '!!} {{$row->amount}}</p>
+                                        </td>
+                                        
+                                        
+                                        <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->amount}}</td>
                                     </tr>
-                                    <tr>
-                                        <th colspan="2" class="text-right">Total Amount</th>
-                                        @php
-                                        $amount = $data['amount'];
-                                        $totalamount = $amount - $checkindata->voucher_amount;
-                                        @endphp
-                                        <td> {!!$currency->symbol ?? ' '!!} {{$amount}}</td>
-                                    </tr>
+                                    @endforeach
 
                                 </tbody>
                             </table>
@@ -1665,7 +1648,7 @@ $time = date("h:i");
         })
     </script>
 
-<script>
+    <script>
         $(document).ready(function() {
             $('#refund_invoice').click(function(e) {
                 e.preventDefault();
@@ -1681,7 +1664,7 @@ $time = date("h:i");
                     type: 'get',
                     url: url,
                     success: function(data) {
-                        
+
                         $('#voucerareastart').empty();
                         $('#voucerareastart').append(data);
                         $('#voucher_area').modal('show');
@@ -1692,8 +1675,8 @@ $time = date("h:i");
     </script>
 
 
-<!-- Edit Invoice -->
-<script>
+    <!-- Edit Invoice -->
+    <script>
         $(document).ready(function() {
             $('.editinvoice').click(function(e) {
                 e.preventDefault();
@@ -1719,14 +1702,14 @@ $time = date("h:i");
         })
     </script>
 
-<!-- print Invoice -->
-<script>
+    <!-- print Invoice -->
+    <script>
         $(document).ready(function() {
             $('.printvoucher').click(function(e) {
                 e.preventDefault();
-               
+
                 var url = e.currentTarget.href;
-                
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

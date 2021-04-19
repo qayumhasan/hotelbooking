@@ -42,7 +42,7 @@
                                         <th>Exp.Out Date</th>
                                         <th>Tariff</th>
                                         <th>Checkin By</th>
-                                        <th class="d-none">Action</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tfoot class="text-center">

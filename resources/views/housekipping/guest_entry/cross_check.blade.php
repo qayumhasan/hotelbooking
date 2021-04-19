@@ -99,7 +99,7 @@ $time = date("h:i");
                                         <td>{{$row->entry_date}}</td>
 
                                         <td>{{$row->checkin->number_of_person?? ''}}</td>
-                                        <td>{{$row->guestentrycrosscheck->no_of_pax}}</td>
+                                        <td>{{$row->guestentrycrosscheck->no_of_pax ?? ''}}</td>
                                         <td>{{$row->guestentrycrosscheck->varifiedby->username?? ''}}</td>
                                     </tr>
                                     @endforeach
