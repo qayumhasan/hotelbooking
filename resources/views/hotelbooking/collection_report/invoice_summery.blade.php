@@ -30,7 +30,7 @@ $time = date("h:i");
                                 <select class="form-control form-control-sm" name="guest_name" id="guest_name select_room_no">
                                     <option disabled selected>---- Select A Guest Name ----</option>
                                     @foreach($guests as $row)
-                                    <option value="{{$row->guest_name}}">{{$row->guest_name}}</option>
+                                    <option value="{{$row->id}}">{{$row->guest_name}}</option>
                                     @endforeach
 
                                 </select>
@@ -49,34 +49,17 @@ $time = date("h:i");
 
         <div class="row invoice_summery_ajax">
             <div class="col-sm-12 printableAreasaveprint">
-                @if(count($bookinghistory) > 0)
-                @foreach($bookinghistory as $data)
+           
                 <div class="card">
 
-                    @php
-                    $receive = 0;
-                    $refund = 0;
-
-                    if(count($data->voucherData) >0){
-
-                    foreach($data->voucherData as $row){
-                    if($row->type ==1){
-                    $receive = $receive + $row->amount;
-
-                    }elseif($row->type ==0){
-
-                    $refund = $refund + $row->amount;
-
-                    }
-                    }
-                    }
-                    @endphp
 
 
 
 
 
 
+@if(count($invoicesummarys) > 0)
+    @foreach($invoicesummarys as $row)
 
                     <div class="card-body ">
                         <div class="table-responsive guest_ajax_data">
@@ -96,31 +79,31 @@ $time = date("h:i");
                                     <tr>
 
 
-                                        <td>{{$data->checkin->guest_name ?? ''}}</td>
-                                        <td>{{$data->invoice_no}}</td>
-                                        <td>{{$data->invoice_date}}</td>
-                                        @php
-                                        $outstanding = ($data->gross_amount - $refund) + $receive;
-                                        @endphp
-                                        <td>{{$outstanding}}</td>
+                                        <td>{{$row->guest_name}}</td>
+                                        <td>{{$row->invoice_no}}</td>
+                                        <td>{{$row->invoice_date}}</td>
+                                        <td>{{round($row->outstanding_amount,2)}}</td>
                                         <!-- tax area start -->
+                                        
                                         <td rowspan="5">
-                                            @if(count($data->taxdetails) > 0)
-                                            @foreach($data->taxdetails as $row)
+                                        @if(count($row->taxs) > 0)
+                                            @foreach($row->taxs as $data)
                                             <div class="row">
                                                 <div class="col">
-                                                    <span>{{$row->taxDescription}} On {{$row->baseonamount}} :</span>
+                                                    <span>On {{$data->taxDescription}} @ {{$data->baseonamount}} </span>
                                                 </div>
                                                 <div class="col">
-                                                    $ {{$row->amount}}
+                                                    = {{$data->amount}}
                                                 </div>
                                             </div>
                                             @endforeach
                                             @else
+                                           
                                             <div class="row">
                                                 <div class="col text-center"><strong>No Tax Amount Found!</strong></div>
                                             </div>
-                                            @endif
+                                           @endif
+                                           
                                         </td>
                                     </tr>
                                     <tr class="thead-light">
@@ -129,27 +112,15 @@ $time = date("h:i");
                                         <th scope="col">Checkout Date</th>
                                         <th scope="col">No Of Night</th>
                                     </tr>
-                                    @php
-                                    $booking_type = 0;
-                                    @endphp
-                                    @if(count($data->checkindata) > 0)
-                                    @foreach($data->checkindata as $row)
+                                   
                                     <tr>
                                         <td>{{$row->room_no}}</td>
                                         <td>{{$row->checkin_date}}</td>
-                                        <td>{{$data->checkout_date}}</td>
-                                        <td>{{$row->additional_room_day}}</td>
+                                        <td>{{$row->checkout_date}}</td>
+                                        <td>{{$row->day}}</td>
 
                                     </tr>
-                                    @php
-                                    $booking_type .= $row->booking_type;
-                                    @endphp
-                                    @endforeach
-                                    @else
-                                    <tr>
-                                        <th class="text-center" colspan="4">No Data Found!</th>
-                                    </tr>
-                                    @endif
+                                    
                                     <tr>
                                         <th scope="col">Booking Type</th>
                                         <th scope="col">Room Amount</th>
@@ -159,10 +130,14 @@ $time = date("h:i");
 
                                     <tr>
 
-                                        <td>{{$booking_type}}</td>
-                                        <td>{{round($data->room_amount,2)}}</td>
-                                        <td>{{round($data->fb_amount,2)}}</td>
-                                        <td>{{round($data->extra_service_amount,2)}}</td>
+                                        @if($row->booking_type == 2)
+                                        <td>Group Booking</td>
+                                        @else
+                                        <td>Individual</td>
+                                        @endif
+                                        <td>{{round($row->room_amount,2)}}</td>
+                                        <td>{{round($row->fb_amount,2)}}</td>
+                                        <td>{{round($row->extra_service_amount,2)}}</td>
 
                                     </tr>
                                 </tbody>
@@ -181,26 +156,22 @@ $time = date("h:i");
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(count($data->voucherData) > 0)
-                                    @foreach($data->voucherData as $row)
+                      
                                     <tr>
-                                        <td>{{$row->date}}</td>
-                                        <td>{{$row->vouchertype}}</td>
-                                        <td>{{$row->paymentMode}}</td>
-                                        <td>{{$row->voucher_no}}</td>
-                                        <td>{{$row->debitAmount}}</td>
-                                        <td>{{$row->creditAmount}}</td>
+                                        <td>{{$row->TransectionDate}}</td>
+                                        <td>{{$row->voucher_type}}</td>
+                                        <td></td>
+                                        <td>{{$row->voucherNo}}</td>
+                                        
+                                        <td>{{$row->TransectionAmount}}</td>
+                                        <td>{{abs($row->TransectionAmount)}}</td>
                                         <td>Booking</td>
                                     </tr>
-                                    @endforeach
-                                    @else
-                                    <tr>
-                                        <th colspan="7" class="text-center">No Data Found!</th>
-                                    </tr>
-                                    @endif
+                            
+                                
                                     <tr>
                                         <th colspan="6" class="text-right">Gross Amount</th>
-                                        <td>$ {{round($data->gross_amount,2)}}</td>
+                                        <td> {!!$currency->symbol ?? ' '!!} {{round($row->gross_amount,2)}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -209,18 +180,12 @@ $time = date("h:i");
 
 
                         </div>
-
-
-
-
-
-
                     </div>
 
                 </div>
-                @endforeach
-
-                @else
+    @endforeach
+@else
+                
                 <div class="card">
                     <div class="card-body ">
                         <table class="table table-bordered">
@@ -233,7 +198,9 @@ $time = date("h:i");
                         </table>
                     </div>
                 </div>
-                @endif
+             
+@endif
+
             </div>
         </div>
 
@@ -275,9 +242,10 @@ $time = date("h:i");
 
             $.ajax({
                 type: 'GET',
-                url: "{{ route('admin.invoice.summery.ajax.report') }}",
+                url: "{{route('admin.invoice.summery.ajax.report')}}",
                 data: $('#clean_duration_search').serializeArray(),
                 success: function(data) {
+                    $('.invoice_summery_ajax').empty();
                     $('.invoice_summery_ajax').append(data);
 
                 },

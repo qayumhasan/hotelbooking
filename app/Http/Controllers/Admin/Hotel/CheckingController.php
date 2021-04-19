@@ -187,6 +187,8 @@ class CheckingController extends Controller
         $checkin->male_no = $request->male_no;
         $checkin->female_no = $request->female_no;
         $checkin->children_no = $request->children_no;
+        $checkin->entry_by = auth()->user()->id;
+        $checkin->entry_date = Carbon::now()->toDateTimeString();
         $checkin->is_occupy = 1;
 
         if(isset($insert)){
@@ -295,6 +297,8 @@ class CheckingController extends Controller
                 $checkin->male_no = $request->male_no;
                 $checkin->female_no = $request->female_no;
                 $checkin->children_no = $request->children_no;
+                $checkin->entry_by = auth()->user()->id;
+                $checkin->entry_date = Carbon::now()->toDateTimeString();
                 $checkin->is_occupy = 1;
 
                 if(isset($insert)){
@@ -429,8 +433,9 @@ class CheckingController extends Controller
         $services = CheckinService::with('checkin')->where('checkin_id', $id)->get();
         $items = ItemEntry::where('is_active', 1)->where('is_deleted', 0)->get();
         $menucategores = MenuCategory::where('is_active', 1)->where('is_deleted', 0)->get();
+        $supliers = Supplier::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        return view('hotelbooking.checking.services.ajax.edit', compact('services', 'items', 'menucategores'));
+        return view('hotelbooking.checking.services.ajax.edit', compact('services', 'items', 'menucategores','supliers'));
     }
 
     public function serviceUpdate(Request $request)
@@ -458,6 +463,9 @@ class CheckingController extends Controller
         $services->remarks = $request->remarks;
         $services->rate = $request->rate;
         $services->qty = $request->qty;
+        $services->amount = $request->qty * $request->rate;
+        $services->updated_by = auth()->user()->id;
+        $services->updated_date = Carbon::now()->toDateTimeString();
 
         if (isset($request->is_third) && $request->is_third == 1) {
             $services->is_third = $request->is_third;
@@ -478,6 +486,9 @@ class CheckingController extends Controller
             $services->return_date = null;
             $services->return_time = null;
         }
+
+
+
 
         $services->save();
 
@@ -935,8 +946,9 @@ class CheckingController extends Controller
         $tax_details = CheckOut_Tax_Details::where('booking_no', $request->booking_no)->where('invoice_no', $request->invoice_no)->get();
 
         $checkins = Checkin::where('booking_no', $request->booking_no)->get();
+        $checkingservices = CheckinService::where('booking_no',$request->booking_no)->get();
 
-        return view('hotelbooking.home.checkout_invoice', compact('checkindata', 'taxs', 'checkout', 'tax_details', 'addi_checkins', 'data', 'checkins'));
+        return view('hotelbooking.home.checkout_invoice', compact('checkindata', 'taxs', 'checkout', 'tax_details', 'addi_checkins', 'data', 'checkins','checkingservices'));
     }
 
 
@@ -965,7 +977,7 @@ class CheckingController extends Controller
 
     public function guestNameList()
     {
-        $guests = Guest::where('is_active',1)->where('is_deleted',0)->get();
+        $guests = Guest::where('is_active',1)->orderBy('id', 'desc')->where('is_deleted',0)->get();
         return view('hotelbooking.checking.ajax.guest_list',compact('guests'));
     }
 

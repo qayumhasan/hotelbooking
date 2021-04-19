@@ -6,6 +6,12 @@ date_default_timezone_set("Asia/Dhaka");
 $current =date("d/m/Y");
 $time = date("h:i");
 @endphp
+<style>
+    .old_guest{
+        cursor: pointer;
+        border-bottom: 1px solid yellow;
+    }
+</style>
 
 
 <script src="{{asset('public/backend')}}/assets/js/select2.js"></script>
@@ -30,9 +36,17 @@ $time = date("h:i");
                     <div class="row">
                         <div class="col-md-9">
                             <div class="card shadow-sm shadow-showcase">
-                                <div class="card-header d-flex justify-content-between">
-                                    <div class="header-title">
-                                        <h4 class="card-title">Advance Booking Content</h4>
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="header-title">
+                                                <h4 class="card-title">Advance Booking Content</h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 text-right">
+                                                <span>If returning guest? <a class="old_guest border-danger" id="showguestname" data-toggle="modal" data-target="#guestlist" data-whatever="@getbootstrap">Click to search</a></span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -94,7 +108,7 @@ $time = date("h:i");
                                                 <label for="staticEmail" class="col-sm-3 col-form-label">Guest Name :</label>
                                                 <div class="col-sm-6">
                                                     <select class="form-control form-control-sm" required name="guest_name" id="select_guest_name">
-                                                        <option></option>
+                                                        <option disabled selected>---Select A Guest Name----</option>
                                                         @foreach($guests as $row)
                                                         <option value="{{$row->id}}">{{$row->guest_name}}</option>
 
@@ -102,6 +116,7 @@ $time = date("h:i");
 
                                                     </select>
                                                 </div>
+                                                
                                                 <div class="col-md-3">
                                                     <button type="button" data-toggle="modal" data-target="#addguest" class="btn btn-sm btn-primary "><i class="fas fa-plus m-0"></i></button>
                                                 </div>
@@ -389,6 +404,26 @@ $time = date("h:i");
 </div>
 
 
+
+
+<div class="modal fade" id="guestlist" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Guest Name List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="guest_name_list">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script>
     var roomdata = [];
 
@@ -670,6 +705,7 @@ $time = date("h:i");
 
         $(document).on('submit', '#add_guest_name', function(e) {
             e.preventDefault();
+            
             var url = $(this).attr('action');
             var type = $(this).attr('method');
             var request = $(this).serialize();
@@ -686,14 +722,21 @@ $time = date("h:i");
                 data: request,
                 success: function(data) {
 
+                   
+                
+
                     $('#addguest').modal('hide');
 
                     $('#select_guest_name').empty();
                     $('#select_guest_name').append(' <option value="0">--Please Guest Name--</option>');
-                    $.each(data, function(index, divisionobj) {
+                    $.each(data.guests, function(index, divisionobj) {
 
                         $('#select_guest_name').append('<option value="' + divisionobj.id + '">' + divisionobj.guest_name + '</option>');
                     });
+
+                    $('#select_guest_name').val(data.id).selected;
+
+                    
 
                     // toastr.success('Guest Insert Succssfully!');
 
@@ -747,11 +790,50 @@ $time = date("h:i");
     });
 </script>
 
+
 <script>
+    $(document).ready(function() {
+        $('#showguestname').click(function(e) {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            $.ajax({
+                type: 'get',
+                url: "{{route('admin.guest.name.list')}}",
+
+                success: function(data) {
+                    $('#guest_name_list').empty();
+                    $('#guest_name_list').append(data);
+                }
+            });
+        });
+    });
+
+
+
+
+    function getuserData(e) {
+        var modal = $(e)
+        var data = modal.data('whatever');
+
+        $('#select_guest_name').val(data.id).selected;
+        // $('#old_guest_data').prop('checked', true);
+        $('#guestlist').modal('hide');
+
+
+    }
+</script>
+
+<!-- <script>
     $("#select_guest_name").select2({
         placeholder: '----Select Name----'
     });
-</script>
+</script> -->
 
 
 

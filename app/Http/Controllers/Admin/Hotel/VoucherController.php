@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Admin\Hotel;
 
 use App\Http\Controllers\Controller;
+use App\Models\AccountCategory;
+use App\Models\AccountSubCategoryOne;
+use App\Models\AccountSubCategoryTwo;
+use App\Models\AccountTransectionHead;
+use App\Models\ChartOfAccount;
 use App\Models\Checkin;
 use App\Models\Checkout;
 use App\Models\Voucher;
@@ -79,6 +84,8 @@ class VoucherController extends Controller
     public function submitCheckoutVoucher(Request $request , $booking_no)
     {
      
+
+        
      $guestname = Checkin::where('booking_no',$booking_no)->first(); 
      
         if(Voucher::where('voucher_no',$request->voucher_no)->doesntExist()){
@@ -177,18 +184,25 @@ class VoucherController extends Controller
 
 
     public function listVoucher($booking_no)
-    {
-        $voucherdetails = Voucher::where('booking_no',$booking_no)->where('is_deleted',0)->get();
-        return view('hotelbooking.checking.voucher.list',compact('voucherdetails'));
+    {  
+        $alldata=AccountTransectionHead::where('reference',$booking_no)->where('is_deleted',0)->orderBy('id','DESC')->get();
+        // return view('accounts.accounttransection.index',compact('alldata'));
+        return view('hotelbooking.checking.voucher.list',compact('alldata'));
     }
 
     public function editVoucherPage($id)
     {
-        $singlevoucher= Voucher::findOrFail($id);
-        $voucher_no = $singlevoucher->voucher_no; 
-        $booking_no = $singlevoucher->booking_no; 
-        $guestname = Checkin::where('booking_no',$booking_no)->where('is_occupy',1)->first(); 
-        return view('hotelbooking.checking.voucher.edit',compact('voucher_no','booking_no','guestname','singlevoucher'));
+        
+        
+        $allcategory=AccountCategory::get();
+        $allchartofaccount=ChartOfAccount::get();
+        $allsubcategoryone=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
+        $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
+
+        $edit=AccountTransectionHead::where('id',$id)->first();
+        // return view('accounts.accounttransection.update',compact('edit','allcategory','allchartofaccount','allsubcategoryone','allsubcategorytwo'));
+
+        return view('hotelbooking.checking.voucher.edit',compact('edit','allcategory','allchartofaccount','allsubcategoryone','allsubcategorytwo'));
     }
 
     public function updateVoucher(Request $request,$id)
@@ -270,8 +284,9 @@ class VoucherController extends Controller
 
     public function deleteVoucherList($booking_no)
     {
-        $voucherdetails = Voucher::where('booking_no',$booking_no)->where('is_deleted',0)->get();
-        return view('hotelbooking.checking.voucher.delete_list',compact('voucherdetails'));
+        $alldata=AccountTransectionHead::where('reference',$booking_no)->where('is_deleted',0)->orderBy('id','DESC')->get();
+        // return view('accounts.accounttransection.index',compact('alldata'));
+        return view('hotelbooking.checking.voucher.list',compact('alldata'));
     }
 
     public function deleteVoucher($id)
@@ -291,8 +306,9 @@ class VoucherController extends Controller
 
     public function listVoucherView($booking_no)
     {
-        $voucherdetails = Voucher::where('booking_no',$booking_no)->where('is_deleted',0)->get();
-        return view('hotelbooking.checking.voucher.view_list',compact('voucherdetails'));
+        $alldata=AccountTransectionHead::where('reference',$booking_no)->where('is_deleted',0)->orderBy('id','DESC')->get();
+        // return view('accounts.accounttransection.index',compact('alldata'));
+        return view('hotelbooking.checking.voucher.list',compact('alldata'));
         
     }
 

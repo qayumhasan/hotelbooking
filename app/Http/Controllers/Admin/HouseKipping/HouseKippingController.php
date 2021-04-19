@@ -26,6 +26,7 @@ class HouseKippingController extends Controller
         
         $roomtypes = RoomType::where('is_active',1)->where('is_deleted',0)->get();
         $rooms = Room::with('housekeepingreport')->where('is_active',1)->where('is_deleted',0)->where('room_status','!=',3)->get();
+
         return view('housekipping.report.list',compact('rooms','roomtypes'));
     }
 
