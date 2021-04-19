@@ -4,7 +4,7 @@
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$date = date("d/m/Y");
+$date = date("m/d/Y");
 $time = date("h:i");
 @endphp
 
@@ -19,7 +19,7 @@ $time = date("h:i");
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
                             <div class="col-sm-2">
-                                <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
+                                <input class="form-control form-control-sm" id="datepickerdaly" name="from_date" type="text" value="{{$date}}">
                                 <small class="text-danger from_date"></small>
                             </div>
 
@@ -105,8 +105,10 @@ $time = date("h:i");
 
 <script>
     $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'mm/dd/yyyy',
     });
+
+    
 </script>
 
 <script>

@@ -10,6 +10,7 @@ use App\Models\Checkin;
 use App\Models\Guest;
 use App\Models\Room;
 use App\Models\RoomType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -66,8 +67,11 @@ class AdvanceBookingController extends Controller
         ]);
         
         if($insert){
-            $guests = Guest::where('is_active',1)->where('is_deleted',0)->get();
-            return response()->json($guests);
+            $guests = Guest::where('is_active',1)->orderBy('id', 'desc')->where('is_deleted',0)->get();
+            return response()->json([
+                'guests'=>$guests,
+                'id'=>$insert,
+            ]);
         }
 
         
@@ -145,6 +149,8 @@ class AdvanceBookingController extends Controller
             $booking->booking_source = $request->find_us;
             $booking->remarks = $request->remarks;
             $booking->is_active = $request->is_active;
+            $booking->entry_by = auth()->user()->id;
+            $booking->entry_date = Carbon::now();
             $booking->save();
         }
 
@@ -269,6 +275,9 @@ class AdvanceBookingController extends Controller
                 $advancebooking->booking_source = $request->find_us;
                 $advancebooking->remarks = $request->remarks;
                 $advancebooking->is_active = $request->is_active;
+                $advancebooking->updated_by = auth()->user()->id;
+                $advancebooking->updated_date = Carbon::now();
+
                 $advancebooking->save();
 
             }else{
@@ -297,6 +306,9 @@ class AdvanceBookingController extends Controller
             $advancebooking->booking_source = $request->find_us;
             $advancebooking->remarks = $request->remarks;
             $advancebooking->is_active = $request->is_active;
+            $advancebooking->updated_by = auth()->user()->id;
+            $advancebooking->updated_date = Carbon::now();
+
             $advancebooking->save();
 
             }

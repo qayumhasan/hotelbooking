@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin\Hotel;
 
 use App\Http\Controllers\Controller;
+use App\Models\AccountTransectionHead;
 use App\Models\Admin;
 use App\Models\Checkin;
 use App\Models\Checkout;
 use App\Models\Guest;
 use App\Models\Restaurant_Order_head;
+use App\Models\TransectionReport;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 
@@ -20,23 +22,41 @@ class CollectionReportController extends Controller
     public function dailyCollection()
     {
        $employees = Admin::where('is_active',1)->get();
+
         return view('hotelbooking.collection_report.daily_collection',compact('employees'));
     }
 
     public function dailyCollectionAjaxReport(Request $request)
     {
-    
-
+       
+        
         $request->validate([
             'from_date'=>'required',
             'to_date'=>'required',
             'employee'=>'required',
         ]);
 
+        $toDate = strtotime($request->to_date);
+        $toDate = date('m/d/Y',$toDate);
+        
+
+        $fromDate = strtotime($request->from_date);
+        $fromDate = date('m/d/Y',$fromDate);
+
+
+       
+
+
+       $vouchers = TransectionReport::where('entry_by',$request->employee)
+            ->where(function($query) use ($toDate, $fromDate){
+                  $query->whereBetween('TransectionDate', [$fromDate,$toDate]);
+                })
+            ->get();
 
 
 
-        $vouchers = Voucher::where('entry_by',$request->employee)->whereBetween('date',[$request->to_date,$request->from_date])->where('type',1)->get();
+
+        
 
         return view('hotelbooking.collection_report.ajax.daily_collection_ajax',compact('vouchers'));
     }
@@ -46,25 +66,18 @@ class CollectionReportController extends Controller
     {
 
         $guests =Guest::where('is_active',1)->where('is_deleted',0)->get();
-        $checkinguests = Checkin::where('is_occupy',0)->get();
-        $checkinguests = $checkinguests->unique('booking_no');
-
-
-        
+        $checkinguests = TransectionReport::where('is_occupy',1)->get();
         return view('hotelbooking.collection_report.guest_payment_history',compact('guests','checkinguests'));
     }
 
 
     public function ajaxGuestPaymentHistory(Request $request)
     {
-        $guest= Guest::findOrFail($request->guestid);
 
-        if($guest){
-            $checkinguests = Checkin::where('guest_name',$guest->guest_name)->where('is_occupy',0)->get();
-            $checkinguests = $checkinguests->unique('booking_no');
-
+        
+            $checkinguests = TransectionReport::where('is_occupy',1)->get();
             return view('hotelbooking.collection_report.ajax.guest_payment_history_ajax',compact('checkinguests'));
-        }
+     
 
 
     }
@@ -75,29 +88,25 @@ class CollectionReportController extends Controller
     {
         
         $guests =Guest::where('is_active',1)->where('is_deleted',0)->get();
-        $bookinghistory = Checkout::with(['checkin','voucherData'])->where('is_active',0)->get();
-        return view('hotelbooking.collection_report.invoice_summery',compact('bookinghistory','guests'));
+
+        
+        $invoicesummarys = TransectionReport::all();
+     
+        return view('hotelbooking.collection_report.invoice_summery',compact('guests','invoicesummarys'));
     }
 
 
     public function invoiceSummaryAjaxList(Request $request)
     {
         
+        
         $request->validate([
             'guest_name'=>'required',
         ]);
 
-        $guestname = $request->guest_name;
-        $bookinghistory = Checkout::whereHas('checkin',function($query) use ($guestname){
-            $query->where('guest_name', 'like', '%'.$guestname.'%');
+        $invoicesummarys = TransectionReport::where('guest_id',$request->guest_name)->get();
 
-        })
-        ->with(['checkin'=>function($query) use ($guestname){
-            $query->where('guest_name', 'like', '%'.$guestname.'%');
-
-        }])->get();
-
-        return view('hotelbooking.collection_report.ajax.invoice_summery_ajax',compact('bookinghistory'));
+        return view('hotelbooking.collection_report.ajax.invoice_summery_ajax',compact('invoicesummarys'));
     }
 
 

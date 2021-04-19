@@ -24,7 +24,7 @@
         @endforeach
         @else
         <tr>
-            <td>No Data Found!</td>
+            <td colspan="6" class="text-center">No Data Found!</td>
         </tr>
         @endif
         
