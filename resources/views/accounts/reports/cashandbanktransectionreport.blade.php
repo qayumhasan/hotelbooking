@@ -59,7 +59,7 @@ $current = date("m/d/Y");
                                  <select name="employee_name" id="employee_report" class="form-control noradious">
                                     <option value="">--select--</option>
                                     @foreach($allledger as $ledger)
-                                    <option value="{{$ledger->code}}" >{{$ledger->desription_of_account}}</option>
+                                    <option value="{{$ledger->code}}" @if(isset($employee_id)) @if($employee_id==$ledger->code) selected @endif @endif>{{$ledger->desription_of_account}}</option>
                                     @endforeach
                                  </select>
                                  @error('employee_name')

@@ -607,11 +607,11 @@ $time = date("h:i");
                         getbanquetitem();
                         $('#allamountsection').empty();
                         allamount();
-                    $(".itemname").val("");
-                    $(".itemqty").val("");
-                    $(".itemrate").val("");
-                    $(".itemamount").val("");
-                    $(".bit_id").val("");
+                        $(".itemname").val("");
+                        $(".itemqty").val("");
+                        $(".itemrate").val("");
+                        $(".itemamount").val("");
+                        $(".bit_id").val("");
                     //$('.alldataitem').append(data);
                 
                 },
@@ -982,11 +982,7 @@ $time = date("h:i");
                 },
 
                 error: function (err) {
-                //console.log(err.responseJSON.errors.itemname[0]);
-                
-                // $('#item_err').html(err.responseJSON.errors.itemname[0]);
-                // $('#item_rate_err').html(err.responseJSON.errors.itemname[0]);
-                // $('#item_qty_err').html(err.responseJSON.errors.itemname[0]);
+               
                 }
             
             });
@@ -998,14 +994,15 @@ $time = date("h:i");
 </script>
 <script>
     function allcateitem() {
-      //alert("ok");
+    
         var booking_no = $("#booking_no").val();
-        //alert(invoice);
+        //alert(booking_no);
+      
         $.post('{{ url('get/allcateitem/all/') }}/'+booking_no, {_token: '{{ csrf_token() }}'},
             function(data) {
-               // console.log(data);
+              
 			   $('#allcategoryitemsection').append(data);
-              // $('.dueamount').val(data.data);
+              
 
             });
             
@@ -1016,10 +1013,10 @@ $time = date("h:i");
 <script>
     function categoryitemdelete(el) {
         
-       // alert("ok");
+      
         $.post('{{route('get.categoryitemdelete.delete')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
             function(data) {
-                //$('#addtocartshow').html(data);
+                
                 $('#allcategoryitemsection').empty();
                 allcateitem();
 
@@ -1030,23 +1027,23 @@ $time = date("h:i");
      
    
 	}
-	//carttaxdelete();
+	
 </script>
 
 
 
 <script>
     function allamount() {
-      //alert("ok");
+      
         var booking_no = $("#booking_no").val();
         var total_pax_amount = $(".total_pax_amount").val();
          
-         //alert(total_pax_amount);
+        
         $.post('{{ route('get.banquet.allamount') }}', {_token: '{{ csrf_token() }}',booking_no:booking_no,total_pax_amount:total_pax_amount},
             function(data) {
-               // console.log(data);
+            
 			   $('#allamountsection').append(data);
-              // $('.dueamount').val(data.data);
+             
 
             });
             

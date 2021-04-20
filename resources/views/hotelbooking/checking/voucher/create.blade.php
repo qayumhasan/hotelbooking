@@ -49,7 +49,7 @@ $current = date("m/d/Y");
                                             <tbody>
                                                
                                                 <tr>
-                                                    <td><label>Narration:</label></td>
+                                                    <td class="text-center"><label>Narration:</label></td>
                                                     <td colspan="5">
                                                      <input type="hidden" id="voucher_name" name="voucher_name" value="Cash Receipt Voucher">
                                                      <input type="hidden" name="reference" value="{{$guestname->booking_no}}">
@@ -65,35 +65,37 @@ $current = date("m/d/Y");
 
                             </div>
                             <div class="card shadow-sm shadow-showcase">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <table class="table table-borderless">
-                                                <tbody>
-                                                    <tr>
-                                                        <td><label>Sourch Cash:</label></td>
-                                                        <td colspan="5">
-                                                            @php
-                                                            $datasourche=App\Models\ChartOfAccount::where('maincategory_code',19)->get();
+                            <div class="card-body">
+                                
+                                <div class="form-group row">
+                                    <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Sourch Account:</label>
+                                    <div class="col-sm-6">
+                                        @php
+                                        $datasourche=App\Models\ChartOfAccount::where('maincategory_code',19)->get();
 
-                                                            $allsubcategoryone=App\Models\AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
-                                                            $allsubcategorytwo=App\Models\AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
-                                                            @endphp
-                                                            <select id="account_head_main" name="account_head_main" class="form-control noradious">
-                                                                <option value="">--Select--</option>
-                                                                @foreach($datasourche as $sorch_ofaccgg)
-                                                                <option value="{{$sorch_ofaccgg->code}}">{{$sorch_ofaccgg->desription_of_account}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                            <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
-                                                            <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
-                                                            <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
-                                                            <input type="hidden" value="" name="sourch_subcate_codetwo" id="sourch_subcate_codetwo">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label>Account Head:</label></td>
-                                                        <td colspan="5">
+                                        $allsubcategoryone=App\Models\AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
+                                        $allsubcategorytwo=App\Models\AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
+                                        @endphp
+                                        <select id="account_head_main" name="account_head_main" class="form-control noradious">
+                                            <option value="">--Select--</option>
+                                            @foreach($datasourche as $sorch_ofaccgg)
+                                            <option value="{{$sorch_ofaccgg->code}}">{{$sorch_ofaccgg->desription_of_account}}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
+                                        <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
+                                        <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
+                                        <input type="hidden" value="" name="sourch_subcate_codetwo" id="sourch_subcate_codetwo">
+                                    </div>
+                                    <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Amount:</label>
+                                        <div class="col-sm-2">
+                                        <input type="number" class="form-control form-control-lg" id="amount" name="amount" placeholder="">
+                                        <span style="color:red;font-size:10px;" id="accont_amount"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Account Head Type:</label>
+                                    <div class="col-sm-6">
                                                             @php
                                                             $allguest=App\Models\Guest::where('id',$guestname->guest_id)->first();
 
@@ -104,32 +106,36 @@ $current = date("m/d/Y");
 
                                                             <input type="text" class="form-control" value="{{$guestname->guest_name}}" disabled>
 
-                                                            <span style="color:red" id="accont_head_err"></span>
-                                                            <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
-                                                            <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
-                                                            <input type="hidden" value="" name="acchead_subcate_codeone" id="acchead_subcate_codeone">
-                                                            <input type="hidden" value="" name="acchead_subcate_codetwo" id="acchead_subcate_codetwo">
-
-
-                                                            <input type="hidden" name="reference" value="{{$guestname->booking_no}}">
-
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-
-                                                        <td class="qty" style="display:none"> <input type="text" id="qty" name="qty" class="form-control noradious" placeholder="Qty"></td>
-                                                        <td class="qty" style="display:none"> <input type="text" id="price" name="price" class="form-control noradious" placeholder="Price"></td>
-                                                        <td><label>Remarks:</label></td>
-                                                        <td colspan="2">
-                                                            <input type="text" id="remarks" name="remarks" class="form-control noradious">
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                <span style="color:red" id="accont_head_err"></span>
+                                                <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
+                                                <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
+                                                <input type="hidden" value="" name="acchead_subcate_codeone" id="acchead_subcate_codeone">
+                                                <input type="hidden" value="" name="acchead_subcate_codetwo" id="acchead_subcate_codetwo">
                                     </div>
-                                </div>
+                                    <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Davit/Cradit:</label>
+                                    <div class="col-sm-2">
+                                                    <select name="amount_cate" id="amount_cate" class="form-control">
+                                                                <option value="Debit">Debit</option>
+                                                                <option value="Cradit">Cradit</option>
+                                                            </select>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row">
+                                    <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Remarks: </label>
+                                    <div class="col-sm-6">
+                                         <input type="text" id="remarks" name="remarks"  class="form-control form-control-lg" placeholder="Remarks">
+                                    </div>
+                                    <div class="col-sm-4 text-right">
+                                    <a id="additem" class="btn-sm" style="padding: 10px;background: #4788ff; color: #fff; cursor:pointer">Add</a>
+                                        </div>
+                                   
+                                 </div>
+
+                            </div>
+                            <!-- card body ses -->
+                                
+
+
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -184,31 +190,11 @@ $current = date("m/d/Y");
                                     <div class="card shadow-sm shadow-showcase">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
-                                                        <div class="col-sm-7">
-                                                            <input type="text" class="form-control noradious" id="amount" name="amount">
-                                                            <span style="color:red;font-size:10px;" id="accont_amount"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-9">
-                                                            <select name="amount_cate" id="amount_cate" class="form-control noradious">
-                                                                <!-- <option value="Debit">Debit</option> -->
-                                                                <option value="Cradit" selected>Cradit</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2 ">
-                                                    <a id="additem" class="btn-sm" style="padding: 10px;
-    background: #616060;
-    color: #fbfbfb;
-    cursor: pointer;">Add</a>
-                                                </div>
+                                            <div class="col-md-12 text-right">
+                                            <button type="submit" class="btn btn-success">Submit</button>
+                                            </div>
+                                              
+                                           
                                             </div>
                                         </div>
                                     </div>
@@ -234,9 +220,7 @@ $current = date("m/d/Y");
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
+                   
             </div>
             </form>
         </div>

@@ -80,6 +80,78 @@
                             </ul>
                         </li>
                         <li class="">
+                            <a href="#Bookingreports" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-bed"></i><span>Booking Reports</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="Bookingreports" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.banquet.printdetais*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.banquet.printdetais')}}">
+                                        <i class="las la-list-alt"></i><span>Print Function Details</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.banquet.dalilyreports*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.banquet.dalilyreports')}}">
+                                        <i class="las la-list-alt"></i><span>Daily Booking</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.banquet.banquetwise*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.banquet.banquetwise')}}">
+                                        <i class="las la-list-alt"></i><span>Banquet Wise Booking</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#Transection" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-bed"></i><span>Transection Reports</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="Transection" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="">
+                                    <a href="">
+                                        <i class="las la-list-alt"></i><span>Invoice Date Wise</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.banquet.index')}}">
+                                        <i class="las la-list-alt"></i><span>Banquet Wise invoice</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.banquet.index')}}">
+                                        <i class="las la-list-alt"></i><span>Menu Wise  Booking</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#Collection" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fas fa-bed"></i><span>Collection Reports</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="Collection" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="">
+                                    <a href="">
+                                        <i class="las la-list-alt"></i><span>Banquet Collection</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.banquet.index')}}">
+                                        <i class="las la-list-alt"></i><span>Voucher Wise Summary</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a href="{{route('admin.banquet.index')}}">
+                                        <i class="las la-list-alt"></i><span>Daily Sale Reports</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="">
                             <a href="#hall" class="collapsed" data-toggle="collapse" aria-expanded="false">
                             <i class="fas fa-map"></i><span>Venue</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>

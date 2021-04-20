@@ -36,15 +36,15 @@ $current = date("m/d/Y");
                                  <label for="fname">Voucher Type: *</label>
                                 <select name="voucher_type" id="" class="form-control">
                                 <option value="">--select--</option>
-                                    <option value="Cash Payment Voucher">Cash Payment Voucher</option>
-                                    <option value="Bank Payment Voucher">Bank Payment Voucher</option>
-                                    <option value="Fund Transfer Voucher">Fund Transfer Voucher</option>
-                                    <option value="Cash Receipt Voucher">Cash Receipt Voucher</option>
-                                    <option value="Bank Receipt Voucher">Bank Receipt Voucher</option>
-                                    <option value="AorC Receivable Journal Voucher">A/C Receivable Journal Voucher</option>
-                                    <option value="AorC Payble Journal Voucher">A/C Payble Journal Voucher</option>
-                                    <option value="Adjustment Journal Voucher">Adjustment Journal Voucher</option>
-                                    <option value="Account Opening Voucher">Account Opening Voucher</option>
+                                    <option value="Cash Payment Voucher" @if(isset($voucher)) @if($voucher == 'Cash Payment Voucher')  selected @endif  @endif>Cash Payment Voucher</option>
+                                    <option value="Bank Payment Voucher" @if(isset($voucher)) @if($voucher == 'Bank Payment Voucher')  selected @endif  @endif>Bank Payment Voucher</option>
+                                    <option value="Fund Transfer Voucher" @if(isset($voucher)) @if($voucher == 'Fund Transfer Voucher')  selected @endif  @endif>Fund Transfer Voucher</option>
+                                    <option value="Cash Receipt Voucher" @if(isset($voucher)) @if($voucher == 'Cash Receipt Voucher')  selected @endif  @endif>Cash Receipt Voucher</option>
+                                    <option value="Bank Receipt Voucher" @if(isset($voucher)) @if($voucher == 'Bank Receipt Voucher')  selected @endif  @endif>Bank Receipt Voucher</option>
+                                    <option value="AorC Receivable Journal Voucher" @if(isset($voucher)) @if($voucher == 'AorC Receivable Journal Voucher')  selected @endif  @endif>A/C Receivable Journal Voucher</option>
+                                    <option value="AorC Payble Journal Voucher" @if(isset($voucher)) @if($voucher == 'AorC Payble Journal Voucher')  selected @endif  @endif>A/C Payble Journal Voucher</option>
+                                    <option value="Adjustment Journal Voucher" @if(isset($voucher)) @if($voucher == 'Adjustment Journal Voucher')  selected @endif  @endif>Adjustment Journal Voucher</option>
+                                    <option value="Account Opening Voucher" @if(isset($voucher)) @if($voucher == 'Account Opening Voucher')  selected @endif  @endif>Account Opening Voucher</option>
         
                                 </select>
                            </div>
