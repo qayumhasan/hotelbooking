@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\Supplier;
 use App\Models\Guest;
 use DB;
+use Auth;
 
 class ReportsController extends Controller
 {
@@ -224,7 +225,7 @@ class ReportsController extends Controller
             $searchdata=DB::table('vCashAndBankTransection')->where('AccountHeadCode',$employee_id)->whereBetween('date', [$formdate, $to_date])->get();
             $allledger=DB::table('vchart_of_accounts')->where('maincategory_id',9)->get();
             
-            return view('accounts.reports.cashandbanktransectionreport',compact('searchdata','allledger','formdate','to_date'));
+            return view('accounts.reports.cashandbanktransectionreport',compact('employee_id','searchdata','allledger','formdate','to_date'));
         }else{
             $validated = $request->validate([
                 'employee_name' => 'required',
@@ -235,14 +236,16 @@ class ReportsController extends Controller
            
             $allledger=DB::table('vchart_of_accounts')->where('maincategory_id',9)->get();
             
-            return view('accounts.reports.cashandbanktransectionreport',compact('searchdata','allledger'));
+            return view('accounts.reports.cashandbanktransectionreport',compact('searchdata','allledger','employee_id'));
         }
 
     }
 
     public function userTransection(){
+        $userid=Auth::user()->id;
         $alluser=DB::table('admins')->get();
-        $alldata=DB::table('vUserLogLedger')->get();
+
+        $alldata=DB::table('vUserLogLedger')->where('UserID',$userid)->get();
         return view('accounts.reports.usertransectionreport',compact('alluser','alldata'));
     }
 

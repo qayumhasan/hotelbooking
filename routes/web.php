@@ -49,6 +49,7 @@ use App\Http\Controllers\Admin\Banquet\HallController;
 use App\Http\Controllers\Admin\Banquet\BookingforController;
 use App\Http\Controllers\Admin\Banquet\MenutypeController;
 use App\Http\Controllers\Admin\Banquet\BanquetBookingController;
+use App\Http\Controllers\Admin\Banquet\BanquetReportController;
 // payroll
 use App\Http\Controllers\Admin\Payroll\PayrollController;
 use App\Http\Controllers\Admin\Payroll\EmployeeSelaryController;
@@ -430,6 +431,16 @@ Route::post('get/allcateitem/delete', [BanquetBookingController::class, 'getallc
 Route::post('admin/banquet/insert', [BanquetBookingController::class, 'banquetinsert'])->name('admin.banquet.store');
 Route::post('get/allamount/banquet/', [BanquetBookingController::class, 'getallamountsection'])->name('get.banquet.allamount');
 Route::get('admin/banquet/payment/voucher/{bunquet_id}', [BanquetBookingController::class, 'banquetpayment'])->name('admin.banquet.payment');
+// banquet reports
+
+Route::get('admin/banquet/dalily/reports', [BanquetReportController::class, 'dailyreports'])->name('admin.banquet.dalilyreports');
+Route::post('admin/banquet/dalily/reports', [BanquetReportController::class, 'dailyreportssearch'])->name('admin.banquet.dalilyreports');
+// banquet wise report
+Route::get('admin/banquet/banquetwise/reports', [BanquetReportController::class, 'banquetwise'])->name('admin.banquet.banquetwise');
+Route::post('admin/banquet/banquetwise/reports', [BanquetReportController::class, 'banquetwisesearch'])->name('admin.banquet.banquetwise');
+
+Route::get('admin/banquet/printdetails', [BanquetReportController::class, 'printdetais'])->name('admin.banquet.printdetais');
+Route::post('admin/banquet/printdetails', [BanquetReportController::class, 'printdetaisresult'])->name('admin.banquet.printdetais');
 
 
 

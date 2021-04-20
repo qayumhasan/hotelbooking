@@ -39,9 +39,9 @@ class BanquetBookingController extends Controller
         $allcategory=MenuCategory::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $ban_id=Banquet::select(['id'])->first();
         if($ban_id){
-            $booking_no=$ban_id->id;
+            $booking_no='Banquet-'.$ban_id->id;
         }else{
-            $booking_no=0;
+            $booking_no='Banquet-0';
         }
 
         return view('banquet.booking.create',compact('allvanue','bookingfor','allmenutype','allitem','booking_no','alltax','allcategory'));

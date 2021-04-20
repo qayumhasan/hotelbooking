@@ -85,7 +85,6 @@ $current = date("m/d/Y");
                                        <th>Remarks</th>
                                        <th>Date</th>
                                        <th>TransectionAmount</th>
-                                      
                                        <th>ActionType</th>
                                       
                                     </tr>
