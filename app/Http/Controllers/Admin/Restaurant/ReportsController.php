@@ -9,6 +9,7 @@ use App\Models\RestaurantTable;
 use App\Models\Restaurant_order_detail;
 use App\Models\MenuCategory;
 use App\Models\ItemEntry;
+use App\Models\Restaurant_Order_head;
 use DB;
 
 class ReportsController extends Controller
@@ -77,5 +78,43 @@ class ReportsController extends Controller
             ->orderBy('restaurant_order_details.id','DESC')
             ->get();
         return view('restaurant.chui.reports.viewitem',compact('alldata'));
+    }
+
+
+    public function getDateWiseReport()    {
+
+        $datewise = Restaurant_order_detail::all();
+        $datewise=$datewise->groupBy('kot_date');
+        $datewise=$datewise->all();
+        return view('restaurant.chui.reports.date_wise_report',compact('datewise'));
+    }
+
+
+    public function dateWiseAjaxReport(Request $request)
+    {
+
+        $datewise = Restaurant_order_detail::where('kot_date',$request->date)->get();
+        $datewise=$datewise->groupBy('kot_date');
+        $datewise=$datewise->all();
+
+        return view('restaurant.chui.reports.ajax.date_wise_ajax',compact('datewise'));
+
+    }
+
+    public function getPaymentMethodWise()
+    {
+        $paymentwise = Restaurant_Order_head::where('is_payment',1)->get();
+        $paymentwise =$paymentwise->groupBy('payment_method'); 
+        $paymentwise =$paymentwise->all(); 
+
+        return view('restaurant.chui.reports.method_wise_report',compact('paymentwise'));
+    }
+
+    public function paymentMethodWiseAjaxReport(Request $request)
+    {
+        $paymentwise = Restaurant_Order_head::where('payment_method',$request->pay_method)->get();
+        $paymentwise =$paymentwise->groupBy('payment_method'); 
+        $paymentwise =$paymentwise->all(); 
+        return view('restaurant.chui.reports.ajax.payment_wise_report',compact('paymentwise'));
     }
 }

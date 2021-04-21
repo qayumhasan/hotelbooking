@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin\hotel;
 
 use App\Http\Controllers\Controller;
+use App\Models\AccountTransectionDetails;
+use App\Models\AccountTransectionHead;
+use App\Models\CheckBookTransection;
 use App\Models\Checkin;
 use App\Models\CheckinService;
 use App\Models\Checkout;
@@ -18,6 +21,7 @@ use App\Models\TaxCalculation;
 use App\Models\TaxSetting;
 use App\Traits\calculationTax;
 use Carbon\Carbon;
+use CreateAccountTransectionDetailsTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -576,40 +580,47 @@ class CheckingController extends Controller
 
     public function bookingCheckoutStore(Request $request)
     {
+        
+        
+
         $request->validate([
             'checkoutDate' => 'required',
             'checkout_time' => 'required',
             'grace_time' => 'required',
         ]);
+
+        
+
         $invoice_no = date('M') . '-' . rand(111, 999);
 
         $nonCheckoutCount = count($request->non_checkout_room);
+
         if ($nonCheckoutCount > 0) {
             foreach ($request->non_checkout_room as $row) {
                 // make room dirty
 
 
-                $room = Room::findOrFail($row);
-                $room->room_status = 2;
-                $room->save();
+                // $room = Room::findOrFail($row);
+                // $room->room_status = 2;
+                // $room->save();
 
                 // house keeping entyr
 
-                $housekeeping = new HouseKeeping();
-                $housekeeping->room_id = $row;
-                $housekeeping->save();
+                // $housekeeping = new HouseKeeping();
+                // $housekeeping->room_id = $row;
+                // $housekeeping->save();
 
               
 
 
                 // remove from housekeeping guest entry
 
-                $guestEntry = HouseKeepingGuestEntry::where('room_id', $request->room_id)->where('is_active', 1)->first();
-                if($guestEntry){
+                // $guestEntry = HouseKeepingGuestEntry::where('room_id', $request->room_id)->where('is_active', 1)->first();
+                // if($guestEntry){
                     
-                $guestEntry->is_active = 0;
-                $guestEntry->save();
-                }
+                // $guestEntry->is_active = 0;
+                // $guestEntry->save();
+                // }
 
                 // add amount and day in checkin
 
@@ -618,7 +629,7 @@ class CheckingController extends Controller
                 $checkin->additional_room_amount = $checkin->tarif * $request->non_checkout_room_day;
                 $checkin->add_room_checkout_date = $request->checkoutDate;
                 $checkin->add_room_checkout_time = $request->checkout_time;
-                $checkin->is_occupy = 0;
+                // $checkin->is_occupy = 0;
                 $checkin->save();
             }
         }
@@ -656,12 +667,36 @@ class CheckingController extends Controller
             $checkout->entry_by = Auth::user()->id;
             $checkout->entry_date = Carbon::now();
             $checkout->save();
+
         } else {
-            $notification = array(
-                'messege' => 'Checkout Already Done!! Please create an invoice',
-                'alert-type' => 'error'
-            );
-            return redirect()->route('admin.checkout.invoice.page', \Crypt::encrypt($request->booking_no))->with($notification);
+            $check->prime_room = $request->room_id;
+            $check->booking_no = $request->booking_no;
+            $check->invoice_no = $invoice_no;
+
+            $check->checkout_date = $request->checkoutDate;
+            $check->checkout_time = $request->checkout_time;
+            $check->grace_time = $request->grace_time;
+
+            $check->room_amount = $request->room_total_amount;
+            $check->extra_service_amount = $request->extra_service;
+            $check->fb_amount = $request->fb_bservice;
+            $check->restaurant_amount = $request->restaurant;
+
+            $check->voucher_amount = $request->advance_amount;
+
+            $check->net_amount = $request->net_amount;
+
+            $check->gross_amount = $request->net_amount;
+            
+            $check->outstanding_amount = $request->outstanding_amount;
+
+
+            $check->additional_room = $request->safsda;
+
+
+            $check->entry_by = Auth::user()->id;
+            $check->entry_date = Carbon::now();
+            $check->save();
         }
 
         return redirect()->route('admin.checkout.invoice.page', [\Crypt::encrypt($request->booking_no)]);
@@ -677,13 +712,15 @@ class CheckingController extends Controller
 
     public function checkOutInvoice($booking_no)
     {
+        
 
-        $booking_no = \Crypt::decrypt($booking_no);
+
+       $booking_no = \Crypt::decrypt($booking_no);
 
 
-        $checkindata = Checkin::where('booking_no', $booking_no)->where('is_occupy', 0)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
+        $checkindata = Checkin::where('booking_no', $booking_no)->where('is_occupy', 1)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
 
-        $addi_checkins = Checkin::where('booking_no', $booking_no)->get();
+        $roomdata = Checkin::where('booking_no', $booking_no)->get();
 
         $checkout = Checkout::where('booking_no', $booking_no)->first();
 
@@ -691,7 +728,7 @@ class CheckingController extends Controller
 
         $tax_details = CheckOut_Tax_Details::where('booking_no', $checkout->booking_no)->where('invoice_no', $checkout->invoice_no)->get();
 
-        return view('hotelbooking.home.checkout_invoice', compact('checkindata', 'taxs', 'checkout', 'tax_details', 'addi_checkins'));
+        return view('hotelbooking.home.checkout_invoice', compact('checkindata', 'taxs', 'checkout', 'tax_details','roomdata'));
     }
 
     public function calculateTaxAmount(Request $request)
@@ -937,7 +974,45 @@ class CheckingController extends Controller
 
 
         $checkindata = Checkin::where('booking_no', $request->booking_no)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
+
+
+
+
+
         $addi_checkins = Checkin::where('booking_no', $request->booking_no)->get();
+        $roomdata = Checkin::where('booking_no', $request->booking_no)->get();
+
+        // make room dirty
+
+        foreach ($addi_checkins as $row) {
+         
+            $room = Room::findOrFail($row->room_id);
+            if($room){
+                    $room->room_status = 2;
+                    $room->save();   
+                }
+        
+                //  house keeping entyr
+
+                $housekeeping = new HouseKeeping();
+                $housekeeping->room_id = $row->room_id;
+                $housekeeping->save();
+
+                
+                // remove from housekeeping guest entry
+
+                $guestEntry = HouseKeepingGuestEntry::where('room_id', $row->room_id)->where('is_active', 1)->first();
+                if($guestEntry){
+                    
+                    $guestEntry->is_active = 0;
+                    $guestEntry->save();
+                }
+
+                $checkin = Checkin::where('room_id', $row->room_id)->where('booking_no', $row->booking_no)->first();
+                $checkin->is_occupy = 0;
+                $checkin->save();
+        }
+
 
         $checkout = Checkout::findOrFail($request->checkout_id);
 
@@ -948,7 +1023,7 @@ class CheckingController extends Controller
         $checkins = Checkin::where('booking_no', $request->booking_no)->get();
         $checkingservices = CheckinService::where('booking_no',$request->booking_no)->get();
 
-        return view('hotelbooking.home.checkout_invoice', compact('checkindata', 'taxs', 'checkout', 'tax_details', 'addi_checkins', 'data', 'checkins','checkingservices'));
+        return view('hotelbooking.home.checkout_invoice', compact('checkindata', 'taxs', 'checkout', 'tax_details', 'roomdata', 'data', 'checkins','checkingservices'));
     }
 
 
@@ -990,5 +1065,74 @@ class CheckingController extends Controller
             return view('hotelbooking.checking.ajax.guest_checkin_details',compact('checkinInfo'));
         }
         
+    }
+
+    public function checkoutVoucerCreate(Request $request,$booking_no)
+    {
+        
+        $check=AccountTransectionDetails::where('voucher_no',$request->invoice)->first();
+        if($check){
+              
+                $data = new AccountTransectionHead;
+                $data->voucher_type=$request->voucher_name;
+                $data->voucher_no=$request->invoice;
+                $data->date=$request->date;
+                $data->reference=$request->reference;
+                $data->cheque_reference=$check->check_reference;
+                $data->narration=$request->narration;
+                $data->advice=$request->advice;
+                $data->main_invoice=$request->hiddeninvoice;
+                $data->created_at=Carbon::now()->toDateTimeString();
+                $data->entry_by=Auth::user()->id;
+                if($check->dr_amount == NULL){
+                    // return "dr faka";
+
+                    CheckBookTransection::where('id',$check->check_reference)->update([
+                        'status'=>'U',
+                        'voucher_number'=>$request->invoice,
+                        'check_date'=>$request->date,
+                        'check_amount'=>$check->cr_amount,
+                        'updated_at'=>Carbon::now()->toDateTimeString(),
+                    ]);
+    
+                }elseif($check->cr_amount == NULL){
+                     //return "cr faka";
+                    CheckBookTransection::where('id',$check->check_reference)->update([
+                        'status'=>'U',
+                        'voucher_number'=>$request->invoice,
+                        'check_date'=>$request->date,
+                        'check_amount'=>$check->dr_amount,
+                        'updated_at'=>Carbon::now()->toDateTimeString(),
+                    ]);
+
+                }
+                $detailsdata=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
+                foreach($detailsdata as $updata){
+                    AccountTransectionDetails::where('id',$updata->id)->update([
+                        'is_active'=>1,
+                    ]);
+                }
+
+                if($data->save()){
+                    $notification = array(
+                        'messege' => 'Insert Success',
+                        'alert-type' => 'success'
+                    );
+                    return Redirect()->back()->with($notification);
+                }else{
+                    $notification = array(
+                        'messege' => 'Insert Faild',
+                        'alert-type' => 'error'
+                    );
+                    return Redirect()->back()->with($notification);
+                }
+
+        }else{
+            $notification = array(
+                'messege' => 'Please add Transection',
+                'alert-type' => 'error'
+            );
+            return Redirect()->back()->with($notification);
+        }
     }
 }

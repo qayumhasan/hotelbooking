@@ -461,7 +461,7 @@ $time = date("h:i");
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary mx-auto">Check Out & Generate Invoice</button>
+                            <button type="submit" class="btn btn-primary mx-auto">Generate Invoice</button>
 
                         </div>
 

@@ -193,6 +193,8 @@ class AccountTrasectionController extends Controller
     // final account transection 
     public function insertfinal(Request $request){
       
+
+        
         $check=AccountTransectionDetails::where('voucher_no',$request->invoice)->first();
         if($check){
               

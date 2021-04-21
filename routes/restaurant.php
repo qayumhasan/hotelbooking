@@ -103,6 +103,27 @@ Route::middleware('admin')->prefix(md5('admin/chui'))->group(function(){
 
 });
 
+
+Route::prefix(md5('/admin/accounts'))->group(function(){
+    Route::get('/cash',[ChuiController::class,'getCashAccount'])->name('admin.restaurant.get.cash.account');
+    Route::get('/bank',[ChuiController::class,'getBankAccount'])->name('admin.restaurant.get.bank.account');
+});
+
+
+Route::prefix(md5('/admin/credit'))->group(function(){
+    Route::get('/customar',[ChuiController::class,'getCreditCustomar'])->name('admin.restaurant.credit.customar');
+    Route::get('/voucher/{id}',[ChuiController::class,'getCreditVoucher'])->name('admin.restaurant.credit.customar.voucher');
+});
+
+
+Route::prefix(md5('/admin/report'))->group(function(){
+    Route::get('/date/wise',[ReportsController::class,'getDateWiseReport'])->name('admin.restaurant.date.wise.report');
+    Route::get('/payment/method/wise',[ReportsController::class,'getPaymentMethodWise'])->name('admin.restaurant.payment.method.wise.report');
+
+    Route::post('/date/wise/ajax',[ReportsController::class,'dateWiseAjaxReport'])->name('admin.date.wise.ajax.list');
+    Route::post('/payment/method/wise/ajax',[ReportsController::class,'paymentMethodWiseAjaxReport'])->name('admin.payment.method.wise.ajax.list');
+});
+
 // Ajax route start from here
 
 Route::get('/admin/restaurant/chui/menu/inventory/get/items/{id}',[MenuController::class,'menuInventoryGetItem']);
@@ -146,6 +167,7 @@ Route::get('/admin/restaurant/chui/getsearch/history/',[ChuiController::class,'g
 
 Route::get('/admin/restaurant/chui/menu/select/room',[ChuiController::class,'slectRoomForBilling']);
 Route::get('/admin/restaurant/chui/menu/select/room/data/get/{id}',[ChuiController::class,'slectRoomForBillingGet']);
+
 
 Route::get('/admin/restaurant/chui/menu/history/kot/print/{id}',[ChuiController::class,'billingInfoPrint']);
 Route::post('/admin/restaurant/chui/menu/tax/add/to/grid/update',[ChuiController::class,'kotTaxUpdate']);

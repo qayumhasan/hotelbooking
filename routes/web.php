@@ -699,6 +699,7 @@ Route::prefix(md5('admin/booking/checkout'))->group(function(){
     Route::post('/get/gross/amount',[CheckingController::class,'calculateGrossAmount'])->name('admin.checkout.invoice.get.gross.amount');
 
     Route::post('/invoice/store',[CheckingController::class,'checkoutInvoiceStore'])->name('admin.checkout.invoice.store');
+    Route::get('/voucher/store/{booking_no}',[CheckingController::class,'checkoutVoucerCreate'])->name('admin.checkout.voucher.store');
 
 });
 

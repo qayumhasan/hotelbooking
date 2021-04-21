@@ -100,6 +100,24 @@
                                             <i class="las la-list-alt"></i><span>Category-Wise Sell Reports</span>
                                         </a>
                                     </li>
+
+                                    <li class="{{ request()->routeIs('admin.restaurant.credit.customar*') ? 'active' : '' }}">
+                                        <a href="{{route('admin.restaurant.credit.customar')}}">
+                                            <i class="las la-list-alt"></i><span>Credit Customar</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="{{ request()->routeIs('admin.restaurant.date.wise.report*') ? 'active' : '' }}">
+                                        <a href="{{route('admin.restaurant.date.wise.report')}}">
+                                            <i class="las la-list-alt"></i><span>Date Wise Report</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="{{ request()->routeIs('admin.restaurant.payment.method.wise.report*') ? 'active' : '' }}">
+                                        <a href="{{route('admin.restaurant.payment.method.wise.report')}}">
+                                            <i class="las la-list-alt"></i><span>Payment Methods Wise Report</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Restaurant\Chui;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChartOfAccount;
 use App\Models\Checkin;
 use App\Models\Emploayee_Sales_Report;
 use App\Models\Employee;
@@ -248,6 +249,8 @@ class ChuiController extends Controller
             $amountsum = $kotdetails->sum(function ($item) {
                 return $item->amount;
             });
+            
+
 
             $head = new Restaurant_Order_head();
 
@@ -259,6 +262,8 @@ class ChuiController extends Controller
             $head->gross_amount = $amountsum;
             $head->food_amount = $amountsum;
             $head->save();
+
+
 
             $kotdetails = Restaurant_order_detail::where('table_no', $request->tbl_no)->where('kot_status', 0)->where('is_active', 0)->latest('id')->first();
 
@@ -274,6 +279,13 @@ class ChuiController extends Controller
                 'alert-type' => 'success'
             );
 
+            $kotdata = Restaurant_order_detail::where('table_no', $request->tbl_no)->where('kot_status', 0)->where('is_active', 0)->get();
+         
+            $data = [
+                'kotdata'=>$kotdata,
+                'kotdetails'=>$kotdetails,
+            ];
+            $request->session()->put('kotdata',$data);
             return Redirect()->route('admin.chui.restaurant')->with($notification);
         } else {
 
@@ -510,9 +522,9 @@ class ChuiController extends Controller
     public function storeKotItemHistoryByTableID(Request $request)
     {
 
-        
-        
 
+        
+    
 
         $kothead = Restaurant_Order_head::where('invoice_no', $request->invoice_no)->first();
 
@@ -531,55 +543,34 @@ class ChuiController extends Controller
 
                     if ($request->payment_method == 1) {
                         $kothead->payment_method = $request->payment_method;
-                        $kothead->payment_details = 'Cash';
+                        $kothead->payment_details = $request->cash_name;
                     }
 
-                    // add mobile money
-                    if ($request->payment_method == 3) {
-                        $request->validate([
-                            'mobile_number' => 'required',
-                            'trans_number' => 'required',
-                        ]);
-                        $data = [
-                            'mobile_number' => $request->mobile_number,
-                            'trans_number' => $request->trans_number,
-                        ];
-                        $kothead->payment_details = json_encode($data);
-                    }
-
-
+                
                     // Add Payment with bank
 
                     if ($request->payment_method == 2) {
-                        $request->validate([
-                            'bank_name' => 'required',
-                            'card_number' => 'required',
-                        ]);
-                        $data = [
-                            'bank_name' => $request->bank_name,
-                            'card_number' => $request->card_number,
-                        ];
-                        $kothead->payment_details = json_encode($data);
+                        $kothead->payment_method = $request->payment_method;
+                        
+                        $kothead->payment_details = $request->bank_name;
+                        $kothead->card_number = $request->card_number;
                     }
 
                     // add Credit payment
 
                     if ($request->payment_method == 4) {
-                        $request->validate([
-                            'customar_number' => 'required',
-                        ]);
-                        $data = [
-                            'customar_number' => $request->customar_number,
-                        ];
-                        $kothead->payment_details = json_encode($data);
+                        $kothead->payment_method = $request->payment_method;
+                        $kothead->payment_details = $request->customar_name;
+                        $kothead->pay_amount = $request->customar_pay;
+                        $kothead->credit_balance =$kothead->gross_amount-$request->customar_pay;
+                        $kothead->customar_credit_date = Carbon::now()->toDateTimeString();
+                        
                     }
 
                     // payment with post to room
 
                     if ($request->payment_method == 5) {
-                        $request->validate([
-                            'room_no' => 'required',
-                        ]);
+                        $kothead->payment_method = $request->payment_method;
                         $kothead->room_no = $request->room_no;
                         $kothead->booking_no = $request->booking_no;
                     }
@@ -588,6 +579,8 @@ class ChuiController extends Controller
                 $kothead->table_no = $request->table_no;
                 $kothead->mobile_no = $request->mobile_no;
                 $kothead->remarks = $request->remarks;
+                $kothead->entry_by = auth()->user()->id;
+                $kothead->entry_date = Carbon::now()->toDateTimeString();
             }
 
 
@@ -616,7 +609,12 @@ class ChuiController extends Controller
                return redirect()->route('admin.chui.restaurant.tax.print',$request->invoice_no);
             }
         } else {
-            return "no";
+            $notification = array(
+                'messege' => ' Select A Payment Method!',
+                'alert-type' => 'warning'
+            );
+
+            return redirect()->back()->with($notification);
         }
     }
 
@@ -698,5 +696,33 @@ class ChuiController extends Controller
         $tables = RestaurantTable::where('is_deleted', 0)->where('is_active', 1)->orderBy('id', 'DESC')->get();
       
         return view('restaurant.chui.home.index', compact('allwaiter', 'allitem', 'tables', 'orderhead', 'orderdetails'));
+    }
+
+    public function getCashAccount()
+    {
+        $cashdata = ChartOfAccount::select('desription_of_account','code','id')->where('subcategoryone_code',17)->get();
+        return response()->json($cashdata);
+    }
+
+    public function getBankAccount()
+    {
+        
+        $cashdata = ChartOfAccount::select('desription_of_account','code','id')->where('subcategoryone_code',18)->get();
+        return response()->json($cashdata);
+    }
+
+    public function getCreditCustomar()
+    {
+        $creditCustomars = Restaurant_Order_head::where('payment_method',4)->where('is_active',0)->where('is_deleted',0)->get();
+
+        return view('restaurant.chui.reports.credit_customar', compact('creditCustomars'));
+
+    }
+
+
+    public function getCreditVoucher($id)
+    {
+        $guestname = Restaurant_Order_head::findOrFail($id);
+        return view('restaurant.chui.reports.voucher',compact('guestname'));
     }
 }
