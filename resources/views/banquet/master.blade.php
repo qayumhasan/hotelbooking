@@ -144,11 +144,7 @@
                                         <i class="las la-list-alt"></i><span>Voucher Wise Summary</span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="{{route('admin.banquet.index')}}">
-                                        <i class="las la-list-alt"></i><span>Daily Sale Reports</span>
-                                    </a>
-                                </li>
+                               
                             </ul>
                         </li>
                         <li class="">

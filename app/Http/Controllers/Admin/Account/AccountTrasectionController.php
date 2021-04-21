@@ -16,6 +16,7 @@ use App\Models\CheckBookEntry;
 use App\Models\Employee;
 use App\Models\Supplier;
 use App\Models\Guest;
+use App\Models\Banquet;
 use Carbon\Carbon;
 use Session;
 use Auth;
@@ -790,9 +791,10 @@ class AccountTrasectionController extends Controller
         $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
         $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
         $allguest=Guest::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allbanquet=Banquet::where('is_deleted',0)->orderBy('id','DESC')->get();
 
 
-        return view('accounts.accounttransection.vouchertypewise.cashreceiptvoucher',compact('allguest','allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
+        return view('accounts.accounttransection.vouchertypewise.cashreceiptvoucher',compact('allbanquet','allguest','allsuplier','allemployee','account_head','datasourche','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice','vno'));
     }
     
     // 
@@ -981,12 +983,13 @@ class AccountTrasectionController extends Controller
 
     // 
     public function getheadaccountBalance($head_account){
-        $headaccount=0;
+        
+        $headaccou=0;
         $allledger=DB::table('vAccountsHeadsLeadgerTbl')->where('Code',$head_account)->select(['Balance'])->get();
         foreach($allledger as $ledger){
-            $headaccount=$headaccount + $ledger->Balance ;
+            $headaccou=$headaccou + $ledger->Balance ;
         }
-        return response()->json($headaccount);
+        return response()->json($headaccou);
     }
     
 

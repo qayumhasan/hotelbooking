@@ -111,6 +111,10 @@ $current = date("m/d/Y");
                                                             @foreach($allguest as $guest)
                                                             <option value="{{$guest->guest_id}}">{{$guest->guest_name}} (Guest)</option>
                                                             @endforeach
+                                                            @foreach($allbanquet as $banquet)
+                                                            <option value="{{$banquet->booking_no}}">{{$banquet->guest_name}} ( {{$banquet->booking_no}} )</option>
+                                                            @endforeach
+                                                          
                                                             
                                                         </select><br>
                                                         <span style="font-size:12px;color:#776b6b" id="current_balance_head"></span>
