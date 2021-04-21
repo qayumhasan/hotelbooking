@@ -46,6 +46,7 @@ $time = date("h:i");
 
     #rooms {
         overflow: scroll;
+        max-height: 200px;
     }
 
     .old_guest {

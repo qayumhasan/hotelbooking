@@ -209,10 +209,6 @@ $time = date("h:i");
 
             <!-- guest details area start from here -->
 
-
-
-
-
             <!-- service area start from here -->
 
             <div class="addcheckout">
@@ -229,103 +225,37 @@ $time = date("h:i");
                                 <div class="col-md-12 p-2">
                                     <table class="table table-bordered">
                                         <tbody>
-                                            @php
-                                            $origin = new DateTime(Carbon\Carbon::parse("{$checkindata->checkin_date}")->toFormattedDateString());
-                                            $target=Carbon\Carbon::parse("{$current}")->toFormattedDateString();
-                                            $target = new DateTime($target);
-
-                                            $interval =$origin->diff($target);
-
-                                            $date =abs($interval->format('%R%a'));
-                                            $date = $date > 0 ? $date : 1;
-
-
-                                            $totalamountroom = $date > 0 ?(int)$date * $checkindata->tarif : $checkindata->tarif;
-
-                                            @endphp
+                                        @php
+                                            $totalroomprice = 0;
+                                        @endphp
+                                            
 
                                             <tr>
                                                 <th scope="row">Room Charge</th>
-                                                <td></td>
-                                                <td></td>
+                                                <th class="text-center">Details</th>
+                                                <th class="text-center">Total</th>
                                             </tr>
-
-                                            @php
-                                            $totalroomamount = 0;
-                                            @endphp
-
-                                            @foreach($addi_checkins as $row)
-                                            <td class="text-center">
-
-                                                <!-- if room alreay checkout -->
-                                                @if($row->is_occupy == 0)
-                                                <tr class="text-center">
-                                                    <td></td>
-                                                    <td>
-                                                        <h6>Room No : {{$row->room_no}}</h6><br>
-
-                                                        <span>{{$row->checkin_date}} - {{$row->add_room_checkout_date}} = {{$row->additional_room_day}} days</span> </br>
-
-
-                                                        <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
-                                                    </td>
-                                                    <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $row->additional_room_amount}}</td>
-                                                    @php
-                                                    $totalroomamount = $totalroomamount + $row->additional_room_amount;
-                                                    @endphp
-                                                    @endif
-                                                    <!-- if room alreay checkout -->
-
-
-
-
-                                                    <!-- if room alreay not checkout -->
-                                                    @if($row->is_occupy == 1)
-
-                                                    <!-- calculate day and amount  -->
-
-                                                    @php
-                                                    $origin = new DateTime(Carbon\Carbon::parse("{$row->checkin_date}")->toFormattedDateString());
-                                                    $target=Carbon\Carbon::parse("{$current}")->toFormattedDateString();
-                                                    $target = new DateTime($target);
-
-                                                    $interval =$origin->diff($target);
-
-                                                    $date =abs($interval->format('%R%a'));
-                                                    $date = $date > 0 ? $date : 1;
-
-
-                                                    $totalamountroom = $date > 0 ?(int)$date * $checkindata->tarif : $checkindata->tarif;
-
-                                                    @endphp
-
-                                                    <!-- calculate day and amount  -->
-                                                    <!-- hidden room id -->
-
-                                                    <input type="hidden" name="non_checkout_room[]" value="{{$row->room_id}}" />
-                                                    <td class="text-center">
-
-                                                        <h6>Room No : {{$row->room_no}}</h6><br>
-
-                                                        <span>{{$origin->format('d F Y')}} - {{date('d F Y')}} = {{(int)$date}} days</span><br>
-
-
-                                                        <p>Tariff@ {{(int)$row->tarif}}/= Per Day</p><br>
-                                                    </td>
-                                                    <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $totalamountroom}}</td>
-
-                                                    @php
-                                                    $totalroomamount = $totalroomamount + $totalamountroom;
-                                                    @endphp
-                                                    @endif
-                                                    <!-- if room alreay not checkout -->
-
-
-
-                                            </td>
+                                            
+                                            <tr class="text-center">
+                                                <td></td>
+                                                <th>
+                                                @foreach($roomdata as $key=>$row)
+                                                Room No: {{$row->room_no}}
+                                                <p>{{$row->additional_room_day}} Days @ {{$row->tarif}} ={!!$currency->symbol ?? ' '!!}  {{$row->additional_room_amount}}</p>
+                                                @php
+                                                $totalroomprice = $totalroomprice +$row->additional_room_amount;
+                                                @endphp
+                                                @endforeach
+                                                
+                                                </th>
+                                                
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalroomprice}}</td>
+                                                
+                                                
                                             </tr>
-                                            </td>
-                                            @endforeach
+                                            
+
+                                           
 
                                             <tr>
                                                 <th scope="row">Extra Service</th>
@@ -463,9 +393,7 @@ $time = date("h:i");
 
 
 
-                                @php
-                                $totalinword = abs(((int)$totalamountroom + (int)$totalamountextra + (int)$totalfandb + (int)$restaurant) - $totaladvance) ;
-                                @endphp
+                           
 
 
                             </div>
@@ -636,7 +564,7 @@ $time = date("h:i");
                                         <ul class="list-group">
                                             <li class="list-group-item active">Make Invoice</li>
                                             <li class="list-group-item invoice_item" data-toggle="modal" data-target="#foodlist" data-whatever="@getbootstrap">Food List Invoice</li>
-                                            <li class="list-group-item invoice_item" data-toggle="modal" data-target="#eslistinvoice">ES List Invoice</li>
+                                            <li class="list-group-item invoice_item" data-toggle="modal" data-target="#eslistinvoice">Extra Service List Invoice</li>
                                             <li class="list-group-item invoice_item"><a id="recepipt_invoice" href="{{route('admin.checkout.show.voucher',$checkindata->booking_no)}}">Receipt Invoice</a></li>
 
                                             <li class="list-group-item invoice_item"> <a id="refund_invoice" href="{{route('admin.checkout.refund.voucher',$checkindata->booking_no)}}">Refund Invoice</a></li>
@@ -692,7 +620,7 @@ $time = date("h:i");
                             <div class="col-sm-12 text-center p-4">
 
 
-                                <button type="submit" class="btn btn-primary mx-auto">Save & Print</button>
+                                <button type="submit" class="btn btn-primary mx-auto">Checkout & Print</button>
                             </div>
                         </div>
                     </div>

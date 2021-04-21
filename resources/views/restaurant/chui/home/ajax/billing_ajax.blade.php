@@ -256,11 +256,10 @@ $time = date("h:i");
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">Payment Mode: </label>
-                        <select class="form-control form-control-sm" name="payment_method" id="payment_mode">
+                        <select class="form-control form-control-sm" name="payment_method" required id="payment_mode">
                             <option disabled selected>---Select Payment Mode----</option>
                             <option value="1">Cash</option>
                             <option value="2">Card</option>
-                            <option value="3">Mobile Money</option>
                             <option value="4">Credit</option>
                             <option value="5">Post To Room</option>
                         </select>
@@ -448,11 +447,59 @@ $time = date("h:i");
     $(document).ready(function() {
         $('#payment_mode').change(function(e) {
             var id = e.target.value;
+            
 
             $('#payment_mode_insert').empty();
-            // add card number
-            if (id == 2) {
-                $('#payment_mode_insert').append('<tr><th scope="row"><label for="exampleFormControlSelect1">Bank Name</label><select class="form-control form-control-sm" name="bank_name"><option value="1">AB Bank Limited</option><option value="2">Dhaka Bank Limited</option><option value="3">IFIC Bank Limited</option></select></th><td> <label for="exampleFormControlInput1">Card Number</label><input type="text" name="card_number" class="form-control form-control-sm" id="exampleFormControlInput1"></td></tr>');
+
+            // add cash
+            if(id == 1){
+                
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'get',
+            url: "{{route('admin.restaurant.get.cash.account')}}",
+            success: function(data) {
+                console.log(data);
+                var cash_div = '<tr><th scope="row"><label for="exampleFormControlSelect1">Cash Account Name</label><select class="form-control form-control-sm" name="cash_name" require>';
+                data.forEach(function(item){
+                    cash_div+='<option value="'+item.code+'">'+item.desription_of_account+'</option>';
+                });
+                cash_div +='</select></th></tr>';
+                $('#payment_mode_insert').append(cash_div);        
+
+            }
+        });
+
+            }else if (id == 2) {
+                // add card number
+
+                $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'get',
+            url: "{{route('admin.restaurant.get.bank.account')}}",
+            success: function(data) {
+                
+                var cash_div = '<tr><th scope="row"><label for="exampleFormControlSelect1">Bank Account Name</label><select class="form-control form-control-sm" name="bank_name" require>';
+                data.forEach(function(item){
+                    cash_div+='<option value="'+item.code+'">'+item.desription_of_account+'</option>';
+                });
+                cash_div +='</select></th>';
+                cash_div+='<td><label for="exampleFormControlInput1">Card Number</label><input type="text" name="card_number" required class="form-control form-control-sm" id="exampleFormControlInput1"></td>';
+                cash_div +="<tr/>";
+
+
+                $('#payment_mode_insert').append(cash_div);        
+
+            }
+        });
 
                 //    mobile money
             } else if (id == 3) {
@@ -461,7 +508,7 @@ $time = date("h:i");
                 $('#payment_mode_insert').append('<tr><th scope="row"><label for="exampleFormControlSelect1">Mobile Number</label><input type="text" name="mobile_number" class="form-control form-control-sm" id="exampleFormControlInput1"></th><td> <label for="exampleFormControlInput1">Transaction Number</label><input type="text" class="form-control form-control-sm" name="trans_number" id="exampleFormControlInput1"></td></tr>');
                 // credit balance
             } else if (id == 4) {
-                $('#payment_mode_insert').append('<tr><th scope="row" class="text-right">Customar Name:</th><td><input type="text" class="form-control form-control-sm" name="customar_number" id="exampleFormControlInput1"></td></tr>');
+                $('#payment_mode_insert').append('<tr><th scope="row" class="text-right">Customar Name:</th><td><input type="text" class="form-control form-control-sm" required name="customar_name" id="exampleFormControlInput1"></td><th scope="row" class="text-right">Pay Amount:</th><td><input type="text" class="form-control form-control-sm" name="customar_pay"></td></tr>');
 
                 // post to room
             } else if (id == 5) {
