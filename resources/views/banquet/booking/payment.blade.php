@@ -98,8 +98,8 @@ $current = date("m/d/Y");
                                                                
                                                             @endphp
 
-                                                        <input type="hidden" name="account_head"  id="account_head" value="{{$banquetname->bunquet_guest_id}}">
-                                                        <input type="text"  class="form-control" value="{{$banquetname->bunquet_guest_id}}" disabled>
+                                                        <input type="hidden" name="account_head"  id="account_head" value="{{$booking_number}}">
+                                                        <input type="text"  class="form-control" value="{{$banquetname->guest_name}}( {{$banquetname->booking_no}} )" disabled>
 
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">

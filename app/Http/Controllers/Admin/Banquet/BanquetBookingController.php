@@ -37,7 +37,7 @@ class BanquetBookingController extends Controller
         $allitem=ItemEntry::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $alltax=TaxSetting::where('is_deleted',0)->where('is_active',1)->latest()->get();
         $allcategory=MenuCategory::where('is_deleted',0)->where('is_active',1)->latest()->get();
-        $ban_id=Banquet::select(['id'])->first();
+        $ban_id=Banquet::select(['id'])->orderBy('id','DESC')->first();
         if($ban_id){
             $booking_no='Banquet-'.$ban_id->id;
         }else{
