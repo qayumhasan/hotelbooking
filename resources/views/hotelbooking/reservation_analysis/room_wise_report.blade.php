@@ -115,7 +115,11 @@ $time = date("h:i");
                                     @php
                                     $booking_number = $booking_number + $row->NumberOfBooking;
                                     $total_night = $total_night + $row->NumberOfNight;
-                                    $avgnight = $avgnight + round($row->NumberOfNight / $row->NumberOfBooking,2);
+                                    if($row->NumberOfNight !=0){
+                                        $avgnight = $avgnight + round($row->NumberOfNight / $row->NumberOfBooking,2);
+                                    }else{
+                                        $avgnight = $avgnight + 0;
+                                    }
                                     $no_of_guest = $no_of_guest + $row->numberofguest;
 
                                     $accumo_revenue = $accumo_revenue + $row->totalrevenues;
@@ -144,10 +148,10 @@ $time = date("h:i");
                                         <th>{{$total_night}}</th>
                                         <th>{{$avgnight}}</th>
                                         <th>{{$no_of_guest}}</th>
-                                        <th>{{$accumo_revenue}}</th>
+                                        <th>{!!$currency->symbol ?? ' '!!}  {{$accumo_revenue}}</th>
                                         <th>{{$avg_night}}</th>
                                         <th>{{$avg_booking}}</th>
-                                        <th>{{$total_revenue}}</th>
+                                        <th>{!!$currency->symbol ?? ' '!!} {{$total_revenue}}</th>
                                     </tr>
 
                                 </tbody>

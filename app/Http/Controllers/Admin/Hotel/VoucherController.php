@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\AccountCategory;
 use App\Models\AccountSubCategoryOne;
 use App\Models\AccountSubCategoryTwo;
+use App\Models\AccountTransectionDetails;
 use App\Models\AccountTransectionHead;
 use App\Models\ChartOfAccount;
+use App\Models\CheckBookTransection;
 use App\Models\Checkin;
 use App\Models\Checkout;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class VoucherController extends Controller
 {
@@ -40,42 +42,89 @@ class VoucherController extends Controller
         return view('hotelbooking.home.ajax.voucher_ajax',compact('booking_no','guestname','voucher_no'));
     }
 
-    public function submitVoucher(Request $request , $booking_no)
+    public function submitVoucher(Request $request)
     {
-     
-        $guestname = Checkin::where('booking_no',$booking_no)->where('is_occupy',1)->first(); 
-        if(Voucher::where('voucher_no',$request->voucher_no)->doesntExist()){
-            
-        $voucher = new Voucher();
-        $voucher->debit = $request->debit;
-        $voucher->credit = $request->credit;
-        $voucher->amount = $request->amount;
-        $voucher->voucher_no = $request->voucher_no;
-        $voucher->booking_no = $booking_no;
-        $voucher->date = $request->date;
-        $voucher->type = 1;
-        $voucher->remarks = $request->remarks;
+  
+        
 
-        $voucher->entry_by = Auth::user()->id;
-        $voucher->entry_date = Carbon::now();
+         
+        $check=AccountTransectionDetails::where('voucher_no',$request->invoice)->first();
+        if($check){
+              
+                $data = new AccountTransectionHead;
+                $data->voucher_type=$request->voucher_name;
+                $data->voucher_no=$request->invoice;
+                $data->date=$request->date;
+                $data->reference=$request->reference;
+                $data->cheque_reference=$check->check_reference;
+                $data->narration=$request->narration;
+                $data->advice=$request->advice;
+                $data->main_invoice=$request->hiddeninvoice;
+                $data->created_at=Carbon::now()->toDateTimeString();
+                $data->entry_by=1;
+                if($check->dr_amount == NULL){
+                    // return "dr faka";
+                    
+                    CheckBookTransection::where('id',$check->check_reference)->update([
+                        'status'=>'U',
+                        'voucher_number'=>$request->invoice,
+                        'check_date'=>$request->date,
+                        'check_amount'=>$check->cr_amount,
+                        'updated_at'=>Carbon::now()->toDateTimeString(),
+                    ]);
 
-       
+                    $data->price = $check->cr_amount;
+    
+                }elseif($check->cr_amount == NULL){
+                     //return "cr faka";
+                    CheckBookTransection::where('id',$check->check_reference)->update([
+                        'status'=>'U',
+                        'voucher_number'=>$request->invoice,
+                        'check_date'=>$request->date,
+                        'check_amount'=>$check->dr_amount,
+                        'updated_at'=>Carbon::now()->toDateTimeString(),
+                    ]);
 
-        if($voucher->save()){
+                    $data->price = $check->cr_amount;
 
-            
-            $voucher_no = $request->voucher_no;
-            $voucherdetails = Voucher::where('booking_no',$booking_no)->get();
-            return view('hotelbooking.checking.voucher.create',compact('booking_no','guestname','voucher_no','voucher','voucherdetails'));
-        }
+                }
+                $detailsdata=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
+                foreach($detailsdata as $updata){
+                    AccountTransectionDetails::where('id',$updata->id)->update([
+                        'is_active'=>1,
+                    ]);
+                }
+
+                $checkout = Checkout::where('booking_no',$request->reference);
+                $amount =  (float)$request->amount;
+                $checkout->decrement('gross_amount',$amount);
+                $checkout->increment('voucher_amount',$amount);
+                $checkout->decrement('outstanding_amount',$amount);
+                
+                if($data->save()){
+                    $notification = array(
+                        'messege' => 'Insert Success',
+                        'alert-type' => 'success'
+                    );
+                
+                    return Redirect()->back()->with($notification);
+                }else{
+                    $notification = array(
+                        'messege' => 'Insert Faild',
+                        'alert-type' => 'error'
+                    );
+                    return Redirect()->back()->with($notification);
+                }
+
         }else{
-            $notification=array(
-                'messege'=>'Create New Voucher From Here!!',
-                'alert-type'=>'success'
-                );
-            return redirect()->route('admin.checkin.edit',$guestname->id)->with($notification);
+            $notification = array(
+                'messege' => 'Please add Transection',
+                'alert-type' => 'error'
+            );
+            return Redirect()->back()->with($notification);
+        }
 
-        };
+
         
         
     }

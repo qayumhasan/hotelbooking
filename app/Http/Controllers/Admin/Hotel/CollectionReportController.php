@@ -36,12 +36,13 @@ class CollectionReportController extends Controller
             'employee'=>'required',
         ]);
 
-        $toDate = strtotime($request->to_date);
-        $toDate = date('m/d/Y',$toDate);
+        $toDate =$request->to_date;
+        
         
 
-        $fromDate = strtotime($request->from_date);
-        $fromDate = date('m/d/Y',$fromDate);
+        $fromDate = $request->from_date;
+
+        
 
 
        
@@ -49,9 +50,35 @@ class CollectionReportController extends Controller
 
        $vouchers = TransectionReport::where('entry_by',$request->employee)
             ->where(function($query) use ($toDate, $fromDate){
-                  $query->whereBetween('TransectionDate', [$fromDate,$toDate]);
+                  $query->whereBetween('invoice_date', [$fromDate,$toDate]);
                 })
             ->get();
+
+            // $vouchers = TransectionReport::where('entry_by',$request->employee)->get();
+
+            // $collection = collect();
+     
+            
+            // $vouchers->map(function($data) use($collection){
+            //     $collect = array();
+     
+            //     $time = strtotime($data->invoice_date);
+     
+            //     $collect['voucher_date'] = date('d/m/Y',$time);
+            //     $collect['voucher_no'] = $data->voucherNo;
+            //     $collect['guest_name'] = $data->guest_name;
+            //     $collect['room_no'] = $data->guest_name;
+            //     $collect['voucher_type'] = $data->voucher_type;
+            //     $collect['remarks'] = $data->remarks;
+            //     $collect['TransectionAmount'] = $data->TransectionAmount;
+            //     $collect['cashier'] = $data->admin->username;
+            //     $collect['entry_by'] = $data->entry_by;
+            //     $collection->push($collect);
+            // });
+            
+     
+            // $collection =$collection->where('entry_by',$request->employee)->whereBetween('voucher_date', [$fromDate,$toDate])->get();
+            //   return $collection->all();
 
 
 
@@ -66,16 +93,17 @@ class CollectionReportController extends Controller
     {
 
         $guests =Guest::where('is_active',1)->where('is_deleted',0)->get();
-        $checkinguests = TransectionReport::where('is_occupy',1)->get();
+
+        $checkinguests = TransectionReport::where('is_occupy',0)->get();
         return view('hotelbooking.collection_report.guest_payment_history',compact('guests','checkinguests'));
     }
 
 
     public function ajaxGuestPaymentHistory(Request $request)
     {
-
         
-            $checkinguests = TransectionReport::where('is_occupy',1)->get();
+        
+            $checkinguests = TransectionReport::where('guest_id',$request->guestid)->where('is_occupy',0)->get();
             return view('hotelbooking.collection_report.ajax.guest_payment_history_ajax',compact('checkinguests'));
      
 

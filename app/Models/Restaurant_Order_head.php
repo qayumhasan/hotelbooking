@@ -28,4 +28,8 @@ class Restaurant_Order_head extends Model
     {
         return $this->belongsTo(Checkin::class,'room_no','room_id');
     }
+
+    protected $casts = [
+        'created_at' => 'datetime:d/m/Y',
+    ];
 }

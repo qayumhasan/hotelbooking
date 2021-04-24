@@ -18,8 +18,8 @@
         @foreach($vouchers as $row)
         <tr>
             <th scope="row">{{$loop->iteration}}</th>
-            <td>{{ \Carbon\Carbon::parse($row->TransectionDate)->format('d/m/Y')}}</td>
-            <td>{{$row->voucher_no}}</td>
+            <td>{{$row->TransectionDate}}</td>
+            <td>{{$row->voucherNo}}</td>
             <td>{{$row->guest_name}}</td>
             <td>{{$row->room_no}}</td>
             <td>{{$row->voucher_type}}</td>

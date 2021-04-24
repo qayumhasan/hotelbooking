@@ -656,11 +656,13 @@ $time = date("h:i");
                         }
                     </style>
                    
+                   @if(Session::has('kotdata'))
                     <?php $kotdata =session('kotdata');
                            $kotdetails = $kotdata['kotdata'];
                            $invoice = $kotdata['kotdetails'];
                            
                     ?>
+                    @endif
                     <div class="invoice-title">
                         <div id="main-title">
                             <h4>INVOICE</h4>

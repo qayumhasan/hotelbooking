@@ -394,13 +394,22 @@ $time = date("h:i");
                                             <td>Receipt</td>
                                             <td>{{ucfirst($row->debit)}}</td>
                                             <td>Booking</td>
-                                            <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->details->cr_amount ?? ''}}</td>
+                                            <td class="text-center">{!!$currency->symbol ?? ' '!!}
+                                            {{$row->price}}
+                                            </td>
 
 
                                         </tr>
 
                                         @php
-                                        $totaladvance = $totaladvance + $row->details->cr_amount;
+                                      
+
+                                        
+                                            $totaladvance = $totaladvance + $row->price;
+                                        
+                                        
+                                        
+                                        
                                         @endphp
                                         @endforeach
 
