@@ -92,10 +92,13 @@ class ReportsController extends Controller
 
     public function dateWiseAjaxReport(Request $request)
     {
-
-        $datewise = Restaurant_order_detail::where('kot_date',$request->date)->get();
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        
+        
+        $datewise = Restaurant_order_detail::whereBetween('kot_date',[$from_date,$to_date])->get();
         $datewise=$datewise->groupBy('kot_date');
-        $datewise=$datewise->all();
+       $datewise=$datewise->all();
 
         return view('restaurant.chui.reports.ajax.date_wise_ajax',compact('datewise'));
 
@@ -103,6 +106,7 @@ class ReportsController extends Controller
 
     public function getPaymentMethodWise()
     {
+
         $paymentwise = Restaurant_Order_head::where('is_payment',1)->get();
         $paymentwise =$paymentwise->groupBy('payment_method'); 
         $paymentwise =$paymentwise->all(); 
@@ -112,7 +116,16 @@ class ReportsController extends Controller
 
     public function paymentMethodWiseAjaxReport(Request $request)
     {
+
+       
+
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+
+        
+
         $paymentwise = Restaurant_Order_head::where('payment_method',$request->pay_method)->get();
+        
         $paymentwise =$paymentwise->groupBy('payment_method'); 
         $paymentwise =$paymentwise->all(); 
         return view('restaurant.chui.reports.ajax.payment_wise_report',compact('paymentwise'));

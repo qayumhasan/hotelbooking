@@ -13,4 +13,17 @@ class Emploayee_Sales_Report extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    /**
+     * Get the comments for the blog post.
+     */
+    public function employeeSalesReport()
+    {
+        return $this->hasMany(Restaurant_order_detail::class, 'waiter_id', 'waiter_id');
+    }
+
+    public function getcountitemsAttribute()
+    {
+        return $this->employeeSalesReport->sum('qty');
+    }
 }

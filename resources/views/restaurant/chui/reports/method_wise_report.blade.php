@@ -17,21 +17,41 @@ $current = date("d/m/Y");
 
             <div class="col-sm-12">
                 <div class="card">
+                    <form id="searchdatewisereport" action="{{route('admin.payment.method.wise.ajax.list')}}" method="post">
+                        @csrf
+                        <div class="card-body text-center">
 
-                    <div class="card-body text-center">
-                        <div class="form-group row">
-                            <label for="staticEmail" class="col-sm-2  offset-sm-2 col-form-label text-right">Search By Payment Method</label>
-                            <div class="col-sm-3">
-                                <select class="form-control form-control-sm" onchange="searhbypayment(this)" name="payment_method" required="" id="payment_mode">
-                                    <option disabled="" selected="">---Select Payment Mode----</option>
-                                    <option value="1">Cash</option>
-                                    <option value="2">Card</option>
-                                    <option value="4">Credit</option>
-                                    <option value="5">Post To Room</option>
-                                </select>
+                            <div class="form-group row">
+                                <label for="staticEmail" class="col-sm-1 col-form-label text-right">From Date :</label>
+                                <div class="col-sm-2">
+                                    <input type="text" value="{{$current}}" class="form-control text-center form-control-sm datepicker searhbydate" name="from_date" id="searhbydate">
+                                    <small class="from_date text-danger"></small>
+                                </div>
+
+                                <label for="staticEmail" class="col-sm-1 col-form-label text-right">To Date :</label>
+                                <div class="col-sm-2">
+                                    <input type="text" value="{{$current}}" class="form-control text-center form-control-sm datepicker searhbydate" name="to_date" id="searhbydate">
+                                    <small class="to_date text-danger"></small>
+                                </div>
+
+                                <label for="staticEmail" class="col-sm-2 col-form-label text-right">Payment Method</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control form-control-sm" onchange="searhbypayment(this)" name="payment_method" required="" name="payment_mode" id="payment_mode">
+                                        <option disabled="" selected="">---Select Payment Mode----</option>
+                                        <option value="1">Cash</option>
+                                        <option value="2">Card</option>
+                                        <option value="4">Credit</option>
+                                        <option value="5">Post To Room</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-1">
+                                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                                </div>
+
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -43,8 +63,8 @@ $current = date("d/m/Y");
             @if(count($paymentwise) > 0)
             @foreach($paymentwise as $key=>$row)
             <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
+                <div class="card m-0">
+                    <div class="card-header p-1 d-flex justify-content-between">
                         <div class="header-title">
                             @if($key == 1)
                             <h4 class="card-title">Cash</h4>
@@ -60,7 +80,7 @@ $current = date("d/m/Y");
 
                         </span>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-1">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead class="text-center">
@@ -117,7 +137,7 @@ $current = date("d/m/Y");
                     <div class="card-header d-flex justify-content-between">
                         <h5>No Data Found!</h5>
                     </div>
-                  
+
                 </div>
             </div>
 
@@ -140,32 +160,49 @@ $current = date("d/m/Y");
 
 
 </div>
-@endsection
+
 
 <script>
-    function searhbypayment(e) {
-        var pay_method = e.value;
-        
-
+    $(document).ready(function() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        $.ajax({
-            type: 'post',
-            url: "{{ route('admin.payment.method.wise.ajax.list') }}",
-            data: {
-                pay_method
-            },
-            success: function(data) {
-                $('#datewiseitem').empty();
-                $('#datewiseitem').append(data);
+        $(document).on('submit', '#searchdatewisereport', function(e) {
+            e.preventDefault();
+       
+       
+            var url = $(this).attr('action');
+            var type = $(this).attr('method');
+            var request = $(this).serialize();
+            $.ajax({
+                url: url,
+                type: type,
+                data: request,
+                success: function(data) {
+                    $('#datewiseitem').empty();
+                    $('#datewiseitem').append(data);
+                    
 
-            }
+                },
+                error: function(err) {
+                   
+                    if (err.responseJSON.errors.from_date) {
+                        $('.from_date').html('Income header is required');
+                    }
+
+                    if (err.responseJSON.errors.to_date) {
+                        $('.to_date').html('Income header is required');
+                    }
+                }
+            });
         });
-    }
+    });
 </script>
+@endsection
+
+
 
 <script>
     $(function() {

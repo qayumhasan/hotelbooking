@@ -16,7 +16,7 @@
     <tr class="delelement">
 
         <td>{{$row->tax_description_name}}</td>
-        <td>{{$row->calculation_on}}</td>
+        <td>{{$row->taxDescription}}</td>
         <td>{{$row->base_on}}</td>
         <td>{{$row->effect}}</td>
         <td>{{$row->rate}}</td>
@@ -89,6 +89,8 @@
 
             var element = $('#invoice_form').serializeArray();
 
+            console.log(element);
+            return ;
 
             $.ajaxSetup({
                 headers: {

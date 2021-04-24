@@ -92,18 +92,36 @@ $time = date("h:i");
                                 <thead>
                                     <tr>
                                         <th scope="col">Waiter</th>
+                                        <th scope="col">Item Qty</th>
                                         <th scope="col">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
+
+                                @php
+                                    $totalitems = 0;
+                                    $totalamount = 0;
+
+                                @endphp
                                 @if(count($sales) > 0)
                                 @foreach($sales as $row)
                                     <tr>
                                         <td>{{$row->waiter->employee_name?? ''}}</td>
-                                        <td>{{$row->slae_amount}}</td>
+                                        <td>{{$row->countitems}}</td>
+                                        <td>{!!$currency->symbol ?? ' '!!} {{$row->slae_amount}}</td>
+                                        
                                     </tr>
+                                    @php
+                                        $totalitems = $totalitems + $row->countitems;
+                                        $totalamount = $totalamount + $row->slae_amount;
+                                    @endphp
                                 @endforeach
+                                <tr>
+                                    <th class="text-right">Total</th>
+                                    <th>{{$totalitems}}</th>
+                                    <th>{!!$currency->symbol ?? ' '!!} {{$totalamount}}</th>
+                                </tr>
                                 @else
                                 <tr>
                                     <td colspan="2">No Item Found!</td>

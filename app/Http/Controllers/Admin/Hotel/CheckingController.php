@@ -546,7 +546,10 @@ class CheckingController extends Controller
     {
         $checkindata = Checkin::where('room_id', $id)->where('is_occupy', 1)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
 
+       
+
         $addi_checkins = Checkin::where('booking_no', $checkindata->booking_no)->get();
+      
 
 
 

@@ -35,4 +35,5 @@ class TransectionReport extends Model
     }
 
 
+
 }
