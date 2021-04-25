@@ -211,16 +211,16 @@
                                         <i class="las la-id-card"></i><span>General Settings</span>
                                     </a>
                                 </li>
-                                <li class=" {{ request()->routeIs('admin.filemanager.check*') ? 'active' : '' }}">
+                                <!-- <li class=" {{ request()->routeIs('admin.filemanager.check*') ? 'active' : '' }}">
                                     <a href="{{route('admin.filemanager.check')}}">
                                         <i class="las la-id-card"></i><span>Ck Editor With File Manager</span>
                                     </a>
-                                </li>
-                                <li class="{{ request()->routeIs('admin.email*') ? 'active' : '' }}">
+                                </li> -->
+                                <!-- <li class="{{ request()->routeIs('admin.email*') ? 'active' : '' }}">
                                     <a href="{{route('admin.email')}}">
                                         <i class="las la-id-card"></i><span>Mail</span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li class="{{ request()->routeIs('admin.compose.email*') ? 'active' : '' }}">
                                     <a href="{{route('admin.compose.email')}}">
                                         <i class="las la-id-card"></i><span>Compose Mail</span>
@@ -231,14 +231,27 @@
                                         <i class="las la-id-card"></i><span>Bulk Sms Send</span>
                                     </a>
                                 </li>
-
-                                          <!-- Currency area start -->
-                        <li class=" ">
-                            <a href="{{route('currency')}}">
-                            <i class="far fa-money-bill-alt"></i><span>Currency</span>
-                            </a>
+                                <li class=" ">
+                                    <a href="{{route('currency')}}">
+                                    <i class="far fa-money-bill-alt"></i><span>Currency</span>
+                                    </a>
+                                </li>
+                     
+                            </ul>
                         </li>
-                        <!-- Currency area end -->
+                        <li class="">
+                            <a href="#inventory" class="collapsed" data-toggle="collapse" aria-expanded="false">
+                            <i class="fab fa-product-hunt"></i><span>Inventory</span>
+                                <i class="las la-angle-right iq-arrow-right arrow-active"></i>
+                                <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
+                            </a>
+                            <ul id="inventory" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                <li class="{{ request()->routeIs('admin.orderrecusition.manage*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.orderrecusition.manage')}}">
+                                        <i class="las la-list-alt"></i><span>Order Recusition</span>
+                                    </a>
+                                </li>
+                                
                             </ul>
                         </li>
                     

@@ -47,14 +47,24 @@ $current = date("m/d/Y");
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Item Name: *</label>
-                                            <input type="text" id="item_name" name="item_name" class="form-control" list="allitem" placeholder="Item" />
+                                            
                                             <input type="hidden" id="i_id" name="i_id"/>
+
+                                            <!-- <input type="text" id="item_name" name="item_name" class="form-control" list="allitem" placeholder="Item" />
                                             <datalist id="allitem">
                                                 @foreach($allitem as $item)
                                                 <option value="{{$item->item_name}}"></option>
                                                 @endforeach
-                                            </datalist>
-                                                <div style="color:red" id="item_err"></div>
+                                            </datalist> -->
+                                            <select id="item_name" name="item_name" class="form-control"> 
+                                                <option value="">--select--</option>
+                                                @foreach($allitem as $item)
+                                                <option value="{{$item->id}}">{{$item->item_name}}</option>
+                                                @endforeach
+
+                                            </select>
+
+                                            <div style="color:red" id="item_err"></div>
                                             
                                         </div>
                                     </div>
@@ -177,13 +187,13 @@ $current = date("m/d/Y");
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
-     $('input[name="item_name"]').on('change', function(){
+     $('select[name="item_name"]').on('change', function(){
          var item_name = $(this).val();
-         //alert(item_name);
+         
 
          if(item_name) {
              $.ajax({
-                 url: "{{  url('/get/item/all/') }}/"+item_name,
+                 url: "{{  url('/get/item/all/orderrecu/') }}/"+item_name,
                  type:"GET",
                  dataType:"json",
                  success:function(data) {
@@ -230,17 +240,18 @@ $(document).ready(function() {
             },
 
             success: function(data) {
+                alldatashow();
                 $('#item_err').html('');
                 totalqty();
-                $('#item_name').val("");
+                $("#item_name").val("");
                 $('#unit').val("");
                 $('#unit_name').val("");
                 $('#Qty').val("");
                 $("#i_id").val("");
 
                 $('#searchPreloader').hide();
-                alldatashow();
-                mainshow();
+               
+               
             },
 
             error: function (err) {
@@ -253,8 +264,6 @@ $(document).ready(function() {
     });
 });
 </script>
-
-
 <script>
     function alldatashow() {
         var invoice = $("#invoice_no").val();
@@ -286,7 +295,7 @@ $(document).ready(function() {
      alldatashow();
    
 	}
-	cartheaderdelete();
+
 </script>
 <script>
     function cartdata(el) {
@@ -295,7 +304,7 @@ $(document).ready(function() {
         $.post('{{route('get.item.edit')}}', {_token: '{{ csrf_token() }}',item_id: el.value},
             function(data) {
                 //$('#addtocartshow').html(data);
-                            $("#item_name").val(data.item_name);
+                            $("#item_name").val(data.item_id).selected;
                             $("#i_id").val(data.id);
                             $("#unit").val(data.unit);
                             $("#unit_name").val(data.name);
@@ -327,5 +336,211 @@ $(document).ready(function() {
 
 	totalqty();
 </script>
+@if(Session::has('kotdata'))
+<div class="modal fade" id="kotinvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kitchen Order List Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
+            <div class="modal-body">
+                <div class="invoice-card printableAreasaveprintsectioninvoice">
+                    <style>
+                        .invoice_item:hover {
+                            background: gray;
+                            color: white;
+                            cursor: pointer;
+                        }
+
+
+                        .invoice-card {
+
+                            padding: 10px 2em;
+                            background-color: #fff;
+                            border-radius: 5px;
+                        }
+
+                        .invoice-card>div {
+                            margin: 5px 0;
+                        }
+
+                        .invoice-title {
+                            flex: 3;
+                        }
+
+                        .invoice-title #date {
+                            display: block;
+                            margin: 8px 0;
+                            font-size: 12px;
+                        }
+
+                        .invoice-title #main-title {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: 2em;
+                        }
+
+                        .invoice-title #main-title h4 {
+                            letter-spacing: 2.5px;
+                        }
+
+                        .invoice-title span {
+                            color: rgba(0, 0, 0, 0.4);
+                        }
+
+                        .invoice-details {
+                            flex: 1;
+                            border-top: 0.5px dashed grey;
+                            border-bottom: 0.5px dashed grey;
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .invoice-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        .invoice-table thead tr td {
+                            font-size: 12px;
+                            letter-spacing: 1px;
+                            color: grey;
+                            padding: 8px 0;
+                        }
+
+                        .invoice-table thead tr td:nth-last-child(1),
+                        .row-data td:nth-last-child(1),
+                        .calc-row td:nth-last-child(1) {
+                            text-align: right;
+                        }
+
+                        .invoice-table tbody tr td {
+                            padding: 8px 0;
+                            letter-spacing: 0;
+                        }
+
+                        .invoice-table .row-data #unit {
+                            text-align: center;
+                        }
+
+                        .invoice-table .row-data span {
+                            font-size: 13px;
+                            color: rgba(0, 0, 0, 0.6);
+                        }
+
+                        .invoice-footer {
+                            flex: 1;
+                            display: flex;
+                            justify-content: flex-end;
+                            align-items: center;
+                        }
+
+                        .invoice-footer #later {
+                            margin-right: 5px;
+                        }
+
+                        .btn#later {
+                            margin-right: 2em;
+                        }
+
+                        .company_info {
+                            font-size: 10px;
+                            font-weight: normal;
+                        }
+                    </style>
+                       
+                    <div class="invoice-title">
+                        <div id="main-title">
+                            <h4>INVOICE</h4>
+                            <span>#</span>
+                        </div>
+
+                        <span id="date">{{ $current }}</span>
+                    </div>
+
+                    <div class="invoice-details">
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <td>Invoice No</td>
+                                    <td>Item</td>
+                                    <td>Unit</td>
+                                    <td>Qty</td>
+                               
+                                   
+                                </tr>
+                            </thead>
+                           
+                            <tbody>
+                            @if(Session::has('kotdata'))
+                                @php
+                                    $kotdata =session('kotdata');
+                                  
+                                    $totalamount=0;
+                                @endphp
+                              
+                               @foreach($kotdata as $kdata)
+                                        @foreach($kdata as $row)
+                                            <tr>
+                                                <td>{{$row->invoice_no}}</td>
+                                                <td>{{$row->item_name}}</td>
+                                                <td>{{$row->unitname->name}}</td>
+                                                <td>{{$row->qty}}</td>
+                                            <tr>
+                                        @endforeach
+                            
+                             @endforeach
+                                   
+                               
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-right">
+                       
+                    </div>
+             
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="invoice-footer">
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-4" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-outline-primary savepritbtnareainvoice">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+
+@if(Session::has('kotdata'))
+<script>
+   $(document).ready(function() {
+      $('#kotinvoice').modal('show');
+   });
+</script>
+{{session()->forget('kotdata')}}
+@endif
+
+<script>
+    $(function() {
+        $(".savepritbtnareainvoice").on('click', function() {
+                alert("ok")
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableAreasaveprintsectioninvoice").printArea(options);
+            <?php session()->forget('kotdata'); ?>
+        });
+    });
+</script>
 @endsection

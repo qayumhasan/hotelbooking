@@ -655,12 +655,12 @@ $time = date("h:i");
                             font-weight: normal;
                         }
                     </style>
-                   
+                  
                     <?php $kotdata =session('kotdata');
                            $kotdetails = $kotdata['kotdata'];
                            $invoice = $kotdata['kotdetails'];
-                           
                     ?>
+               
                     <div class="invoice-title">
                         <div id="main-title">
                             <h4>INVOICE</h4>
@@ -725,6 +725,7 @@ $time = date("h:i");
 </script>
 @endif
 @endisset
+
 @if(session()->has('kotdata'))
 <script>
    $(document).ready(function() {

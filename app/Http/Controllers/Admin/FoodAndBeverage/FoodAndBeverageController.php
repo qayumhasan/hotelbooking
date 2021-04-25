@@ -14,6 +14,7 @@ use App\Models\KitchenOrderHead;
 use DB;
 use Carbon\Carbon;
 use Auth;
+use Session;
 
 class FoodAndBeverageController extends Controller
 {
@@ -22,6 +23,7 @@ class FoodAndBeverageController extends Controller
     }
     // food
     public function index(){
+      
         $rooms = Room::where('room_status',3)->orderby('id','DESC')->get();
         $allwaiter=Employee::get();
         $allitem=ItemEntry::where('is_deleted',0)->where('is_active',1)->orderBy('id','DESC')->get(); 
@@ -48,7 +50,7 @@ class FoodAndBeverageController extends Controller
 
     // kot insert
     public function kotinsert(Request $request){
-       // return $request;
+        //return $request;
         if($request->i_id == ''){
             $validated = $request->validate([
                 'waitername' => 'required',
@@ -155,7 +157,9 @@ class FoodAndBeverageController extends Controller
 
     // final insert
     public function finalinsert(Request $request){
-
+        
+        
+        
         $check=KitchenOrderDetails::where('booking_no',$request->booking_no)->where('kot_status',0)->first();
         if($check){
             $numberofitem=KitchenOrderDetails::where('booking_no',$request->booking_no)->where('kot_status',0)->count();
@@ -182,11 +186,21 @@ class FoodAndBeverageController extends Controller
                 ]);
             }
             if($insert){
+               
+                $kotdata=KitchenOrderDetails::where('booking_no',$request->booking_no)->where('kot_status',1)->get();
+                
+               
+                $data = [
+                    'kotdata'=>$kotdata,
+                ];
+                Session::put('kotdata',$data);
+             
                 $notification = array(
                     'messege' => 'success!',
                     'alert-type' => 'success'
                 );
-                return redirect()->back()->with($notification);
+                return redirect()->route('admin.foodandbeverage.create')->with($notification);
+              
             }else{
             
                 $notification = array(

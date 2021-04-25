@@ -10,6 +10,7 @@ use App\Models\OrderHeadDetails;
 use Carbon\Carbon;
 use DB;
 use Auth;
+use Session;
 
 class OrderRequisitionController extends Controller
 {
@@ -36,14 +37,14 @@ class OrderRequisitionController extends Controller
         return view('hotelbooking.orderrecusition.create',compact('allitem','invoice_id'));
     }
     // get item
-    public function getitem($item_name){
-       // $data=ItemEntry::where('item_name',$item_name)->first();
-
+    public function getitemnew($item_name){
+ 
         $data = DB::table('item_entries')
-            ->where('item_name',$item_name)
+            ->where('item_entries.id',$item_name)
             ->join('unit_masters', 'item_entries.unit_name', '=', 'unit_masters.id')
             ->select('item_entries.*', 'unit_masters.name')
             ->first();
+          
         return response()->json($data);
     }
 
@@ -53,13 +54,13 @@ class OrderRequisitionController extends Controller
     }
     // order recuinser
     public function iteminsert(Request $request){
-       //return $request;
+   
        if($request->i_id == ''){
      
-           $validated = $request->validate([
+        $validated = $request->validate([
             'item_name' => 'required',
         ]);
-        $item=ItemEntry::where('item_name',$request->item_name)->first();
+        $item=ItemEntry::where('id',$request->item_name)->first();
 
         $itemorder=OrderHeadDetails::where('invoice_no',$request->invoice_no)->where('item_id',$item->id)->first();
 
@@ -76,11 +77,11 @@ class OrderRequisitionController extends Controller
             }
 
         }else{
-         
+        
             $insert=OrderHeadDetails::insert([
-                'item_name'=>$request->item_name,
+                'item_name'=>$item->item_name,
                 'item_id'=>$item->id,
-                'unit'=>$request->unit,
+                'unit'=>$item->unit_name,
                 'qty'=>$request->qty,
                 'invoice_no'=>$request->invoice_no, 
                 'date'=>$request->date,
@@ -97,9 +98,9 @@ class OrderRequisitionController extends Controller
             $validated = $request->validate([
                 'item_name' => 'required',
             ]);
-            $item=ItemEntry::where('item_name',$request->item_name)->first();
+            $item=ItemEntry::where('id',$request->item_name)->first();
             $update=OrderHeadDetails::where('id',$request->i_id)->update([
-                'item_name'=>$request->item_name,
+                'item_name'=>$item->item_name,
                 'item_id'=>$item->id,
                 'unit'=>$request->unit,
                 'qty'=>$request->qty,
@@ -131,11 +132,19 @@ class OrderRequisitionController extends Controller
                     'date'=>$request->date,
                 ]);
                 if($insert){
+                    
+                $kotdata=OrderHeadDetails::where('invoice_no',$request->invoice_no)->get();
+               
+                $data = [
+                    'kotdata'=>$kotdata,
+                ];
+                Session::put('kotdata',$data);
+
                     $notification=array(
                         'messege'=>'Insert Success',
                         'alert-type'=>'success'
                         );
-                    return redirect()->back()->with($notification);
+                    return redirect()->route('admin.ordercusition.create')->with($notification);
                 }else{
                     $notification=array(
                         'messege'=>'SomeThing Is Wrong',
@@ -145,7 +154,7 @@ class OrderRequisitionController extends Controller
                 }
         }else{
             $notification=array(
-                'messege'=>'There Is no Item Foundd',
+                'messege'=>'There Is no Item Found',
                 'alert-type'=>'error'
                 );
             return redirect()->back()->with($notification);
@@ -183,16 +192,27 @@ class OrderRequisitionController extends Controller
 
     // update
     public function orderupdate(Request $request){
+        
+        $numberofitem=OrderHeadDetails::where('invoice_no',$request->invoice_no)->count();
+        $numberofqty=OrderHeadDetails::where('invoice_no',$request->invoice_no)->sum('qty');
         $update=OrderHead::where('id',$request->id)->update([
-            'num_of_qty'=>$request->num_of_qty,
+
+            'num_of_qty'=>$numberofqty,
             'date'=>$request->date,
-            'num_of_item'=>$request->num_of_item,
+            'num_of_item'=> $numberofitem,
             'remarks'=>$request->remarks,
             'updated_by'=>Auth::user()->id,
             'updated_date'=>Carbon::now()->toDateTimeString(),
             'updated_at'=>Carbon::now()->toDateTimeString(),
+            
         ]);
         if($update){
+            $kotnewdata=OrderHeadDetails::where('invoice_no',$request->invoice_no)->get();
+               
+                $data = [
+                    'kotnewdata'=>$kotnewdata,
+                ];
+                Session::put('kotnewdata',$data);
             $notification=array(
                 'messege'=>'update Success',
                 'alert-type'=>'success'

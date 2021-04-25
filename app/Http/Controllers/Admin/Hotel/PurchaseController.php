@@ -52,11 +52,14 @@ class PurchaseController extends Controller
     }
     // purchase insert
     public function insert(Request $request){
-        //return $request;
+        $validated = $request->validate([
+            'supplier' => 'required',
+            'stock_center' => 'required',
+        ]);
+
         $invoice = $request->invoice_no;
         $checkpurchahead=PurchaseHead::where('invoice_no',$invoice)->first();
         if($checkpurchahead){
-           
             $netamount=PurchaseHead::where('invoice_no',$invoice)->sum('amount');
             $data = new Purchase;
             $data->invoice_no =  $invoice;
@@ -81,6 +84,15 @@ class PurchaseController extends Controller
             $data->created_at= Carbon::now()->toDateTimeString();
 
            if($data->save()){
+
+            $purchasedata=PurchaseHead::where('invoice_no',$request->invoice_no)->get();
+           
+               
+            $datanew = [
+                'purchasedata'=>$purchasedata,
+            ];
+            Session::put('purchasedata',$datanew);
+
                 $notification=array(
                     'messege'=>'Purchase Insert Success',
                     'alert-type'=>'success'
@@ -458,6 +470,8 @@ class PurchaseController extends Controller
             'min_level'=>$request->min_level,
             'menu_item'=>$request->menu_type,
             'is_active'=>$request->is_active,
+            'is_stock' => $request->direct_stock,
+            'is_vat' => $request->add_vat,
             'date'=>Carbon::now()->toDateTimeString(),
             'entry_by'=>Auth::user()->id,
             'entry_date'=>Carbon::now()->toDateTimeString(),

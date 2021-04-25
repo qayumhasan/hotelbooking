@@ -1,4 +1,4 @@
-@extends('inventory.master')
+@extends('layouts.admin')
 @section('title', 'All Order Recusition|'.$seo->meta_title)
 @section('content')
 <style>
@@ -13,12 +13,12 @@
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">All Item</h4>
+                        <h4 class="card-title">All Order Recusition</h4>
                      </div>
                      <span class="float-right mr-2">
-                        <a href="{{route('admin.ordercusition.create')}}" class="btn btn-sm bg-primary">
+                        <!-- <a href="{{route('admin.ordercusition.create')}}" class="btn btn-sm bg-primary">
                            <i class="ri-add-fill"><span class="pl-1">Add Order</span></i>
-                        </a>
+                        </a> -->
                      </span>
                   </div>
                   <div class="card-body">
@@ -46,17 +46,21 @@
                                  <td>
                                  @if($data->is_active==1)
                                  <span class=" btn-info btn-sm">pending</span>
-                                 @else
-                                 <span class=" btn-danger btn-sm">Deactive</span>
+                                 @elseif($data->is_active==2)
+                                 <span class=" btn-danger btn-sm">OnProcessing</span>
+                                 @elseif($data->is_active==3)
+                                 <span class=" btn-success btn-sm">Approve</span>
                                  @endif
 
                                  </td>
                                  <td>
-                                   <!-- @if($data->is_active==1)
-                                   <a class="badge bg-info-light mr-2"  data-toggle="tooltip" data-placement="top"  href="{{url('admin/itementry/deactive/'.$data->id)}}" data-original-title="Active"><i class="la la-thumbs-up"></i></a>
-                                   @else
-                                    <a class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/itementry/active/'.$data->id)}}" data-original-title="Deactive"><i class="la la-thumbs-down"></i></a>
-                                   @endif -->
+                                    @if($data->is_active==1)
+                                   <a class="badge bg-info-light mr-2"  data-toggle="tooltip" data-placement="top"  href="{{url('admin/orderrecusition/onprocessing/'.$data->id)}}" data-original-title="OnProcesing"><i class="la la-thumbs-down"></i></a>
+                                    @elseif($data->is_active==2)
+                                    <a class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/orderrecusition/onapprove/'.$data->id)}}" data-original-title="Approve"><i class="la la-thumbs-down"></i></a>
+                                    @elseif($data->is_active==3)
+                                    <a class="badge bg-success-light mr-2"  data-toggle="tooltip" data-placement="top" href="" data-original-title="Approve"><i class="la la-thumbs-up"></i></a>
+                                    @endif
                                    <a class="badge bg-primary-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/ordercusition/edit/'.$data->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
                                    <a id="delete" class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/ordercusition/delete/'.$data->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
                                  </td>

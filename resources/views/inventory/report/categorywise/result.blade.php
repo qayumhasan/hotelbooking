@@ -126,7 +126,7 @@ $current = date("m/d/Y");
                                        @endphp
                                        @if($check)
                                        <tr>
-                                          <td>{{++$key}}</td>
+                                         
                                           <td>{{$pdata->item_name}}</td>
                                           <td>{{ $pdata->qty }}</td>
                                           <td>{{ $pdata->rate }}</td>
