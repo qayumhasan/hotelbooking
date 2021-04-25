@@ -7,6 +7,11 @@
     height: 35px;
  
 }
+button.btn-sm.btn-primary.mt-2 {
+    border: beige;
+    padding: 2px 9px;
+    font-size: 11px;
+}
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
@@ -24,8 +29,8 @@ $current = date("m/d/Y");
                         <div class="header-title">
                             <h4 class="card-title">Purchase</h4>
                         </div>
-                        <button type="button" class="btn-sm btn-primary mt-2" data-toggle="modal" data-target=".bd-example-modal-xl">Add Item</button>
-                        <button type="button" class="btn-sm btn-primary mt-2" data-toggle="modal" data-target=".bd-example-modal-lg">Add Supplier</button>
+                  
+                       
                        <a href="{{route('admin.purchase.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
                     </div>
                 </div>
@@ -83,7 +88,9 @@ $current = date("m/d/Y");
                                                 <option value="{{$stock->id}}">{{$stock->name}}</option>
                                                 @endforeach
                                             </select>
-                                            
+                                            @error('stock_center')
+                                                <div style="color:red">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +101,20 @@ $current = date("m/d/Y");
                         <div class="card shadow-sm shadow-showcase">
                             <div class="card-body">
                                 <div class="row" id="mainfile">
-                                    <div class="col-md-3" id="allitempurchase">
+                                    <div class="col-md-3">
+                                         <div class="form-group">
+                                            <label for="fname">Item Name:*</label> <button type="button" class="btn-sm btn-primary mt-2" data-toggle="modal" data-target=".bd-example-modal-xl"><i class="fa fa-plus"></i></button>
+                                            <input type="text" id="item_name" name="item_name" class="form-control item_name" list="allitem" placeholder="Item" />
+                                            <input type="hidden" id="i_id" name="i_id"/>
+                                            <datalist id="allitem">
+                                                @foreach($allitem as $item)
+                                                <option value="{{$item->item_name}}"></option>
+                                                @endforeach
+                                            </datalist>
+                                            <div style="color:red" id="item_err"></div>
+
+
+                                         </div>
                                         
                                     </div>
                                     <div class="col-md-2">
@@ -311,7 +331,9 @@ $current = date("m/d/Y");
                         <div class="header-title">
                             <h4 class="card-title">Add Item</h4>
                         </div>
-                       <!-- <a href="{{route('admin.itementry.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Item</span></i></button></a> -->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
                     </div>
                 </div>
                 <form  method="POST" id="ajaxitementry">
@@ -386,6 +408,24 @@ $current = date("m/d/Y");
                                           
                                         </div>
                                     </div>
+                                    <div class="col-md-6 p-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" id="" name="direct_stock">
+                                            <label class="form-check-label" for="invalidCheck2">
+                                            Is Direct Stock Deduct?
+                                            </label>
+                                        </div>
+                                        </div>
+
+                                        <div class="col-md-6 p-4">
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" id="" name="add_vat">
+                                            <label class="form-check-label" for="invalidCheck2">
+                                                Vat Added On Bill
+                                            </label>
+                                        </div>
+                                        </div>
                                 </div>
                             </div>
 
@@ -469,10 +509,7 @@ $current = date("m/d/Y");
 
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times-circle"></i></button>
-            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-        </div>
+       
     </div>
 </div>
 </div>
@@ -688,6 +725,33 @@ $current = date("m/d/Y");
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- endmodal -->
+<script type="text/javascript">
+  $(document).ready(function() {
+     $(".item_name").on('change', function(){
+         var item_name = $(this).val();
+        //alert(item_name);
+         if(item_name) {
+             $.ajax({
+                 url: "{{  url('/get/item/all/') }}/"+item_name,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+
+                        $('#unit').val(data.unit_name);
+                        $('#unit_name').val(data.name);
+                        $('#Qty').val(1);
+                        $('.rate').val(data.rate);
+                        $('.amount').val(data.rate);
+
+                    }
+             });
+         } else {
+           
+         }
+
+     });
+ });
+</script>
 <script>
     function getallitem(){
       
@@ -696,7 +760,7 @@ $current = date("m/d/Y");
                   
                       
                        var html = '<div class="form-group" id="allnewitem">';
-                         html += '<label for="fname">Item Name: *</label>';
+                         html += '<label for="fname">Item Name: *  </label>';
                          html += '<input type="text" id="item_name" name="item_name" class="form-control item_name" list="allitem" placeholder="Item" />';
                          html += '<input type="hidden" id="i_id" name="i_id"/>';
                          html += '<datalist id="allitem">';
@@ -718,33 +782,7 @@ $current = date("m/d/Y");
 
 </script>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-     $("#item_name").on('change', function(){
-         var item_name = $(this).val();
-         //alert(item_name);
-         if(item_name) {
-             $.ajax({
-                 url: "{{  url('/get/item/all/') }}/"+item_name,
-                 type:"GET",
-                 dataType:"json",
-                 success:function(data) {
 
-                        $('#unit').val(data.unit_name);
-                        $('#unit_name').val(data.name);
-                        $('#Qty').val(1);
-                        $('.rate').val(data.rate);
-                        $('.amount').val(data.rate);
-
-                    }
-             });
-         } else {
-             //alert('danger');
-         }
-
-     });
- });
-</script>
 <script>
 $(document).ready(function() {
         $('#additemajax').click(function (e) {
@@ -801,6 +839,7 @@ $(document).ready(function() {
             data: $('#addsuppiler').serializeArray(),
             success: function(data) {
                 if(data=='success'){
+                    getallitem();
                     getallsuplier();
                     $('.title').val("");
                     $('.name').val("");
@@ -874,6 +913,7 @@ $(document).ready(function() {
             },
 
             success: function(data) {
+                getallitem();
                 $('#tax_id').val("");
                 $('#calculation_on').val("");
                 $('#based_on').val("");
@@ -928,6 +968,7 @@ $(document).ready(function() {
                  dataType:"json",
                  success:function(data) {
                       //console.log(data.amount);
+                      getallitem();
                         $("#calculation_on").val(data.data.calculation);
                         //$("#based_on").html("<option value=" + data.data.base_on+ ">"+ data.data.base_on +"</option>");
                         $("#based_on").val(data.data.base_on);
@@ -964,14 +1005,15 @@ $(document).ready(function() {
                 //                           'position':'topCenter'
                 //                       });
                 // }
-
+                getallitem();
                 alltaxfile();
                 totalamount();
             });
            
    
 	}
-	taxDatadelete();
+	
+    
 </script>
 
 <!-- tax include script end -->
@@ -1038,7 +1080,21 @@ $(document).ready(function() {
      });
  });
 </script>
+<script>
+    function alldatashow() {
+      //alert("ok");
+        var invoice = $("#invoice_no").val();
+        //alert(invoice);
+        $.post('{{ url('/get/itempurchase/data/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
+            function(data) {
+			   $('#showallitem').html(data);
 
+            });
+            
+	}
+
+	alldatashow();
+</script>
 <script>
 $(document).ready(function() {
     $('#addnow').on('click', function() {
@@ -1069,19 +1125,20 @@ $(document).ready(function() {
             },
 
             success: function(data) {
-                
+                getallitem();
                 $('#item_err').html('');
-                $('#item_name').val("");
+                $('.item_name').val("");
                 $('#unit').val("");
                 $('#unit_name').val("");
                 $('#Qty').val("");
                 $("#i_id").val("");
                 $(".rate").val("");
                 $(".amount").val("");
+       
+                 
                 alltaxfile();
                 totalamount();
                 alldatashow();
-                mainshow();
                
               
             },
@@ -1098,21 +1155,7 @@ $(document).ready(function() {
 </script>
 
 
-<script>
-    function alldatashow() {
-      //alert("ok");
-        var invoice = $("#invoice_no").val();
-        //alert(invoice);
-        $.post('{{ url('/get/itempurchase/data/') }}/'+invoice, {_token: '{{ csrf_token() }}'},
-            function(data) {
-			   $('#showallitem').html(data);
 
-            });
-            
-	}
-
-	alldatashow();
-</script>
 <script>
     function totalamount() {
       //alert("ok");
@@ -1225,7 +1268,7 @@ function taxedit(el) {
             function(data) {
                         
                         var html = '<div class="form-group" id="sup_id">';
-                         html += '<label for="fname">Supplier: *</label>';
+                         html += '<label for="fname">Supplier: *</label>  <button type="button" class="btn-sm btn-primary mt-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-plus"></i></button>';
                          html += '<select name="supplier" id="supplier" class="form-control supplier">';
                          html += '<option value="">--select--</option>';
                         $.each(data,function(index,districtObj){
@@ -1234,6 +1277,9 @@ function taxedit(el) {
                         });
                          html += '</select>';
                          html += '</div>';
+                         html += ' @error("stock_center")'
+                         html += '<div style="color:red">{{ $message }}</div>'
+                         html +=' @enderror'
 
                          $('#sup_id').remove();
                          $('#selectsupplier').append(html);
@@ -1262,6 +1308,221 @@ function taxedit(el) {
     }
     return false;
     }
+    });
+</script>
+@if(Session::has('purchasedata'))
+<div class="modal fade" id="kotinvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kitchen Order List Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="invoice-card printableAreasaveprintsectioninvoice">
+                    <style>
+                        .invoice_item:hover {
+                            background: gray;
+                            color: white;
+                            cursor: pointer;
+                        }
+
+
+                        .invoice-card {
+
+                            padding: 10px 2em;
+                            background-color: #fff;
+                            border-radius: 5px;
+                        }
+
+                        .invoice-card>div {
+                            margin: 5px 0;
+                        }
+
+                        .invoice-title {
+                            flex: 3;
+                        }
+
+                        .invoice-title #date {
+                            display: block;
+                            margin: 8px 0;
+                            font-size: 12px;
+                        }
+
+                        .invoice-title #main-title {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: 2em;
+                        }
+
+                        .invoice-title #main-title h4 {
+                            letter-spacing: 2.5px;
+                        }
+
+                        .invoice-title span {
+                            color: rgba(0, 0, 0, 0.4);
+                        }
+
+                        .invoice-details {
+                            flex: 1;
+                            border-top: 0.5px dashed grey;
+                            border-bottom: 0.5px dashed grey;
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .invoice-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        .invoice-table thead tr td {
+                            font-size: 12px;
+                            letter-spacing: 1px;
+                            color: grey;
+                            padding: 8px 0;
+                        }
+
+                        .invoice-table thead tr td:nth-last-child(1),
+                        .row-data td:nth-last-child(1),
+                        .calc-row td:nth-last-child(1) {
+                            text-align: right;
+                        }
+
+                        .invoice-table tbody tr td {
+                            padding: 8px 0;
+                            letter-spacing: 0;
+                        }
+
+                        .invoice-table .row-data #unit {
+                            text-align: center;
+                        }
+
+                        .invoice-table .row-data span {
+                            font-size: 13px;
+                            color: rgba(0, 0, 0, 0.6);
+                        }
+
+                        .invoice-footer {
+                            flex: 1;
+                            display: flex;
+                            justify-content: flex-end;
+                            align-items: center;
+                        }
+
+                        .invoice-footer #later {
+                            margin-right: 5px;
+                        }
+
+                        .btn#later {
+                            margin-right: 2em;
+                        }
+
+                        .company_info {
+                            font-size: 10px;
+                            font-weight: normal;
+                        }
+                    </style>
+                        
+                    <div class="invoice-title">
+                        <div id="main-title">
+                            <h4>INVOICE</h4>
+                            <span>#</span>
+                        </div>
+
+                        <span id="date">{{ $current }}</span>
+                    </div>
+
+                    <div class="invoice-details">
+                        <table class="invoice-table">
+                            <thead>
+                                <tr>
+                                    <td>Invoice No</td>
+                                    <td>Item</td>
+                                    <td>Price</td>
+                                    <td>Qty</td>
+                                    <td>Amount</td>
+                               
+                                   
+                                </tr>
+                            </thead>
+                           
+                            <tbody>
+                            
+                            @if(Session::has('purchasedata'))
+                                @php
+                                    $purchasedata =session('purchasedata');
+                                    $totalamount=0;
+                                @endphp
+                           
+                              
+                               @foreach($purchasedata as $kdata)
+                                        @foreach($kdata as $row)
+                                            <tr>
+                                                <td>{{$row->invoice_no}}</td>
+                                                <td>{{$row->item_name}}</td>
+                                                <td>{{$row->rate}}</td>
+                                                <td>{{$row->qty}}</td>
+                                                <td>{{$row->amount}}</td>
+                                            <tr>
+                                            @php
+                                            $totalamount=$totalamount+$row->amount;
+                                            @endphp
+                                        @endforeach
+                            
+                             @endforeach
+                                   
+                               
+                            @endif
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-right">
+                       <h5>Total Amount: {{$totalamount}}</h5>
+                      
+                    </div>
+             
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="invoice-footer">
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-4" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-outline-primary savepritbtnareainvoice">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+
+@if(Session::has('purchasedata'))
+<script>
+   $(document).ready(function() {
+      $('#kotinvoice').modal('show');
+   });
+</script>
+{{session()->forget('purchasedata')}}
+@endif
+
+<script>
+    $(function() {
+        $(".savepritbtnareainvoice").on('click', function() {
+                alert("ok")
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableAreasaveprintsectioninvoice").printArea(options);
+            <?php session()->forget('purchasedata'); ?>
+        });
     });
 </script>
                                       

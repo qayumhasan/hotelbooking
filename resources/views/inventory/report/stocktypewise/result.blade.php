@@ -6,7 +6,7 @@
 <script src="{{asset('public/backend')}}/printThis.js"></script>
 <style>
 .form-control{
-   height:32px;
+   height:37px;
 }
 </style>
 @php
@@ -38,7 +38,7 @@ $current = date("m/d/Y");
                                        <select name="stock_id" class="form-control col-md-5" style="font-size:12px">
                                             <option value="0">--All-</option>
                                             @foreach($allstockcenter as $stock)
-                                            <option value="{{$stock->id}}" >{{$stock->name}}</option>
+                                            <option value="{{$stock->id}}" @if(isset($stock_id)) @if($stock_id==$stock->id) selected @endif @endif>{{$stock->name}}</option>
                                             @endforeach
                                            
                                        </select>

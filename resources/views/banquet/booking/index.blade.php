@@ -25,6 +25,7 @@
                                  <th>Name</th>
                                  <th>Mobile</th>
                                  <th>Date</th>
+                                 <th>Total Amount</th>
                                  <th>status</th>
                                  <th>Action</th>
                               </tr>
@@ -37,6 +38,7 @@
                                  <td>{{$data->guest_name}}</td>
                                  <td>{{$data->mobile}}</td>
                                  <td>{{$data->booking_date}}</td>
+                                 <td>{{$data->total_net_amount}}</td>
                                  <td>
                                  @if($data->is_active==1)
                                  <span class=" btn-success btn-sm">Active</span>

@@ -77,7 +77,7 @@ $current = date("m/d/Y");
                                
                               </tr>
                            </thead>
-                           <tbody class="text-center">
+                           <tbody class="text-center" style="font-size:12px">
                            @php
                            $total_amount=0;
                            @endphp
@@ -91,7 +91,7 @@ $current = date("m/d/Y");
                                     <th>{{ $supplier->name}}</th>
                                 </tr>
                                 @php
-                                    $itemall=App\Models\Purchase::where('is_deleted',0)->where('supplier_id',$supplier->id)->orderBy('id','DESC')->get();
+                                    $itemall=App\Models\Purchase::where('is_deleted',0)->where('supplier_id',$supplier->id)->where('date',$current)->orderBy('id','DESC')->get();
                                   
                                 @endphp
                                 @foreach($itemall as $item)

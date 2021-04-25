@@ -36,6 +36,10 @@
         .form-control {
             border: 1px solid #443f3f;
         }
+        .badge {
+    
+    border: aqua;
+}
     </style>
     <!-- loader END -->
     <!-- Wrapper Start -->
@@ -227,11 +231,11 @@
                                         <i class="las la-list-alt"></i><span>Supplier Wise Purchase</span>
                                     </a>
                                 </li>
-                                <li class="{{ request()->routeIs('admin.datewise.report*') ? 'active' : '' }}">
+                                <!-- <li class="{{ request()->routeIs('admin.datewise.report*') ? 'active' : '' }}">
                                     <a href="{{route('admin.datewise.report')}}">
                                         <i class="las la-list-alt"></i><span>Date Wise Purchase</span>
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </li>
 
@@ -562,8 +566,12 @@
     <script>
         $('.datepicker').datepicker();
     </script>
+   <script>
+        $("#item_name").select2({
+            placeholder: '--Select--'
+        });
+    </script>
 
-  
 
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>
 </body>

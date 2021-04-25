@@ -68,7 +68,7 @@ $current = date("m/d/Y");
                            <!--  -->
                            @foreach($purchase as $key => $pdata)
                               <tr>
-                                 <td rowspan="3">{{++$key}}</td>
+                                 <td >{{++$key}}</td>
                                  <td>{{$pdata->invoice_no}}</td>
                                  <td>{{ $pdata->date }}</td>
                                  <td>{{ $pdata->supplier_name }}</td>
@@ -87,13 +87,14 @@ $current = date("m/d/Y");
                                  @endif
                                  </td>
                                  <td>{{Str::limit($pdata->narration,25)}}</td>
+
                               </tr>
                               @php
                                  $allitem=App\Models\PurchaseHead::where('invoice_no',$pdata->invoice_no)->orderBy('id','DESC')->get();
                               @endphp
                               @foreach($allitem as $item)
                               <tr style="background:#f7f7f7;font-size:12px">
-                                  <td></td>
+                                 <td></td>
                                  <td></td>
                                  <td>{{$item->item_name}}</td>
                                  <td>{{$item->rate}}</td>

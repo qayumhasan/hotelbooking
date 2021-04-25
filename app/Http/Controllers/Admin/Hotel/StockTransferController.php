@@ -248,4 +248,12 @@ class StockTransferController extends Controller
             return redirect()->back()->with($notification);
         }
     }
+
+
+    // 
+    public function getfromstockName($fromstock_name){
+        $id=$fromstock_name;
+        $allstock=StockCenter::where('is_deleted',0)->where('is_active',1)->where('id','!=',$id)->get();
+        return response()->json($allstock);
+    }
 }

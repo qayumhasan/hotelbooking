@@ -84,7 +84,7 @@ $current = date("d/m/Y");
                                     <td>{{$data->booking_date}}</td>
                                    
                                     <td>
-                                        <a href=""><i class="fa fa-print"></i></a>
+                                        <a class="banquetdata" data-id="{{$data->id}}" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-print"></i></a>
                                     </td>
                               </tr>
                               @endforeach
@@ -98,4 +98,101 @@ $current = date("d/m/Y");
          </div>
       </div>
       </div>
+
+
+
+
+<script>
+   $(document).ready(function() {
+      $('.banquetdata').on('click', function() {
+         var chid = $(this).data('id');
+         alert(chid);
+         $('#printfunctionajaxdata').empty();
+         if(checkin_id) {
+               $.ajax({
+                  url: "{{  url('/get/kothistory/data/') }}/"+checkin_id,
+                  type:"GET",
+                  success:function(data) {
+
+                        $('#printfunctionajaxdata').append(data);
+                        
+                     }
+
+                     
+               });
+            } 
+      });
+   });
+</script>
+
+
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 printableAreasaveprint">
+                        <style>
+                            table.items {
+                                border: 0.1mm solid #e7e7e7;
+                            }
+
+                            td {
+                                vertical-align: top;
+                            }
+
+                            .items td {
+                                border-left: 0.1mm solid #e7e7e7;
+                                border-right: 0.1mm solid #e7e7e7;
+                            }
+
+                            table thead td {
+                                text-align: center;
+                                border: 0.1mm solid #e7e7e7;
+                            }
+
+                            .items td.blanktotal {
+                                background-color: #EEEEEE;
+                                border: 0.1mm solid #e7e7e7;
+                                background-color: #FFFFFF;
+                                border: 0mm none #e7e7e7;
+                                border-top: 0.1mm solid #e7e7e7;
+                                border-right: 0.1mm solid #e7e7e7;
+                            }
+
+                            .items td.totals {
+                                text-align: right;
+                                border: 0.1mm solid #e7e7e7;
+                            }
+
+                            .items td.cost {
+                                text-align: "."center;
+                            }
+                        </style>
+                        </head>
+
+                        <body id="printfunctionajaxdata">
+                          
+                        </body>
+
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-primary mx-auto mt-5 savepritbtn">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

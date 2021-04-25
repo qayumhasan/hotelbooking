@@ -6,7 +6,7 @@
 <script src="{{asset('public/backend')}}/printThis.js"></script>
 <style>
 .form-control{
-   height:27px;
+   height:37px;
 }
 </style>
 @php

@@ -106,9 +106,9 @@
                                             Is Direct Stock Deduct?
                                             </label>
                                         </div>
-                                        </div>
+                                    </div>
 
-                                        <div class="col-md-6 p-4">
+                                    <div class="col-md-6 p-4">
 
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="1" id="" name="add_vat">
@@ -116,7 +116,7 @@
                                                 Vat Added On Bill
                                             </label>
                                         </div>
-                                        </div>
+                                    </div>
 
                                 </div>
                             </div>

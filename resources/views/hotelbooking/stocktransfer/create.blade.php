@@ -47,7 +47,8 @@ $current = date("d/m/Y");
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="fname">From Center : *</label>
-                                            <select name="from_center" class="form-control" placeholder="--select--">
+                                            <select name="from_center" class="form-control from_center" placeholder="--select--">
+                                                <option value="">--select--</option>
                                                 @foreach($allstock as $stock)
                                                 <option value="{{$stock->id}}">{{$stock->name}}</option>
                                                 @endforeach
@@ -60,10 +61,10 @@ $current = date("d/m/Y");
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="fname">To Center : *</label>
-                                            <select name="to_center" class="form-control" placeholder="--select--">
-                                                @foreach($allstock as $stock)
-                                                <option value="{{$stock->id}}">{{$stock->name}}</option>
-                                                @endforeach
+                                            <select name="to_center" id="to_center" class="form-control" placeholder="--select--">
+                                                
+                                                <option value="">--select--</option>
+                                              
                                             </select>
                                             @error('to_center')
                                                 <div style="color:red">{{ $message }}</div>
@@ -213,6 +214,35 @@ $current = date("d/m/Y");
 
 
 <!-- tax include script end -->
+
+<script type="text/javascript">
+  $(document).ready(function() {
+     $('select[name="from_center"]').on('change', function(){
+         var fromstock_name = $(this).val();
+        
+
+         if(fromstock_name) {
+             $.ajax({
+                 url: "{{  url('/get/stockcenter/select/by/fromstock/') }}/"+fromstock_name,
+                 type:"GET",
+                 dataType:"json",
+                 success:function(data) {
+
+                        $('#to_center').empty();
+                        $('#to_center').append(' <option value="">--Select--</option>');
+                        $.each(data,function(index,districtObj){
+                         $('#to_center').append('<option value="' + districtObj.id + '">'+districtObj.name+'</option>');
+                       });
+
+                    }
+             });
+         } else {
+             //alert('danger');
+         }
+
+     });
+ });
+</script>
 
 <script type="text/javascript">
   $(document).ready(function() {

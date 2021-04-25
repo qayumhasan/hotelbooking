@@ -43,6 +43,7 @@ use App\Http\Controllers\Admin\UserRoleController;
 
 
 
+
 use App\Http\Controllers\Admin\FoodAndBeverage\FoodAndBeverageController;
 use App\Http\Controllers\Admin\Banquet\BanquetController;
 use App\Http\Controllers\Admin\Banquet\HallController;
@@ -58,6 +59,8 @@ use App\Http\Controllers\Admin\AddonManagerController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Admin\MediaManagerController;
 use App\Http\Controllers\Admin\DepartmentController;
+
+
 
 
 
@@ -88,6 +91,10 @@ Route::get('admin/user/deactive/{id}', [AdminController::class, 'deactive']);
 Route::get('admin/user/active/{id}', [AdminController::class, 'active']);
 Route::get(md5('admin/user/password/change'), [AdminController::class, 'passwordchange'])->name('password.chamge');
 Route::post(md5('admin/user/password/submit'), [AdminController::class, 'passwordchangesubmit'])->name('admin.passchange.submit');
+
+Route::get('admin/orderrecusition/manage', [AdminController::class, 'OrderRecusitionmanage'])->name('admin.orderrecusition.manage');
+Route::get('admin/orderrecusition/onprocessing/{id}', [AdminController::class, 'onprocessing']);
+Route::get('admin/orderrecusition/onapprove/{id}', [AdminController::class, 'onapprove']);
 // email controller
 Route::get(md5('admin/email'), [EmailController::class, 'index'])->name('admin.email');
 Route::get(md5('admin/compose/email'), [EmailController::class, 'composemail'])->name('admin.compose.email');
@@ -208,7 +215,7 @@ Route::post(md5('admin/itementry/update'), [ItemEntryController::class, 'update'
 // order recusition
 Route::get(md5('admin/ordercusition/create'), [OrderRequisitionController::class, 'create'])->name('admin.ordercusition.create');
 Route::get(md5('admin/ordercusition/index'), [OrderRequisitionController::class, 'index'])->name('admin.ordercusition.index');
-Route::get('/get/item/all/{item_name}', [OrderRequisitionController::class, 'getitem']);
+Route::get('/get/item/all/orderrecu/{item_name}', [OrderRequisitionController::class, 'getitemnew']);
 Route::post('/get/item/showlol/{invoice}', [OrderRequisitionController::class, 'allrecuitem']);
 Route::post('/get/totalqty/orderrequ/{invoice}', [OrderRequisitionController::class, 'allqtyorrequ']);
 
@@ -218,7 +225,7 @@ Route::get('/get/item/insert/lol', [OrderRequisitionController::class, 'iteminse
 Route::post('/get/item/order/submit/lol', [OrderRequisitionController::class, 'ordersubmit']);
 Route::post('/get/oderrecusition/edit/', [OrderRequisitionController::class, 'orderedit'])->name('get.item.edit');
 Route::get('admin/ordercusition/edit/{id}', [OrderRequisitionController::class, 'edit']);
-Route::post('admin/ordercusition/update/', [OrderRequisitionController::class, 'orderupdate'])->name('orderhead.update');
+Route::post('admin/ordercusition/update', [OrderRequisitionController::class, 'orderupdate'])->name('admin.ordercusition.update');
 Route::get('admin/ordercusition/delete/{id}', [OrderRequisitionController::class, 'orderdelete']);
 
 
@@ -267,6 +274,8 @@ Route::post('/get/itemstocktransfer/data/{invoice}', [StockTransferController::c
 Route::post('get/totalitem/count/{invoice}', [StockTransferController::class, 'getstockitem']);
 Route::post('get/totalitem/stocktranfer/', [StockTransferController::class, 'getstocktransdelete'])->name('get.stocktransferitem.delete');
 Route::post('get/totalitem/stocktranfer/edit', [StockTransferController::class, 'getstocktransedit'])->name('get.itemstocktransfer.edit');
+
+Route::get('/get/stockcenter/select/by/fromstock/{fromstock_name}', [StockTransferController::class, 'getfromstockName']);
 
 // purchase order
 Route::get(md5('admin/purchaseorder/create'), [PurchaseOrderController::class, 'create'])->name('admin.purchaseorder.create');
@@ -808,5 +817,7 @@ Route::get('/admin/guest/name/list',[CheckingController::class,'guestNameList'])
 
 Route::get('admin/userrole/manage',[UserRoleController::class,'index'])->name('admin.userrole.permissionnew');
 Route::post('admin/userrole/manage/update',[UserRoleController::class,'update'])->name('admin.userrole.permission');
+
+// admin Inventory manage controller
 
 

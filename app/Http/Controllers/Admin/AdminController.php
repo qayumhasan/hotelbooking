@@ -13,6 +13,7 @@ use App\Models\Guest;
 use App\Models\Room;
 use App\Models\Supplier;
 use App\Models\UserRole;
+use App\Models\OrderHead;
 use Auth;
 
 class AdminController extends Controller
@@ -286,5 +287,55 @@ class AdminController extends Controller
 	   
 	   return view('layouts.mainfile');
    }
+
+//   inventory manage order Recusition
+   public function OrderRecusitionmanage(){
+	   $alldata=OrderHead::orderBy('id','DESC')->get();
+	   return view('backend.inventoryitem.orderrecusition',compact('alldata'));
+   }
+
+//    
+		public function onprocessing($id){
+			$onpro=OrderHead::where('id',$id)->update([
+				'is_active'=>2,
+
+			]);
+			if($onpro){
+				$notification=array(
+					'messege'=>' success',
+					'alert-type'=>'success'
+					 );
+				   return Redirect()->back()->with($notification);
+			}else{
+				$notification=array(
+					'messege'=>'Faild',
+					'alert-type'=>'error'
+					 );
+				   return Redirect()->back()->with($notification);
+			}
+		}
+		public function onapprove($id){
+			date_default_timezone_set("asia/dhaka");
+			$current = date("d/m/Y");
+			$onpro=OrderHead::where('id',$id)->update([
+				'is_active'=>3,
+				'approve_by'=>auth::user()->id,
+				'approve_date'=>$current,
+
+			]);
+			if($onpro){
+				$notification=array(
+					'messege'=>' success',
+					'alert-type'=>'success'
+					 );
+				   return Redirect()->back()->with($notification);
+			}else{
+				$notification=array(
+					'messege'=>'Faild',
+					'alert-type'=>'error'
+					 );
+				   return Redirect()->back()->with($notification);
+			}
+		}
 
 }

@@ -83,7 +83,7 @@ $current = date("m/d/Y");
                                
                               </tr>
                            </thead>
-                           <tbody class="text-center">
+                           <tbody class="text-center" style="font-size:12px">
                            @php
                            $total_amount=0;
                            @endphp
