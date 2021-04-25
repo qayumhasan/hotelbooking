@@ -404,6 +404,15 @@
         );
     </script>
 
+
+<script>
+    $(document).ready(function(){
+        
+        $(".select_room_no").select2({
+            placeholder: '----Select Room No----'
+        });
+    })
+</script>
   
 
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>

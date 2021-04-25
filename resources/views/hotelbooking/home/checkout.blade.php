@@ -214,7 +214,8 @@ $time = date("h:i");
                                                 </td>
                                                 <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $row->additional_room_amount}}</td>
                                                 @php
-                                                $totalroomamount = $totalroomamount + $row->additional_room_amount;
+                                                    
+                                                    $totalroomamount = $totalroomamount + $row->additional_room_amount;
                                                 @endphp
                                                 @endif
                                                 <!-- if room alreay checkout -->

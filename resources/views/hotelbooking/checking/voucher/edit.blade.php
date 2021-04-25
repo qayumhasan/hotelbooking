@@ -1,5 +1,5 @@
 @extends('hotelbooking.master')
-@section('title', 'Update Account Transection| '.$seo->meta_title)
+@section('title', 'Create Account Transection| '.$seo->meta_title)
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
@@ -22,12 +22,12 @@ $current = date("m/d/Y");
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Update Account Transection</h4>
+                            <h4 class="card-title">Account Transection</h4>
                         </div>
-                       <a href=""><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
+                       <a href="{{route('admin.purchase.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.transection.update',$edit->id)}}" method="post">
+                <form action="{{route('admin.transection.create')}}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-md-8">
@@ -43,34 +43,25 @@ $current = date("m/d/Y");
                                                     <td><label>Voucher Type:</label></td>
                                                     <td>   
                                                         <select name="voucher" id="voucher_type" class="form-control noradious" disabled>
-                                                            <option value="">--select--</option>
-                                                            <option value="Cash Payment Voucher"@if($edit->voucher_type=='Cash Payment Voucher') selected @endif>Cash Payment Voucher</option>
-                                                            <option value="Bank Payment Voucher"@if($edit->voucher_type=='Bank Payment Voucher') selected @endif>Bank Payment Voucher</option>
-                                                            <option value="Fund Transfer Voucher"@if($edit->voucher_type=='Fund Transfer Voucher') selected @endif>Fund Transfer Voucher</option>
-                                                            <option value="Cash Receipt Voucher"@if($edit->voucher_type=='Cash Receipt Voucher') selected @endif>Cash Receipt Voucher</option>
-                                                            <option value="Bank Receipt Voucher"@if($edit->voucher_type=='Bank Receipt Voucher') selected @endif>Bank Receipt Voucher</option>
-                                                            <option value="AorC Receivable Journal Voucher"@if($edit->voucher_type=='AorC Receivable Journal Voucher') selected @endif>A/C Receivable Journal Voucher</option>
-                                                            <option value="AorC Payble Journal Voucher"@if($edit->voucher_type=='AorC Payble Journal Voucher') selected @endif>A/C Payble Journal Voucher</option>
-                                                            <option value="Adjustment Journal Voucher"@if($edit->voucher_type=='Adjustment Journal Voucher') selected @endif>Adjustment Journal Voucher</option>
-                                                            <option value="Acount Opening Voucher"@if($edit->voucher_type=='Acount Opening Voucher') selected @endif>Acount Opening Voucher</option>
+                                                            <option value="Cash Receipt Voucher">Cash Receipt Voucher</option>
                                                         </select>
                                                         @error('voucher')
                                                             <p style="color:red">{{ $message }}</p>
                                                         @enderror
-                                                        <input type="hidden" id="voucher_name" name="voucher_name" value="{{$edit->voucher_type}}">
+                                                        <input type="hidden" id="voucher_name" name="voucher_name" value="Cash Receipt Voucher">
                                                      </td>
                                                      <td><span id="plus_icon" style="display:none"><a href="#" id="changeVoucher"><i class="fas fa-plus-square"></i></a></span></td>
                                                      <td></td>
                                                      <td><label>Referance:</label></td>
                                                    <td>
-                                                    <input type="text" class="form-control noradious" name="reference" value="{{$edit->reference}}">
+                                                    <input type="text" class="form-control noradious" name="reference">
                                                    </td>
                                                    
                                                 </tr>
                                                 <tr>
                                                     <td><label>Narration:</label></td>
                                                     <td colspan="5">
-                                                        <textarea name="narration" class="form-control noradious">{{$edit->narration}}</textarea>
+                                                        <textarea name="narration" class="form-control noradious"></textarea>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -89,12 +80,14 @@ $current = date("m/d/Y");
                                                 <tr>
                                                     <td><label>Sourch Cash:</label></td>
                                                     <td colspan="5">
-                                                        <input type="text" id="account_head_main" name="account_head_main" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
-                                                        <datalist id="ref_in">
-                                                             @foreach($allchartofaccount as $account)
-                                                            <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
+                                                        <select id="account_head_main" name="account_head_main" class="form-control noradious"> 
+                                                            <option value="">--Select--</option>
+                                                            @foreach($datasourche as $sorch_ofaccgg)
+                                                                <option value="{{$sorch_ofaccgg->code}}">{{$sorch_ofaccgg->desription_of_account}}</option>
                                                             @endforeach
-                                                        </datalist>
+                                                        </select>
+                                                        <br>
+                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_sourch"></span>
                                                         <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
                                                         <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
                                                         <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
@@ -104,12 +97,17 @@ $current = date("m/d/Y");
                                                 <tr>
                                                     <td><label>Account Head:</label></td>
                                                     <td colspan="5">
-                                                         <input type="text" id="account_head" name="account_head" class="form-control noradious account_head" list="ref_inss" placeholder="Account Head" />
-                                                        <datalist id="ref_inss">
-                                                             @foreach($allchartofaccount as $account)
-                                                            <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
+                                                        <select id="account_head" name="account_head" class="form-control noradious" width="60%"> 
+                                                            <option value="">--Select--</option>
+                                                        
+                                                            @foreach($allguest as $guest)
+                                                            <option value="{{$guest->guest_id}}">{{$guest->guest_name}} (Guest)</option>
                                                             @endforeach
-                                                        </datalist>
+                                                         
+                                                          
+                                                            
+                                                        </select><br>
+                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_head"></span>
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
                                                         <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
@@ -129,35 +127,7 @@ $current = date("m/d/Y");
                                                         <input type="text"  id="remarks" name="remarks" class="form-control noradious">
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td >
-                                                        <label>Sub Head:</label>
-                                                        <input type="checkbox" id="mainsubheadone">
-                                                    </td>
-                                                 
-                                                    <td class="subheadone" style="display:none">
-                                                        <select name="subcategory_codeone" id="subcategory_codeone" class="form-control noradious">
-                                                            <option value="">--Select--</option>
-                                                            @foreach($allsubcategoryone as $subcate)
-                                                            <option value="{{$subcate->subcategory_codeone}}">{{$subcate->subcategory_nameone}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    
-                                                    </td> 
-                                                    <td >
-                                                        <label>Sub Head-2:</label>
-                                                        <input type="checkbox" id="mainsubheadtwo">
-                                                        
-                                                    </td>
-                                                    <td class="subheadtwo" style="display:none"> 
-                                                            <select name="subcategory_codetwo" id="subcategory_codetwo" class="form-control noradious">
-                                                            <option value="">--Select--</option>
-                                                            @foreach($allsubcategorytwo as $subcatetwo)
-                                                            <option value="{{$subcatetwo->subcategory_codetwo}}">{{$subcatetwo->subcategory_nametwo}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                </tr>
+                                                
                                             </tbody>
                                             </table>
                                         </div>
@@ -174,38 +144,29 @@ $current = date("m/d/Y");
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="fname">Voucher No: *</label>
-                                                            <input type="text"  class="form-control noradious newinvoice" value="{{$edit->voucher_no}}" disabled>
-                                                            <input type="hidden" name="invoice" id="invoice" class="newinvoice" value="{{$edit->voucher_no}}">
-                                                            <input type="hidden" name="hiddeninvoice" id="hiddeninvoice" class="hiddeninvoice" value="{{$edit->main_invoice}}">
+                                                            <input type="text"  class="form-control noradious newinvoice" value="" disabled>
+                                                            <input type="hidden" name="invoice" id="invoice" class="newinvoice" value="">
+                                                            <input type="hidden" name="hiddeninvoice" id="hiddeninvoice" class="hiddeninvoice" value="{{$invoice}}">
                                                             <input type="hidden" name="accounttransecti_id" id="accounttransecti_id" >
-                                                            
                                                         </div>
                                                     </div>
                                                     </div>
-                                                <div class="row">
+                                                    <div class="row" style="padding-bottom:15px">
                                                     <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="fname">Voucher Date: *</label>
-                                                                <input type="text" name="date" id="date" class="form-control noradious datepicker" value="{{$edit->date}}">
+                                                                <input type="text"  id="date" name="date" class="form-control noradious datepicker" value="{{$current}}">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="staticEmail" class="col-form-label">Advice:</label>
-                                                                <input type="text" name="advice" class="form-control noradious" value="{{$edit->advice}}">
+                                                                <label for="" >Advice:</label>
+                                                                <input type="text" name="advice" class="form-control noradious" id="staticEmail" value="">
                                                             </div>
                                                         </div>
                                                 </div>
-                                                    <div class="row" id="check_r" @if($edit->voucher_type=='Bank Payment Voucher')  @elseif($edit->voucher_type=='Bank Receipt Voucher')  @else  style="display:none" @endif>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <label for="staticEmail" class="col-form-label">Cheque Referance:</label>
-                                                                <select name="cheque_reference"  class="form-control" id="cheque_reference">
-                                                                    <option value="">--select--</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                              
+                                               
                                             </div>
                                         </div>
                                         <div class="card shadow-sm shadow-showcase">
@@ -224,7 +185,7 @@ $current = date("m/d/Y");
                                                                 <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
                                                                 <div class="col-sm-7">
                                                                 <input type="text" class="form-control noradious" id="amount" name="amount">
-                                                                <span style="color:red;font-size:10px;" id="accont_amount"> </span>
+                                                                <span style="color:red;font-size:10px;" id="accont_amount"></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -232,8 +193,8 @@ $current = date("m/d/Y");
                                                              <div class="form-group row">
                                                                 <div class="col-sm-9">
                                                                     <select name="amount_cate" id="amount_cate" class="form-control noradious">
-                                                                        <option value="Debit">Debit</option>
-                                                                        <option value="Cradit">Cradit</option>
+                                                                        <!-- <option value="Debit">Debit</option> -->
+                                                                        <option value="Cradit" selected>Cradit</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -267,7 +228,7 @@ $current = date("m/d/Y");
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-success">Update</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </div>
                 </form>
@@ -294,11 +255,110 @@ $(document).ready(function() {
                 }
            });
        } else {
-           //alert('danger');
+           
        }
 
    });
 });
+</script>
+
+<!-- voucher type wise sourh account -->
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#voucher_type').on('change', function(){
+       var voucher_type = $(this).val();
+      
+        
+       if(voucher_type) {
+           $.ajax({
+               url: "{{  url('/get/admin/vouchertype/sourchaccount/') }}/"+voucher_type,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                   
+                //console.log(data);
+                        $('#ref_in').empty();
+                        $('#ref_in').append(' <option>--select--</option>');
+                        $.each(data,function(index,districtObj){
+                          
+                         $('#ref_in').append('<option value="' + districtObj.desription_of_account + '">'+districtObj.desription_of_account+'</option>');
+                       });
+                    
+                }
+           });
+       } else {
+           
+       }
+
+   });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+   $('#voucher_type').on('change', function(){
+       var voucher_type = $(this).val();
+      //alert("okkkkkk");
+        
+       if(voucher_type) {
+           $.ajax({
+               url: "{{  url('/get/admin/vouchertype/accountheadaccount/') }}/"+voucher_type,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                   
+                        console.log(data);
+                        $('#ref_inss').empty();
+                        $('#ref_inss').append(' <option>--select--</option>');
+                        $.each(data,function(index,districtObj){
+                         $('#ref_inss').append('<option value="' + districtObj.desription_of_account + '">'+districtObj.desription_of_account+'</option>');
+                       });
+                    
+                }
+           });
+       } else {
+           
+       }
+
+   });
+});
+</script>
+
+
+
+
+<script>
+
+$(document).ready(function() {
+   $('#account_head_main').on('change', function(){
+       var account_head = $(this).val();
+        //alert(account_head);
+       if(account_head) {
+           $.ajax({
+               url: "{{  url('/get/admin/accounthead/checkbok/all') }}/"+account_head,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#cheque_reference').empty();
+                        $('#cheque_reference').append(' <option value="">--select--</option>');
+                        $.each(data,function(index,districtObj){
+                         $('#cheque_reference').append('<option value="' + districtObj.id + '">'+districtObj.check_number+'</option>');
+                       });
+                    alldata();
+                    
+                }
+           });
+       } else {
+         
+       }
+
+   });
+});
+</script>
+
+
+
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -596,7 +656,7 @@ $(document).ready(function() {
            
    
 	}
-	taxDatadelete();
+
 </script>
 
 <script>
@@ -676,37 +736,53 @@ function editdata(el) {
    
    
 	}
-	taxedit();
+
 
 </script>
 
 <script>
-
 $(document).ready(function() {
    $('#account_head_main').on('change', function(){
-       var account_head = $(this).val();
-        //alert(account_head);
-       if(account_head) {
+       var source_account = $(this).val();
+        //alert(source_account);
+       if(source_account) {
            $.ajax({
-               url: "{{  url('/get/admin/accounthead/checkbok/all') }}/"+account_head,
+               url: "{{  url('/get/admin/source_account/current/blance/') }}/"+source_account,
                type:"GET",
                dataType:"json",
                success:function(data) {
                   
-                        $('#cheque_reference').empty();
-                        $('#cheque_reference').append(' <option value="">--select--</option>');
-                        $.each(data,function(index,districtObj){
-                         $('#cheque_reference').append('<option value="' + districtObj.id + '">'+districtObj.check_number+'</option>');
-                       });
-                    alldata();
+                        $('#current_balance_sourch').html("Current Balance:" +data);
+                    
                     
                 }
            });
-       } else {
-         
        }
 
    });
 });
-</script>                                   
+</script>
+
+<script>
+$(document).ready(function() {
+   $('#account_head').on('change', function(){
+       var head_account = $(this).val();
+        //alert(head_account);
+       if(head_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/head_account/current/blance/') }}/"+head_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_head').html("Current Balance: " +data);
+                    
+                    
+                }
+           });
+       }
+
+   });
+});
+</script>                                
 @endsection

@@ -571,7 +571,11 @@ $time = date("h:i");
                                                         <th scope="col">Room No</th>
                                                         <th scope="col">Room Type</th>
                                                         <th scope="col">Tariff</th>
+                                                        <th scope="col">No of Person</th>
                                                         <th scope="col">Guest Name</th>
+                                                        <th scope="col">Gender</th>
+                                                        <th scope="col">Age</th>
+                                                        <th scope="col">Relationship</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="addroomchoosearea">
@@ -899,7 +903,7 @@ $time = date("h:i");
 
     function addchoosroom(rooms, value) {
         rooms.forEach(function(room) {
-            var html = '<tr id="%id%" class="addroomdata"><th>%room_no%</th><td>%room_type% </td><td><input type="number" class="controll-from" name="add_room_price[]" value="%price%"></td><td><input type="text" class="controll-from" name="add_room_guest[]" ><input type="hidden" class="controll-from" name="add_room_id[]" value="%room_id%"></td></tr>';
+            var html = '<tr id="%id%" class="addroomdata"><th>%room_no%</th><td>%room_type% </td><td><input type="number" class="controll-from" name="add_room_price[]" value="%price%"></td><td><input type="number" class="controll-from" name="add_room_pax[]" value="1"></td><td><input type="text" class="controll-from" name="add_room_guest[]" ></td><td> <select class="controll-from" name="add_guest_gender[]"><option value="1">Male</option><option value="1">Female</option><option value="1">Other</option></select><input type="hidden" class="controll-from" name="add_room_id[]" value="%room_id%"></td><td><input type="text" class="controll-from" name="add_room_age[]" ></td></td><td><input type="text" class="controll-from" name="add_room_relation[]" ></td></tr>';
 
             var newhtml = html.replace('%room_no%', room.room_no);
             var newhtml = newhtml.replace('%id%', 'addchoosroom' + value);

@@ -35,10 +35,10 @@
                               <tr>
                                
                                  <td>{{$data->room_no}}</td>
-                                 <td>{{$data->branch->branch_name}}</td>
-                                 <td>{{$data->roomtype->room_type}}</td>
-                                 <td>{{$data->flortype->name}}</td>
-                                 <td>{{$data->tariff}}</td>
+                                 <td>{{$data->branch->branch_name ?? ''}}</td>
+                                 <td>{{$data->roomtype->room_type ?? ''}}</td>
+                                 <td>{{$data->flortype->name?? ''}}</td>
+                                 <td>{{$data->tariff ?? ''}}</td>
                                  <td> 
                                  @if($data->is_active==1)
                                  <span class="btn-sm btn-success">Active</span>

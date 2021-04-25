@@ -56,10 +56,6 @@ class CheckingController extends Controller
     public function store(Request $request)
     {
 
-
-        
-        
-
         $request->validate([
             'guest_name' => 'required',
             'print_name' => 'required',
@@ -269,7 +265,7 @@ class CheckingController extends Controller
                 $checkin->title = $request->person_title;
                 $checkin->guest_name = $request->add_room_guest[$i] ? $request->add_room_guest[$i] : $request->guest_name;
                 $checkin->print_name = $request->add_room_guest[$i] ? $request->add_room_guest[$i] : $request->guest_name;
-                $checkin->gender = $request->gender;
+                $checkin->gender = $request->add_guest_gender[$i]?$request->add_guest_gender[$i] :$request->gender;
                 $checkin->father_name = $request->father_name;
                 $checkin->address = $request->address;
                 $checkin->city = $request->city;
@@ -296,8 +292,8 @@ class CheckingController extends Controller
                 $checkin->comming_form = $request->comming_from;
                 $checkin->comming_to = $request->going_to;
                 $checkin->purpose_of_visit = $request->purpose_of_visit;
-                $checkin->number_of_person = $request->no_of_person;
-                $checkin->relationship = $request->relationship;
+                $checkin->number_of_person = $request->add_room_pax[$i] ?$request->add_room_pax[$i] : $request->no_of_person;
+                $checkin->relationship =$request->add_room_relation[$i]?$request->add_room_relation[$i]: $request->relationship;
                 $checkin->male_no = $request->male_no;
                 $checkin->female_no = $request->female_no;
                 $checkin->children_no = $request->children_no;
@@ -544,6 +540,8 @@ class CheckingController extends Controller
 
     public function bookingCheckout($id)
     {
+
+        
         $checkindata = Checkin::where('room_id', $id)->where('is_occupy', 1)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
 
        
@@ -925,6 +923,8 @@ class CheckingController extends Controller
 
     public function checkoutInvoiceStore(Request $request)
     {
+
+       
 
 
         $checkout = Checkout::where('booking_no', $request->booking_no)->first();

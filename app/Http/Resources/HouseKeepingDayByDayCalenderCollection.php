@@ -19,7 +19,7 @@ class HouseKeepingDayByDayCalenderCollection extends ResourceCollection
                 $startdate = strtotime(str_replace('/', '-', $data->checkindate));
 
                 return [
-                    'title' => $data->room->room_no?$data->room->room_no:'',
+                    'title' => isset($data->room->room_no)?$data->room->room_no:'No Room',
                     'start' => date('Y-m-d', $startdate),
                     'url'=> route('admin.housekeeping.advance.booking.room',$data->id),
                 ];

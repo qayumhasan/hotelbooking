@@ -27,7 +27,7 @@ $time = date("h:i");
 
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>Guest:</b></label>
                             <div class="col-sm-3">
-                                <select class="form-control form-control-sm" name="guest_name" id="guest_name select_room_no">
+                                <select class="form-control form-control-sm select_room_no" name="guest_name" id="guest_name ">
                                     <option disabled selected>---- Select A Guest Name ----</option>
                                     @foreach($guests as $row)
                                     <option value="{{$row->id}}">{{$row->guest_name}}</option>
@@ -223,9 +223,11 @@ $time = date("h:i");
 </script>
 
 <script>
-    $("#select_room_no").select2({
+    $(document).ready(function(){
+        $(".select_room_no").select2({
         placeholder: '----Select Room No----'
     });
+    })
 </script>
 
 <script>
