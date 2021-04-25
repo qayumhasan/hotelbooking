@@ -76,7 +76,8 @@ $current = date("m/d/Y");
                                     <td>{{$sdata->reference}}</td>
                                     <td>{{$sdata->cheque_reference}}</td>
                                     @php
-                                       $amount=App\Models\AccountTransectionDetails::where('voucher_no',$sdata->voucher_no)->select(['dr_amount','cr_amount'])->first();
+                                       $amount=App\Models\AccountTransectionDetails::where('voucher_no',$sdata->voucher_no)->first();
+                                       dd($amount);
                                     @endphp
                                  
 

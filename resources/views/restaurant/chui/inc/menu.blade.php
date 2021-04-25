@@ -1,6 +1,6 @@
 <div class="iq-sidebar  sidebar-default ">
             <div class="iq-sidebar-logo d-flex align-items-center justify-content-between">
-                <a href="{{route('admin.inventory.home')}}" class="header-logo">
+                <a href="{{route('admin.chui.restaurant')}}" class="header-logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal light-logo" alt="logo">
                     <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" class="img-fluid rounded-normal darkmode-logo" alt="logo">
                 </a>
@@ -11,7 +11,7 @@
             <div class="data-scrollbar" data-scroll="1">
                 <nav class="iq-sidebar-menu">
                     <ul id="iq-sidebar-toggle" class="iq-menu">
-                        <li class="{{ request()->routeIs('admin.inventory.home*') ? 'active' : '' }}">
+                        <li class="{{ request()->routeIs('admin.chui.restaurant*') ? 'active' : '' }}">
                             <a href="{{route('admin.chui.restaurant')}}">
                                 <i class="las la-home"></i><span>Home</span>
                             </a>

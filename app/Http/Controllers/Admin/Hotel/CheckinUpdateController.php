@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Hotel;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChangeTariff;
 use App\Models\Checkin;
 use App\Models\Room;
 use Illuminate\Http\Request;
@@ -178,18 +179,32 @@ class CheckinUpdateController extends Controller
 
     public function tariffUpdate(Request $request ,$id)
     {
+
+        
         $request->validate([
             'tariff_change_date'=>'required',
             'tariff_change_time'=>'required',
             'new_tariff'=>'required',
         ]);
-
+        
         $checkin = Checkin::findOrFail($id);
-        $checkin->tariff_change_date = $request->tariff_change_date;
-        $checkin->tariff_change_time = $request->tariff_change_time;
-        $checkin->tariff_remarks = $request->tariff_remarks;
-        $checkin->tarif = $request->new_tariff;
-        $checkin->save();
+        if($checkin){
+            $tarrif = new ChangeTariff();
+            $tarrif->booking_no =$checkin->booking_no;
+            $tarrif->apply_date =$request->tariff_change_date;
+            $tarrif->apply_time =$request->tariff_change_time;
+            $tarrif->tarrif =$request->new_tariff;
+            $tarrif->tariff_remarks =$request->tariff_remarks;
+            $tarrif->save();
+        }
+     
+
+        // $checkin = Checkin::findOrFail($id);
+        // $checkin->tariff_change_date = $request->tariff_change_date;
+        // $checkin->tariff_change_time = $request->tariff_change_time;
+        // $checkin->tariff_remarks = $request->tariff_remarks;
+        // $checkin->tarif = $request->new_tariff;
+        // $checkin->save();
         $notification=array(
             'messege'=>'Tariff Information Cheanged successfully!',
             'alert-type'=>'success'

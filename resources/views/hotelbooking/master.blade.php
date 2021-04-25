@@ -671,7 +671,7 @@
             format: 'dd-mm-yyyy',
         });
         $('#datepickerdaly').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
     });
     </script>
 

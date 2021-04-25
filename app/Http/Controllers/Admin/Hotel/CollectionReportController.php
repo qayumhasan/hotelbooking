@@ -23,7 +23,9 @@ class CollectionReportController extends Controller
     {
        $employees = Admin::where('is_active',1)->get();
 
-        return view('hotelbooking.collection_report.daily_collection',compact('employees'));
+       $collectionreports = TransectionReport::all();
+
+        return view('hotelbooking.collection_report.daily_collection',compact('employees','collectionreports'));
     }
 
     public function dailyCollectionAjaxReport(Request $request)
@@ -103,7 +105,7 @@ class CollectionReportController extends Controller
     {
         
         
-            $checkinguests = TransectionReport::where('guest_id',$request->guestid)->where('is_occupy',0)->get();
+           return $checkinguests = TransectionReport::where('guest_id',$request->guestid)->where('is_occupy',0)->get();
             return view('hotelbooking.collection_report.ajax.guest_payment_history_ajax',compact('checkinguests'));
      
 

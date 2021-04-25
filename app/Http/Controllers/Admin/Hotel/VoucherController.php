@@ -12,6 +12,7 @@ use App\Models\ChartOfAccount;
 use App\Models\CheckBookTransection;
 use App\Models\Checkin;
 use App\Models\Checkout;
+use App\Models\Guest;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -235,6 +236,7 @@ class VoucherController extends Controller
     public function listVoucher($booking_no)
     {  
         $alldata=AccountTransectionHead::where('reference',$booking_no)->where('is_deleted',0)->orderBy('id','DESC')->get();
+        
         // return view('accounts.accounttransection.index',compact('alldata'));
         return view('hotelbooking.checking.voucher.list',compact('alldata'));
     }

@@ -225,37 +225,37 @@ $time = date("h:i");
                                 <div class="col-md-12 p-2">
                                     <table class="table table-bordered">
                                         <tbody>
-                                        @php
+                                            @php
                                             $totalroomprice = 0;
-                                        @endphp
-                                            
+                                            @endphp
+
 
                                             <tr>
                                                 <th scope="row">Room Charge</th>
                                                 <th class="text-center">Details</th>
                                                 <th class="text-center">Total</th>
                                             </tr>
-                                            
+
                                             <tr class="text-center">
                                                 <td></td>
                                                 <th>
-                                                @foreach($roomdata as $key=>$row)
-                                                Room No: {{$row->room_no}}
-                                                <p>{{$row->additional_room_day}} Days @ {{$row->tarif}} ={!!$currency->symbol ?? ' '!!}  {{$row->additional_room_amount}}</p>
-                                                @php
-                                                $totalroomprice = $totalroomprice +$row->additional_room_amount;
-                                                @endphp
-                                                @endforeach
-                                                
-                                                </th>
-                                                
-                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalroomprice}}</td>
-                                                
-                                                
-                                            </tr>
-                                            
+                                                    @foreach($roomdata as $key=>$row)
+                                                    Room No: {{$row->room_no}}
+                                                    <p>{{$row->additional_room_day}} Days @ {{$row->tarif}} ={!!$currency->symbol ?? ' '!!} {{$row->additional_room_amount}}</p>
+                                                    @php
+                                                    $totalroomprice = $totalroomprice +$row->additional_room_amount;
+                                                    @endphp
+                                                    @endforeach
 
-                                           
+                                                </th>
+
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalroomprice}}</td>
+
+
+                                            </tr>
+
+
+
 
                                             <tr>
                                                 <th scope="row">Extra Service</th>
@@ -372,16 +372,13 @@ $time = date("h:i");
                                                 <td></td>
                                                 <td>{{ucfirst($row->debit)}}</td>
                                                 <td>Booking</td>
-                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} 
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!}
                                                     {{$row->price}}
                                                 </td>
-                                            </td>
+                                                </td>
 
 
                                                 <td class="text-center">
-
-                                                    <a href="{{route('admin.checkout.invoice_edit',$row->id)}}" class="badge bg-primary-light mr-2 mouse_pointer editinvoice" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="lar la-edit"></i></a>
-
                                                     <a href="{{route('admin.checkout.invoice_print',$row->id)}}" class="badge bg-danger-light mr-2 printvoucher mouse_pointer" data-toggle="tooltip" data-placement="top" data-original-title="Print"> <i class="la la-print"></i></a>
                                                 </td>
                                             </tr>
@@ -398,7 +395,7 @@ $time = date("h:i");
 
 
 
-                           
+
 
 
                             </div>
@@ -760,46 +757,142 @@ $time = date("h:i");
                                     <tr>
                                         <th>Name</th>
                                         <th class="text-center">Details</th>
-                                        <th>Amount</th>
+                                        <th width: 10%>Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($checkins as $row)
-                                    <tr>
-                                        @if($loop->iteration == 1)
-                                        <th scope="row">Rooms</th>
-                                        @else
-                                        <th></th>
-                                        @endif
-                                        <td class="text-center">
-                                            <h6>Room No: - {{$row->room_no}}</h6>
-                                            <p>{{$row->checkin_date}}- To -{{$row->checkout->checkout_date ?? ''}} = {{$row->additional_room_day}} days</p>
+                                    <!-- room area start from here -->
+                                    <tr class="text-center">
+                                    <th scope="row" class="text-left">Room</th>
+                                        @php
+                                        $totalroomprice = 0;
+                                        @endphp
+                                        <th>
+                                            @foreach($roomdata as $key=>$row)
+                                            Room No: {{$row->room_no}}
+                                            <p>{{$row->additional_room_day}} Days @ {{$row->tarif}} ={!!$currency->symbol ?? ' '!!} {{$row->additional_room_amount}}</p>
+                                            @php
+                                            $totalroomprice = $totalroomprice +$row->additional_room_amount;
+                                            @endphp
+                                            @endforeach
 
-                                            <p>Tariff @ {!!$currency->symbol ?? ' '!!} {{$row->tarif}}</p>
-                                        </td>
-                                        <td class="text-center d-block">{!!$currency->symbol ?? ' '!!} {{$row->additional_room_day * $row->tarif}}</td>
-                                    </tr>
-                                    @endforeach
+                                        </th>
 
-                                    @foreach($checkingservices as $row)
-                                    <tr>
-                                        
-                                        @if($loop->iteration == 1)
-                                        <th>Extra Service</th>
-                                        @else
-                                        <th></th>
-                                        @endif
-                                        <td class="text-center">
-                                            <h6>Room No: {{$row->room_no}}</h6>
-                                            <p>{{$row->item_name}} {{$row->qty}} pcs</p>
-                                            <p>Rate @{{$row->rate}}</p>
-                                            <p>Total: {!!$currency->symbol ?? ' '!!} {{$row->amount}}</p>
-                                        </td>
-                                        
-                                        
-                                        <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->amount}}</td>
+                                        <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalroomprice}}</td>
+
+
                                     </tr>
-                                    @endforeach
+
+                                    <!-- room area end from here -->
+                                    <tr>
+                                        <th scope="row">Extra Service</th>
+                                        <td class="text-center">
+                                            @php
+                                            $totalamountextra = 0;
+                                            @endphp
+
+                                            @foreach($checkindata->checkin as $row)
+                                            <div class="border" <p>{{$row->item_name}} {{$row->qty}} pcs</p>
+                                                <p>Rate @ {{$row->rate}} /= per pcs </p>
+                                                <p>Total :{!!$currency->symbol ?? ' '!!} {{$row->qty * $row->rate}}</p>
+                                            </div>
+
+                                            @php
+                                            $totalamountextra = $totalamountextra + $row->amount;
+                                            @endphp
+                                            @endforeach
+                                        </td>
+                                        <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalamountextra}}</td>
+                                    </tr>
+                                    <!-- Extra service end from here -->
+
+
+                                    <!-- Food & Beverage start from here -->
+                                    <tr>
+                                                <th scope="row">Food(F & B)</th>
+                                                <td class="text-center">
+                                                    @foreach($checkindata->foodandbeverage as $row)
+                                                    <div class="border">
+                                                        <p>{{$row->item_name}} {{$row->qty}} pcs</p>
+                                                        <p>Rate @ {{$row->rate}} per pcs</p>
+                                                    </div>
+
+                                                    @php
+                                                    $totalfandb = $totalfandb + $row->amount;
+                                                    @endphp
+
+
+                                                    @endforeach
+
+
+                                                </td>
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalfandb}}</td>
+                                            </tr>
+
+                                    <!-- Food & Beverage end from here -->
+
+                                    <!-- Restaurant area stat from here -->
+                                    @php
+                                            $restaurant = 0;
+                                            @endphp
+                                            <tr>
+                                                <th scope="row">Ref. Invoice(Restaurant)</th>
+                                                <td class="text-center">
+                                                    @foreach($checkindata->restaurant as $row)
+                                                    <p>{{$row->item->item_name ?? ''}} {{$row->qty}} pcs</p>
+                                                    <p>Rate @ {{$row->rate}} per pcs</p>
+
+                                                    @php
+                                                    $head = App\Models\Restaurant_Order_head::where('invoice_no',$row->invoice_id)->first();
+                                                    $restaurant = $restaurant + $head->gross_amount;
+
+                                                    @endphp
+
+                                                    @endforeach
+                                                </td>
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $restaurant}}</td>
+                                            </tr>
+
+                                    <!-- Restaurant area end from here -->
+
+                                    <tr>
+                                                <th class="text-right" scope="row" colspan="2">Total Amount</th>
+                                                <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->net_amount,2)}}</th>
+                                            </tr>
+
+                                            <tr>
+                                                <th class="text-right" scope="row" colspan="2">Discount Amount</th>
+                                                <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->discount_amount,2)}}</th>
+                                            </tr>
+
+
+                                            <tr>
+                                                <th class="text-right" scope="row" colspan="2">Net Amount</th>
+                                                <th class="text-center">{!!$currency->symbol ?? ' '!!} {{round($checkout->gross_amount,2)}}</th>
+                                            </tr>
+
+                                            @php
+                                            $paybleAmount =$checkout->outstanding_amount;
+                                            @endphp
+                                            <tr>
+                                                <th class="text-right" scope="row" colspan="2">{{$paybleAmount < 0 ?'Refund':'Payable'}}</th>
+                                                <th class="text-center">{!!$currency->symbol ?? ' '!!}
+                                                    {{round($paybleAmount,2)}}
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-right" scope="row" colspan="2">{{$paybleAmount < 0 ?'Refund':'Payable'}} (In Word):</th>
+                                                <td class="text-center">
+
+                                                    <code>{{$numToWord->numberTowords(abs($paybleAmount))}}</code>
+                                                </td>
+
+                                            </tr>
+
+
+
+
+
 
                                 </tbody>
                             </table>

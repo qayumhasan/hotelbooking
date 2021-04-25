@@ -46,7 +46,7 @@ $current =date("Y-m-d");
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-1 col-form-label">Room Type</label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="room_type">
+                                    <select class="form-control select_room_no" id="exampleFormControlSelect1" name="room_type">
                                         <option selected disabled>--Room Type---</option>
                                         @foreach($roomtypes as $row)
                                             <option value="{{$row->id}}">{{$row->room_type}}</option>
@@ -55,13 +55,13 @@ $current =date("Y-m-d");
                                 </div>
                                 <label for="inputPassword" class="col-sm-1 col-form-label">Year</label>
                                 <div class="col-sm-4">
-                                    <select class="form-control" id="exampleFormControlSelect2" name="year">
+                                    <select class="form-control select_room_no" id="exampleFormControlSelect2" name="year">
                                         
                                         @for($i=$firstYear;$i<=$lastYear;$i++) <option {{(int)date('Y') == $i ?'selected':''}} value="{{$i}}">{{$i}}</option>
                                      @endfor
                                     </select>
                                 </div>
-                                <button type="button" id="searchbtn" class=" col-sm-2 btn btn-primary">Search</button>
+                                <button type="button" id="searchbtn" class=" col-sm-2 btn btn-sm btn-primary">Search</button>
                             </div>
                         </form>
 

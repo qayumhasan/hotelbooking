@@ -4,7 +4,7 @@
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$date = date("d/m/Y");
+$date = date("d-m-Y");
 $time = date("h:i");
 @endphp
 
@@ -25,11 +25,11 @@ $time = date("h:i");
 
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
                             <div class="col-sm-2">
-                                <input class="form-control datepicker form-control-sm" name="to_date" type="text" value="{{$date}}">
+                                <input class="form-control datepickernew form-control-sm" name="to_date" type="text" value="{{$date}}">
                                 <small class="text-danger to_date"></small>
                             </div>
 
-                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Employee:</b></label>
+                            <label for="inputPassword" class="col-sm-1 col-form-label"><b>Cashier:</b></label>
                             <div class="col-sm-2">
                                 <select class="form-control form-control-sm" name="employee">
                                     <option selected disabled>---Select A Employee---</option>
@@ -66,7 +66,43 @@ $time = date("h:i");
                     <div class="card-body ">
                         <div class="table-responsive room_ajax_data">
 
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="row">SL</th>
+                                        <th>Date</th>
+                                        <th>Number</th>
+                                        <th>Guest</th>
+                                        <th>Room</th>
+                                        <th>Mode</th>
+                                        <th>Remarks</th>
+                                        <th>Cashier</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
+                                    @if(count($collectionreports) > 0)
+                                    @foreach($collectionreports as $row)
+                                    <tr>
+                                        <th scope="row">{{$loop->iteration}}</th>
+                                        <td>{{$row->TransectionDate}}</td>
+                                        <td>{{$row->voucherNo}}</td>
+                                        <td>{{$row->guest_name}}</td>
+                                        <td>{{$row->room_no}}</td>
+                                        <td>{{$row->voucher_type}}</td>
+                                        <td>{{$row->remarks}}</td>
+                                        <td>{{$row->admin->username ?? '' }}</td>
+                                        <td>{!!$currency->symbol ?? ' '!!} {{abs($row->TransectionAmount)}}</td>
+                                    </tr>
+                                    @endforeach
+                                    @else
+                                    <tr>
+                                        <td colspan="9" class="text-center">No Data Found!</td>
+                                    </tr>
+                                    @endif
+                                </tbody>
+                            </table>
 
 
 
@@ -105,10 +141,8 @@ $time = date("h:i");
 
 <script>
     $('.datepicker').datepicker({
-        format: 'mm/dd/yyyy',
+        format: 'mm-dd-yyyy',
     });
-
-    
 </script>
 
 <script>
@@ -137,7 +171,7 @@ $time = date("h:i");
                 url: "{{ route('admin.daily.collection.ajax.report') }}",
                 data: $('#clean_duration_search').serializeArray(),
                 success: function(data) {
-                    
+
                     $('.preloader').hide();
                     $('.room_ajax_data').append(data);
 
