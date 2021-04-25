@@ -219,7 +219,7 @@ class AccountTrasectionController extends Controller
                         'check_amount'=>$check->cr_amount,
                         'updated_at'=>Carbon::now()->toDateTimeString(),
                     ]);
-    
+                        $data->price = $check->cr_amount;
                 }elseif($check->cr_amount == NULL){
                      //return "cr faka";
                     CheckBookTransection::where('id',$check->check_reference)->update([
@@ -229,6 +229,7 @@ class AccountTrasectionController extends Controller
                         'check_amount'=>$check->dr_amount,
                         'updated_at'=>Carbon::now()->toDateTimeString(),
                     ]);
+                    $data->price = $check->dr_amount;
 
                 }
                 $detailsdata=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();

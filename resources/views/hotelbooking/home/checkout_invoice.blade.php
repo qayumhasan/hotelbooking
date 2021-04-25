@@ -372,7 +372,12 @@ $time = date("h:i");
                                                 <td></td>
                                                 <td>{{ucfirst($row->debit)}}</td>
                                                 <td>Booking</td>
-                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$row->details->cr_amount ?? ''}}</td>
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} 
+                                                    {{$row->price}}
+                                                </td>
+                                            </td>
+
+
                                                 <td class="text-center">
 
                                                     <a href="{{route('admin.checkout.invoice_edit',$row->id)}}" class="badge bg-primary-light mr-2 mouse_pointer editinvoice" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="lar la-edit"></i></a>

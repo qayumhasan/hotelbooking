@@ -710,6 +710,8 @@ Route::prefix(md5('admin/booking/checkout'))->group(function(){
     Route::post('/invoice/store',[CheckingController::class,'checkoutInvoiceStore'])->name('admin.checkout.invoice.store');
     Route::get('/voucher/store/{booking_no}',[CheckingController::class,'checkoutVoucerCreate'])->name('admin.checkout.voucher.store');
 
+    Route::post('/voucher/store',[VoucherController::class,'submitVoucher'])->name('admin.transection.checkout.create');
+
 });
 
 

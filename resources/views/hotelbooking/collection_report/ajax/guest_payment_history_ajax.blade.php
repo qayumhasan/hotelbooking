@@ -20,7 +20,7 @@
             <th scope="row">{{$loop->iteration}}</th>
             <td>{{$row->checkin_date}}</td>
             <td>{{$row->guest_name}}</td>
-            <td>{{$row->user->username ?? ''}}</td>
+            <td>{{$row->admin->username ?? '' }}</td>
             <td>{{$row->cashamount}}</td>
             <td>{{$row->bankamount}}</td>
             <td>{{round($row->checkout->gross_amount ?? '',2)}}</td>
@@ -30,7 +30,7 @@
             $balance = $gross_amount - $paidamount;
             @endphp
             <td>{{$paidamount}}</td>
-            <td>{{$balance}}</td>
+            <td>{{round($balance,2)}}</td>
         </tr>
         @endforeach
     @else

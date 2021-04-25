@@ -47,7 +47,7 @@ class OtherInfoController extends Controller
     public function inHouseGuest()
     {
         
-        $checkins = Checkin::where('is_deleted',0)->orderBy('id', 'DESC')->get();
+        $checkins = Checkin::where('is_deleted',0)->where('is_occupy',1)->orderBy('id', 'DESC')->get();
         return view('restaurant.chui.otherinfo.in_house_guest', compact('checkins'));
     }
 }

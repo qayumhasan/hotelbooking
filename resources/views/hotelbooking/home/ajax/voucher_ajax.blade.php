@@ -17,7 +17,7 @@ $time = date("h:i");
     <div class="row">
         <div class="col-sm-12 col-lg-12">
 
-        <form action="{{route('admin.transection.create')}}" method="post">
+        <form action="{{route('admin.transection.checkout.create')}}" method="post">
                     @csrf
                     <div class="row">
                         <div class="col-md-8">
