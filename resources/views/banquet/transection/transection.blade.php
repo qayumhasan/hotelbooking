@@ -1,4 +1,4 @@
-@extends('hotelbooking.master')
+@extends('banquet.master')
 @section('title', 'All Account Transection | '.$seo->meta_title)
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -22,15 +22,15 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">All Transaction</h4>
+                        <h4 class="card-title">All Transaction Banquet</h4>
                      </div>
-                     <span class="float-right mr-2">
+                     <!-- <span class="float-right mr-2">
                         <a href="{{route('admin.transection.create')}}" class="btn btn-sm bg-primary">
                            <i class="ri-add-fill"><span class="pl-1">Add New</span></i>
                         </a>
-                     </span>
+                     </span> -->
                   </div>
-                  <form action="{{route('admin.transection.index')}}" method="POST">
+                  <form action="" method="POST">
                   <div class="card-header d-flex justify-content-center">
                      
                         @csrf
@@ -76,8 +76,7 @@ $current = date("m/d/Y");
                                     <td>{{$sdata->reference}}</td>
                                     <td>{{$sdata->cheque_reference}}</td>
                                     @php
-                                       $amount=App\Models\AccountTransectionDetails::where('voucher_no',$sdata->voucher_no)->first();
-                                       dd($amount);
+                                       $amount=App\Models\AccountTransectionDetails::where('voucher_no',$sdata->voucher_no)->select(['dr_amount','cr_amount'])->first();
                                     @endphp
                                  
 
@@ -107,38 +106,43 @@ $current = date("m/d/Y");
                                  </thead>
                                  <tbody class="text-center">
 
+                            
 
+                              @foreach($allbanquet as $key => $datass)
+                                @php
+                                    $newdata=App\Models\AccountTransectionHead::where('is_deleted',0)->where('reference',$datass->booking_no)->get();
+                                @endphp
+                                @foreach($newdata as $data)
+                                <tr>
+                                    <td>{{++$key}}</td>
+                                    <td>{{$data->voucher_no}}</td>
+                                    <td>{{$data->date}}</td>
+                                    <td>{{$data->reference}}</td>
+                                    <td>{{$data->cheque_reference}}</td>
+                                    @php
+                                        $amount=App\Models\AccountTransectionDetails::where('voucher_no',$data->voucher_no)->select(['dr_amount','cr_amount'])->first();
+                                    @endphp
+                                    
 
-                              @foreach($alldata as $key => $data)
-                              <tr>
-                                 <td>{{++$key}}</td>
-                                 <td>{{$data->voucher_no}}</td>
-                                 <td>{{$data->date}}</td>
-                                 <td>{{$data->reference}}</td>
-                                 <td>{{$data->cheque_reference}}</td>
-                                 @php
-                                    $amount=App\Models\AccountTransectionDetails::where('voucher_no',$data->voucher_no)->select(['dr_amount','cr_amount'])->first();
-                                 @endphp
-                                
-
-                                 <td> @if($amount->dr_amount==NULL) {{$amount->cr_amount}} @elseif($amount->cr_amount==NULL) {{$data->dr_amount}} @endif</td>
-                                 <td>
-                                   <a class="badge bg-success-light mr-2 print_click" data-id="{{$data->id}}" data-original-title="Print"><i class="la la-print"></i></a>
-                                   <a class="badge bg-primary-light mr-2" data-toggle="tooltip" data-placement="top" href="{{route('admin.checkin.edit.voucher.page',[$data->id,$booking_no])}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
-                                   <a id="delete" class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/account/transectionhead/delete/'.$data->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
-                                  
-                                 </td>
-                              </tr>
+                                    <td> @if($amount->dr_amount==NULL) {{$amount->cr_amount}} @elseif($amount->cr_amount==NULL) {{$data->dr_amount}} @endif</td>
+                                    <td>
+                                    <a class="badge bg-success-light mr-2 print_click" data-id="{{$data->id}}" data-original-title="Print"><i class="la la-print"></i></a>
+                                    <a class="badge bg-primary-light mr-2" data-toggle="tooltip" data-placement="top" href="{{url('admin/account/transectionhead/edit/'.$data->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
+                                    <a id="delete" class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/account/transectionhead/delete/'.$data->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
+                                    
+                                    </td>
+                                </tr>
+                                @endforeach
                               @endforeach
                                  </tbody>
                                </table>
 
-                              @endif
+                            @endif
                           
                      </div>
                   </div>
                   <div class="card-body text-center">
-                     <a href="" class="btn btn-success">Print</a>
+                     <!-- <a href="" class="btn btn-success">Print</a> -->
                   </div>
                </div>
             </div>

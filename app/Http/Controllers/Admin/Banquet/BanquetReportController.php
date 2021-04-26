@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banquet;
 use App\Models\Venue;
+use App\Models\AccountTransectionHead;
 use Carbon\Carbon;
 use Session;
 
@@ -58,6 +59,20 @@ class BanquetReportController extends Controller
     //collection
     public function banquetcollection(){
         
+    }
+    public function alltransection(){
+        $allbanquet=Banquet::where('is_deleted',0)->orderBy('id','DESC')->get();
+        return view('banquet.transection.transection',compact('allbanquet'));
+    }
+
+    public function alltransectionsearch(Request $request){
+        return $request;
+        
+    }
+
+    public function getprintbanquet($chid){
+        $banquet=Banquet::where('id',$chid)->first();
+        return view('banquet.reports.ajaxview.printfunctionajax',compact('banquet'));
     }
 
 }

@@ -109,7 +109,9 @@ $current = date("m/d/Y");
                                             <div class="col-sm-6">
                                                     <select id="account_head" name="account_head" class="form-control"> 
 
-                                                    <option value="">--Select--</option>
+                                                            <option value="">--Select--</option>
+                                                     
+                                                           
 
                                                     </select>
                                                         <span style="font-size:12px;color:#776b6b" id="current_balance_head"></span>

@@ -163,7 +163,7 @@ $current = date("m/d/Y");
                   <p>PrintDate:17/90/34</p><br>
                </div>
                <div class="col-md-12">
-               <button type="button" class="btn btn-primary savepritbtn">Print</button>
+               <!-- <button type="button" class="btn btn-primary savepritbtn">Print</button> -->
                </div>
             </div>
            
