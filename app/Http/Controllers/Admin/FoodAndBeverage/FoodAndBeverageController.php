@@ -187,7 +187,7 @@ class FoodAndBeverageController extends Controller
             }
             if($insert){
                
-                $kotdata=KitchenOrderDetails::where('booking_no',$request->booking_no)->where('kot_status',1)->get();
+                $kotdata=KitchenOrderDetails::where('booking_no',$request->booking_no)->where('kot_status',1)->where('billing_status',0)->get();
                 
                
                 $data = [

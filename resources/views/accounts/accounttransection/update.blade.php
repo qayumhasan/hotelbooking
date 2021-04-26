@@ -82,88 +82,141 @@ $current = date("m/d/Y");
                              </div>
                             <div class="card shadow-sm shadow-showcase">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <table class="table table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <td><label>Sourch Cash:</label></td>
-                                                    <td colspan="5">
-                                                        <input type="text" id="account_head_main" name="account_head_main" class="form-control noradious" list="ref_in" placeholder="Sourch Cash" />
-                                                        <datalist id="ref_in">
-                                                             @foreach($allchartofaccount as $account)
-                                                            <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
-                                                            @endforeach
-                                                        </datalist>
+                                     <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Sourch Account:</label>
+                                            <div class="col-sm-6">
+                                            <select id="account_head_main" name="account_head_main" class="form-control"> 
+
+                                                <option value="">--Select--</option>
+                                                @foreach($allchartofaccount as $account)
+                                                <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
+                                                @endforeach
+
+                                            </select>
+                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_sourch"></span>
                                                         <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
                                                         <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
                                                         <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
                                                         <input type="hidden" value="" name="sourch_subcate_codetwo" id="sourch_subcate_codetwo">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>Account Head:</label></td>
-                                                    <td colspan="5">
-                                                         <input type="text" id="account_head" name="account_head" class="form-control noradious account_head" list="ref_inss" placeholder="Account Head" />
-                                                        <datalist id="ref_inss">
-                                                             @foreach($allchartofaccount as $account)
+                                            </div>
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Amount:</label>
+                                            <div class="col-sm-2">
+                                            <input type="number" class="form-control form-control-lg" id="amount" name="amount" placeholder="">
+                                            <span style="color:red;font-size:10px;" id="accont_amount"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Account Head Type:</label>
+                                            <div class="col-sm-6">
+                                                    <select id="account_head" name="account_head" class="form-control"> 
+
+                                                            <option value="">--Select--</option>
+                                                            @foreach($allchartofaccount as $account)
                                                             <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
                                                             @endforeach
-                                                        </datalist>
+
+                                                            @foreach($allemployee as $employee)
+                                                            <option value="{{$employee->employee_id}}">{{$employee->employee_name}} (Employee)</option>
+                                                            @endforeach
+                                                            @foreach($allsuplier as $suplier)
+                                                            <option value="{{$suplier->supplier_id}}">{{$suplier->name}} (Supplier)</option>
+                                                            @endforeach
+                                                            @foreach($allguest as $guest)
+                                                            <option value="{{$guest->guest_id}}">{{$guest->guest_name}} (Guest)</option>
+                                                            @endforeach
+                                                            @foreach($allbanquet as $banquet)
+                                                            <option value="{{$banquet->booking_no}}">{{$banquet->guest_name}} ( {{$banquet->booking_no}} )</option>
+                                                            @endforeach
+
+                                                    </select>
+                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_head"></span>
+
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
                                                         <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
                                                         <input type="hidden" value="" name="acchead_subcate_codeone" id="acchead_subcate_codeone">
                                                         <input type="hidden" value="" name="acchead_subcate_codetwo" id="acchead_subcate_codetwo">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td >
-                                                        <label>Qty:</label>
-                                                        <input type="checkbox" id="mainqty">
-                                                    </td>
-                                                    <td class="qty" style="display:none"> <input type="text" id="qty" name="qty"  class="form-control noradious" placeholder="Qty"></td>
-                                                    <td class="qty" style="display:none"> <input type="text" id="price" name="price" class="form-control noradious" placeholder="Price"></td>
-                                                    <td><label>Remarks:</label></td>
-                                                    <td colspan="2">
-                                                        <input type="text"  id="remarks" name="remarks" class="form-control noradious">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td >
-                                                        <label>Sub Head:</label>
-                                                        <input type="checkbox" id="mainsubheadone">
-                                                    </td>
-                                                 
-                                                    <td class="subheadone" style="display:none">
-                                                        <select name="subcategory_codeone" id="subcategory_codeone" class="form-control noradious">
+                                            </div>
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Davit/Cradit:</label>
+                                            <div class="col-sm-2">
+                                                            <select name="amount_cate" id="amount_cate" class="form-control">
+                                                                        <option value="Debit">Debit</option>
+                                                                        <option value="Cradit">Cradit</option>
+                                                                    </select>
+                                            </div>
+                                         </div>
+                                         <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Remarks: </label>
+                                            <div class="col-sm-6">
+                                                 <input type="text" id="remarks" name="remarks"  class="form-control form-control-lg" placeholder="Remarks">
+                                            </div>
+                                            <div class="col-sm-4 text-right">
+                                            <a id="additem" class="btn-sm" style="padding: 10px;background: #4788ff; color: #fff; cursor:pointer">Add</a>
+                                                </div>
+                                           
+                                         </div>
+                                         <div class="form-group row" id="check_r"  style="display:none">
+                                                <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Cheque Referance: </label>
+                                                <div class="col-sm-6">
+                                                <select name="cheque_reference" id="cheque_reference" class="form-control">
+                                                        <option value="">--select--</option>
+                                                    </select>
+                                                </div>
+                                               
+                                            </div>
+                                        
+
+                                            
+
+
+                                         <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Qty:</label>
+                                            <div class="col-sm-1">
+                                            <input type="checkbox" id="mainqty">                                            
+                                            </div>
+                                          
+                                                <div class="col-sm-2 text-left qty" style="display:none">
+                                                    <input type="number" class="form-control form-control-lg" id="colFormLabelLg" placeholder="Quantity">
+                                                </div>
+                                                <div class="col-sm-3 qty" style="display:none">
+                                                    <input type="number" class="form-control form-control-lg" id="colFormLabelLg" placeholder="Price">
+                                                </div>
+                                            
+                                         </div>
+                                         <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">SubHead:</label>
+                                            <div class="col-sm-1">
+                                            <input type="checkbox" id="mainsubheadone">                                         
+                                            </div>
+                                           
+                                            <div class="col-sm-5 text-left subheadone" style="display:none">
+                                                        <select name="subcategory_codeone" id="subcategory_codeone" class="form-control">
                                                             <option value="">--Select--</option>
                                                             @foreach($allsubcategoryone as $subcate)
                                                             <option value="{{$subcate->subcategory_codeone}}">{{$subcate->subcategory_nameone}}</option>
                                                             @endforeach
                                                         </select>
-                                                    
-                                                    </td> 
-                                                    <td >
-                                                        <label>Sub Head-2:</label>
-                                                        <input type="checkbox" id="mainsubheadtwo">
-                                                        
-                                                    </td>
-                                                    <td class="subheadtwo" style="display:none"> 
-                                                            <select name="subcategory_codetwo" id="subcategory_codetwo" class="form-control noradious">
-                                                            <option value="">--Select--</option>
-                                                            @foreach($allsubcategorytwo as $subcatetwo)
-                                                            <option value="{{$subcatetwo->subcategory_codetwo}}">{{$subcatetwo->subcategory_nametwo}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                            </div>
+                                            
+                                         </div>
+                                         <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">SubHead-2:</label>
+                                            <div class="col-sm-1">
+                                            <input type="checkbox" id="mainsubheadtwo">                                       
+                                            </div>
+                                           
+                                            <div class="col-sm-5 text-left subheadtwo" style="display:none">
+                                                <select name="subcategory_codetwo" id="subcategory_codetwo" class="form-control">
+                                                    <option value="">--Select--</option>
+                                                    @foreach($allsubcategorytwo as $subcatetwo)
+                                                    <option value="{{$subcatetwo->subcategory_codetwo}}">{{$subcatetwo->subcategory_nametwo}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                         </div>
+
                                 </div>
-                             </div>
+                        </div>
                     </div>
                     <div class="col-md-4">
                             <div class="row">
@@ -211,36 +264,9 @@ $current = date("m/d/Y");
                                         <div class="card shadow-sm shadow-showcase">
                                             <div class="card-body">
                                                 <div class="row">
-                                                        <!-- <div class="col-md-12">
-                                                             <div class="form-group row">
-                                                                <label for="staticEmail" class="col-sm-3 col-form-label">Location:</label>
-                                                                <div class="col-sm-9">
-                                                                <input type="text" class="form-control noradious" id="location" name="location">
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
-                                                        <div class="col-md-6">
-                                                            <div class="form-group row">
-                                                                <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
-                                                                <div class="col-sm-7">
-                                                                <input type="text" class="form-control noradious" id="amount" name="amount">
-                                                                <span style="color:red;font-size:10px;" id="accont_amount"> </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                             <div class="form-group row">
-                                                                <div class="col-sm-9">
-                                                                    <select name="amount_cate" id="amount_cate" class="form-control noradious">
-                                                                        <option value="Debit">Debit</option>
-                                                                        <option value="Cradit">Cradit</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-2 ">
-                                                            <a id="additem" class="btn-sm" style="padding: 10px;background: red; color: #151515; cursor:pointer">Add</a>
-                                                        </div>
+                                                <div class="col-md-12 text-right">
+                                                        <button type="submit" class="btn btn-success">Update</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -266,9 +292,7 @@ $current = date("m/d/Y");
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-success">Update</button>
-                    </div>
+                   
                 </div>
                 </form>
             </div>

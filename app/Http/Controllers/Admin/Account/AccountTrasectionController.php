@@ -51,7 +51,11 @@ class AccountTrasectionController extends Controller
         $allchartofaccount=ChartOfAccount::get();
         $allsubcategoryone=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
         $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
-        return view('accounts.accounttransection.create',compact('allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice'));
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allguest=Guest::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allbanquet=Banquet::where('is_deleted',0)->orderBy('id','DESC')->get();
+        return view('accounts.accounttransection.create',compact('allbanquet','allguest','allsuplier','allemployee','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice'));
     }
     // get ajax account
     public function getaccount($cate_id){
@@ -317,7 +321,13 @@ class AccountTrasectionController extends Controller
         $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
 
         $edit=AccountTransectionHead::where('id',$id)->first();
-        return view('accounts.accounttransection.update',compact('edit','allcategory','allchartofaccount','allsubcategoryone','allsubcategorytwo'));
+
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allguest=Guest::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allbanquet=Banquet::where('is_deleted',0)->orderBy('id','DESC')->get();
+
+        return view('accounts.accounttransection.update',compact('allbanquet','allguest','allsuplier','allemployee','edit','allcategory','allchartofaccount','allsubcategoryone','allsubcategorytwo'));
     }
 
     public function delete($id){

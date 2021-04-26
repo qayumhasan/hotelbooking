@@ -182,6 +182,10 @@ class BanquetBookingController extends Controller
                 );
           return redirect()->back()->with($notification);
         }
+        
+       
+
+
     }
 
 
@@ -516,6 +520,6 @@ class BanquetBookingController extends Controller
         return view('banquet.booking.payment',compact('booking_number'));
     }
 
-
+   
 
 }
