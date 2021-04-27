@@ -164,4 +164,6 @@ Route::get('admin/account/transection/reports/uservoucher', [ReportsController::
 Route::post('admin/account/transection/reports/uservoucher', [ReportsController::class, 'uservouchetypewisesearch'])->name('admin.account.reports.uservouchertype');
 
 Route::get('admin/account/transection/demo', [ReportsController::class, 'demo']);
+Route::get('admin/account/transection/voucherlist', [ReportsController::class, 'voucherlist'])->name('admin.account.reports.voucherlist');
+Route::post('admin/account/transection/voucherlist', [ReportsController::class, 'voucherlistsearch'])->name('admin.account.reports.voucherlist');
 

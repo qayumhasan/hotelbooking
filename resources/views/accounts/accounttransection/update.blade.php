@@ -89,7 +89,7 @@ $current = date("m/d/Y");
 
                                                 <option value="">--Select--</option>
                                                 @foreach($allchartofaccount as $account)
-                                                <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
+                                                <option value="{{$account->code}}">{{$account->desription_of_account}}</option>
                                                 @endforeach
 
                                             </select>
@@ -112,7 +112,7 @@ $current = date("m/d/Y");
 
                                                             <option value="">--Select--</option>
                                                             @foreach($allchartofaccount as $account)
-                                                            <option value="{{$account->desription_of_account}}">{{$account->desription_of_account}}</option>
+                                                            <option value="{{$account->code}}">{{$account->desription_of_account}}</option>
                                                             @endforeach
 
                                                             @foreach($allemployee as $employee)
@@ -732,5 +732,230 @@ $(document).ready(function() {
 
    });
 });
-</script>                                   
+</script>
+<script>
+$(document).ready(function() {
+   $('#account_head_main').on('change', function(){
+       var source_account = $(this).val();
+        //alert(source_account);
+       if(source_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/source_account/current/blance/') }}/"+source_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_sourch').html("Current Balance:" +data);
+                    
+                    
+                }
+           });
+       }
+
+   });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+   $('#account_head').on('change', function(){
+       var head_account = $(this).val();
+        //alert(head_account);
+       if(head_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/head_account/current/blance/') }}/"+head_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_head').html("Current Balance: " +data);
+                    
+                    
+                }
+           });
+       }
+
+   });
+});
+</script>
+
+@if(Session::has('accounthead'))
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="text-center printableAreasaveprintsectioninvoice">
+            <div class="modal-header" >
+                <h5 class="modal-title">INVOICE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                        @if(Session::has('accounthead'))
+                                    @php
+                                        $accounthead =session('accounthead');
+                                    
+                                        $totalamount=0;
+                                    @endphp
+                        @endif
+                    <div class="col-md-4">
+                        <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" alt="" height="40px">
+                        
+                        <h6 style="margin-top:5px;font-size:10px">ChequeNo: {{ $accounthead['accountnew']->checque_reference }}<span id="ChequeNo"></span></h6>
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <h3></h3>
+                        <h6></h6>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 style="margin-top:5px;font-size:10px">VoucherNo: {{ $accounthead['accountnew']->voucher_no }}<span id="voucherno"></span></h6>
+                        <h6>Date:{{ $accounthead['accountnew']->date }}<span class="date"></span></h6>
+                        <p style="margin-top:2px;font-size:10px">ReferenceChecque:<span id="referenceno">{{ $accounthead['accountnew']->reference }}</span></p>
+                    </div>
+                    
+                    <div class="col-md-12">
+                            <div class="card shadow-sm shadow-showcase">
+                                <div class="card-body">
+                                    <div class="row asif">
+                                        <div class="col-md-12 text-left">
+                                        Narration:{{ $accounthead['accountnew']->narration }} <span id="Narration"></span>
+                                        </div>
+                                        <div class="col-md-12" style="font-size:12px">
+                                        <div class="card" id="">
+                                        <div class="card-body">
+                                            <table border="1" width="100%">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                    <th scope="col">A/C CODE</th>
+                                                    <th scope="col">HeadofAccount</th>
+                                                    <th scope="col">Details</th>
+                                                    <th scope="col">Dabit</th>
+                                                    <th scope="col">Cradit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $total_amount=0;
+                                                        $accounts = $accounthead['accounthead'];
+                                                    
+                                                    @endphp
+                                                    @foreach($accounts as $head)
+                                                                    <tr>
+                                                                    <th scope="row">{{$head->account_head_code}}</th>
+                                                                    <td>{{$head->account_head_details}}</td>
+                                                                    <td>{{$head->remarks}}</td>
+                                                                    <td>{{$head->dr_amount}}</td>
+                                                                    <td>{{$head->cr_amount}}</td>
+                                                                </tr>
+                                                                @php
+                                                                    $total_amount=$total_amount + $head->dr_amount;
+                                                                @endphp
+                                                    
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            <table  border="0"  width="100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>Total: {{$total_amount}}</td>
+                                                    
+                                                    </tr>
+                                                
+                                                </tbody>
+                                            </table>
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row" style="margin-bottom:20px;font-size:10px">
+
+                                                <table  width="100%">
+                                                    <tbody>
+                                                    
+                                                    <tr>
+                                                        <th scope="row">In Word: ( {{$numToWord->numberTowords($total_amount)}} )</th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td> Total: {{$total_amount}} | {{$total_amount}}</td>
+                                                    </tr>
+                                                                
+                                                    </tbody>
+                                                </table>
+                                           
+                                        </div>
+                                        <br>
+                                        <div class="col-md-12 row">
+                                                <table  width="100%" style="font-size:12px">
+                                                    <tbody>
+                                                    
+                                                    <tr>
+                                                        <th scope="row">  <span style="border-top:2px solid #000; width:50%;"> PreparedBy:</span></th>
+                                                        <td> <span style="border-top:2px solid #000; width:50%;"> CheckedBy:</span></td>
+                                                        <td><span style="border-top:2px solid #000; width:50%;"> VerifiedBy:</span></td>
+                                                        <td> <span style="border-top:2px solid #000; width:50%;"> ApproveBy:</span></td>
+                                                        <td></td>
+                                                    </tr>
+                                                                
+                                                    </tbody>
+                                                </table>
+                                     
+                                       
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+                    
+                        <div class="modal-footer ">
+                                <div class="col-md-12 text-center">
+                                    <button type="button" class="btn btn-primary savepritbtnareainvoice"><i class="fa fa-print"></i></button>
+                                </div>
+                        </div>
+           
+            </div>
+         </div>
+      </div>
+   </div>
+</div> 
+@endif
+
+@if(Session::has('accounthead'))
+<script>
+   $(document).ready(function() {
+      $('#exampleModal').modal('show');
+   });
+</script>
+
+ {{ Session::forget('accounthead')}}
+@endif
+
+<script>
+
+    $(function() {
+        $(".savepritbtnareainvoice").on('click', function() {
+               // alert("ok");
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableAreasaveprintsectioninvoice").printArea(options);
+            <?php session()->forget('accounthead'); ?>
+        });
+    });
+</script>
 @endsection
