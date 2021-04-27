@@ -75,7 +75,7 @@ class AccountTrasectionController extends Controller
 
     // transection details insert
     public function transectiondetailsinsert(Request $request){
-        // return $request;
+         //return $request->account_head;
 
 
        if($request->accounttransecti_id == ''){
@@ -102,12 +102,12 @@ class AccountTrasectionController extends Controller
         $data->is_active = 0;
         $data->entry_by = Auth::user()->id;
 
-        if($request->subcategory_codeone==''){
+        if($request->subcategory_codeone== null){
             $data->subcategory_codeone =$account_hedcode->subcategoryone_code;
         }else{
             $data->subcategory_codeone = $request->subcategory_codeone;
         }
-        if($request->subcategory_codetwo==''){
+        if($request->subcategory_codetwo== null){
             $data->subcategory_codetwo = $account_hedcode->subcategorytwo_code;
         }else{
             $data->subcategory_codetwo = $request->subcategory_codetwo;
@@ -244,6 +244,28 @@ class AccountTrasectionController extends Controller
                 }
 
                 if($data->save()){
+
+                    $accounthead=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
+                    $accountnew=AccountTransectionHead::where('voucher_no',$request->invoice)->first();
+                
+                        
+                    $data = [
+                        'accounthead'=>$accounthead,
+                        'accountnew'=>$accountnew,
+                    ];
+
+                    Session::put('accounthead',$data);
+
+
+                    // $items = session('accounthead');
+
+                    // $accounts = $items['accounthead'];
+
+                    // foreach ($accounts as $key => $value) {
+                    //     return $value->date;
+                    // }
+                    
+
                     $notification = array(
                         'messege' => 'Insert Success',
                         'alert-type' => 'success'
@@ -413,6 +435,19 @@ class AccountTrasectionController extends Controller
                 }
 
                 if($data->save()){
+
+                    
+                    $accounthead=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
+                    $accountnew=AccountTransectionHead::where('voucher_no',$request->invoice)->first();
+                
+                        
+                    $data = [
+                        'accounthead'=>$accounthead,
+                        'accountnew'=>$accountnew,
+                    ];
+
+                    Session::put('accounthead',$data);
+
                     $notification = array(
                         'messege' => 'Update Success',
                         'alert-type' => 'success'

@@ -225,6 +225,11 @@
                                         <i class="las la-list-alt"></i><span>Transection Date</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.account.reports.voucherlist*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.voucherlist')}}">
+                                        <i class="las la-list-alt"></i><span>Voucher List</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="">
@@ -542,6 +547,7 @@
 
     <!-- alert -->
     <script src="{{asset('public/backend')}}/assets/js/izitost.js"></script>
+    <script src="{{asset('public/backend')}}/assets/jquery.PrintArea.js"></script>
 
     <script>
         @if(Session::has('messege'))
