@@ -215,7 +215,7 @@
                                         <i class="las la-list-alt"></i><span>DateWise Transection</span>
                                     </a>
                                 </li>
-                                <li class="">
+                                <li class="{{ request()->routeIs('admin.account.reports.vouchertypewise') ? 'active' : '' }}">
                                     <a href="{{route('admin.account.reports.vouchertypewise')}}">
                                         <i class="las la-list-alt"></i><span> VoucherType Wise Transection</span>
                                     </a>
@@ -228,6 +228,11 @@
                                 <li class="{{ request()->routeIs('admin.account.reports.voucherlist*') ? 'active' : '' }}">
                                     <a href="{{route('admin.account.reports.voucherlist')}}">
                                         <i class="las la-list-alt"></i><span>Voucher List</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.account.reports.accountreceiptandpayment*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.accountreceiptandpayment')}}">
+                                        <i class="las la-list-alt"></i><span>Account Payment & Receipt</span>
                                     </a>
                                 </li>
                             </ul>

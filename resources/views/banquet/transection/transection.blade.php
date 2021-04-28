@@ -153,7 +153,8 @@ $current = date("m/d/Y");
 
 <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog modal-lg">
-      <div class="modal-content text-center printableAreasaveprint">
+      <div class="modal-content text-center ">
+      <div class="text-center printableAreasaveprint">
          <div class="modal-header " >
                <h5 class="modal-title">INVOICE</h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -163,9 +164,10 @@ $current = date("m/d/Y");
          <div class="modal-body" id="maindata">
             
          </div>
+      </div>
             <div class="modal-footer ">
                <div class="col-md-12 text-right">
-                  <p>PrintDate:17/90/34</p><br>
+                  <p>PrintDate:{{$current}}</p><br>
                </div>
                <div class="col-md-12">
                <button type="button" class="btn btn-primary savepritbtn">Print</button>

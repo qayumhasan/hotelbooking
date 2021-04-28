@@ -79,7 +79,7 @@ $current = date("m/d/Y");
                   </div>
                   <form>
                   <div class="card-body">
-                     <div class="table-responsive">
+                     <div class="table-responsive printableAreasaveprint">
                               @if(isset($searchdata))
                               <table  class="table table-striped table-bordered" >
                                  <thead class="text-center">
@@ -157,9 +157,11 @@ $current = date("m/d/Y");
                           
                      </div>
                   </div>
+                  @if(isset($searchdata))
                   <div class="card-body text-center">
                      <a class="btn btn-success savepritbtn">Print</a>
                   </div>
+                  @endif
                </div>
             </div>
          </div>

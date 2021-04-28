@@ -698,6 +698,16 @@
             });
         });
     </script>
+     <script>
+        $("#account_head_main").select2({
+            placeholder: '--Select--'
+        });
+    </script>
+     <script>
+        $("#account_head").select2({
+            placeholder: '--Select--'
+        });
+    </script>
 
 
 

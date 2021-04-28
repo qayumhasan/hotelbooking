@@ -252,6 +252,7 @@ class VoucherController extends Controller
 
         $edit=AccountTransectionHead::where('id',$id)->first();
         $datasourche=ChartOfAccount::where('category_id',1)->where('maincategory_id',9)->where('subcategoryone_id',17)->get();
+
         $allguest=Guest::get();
         return view('hotelbooking.checking.voucher.edit',compact('booking_no','allguest','datasourche','edit','allcategory','allchartofaccount','allsubcategoryone','allsubcategorytwo'));
     }
@@ -337,7 +338,7 @@ class VoucherController extends Controller
     {
         $alldata=AccountTransectionHead::where('reference',$booking_no)->where('is_deleted',0)->orderBy('id','DESC')->get();
         // return view('accounts.accounttransection.index',compact('alldata'));
-        return view('hotelbooking.checking.voucher.list',compact('alldata'));
+        return view('hotelbooking.checking.voucher.list',compact('alldata','booking_no'));
     }
 
     public function deleteVoucher($id)
@@ -359,7 +360,7 @@ class VoucherController extends Controller
     {
         $alldata=AccountTransectionHead::where('reference',$booking_no)->where('is_deleted',0)->orderBy('id','DESC')->get();
         // return view('accounts.accounttransection.index',compact('alldata'));
-        return view('hotelbooking.checking.voucher.list',compact('alldata'));
+        return view('hotelbooking.checking.voucher.list',compact('alldata','booking_no'));
         
     }
 

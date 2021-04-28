@@ -67,8 +67,8 @@ $current = date("d/m/Y");
                                     <td>{{$data->guest_name}}</td>
                                     <td>{{$data->mobile}}</td>
                                     <td>{{$data->booking_date}}</td>
-                                   
-                                    <td> <a href=""><i class="fa fa-print"></i></a></td>
+                                   <td><a class="banquetdata" type="button" data-toggle="modal" data-target="#exampleModal" data-id="{{$data->id}}" ><i class="fa fa-print"></i></a> </td>
+                                     
                                 </tr>
                                 @endforeach
                             @else
@@ -198,4 +198,19 @@ $current = date("d/m/Y");
       });
    });
 </script>
+
+<script>
+        $(function () {
+            $(".savepritbtn").on('click', function () {
+              //alert("ok");
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printableAreasaveprint").printArea(options);
+            });
+        });
+   </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\AccountTransectionDetails;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Supplier;
@@ -356,6 +357,16 @@ class ReportsController extends Controller
                 $searchdata=AccountTransectionHead::where('voucher_type',$voucher_name)->get();
                 return view('accounts.reports.voucherlist',compact('searchdata','voucher_name'));
             }
+    }
+
+
+    // account recepipt and payment
+    public function accountreceiptandpayment(){
+        $alldata=AccountTransectionDetails::where('is_active',1)->where('is_deleted',0)->get();
+        $alldatareceipt=AccountTransectionDetails::where('is_active',1)->where('is_deleted',0)->where('cr_amount',NULL)->orderBy('id','DESC')->get();
+
+ 
+        return view('accounts.reports.accountreceiptandpayment',compact('alldata','alldatareceipt'));
     }
 
   

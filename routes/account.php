@@ -167,3 +167,5 @@ Route::get('admin/account/transection/demo', [ReportsController::class, 'demo'])
 Route::get('admin/account/transection/voucherlist', [ReportsController::class, 'voucherlist'])->name('admin.account.reports.voucherlist');
 Route::post('admin/account/transection/voucherlist', [ReportsController::class, 'voucherlistsearch'])->name('admin.account.reports.voucherlist');
 
+Route::get('admin/account/transection/receiprpayment', [ReportsController::class, 'accountreceiptandpayment'])->name('admin.account.reports.accountreceiptandpayment');
+

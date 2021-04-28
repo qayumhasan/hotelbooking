@@ -99,14 +99,20 @@ $current = date("m/d/Y");
                                     <div class="col-sm-6">
                                                             @php
                                                             $allguest=App\Models\Guest::where('id',$guestname->guest_id)->first();
+                                                            $balance=0;
+                                                            $allledger=DB::table('vAccountsHeadsLeadgerTbl')->where('Code',$allguest->guest_id)->select(['Balance'])->get();
+                                                                    foreach($allledger as $ledger){
+                                                                        $balance=$balance + $ledger->Balance ;
+                                                                    }
 
                                                             @endphp
 
                                                             <input type="hidden" id="account_head" name="account_head" value="{{$allguest->guest_id}}">
 
 
-                                                            <input type="text" class="form-control" value="{{$guestname->guest_name}}" disabled>
-                                                <span style="font-size:12px;color:#776b6b" id="current_balance_head"></span>
+                                                
+                                                <span style="font-size:12px;color:#776b6b" id="current_balance_head">Current Balance:{{ $balance}}</span>
+                                                <input type="text" class="form-control" value="{{$guestname->guest_name}}" disabled>
                                                 <span style="color:red" id="accont_head_err"></span>
                                                 <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
                                                 <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
