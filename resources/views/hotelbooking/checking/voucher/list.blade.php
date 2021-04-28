@@ -25,9 +25,8 @@ $current = date("m/d/Y");
                         <h4 class="card-title">All Transaction</h4>
                      </div>
                      <span class="float-right mr-2">
-                        <a href="{{route('admin.transection.create')}}" class="btn btn-sm bg-primary">
-                           <i class="ri-add-fill"><span class="pl-1">Add New</span></i>
-                        </a>
+                     <a href="{{route('admin.hotel')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">Home</span></i></button></a>
+                         
                      </span>
                   </div>
                   <form action="{{route('admin.transection.index')}}" method="POST">
@@ -77,7 +76,7 @@ $current = date("m/d/Y");
                                     <td>{{$sdata->cheque_reference}}</td>
                                     @php
                                        $amount=App\Models\AccountTransectionDetails::where('voucher_no',$sdata->voucher_no)->first();
-                                       dd($amount);
+                                       
                                     @endphp
                                  
 

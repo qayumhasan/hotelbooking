@@ -9,7 +9,10 @@
 <style>
 .form-control {
     height: 32px;
+    wodth: 50%;
 }
+
+
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
@@ -22,75 +25,63 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">DateWise Transection Reports</h4>
+                        <h4 class="card-title">Account Transaction Receipt and Payment</h4>
                      </div>
                      <span class="float-right mr-2">
                        
                      </span>
                   </div>
-                  <form action="{{route('admin.account.reports.datewise')}}" method="POST">
-                  <div class="card-header d-flex justify-content-center">
+                  <form action="{{route('admin.account.reports.voucherlist')}}" method="POST">
+                  <div class="card-header d-flex justify-content-center row">
                      
                         @csrf
-                     <div class="col-md-3">
+            
+                        <div class="col-md-2">
                            <div class="form-group">
-                                 <label for="fname">From Date: *</label>
-                                 <input type="text"  id="date" name="formdate" class="form-control noradious datepicker" @if(isset($formdate))  value="{{$formdate}}" @else value="{{$current}}" @endif >
+                                 <label for="fname">From Date:</label>
+                                 <input type="text"  id="formdate"  name="formdate" class="formdate form-control noradious datepicker" @if(isset($formdate))  value="{{$formdate}}"   @else value="{{$current}}" @endif >
                            </div>
                      </div>
-                     <div class="col-md-3">
+                     <div class="col-md-2">
                            <div class="form-group">
-                                 <label for="fname">To Date: *</label>
-                                 <input type="text"  id="date" name="todate" class="form-control noradious datepicker"  @if(isset($todate))  value="{{$todate}}" @else value="{{$current}}" @endif>
+                                 <label for="fname">To Date:</label>
+                                 <input type="text"  id="todate"   name="todate" class="todate form-control noradious datepicker"  @if(isset($to_date))  value="{{$to_date}}"  @else value="{{$current}}" @endif>
+                                 
                            </div>
                      </div>
-                     <div class="col-md-3">
+                     <div class="col-md-2">
                           <button type="submit" class="btn btn-success">Search</button>
                      </div>
                   </div>
                   <form>
                   <div class="card-body">
                      <div class="table-responsive printableAreasaveprint">
-                       
                               @if(isset($searchdata))
-                              <table  class="table table-striped table-bordered" width="100%" >
+                              <table  class="table table-striped table-bordered" >
                                  <thead class="text-center">
                                     <tr>
                                        <th>#</th>
-                                       <th>Voucher No</th>
-                                       <th>Voucher Type</th>
                                        <th>Date</th>
-                                       <th>Account Head</th>
-                                       <th>Code</th>
-                                       <th>Dabit Amount</th>
-                                       <th>Cradit Amount</th>
-                                       <th>Balance</th>
+                                       <th>Head Of Account(Receipt)</th>
+                                       <th>Amount</th>
+                                       <th>Head Of Account(Payment)</th>
+                                       <th>Amount</th>
+                                      
                                     </tr>
                                  </thead>
                                  <tbody class="text-center">
-                                 @php
-                                    $totaldavitamount=0;
-                                    $totalcreditamount=0;
-                                    $totalbalance=0;
-                                 @endphp
+                                
                                  @foreach($searchdata as $key => $sdata)
                                  <tr>
-                                       <td>{{++$key}}</td>
-                                       <td>{{$sdata->VoucherNo}}</td>
-                                       <td>{{$sdata->VoucherType}}</td>
-                                       <td>{{$sdata->date}}</td>
-                                    
-                                       <td>{{$sdata->Accounts}}</td>
-                                       <td>{{$sdata->Code}}</td>
-                                       <td>{{$sdata->DabitAmount}}</td>
-                                       <td>{{$sdata->CreditAmount}}</td>
-                                       <td>{{$sdata->Balance}}</td>
+                                         <td>{{++$key}}</td>
+                                       <td>{{$sdata->voucher_type}}</td>
+                                       <td>{{$sdata->voucher_no}}</td>
+                                       <td>{{$sdata->reference}}</td>
+                                       <td>{{$sdata->cheque_reference}}</td>
+                                       <td>{{$sdata->advice}}</td>
+                                       <td>{{$sdata->narration}}</td>
                                  </tr>
-                                  @php
-                                     $totaldavitamount=$totaldavitamount + $sdata->DabitAmount ;
-                                     $totalcreditamount=$totalcreditamount + $sdata->CreditAmount ;
-                                     $totalbalance = $totalbalance +( $sdata->Balance) ;
-                                    @endphp
+                                
                                  @endforeach
                                  </tbody>
                                  <tfoot>
@@ -101,9 +92,8 @@ $current = date("m/d/Y");
                                        <td></td>
                                        <td></td>
                                        <td></td>
-                                       <td>Total: {{ $totaldavitamount }}</td>
-                                       <td>Total: {{ $totalcreditamount }}</td>
-                                       <td>Total: {{ $totalbalance }}</td>
+                                       <td></td>
+                                       <td></td>
                                     </tr>
                                  </tfoot>
                                </table>
@@ -112,34 +102,27 @@ $current = date("m/d/Y");
                                  <thead class="text-center">
                                     <tr>
                                        <th>#</th>
-                                       <th>Voucher No</th>
-                                       <th>Voucher Type</th>
                                        <th>Date</th>
-                                       
-                                       <th>Account Head</th>
-                                       <th>Code</th>
-                                       <th>Dabit Amount</th>
-                                       <th>Cradit Amount</th>
-                                       <th>Balance</th>
+                                       <th>Head Of Account(Receipt)</th>
+                                       <th>Amount</th>
+                                       <th>Head Of Account(Payment)</th>
+                                       <th>Amount</th>
                                       
                                     </tr>
                                  </thead>
                                  <tbody class="text-center">
-                              @foreach($alldata as $key => $data)
-                              <tr>
-                                 <td>{{++$key}}</td>
-                                 <td>{{$data->VoucherNo}}</td>
-                                 <td>{{$data->VoucherType}}</td>
-                                 <td>{{$data->date}}</td>
-                               
-                                 <td>{{$data->Accounts}}</td>
-                                 <td>{{$data->Code}}</td>
-                                 <td>{{$data->DabitAmount}}</td>
-                                 <td>{{$data->CreditAmount}}</td>
-                                 <td>{{$data->Balance}}</td>
-                                 
-                              </tr>
-                              @endforeach
+                                    @foreach($alldatareceipt as $key => $rdata)
+                                       <tr>
+                                             <td>{{ ++$key }}</td>
+                                             <td>{{ $rdata->date }}</td>
+                                             <td></td>
+                                             <td></td>
+                                       <tr>
+                                    @endforeach
+                                   
+                                   
+
+                                   
                                  </tbody>
                                </table>
 
@@ -147,9 +130,11 @@ $current = date("m/d/Y");
                           
                      </div>
                   </div>
+                  @if(isset($searchdata))
                   <div class="card-body text-center">
-                     <a href="#"  class="btn btn-success savepritbtn">Print</a>
+                     <a class="btn btn-success savepritbtn">Print</a>
                   </div>
+                  @endif
                </div>
             </div>
          </div>
@@ -158,7 +143,31 @@ $current = date("m/d/Y");
 
 
 
-
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content text-center printableAreasaveprint">
+         <div class="modal-header " >
+               <h5 class="modal-title">INVOICE</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+         </div>
+         <div class="modal-body" id="maindata">
+            
+         </div>
+            <div class="modal-footer ">
+               <div class="col-md-12 text-right">
+                  <p>PrintDate:17/90/34</p><br>
+               </div>
+               <div class="col-md-12">
+               <button type="button" class="btn btn-primary savepritbtn">Print</button>
+               </div>
+            </div>
+           
+         </div>
+      </div>
+   </div>
+</div> 
 
    <script>
         $(function () {
@@ -199,6 +208,9 @@ $(document).ready(function() {
 
     });
 });
+</script>
+<script>
+
 </script>
 
 @endsection

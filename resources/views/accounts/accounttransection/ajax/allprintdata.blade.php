@@ -69,27 +69,38 @@
                                         
                                         </div>
                                     </div>
-                                    <div class="col-md-12 row" style="margin-bottom:20px">
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-3">
-                                            Total: {{$total_amount}} | {{$total_amount}}
+                                    <div class="col-md-12 row" style="margin-bottom:20px;font-size:10px">
+
+                                                <table  width="100%">
+                                                    <tbody>
+                                                    
+                                                    <tr>
+                                                        <th scope="row">In Word: ( {{$numToWord->numberTowords($total_amount)}} )</th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td> Total: {{$total_amount}} | {{$total_amount}}</td>
+                                                    </tr>
+                                                                
+                                                    </tbody>
+                                                </table>
+                                           
                                         </div>
-                                    </div>
                                     <div class="col-md-12 row">
-                                       <div class="col-md-3">
-                                          <span> PreparedBy:</span>
-                                       </div>
-                                       <div class="col-md-3">
-                                       <span> CheckedBy:</span>
-                                       </div>
-                                       <div class="col-md-3">
-                                       <span> VerifiedBy:</span>
-                                       </div>
-                                       <div class="col-md-3">
-                                       <span> ApproveBy:</span>
-                                       </div>
+                                              <table  width="100%" style="font-size:12px">
+                                                    <tbody>
+                                                    
+                                                    <tr>
+                                                        <th scope="row">  <span style="border-top:2px solid #000; width:50%;"> PreparedBy:</span></th>
+                                                        <td> <span style="border-top:2px solid #000; width:50%;"> CheckedBy:</span></td>
+                                                        <td><span style="border-top:2px solid #000; width:50%;"> VerifiedBy:</span></td>
+                                                        <td> <span style="border-top:2px solid #000; width:50%;"> ApproveBy:</span></td>
+                                                        <td></td>
+                                                    </tr>
+                                                                
+                                                    </tbody>
+                                                </table>
                                     </div>
                                   
                                 </div>

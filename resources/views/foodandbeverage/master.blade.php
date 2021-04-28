@@ -59,7 +59,7 @@
                                 <i class="las la-home"></i><span>Dashboards</span>
                             </a>
                         </li>
-                        <li class="">
+                        <li class="{{ request()->routeIs('admin.foodandbeverage.kothistory*') ? 'active' : '' }}">
                             <a href="{{route('admin.foodandbeverage.kothistory')}}">
                                 <i class="las la-list-alt"></i><span>Kot History</span>
                             </a>
@@ -71,12 +71,12 @@
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
                             <ul id="user" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="">
+                                <li class="{{ request()->routeIs('admin.foodandbeverage.pending*') ? 'active' : '' }}">
                                     <a href="{{route('admin.foodandbeverage.pending')}}">
                                         <i class="las la-list-alt"></i><span>Pending Order</span>
                                     </a>
                                 </li>
-                                <li class="">
+                                <li class="{{ request()->routeIs('admin.foodandbeverage.compareOrder*') ? 'active' : '' }}">
                                     <a href="{{route('admin.foodandbeverage.compareOrder')}}">
                                         <i class="las la-list-alt"></i><span>Complate Order</span>
                                     </a>
@@ -335,6 +335,7 @@
     <script src="{{asset('public/backend')}}//assets/vendor/fullcalendar/daygrid/main.js"></script>
     <script src="{{asset('public/backend')}}/assets/vendor/fullcalendar/timegrid/main.js"></script>
     <script src="{{asset('public/backend')}}/assets/vendor/fullcalendar/list/main.js"></script>
+    <script src="{{asset('public/backend')}}/assets/jquery.PrintArea.js"></script>
 
     <!-- SweetAlert JavaScript -->
     <script src="{{asset('public/backend')}}/assets/js/sweetalert.js"></script>

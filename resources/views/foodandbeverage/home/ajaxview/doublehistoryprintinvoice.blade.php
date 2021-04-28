@@ -23,7 +23,7 @@
                 <p style="font-size:11px">Room No: {{$alldata->room_no}}</p>
             </div>
             <div class="col-md-12">
-                <table class="table" style="font-size:10px;">
+                <table width="100%" style="font-size:10px;">
                     <thead>
                     <tr>
                         <th>Item</th>
