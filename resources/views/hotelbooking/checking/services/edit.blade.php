@@ -360,7 +360,7 @@ $time = date("h:i:sa");
 
                 @php
                     date_default_timezone_set("Asia/Dhaka");
-                    $servicedate = date("d/m/Y");
+                    $servicedate = date("d-m-Y");
                     $servicetime = date("h:i");
                     @endphp
                 <div class="row">
@@ -996,7 +996,7 @@ $time = date("h:i:sa");
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label">Shift Date/Time:</label>
                         <div class="col-sm-6">
-                            <input type="text" name="tariff_change_date" class="form-control datepicker form-control-sm" id="inputEmail3" required value="{{$servicedate}}">
+                            <input type="text" name="tariff_change_date" class="form-control datepickerdaly form-control-sm" id="inputEmail3" required value="{{$servicedate}}">
                             
                         </div>
                         <div class="col-sm-3">
@@ -1007,6 +1007,8 @@ $time = date("h:i:sa");
                         <label for="inputPassword3" class="col-sm-3 col-form-label">Room No:</label>
                         <div class="col-sm-6">
                             <span>{{$checkin->room_no}} ({{$checkin->roomtype->room_type ?? ''}})</span>
+
+                            <input type="hidden" value="{{$checkin->room_no}}" name="room_no" />
                         </div>
                     </div>
 
@@ -1204,6 +1206,14 @@ $time = date("h:i:sa");
             });
 
     })
+</script>
+
+<script>
+$(document).ready(function(){
+    $('.datepickerdaly').datepicker({
+        format: 'dd-mm-yyyy',
+    });
+});
 </script>
 
 

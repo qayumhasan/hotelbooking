@@ -223,50 +223,171 @@ $time = date("h:i");
                         <div class="card p-4">
                             <div class="row">
                                 <div class="col-md-12 p-2">
-                                    <table class="table table-bordered">
+                                <table class="table table-bordered">
                                         <tbody>
-                                            @php
-                                            $totalroomprice = 0;
-                                            @endphp
 
 
                                             <tr>
                                                 <th scope="row">Room Charge</th>
-                                                <th class="text-center">Details</th>
-                                                <th class="text-center">Total</th>
-                                            </tr>
 
-                                            <tr class="text-center">
+
+                                                @php
+                                                $totalroomamount = 0;
+                                                @endphp
+
+                                                @foreach($roomdata as $row)
+                                                @if(!$loop->first)
                                                 <td></td>
-                                                <th>
-                                                    @foreach($roomdata as $key=>$row)
-                                                    Room No: {{$row->room_no}}
-                                                    <p>{{$row->additional_room_day}} Days @ {{$row->tarif}} ={!!$currency->symbol ?? ' '!!} {{$row->additional_room_amount}}</p>
-                                                    @php
-                                                    $totalroomprice = $totalroomprice +$row->additional_room_amount;
-                                                    @endphp
-                                                    @endforeach
+                                                @endif
 
-                                                </th>
 
-                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalroomprice}}</td>
+
+
+                                                <!-- if room alreay checkout -->
+                                                @if($row->is_occupy == 0)
+
+
+                                                @php
+
+                                                $gettarrif = $roomTarrif->getTotalTarrif($row->tarif, $row->booking_no, $row->checkin_date,$row->add_room_checkout_date, $row->room_no);
+
+                                                $totalroomamount = $totalroomamount + $row->additional_room_amount;
+                                                @endphp
+
+
+                                                <td class="text-center">
+                                            <tr class="text-center">
+
+                                                @if(!$loop->first)
+                                                <td></td>
+                                                @endif
+                                                <td width="25%">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="room_no">
+                                                                <h6>Room No : {{$row->room_no}}</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="room_details">
+
+                                                                <ul class="list-group">
+                                                                    @foreach($gettarrif['date_show'] as $item)
+                                                                    @php
+
+                                                                    $startdate = strtotime($item['start_date']);
+                                                                    $startdate = date('d F Y', $startdate);
+
+                                                                    $end_date = strtotime($item['end_date']);
+                                                                    $end_date = date('d F Y', $end_date);
+
+                                                                    @endphp
+                                                                    <li class="list-group-item mt-1">{{$startdate}} <b>To</b> {{$end_date}} @ {{$item['day']}} ✖ {!!$currency->symbol ?? ' '!!} {{$item['tarrif']}}</li>
+                                                                    @endforeach
+                                                                </ul>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$gettarrif['total_tarrif']}}</td>
+                                                </td>
+                                                @endif
+                                                <!-- if room alreay checkout -->
+
+
+
+
+                                                <!-- if room alreay not checkout -->
+                                                @if($row->is_occupy == 1)
+
+                                                @php
+                                                $date = 0;
+
+                                                @endphp
+                                                @php
+                                                $gettarrif = $roomTarrif->getTotalTarrif($row->tarif, $row->booking_no, $row->checkin_date,date('Y-m-d'), $row->room_no);
+                                                @endphp
+
+                                                <td class="text-center" width="45%">
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="room_no">
+                                                                <h6>Room No : {{$row->room_no}}</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="room_details">
+
+                                                                <ul class="list-group">
+                                                                    @foreach($gettarrif['date_show'] as $item)
+                                                                    @php
+
+                                                                    $startdate = strtotime($item['start_date']);
+                                                                    $startdate = date('d F Y', $startdate);
+
+                                                                    $end_date = strtotime($item['end_date']);
+                                                                    $end_date = date('d F Y', $end_date);
+
+                                                                    $date += $item['day'];
+
+                                                                    @endphp
+                                                                    <li class="list-group-item mt-1">{{$startdate}} <b>To</b> {{$end_date}} @ {{$item['day']}} ✖ {!!$currency->symbol ?? ' '!!} {{$item['tarrif']}}</li>
+                                                                    @endforeach
+                                                                </ul>
+
+
+                                                                <input type="hidden" name="non_checkout_room[]" value="{{$row->room_id}}" />
+
+                                                                <input type="hidden" name="non_checkout_room_day" value="{{(int)$date}} " />
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+
+
+
+                                                <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$gettarrif['total_tarrif']}} </td>
+                                                @php
+                                                $totalroomamount = $totalroomamount + $gettarrif['total_tarrif'];
+                                                @endphp
+
+
+                                                @endif
+                                                <!-- if room alreay not checkout -->
+
+
+
+                                                </td>
+                                            </tr>
+                                            </td>
+                                            @endforeach
+
+
+
 
 
                                             </tr>
 
+                                            @php
+                                            $totalamountextra = 0;
+                                            @endphp
 
-
-
+                                            @if(count($checkindata->checkin) > 0)
                                             <tr>
                                                 <th scope="row">Extra Service</th>
                                                 <td class="text-center">
-                                                    <h6>Room No : {{$checkindata->room_no}}({{$checkindata->roomtype->room_type ?? ''}})</h6><br>
 
-                                                    @php
-                                                    $totalamountextra = 0;
-                                                    @endphp
+
 
                                                     @foreach($checkindata->checkin as $row)
+                                                    <h6>Room No : {{$row->room_no}}</h6><br>
                                                     <div class="border" <p>{{$row->item_name}} {{$row->qty}} pcs</p>
                                                         <p>Rate @ {{$row->rate}} /= per pcs </p>
                                                         <p>Total :{!!$currency->symbol ?? ' '!!} {{$row->qty * $row->rate}}</p>
@@ -280,9 +401,13 @@ $time = date("h:i");
                                                 <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalamountextra}}</td>
                                             </tr>
 
+                                            @endif
+
                                             @php
                                             $totalfandb = 0;
                                             @endphp
+
+                                            @if(count($checkindata->foodandbeverage))
 
                                             <tr>
                                                 <th scope="row">Food(F & B)</th>
@@ -306,9 +431,12 @@ $time = date("h:i");
                                                 </td>
                                                 <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalfandb}}</td>
                                             </tr>
+                                            @endif
                                             @php
                                             $restaurant = 0;
                                             @endphp
+
+                                            @if(count($checkindata->restaurant) > 0)
                                             <tr>
                                                 <th scope="row">Ref. Invoice(Restaurant)</th>
                                                 <td class="text-center">
@@ -327,6 +455,9 @@ $time = date("h:i");
                                                 </td>
                                                 <td class="text-center">{!!$currency->symbol ?? ' '!!} {{ $restaurant}}</td>
                                             </tr>
+                                            @endif
+
+
 
                                         </tbody>
                                     </table>
