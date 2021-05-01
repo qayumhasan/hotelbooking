@@ -22,7 +22,7 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Date Transection Reports</h4>
+                        <h4 class="card-title">Date Wise Transection Reports</h4>
                      </div>
                      <span class="float-right mr-2">
                        

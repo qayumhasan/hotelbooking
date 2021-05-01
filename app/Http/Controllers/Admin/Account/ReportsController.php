@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\AccountTransectionDetails;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Supplier;
+use App\Models\AccountTransectionHead;
 use App\Models\Guest;
 use DB;
 use Auth;
@@ -330,8 +332,42 @@ class ReportsController extends Controller
        
 
     }
+    public function voucherlist(){
+        date_default_timezone_set("asia/dhaka");
+        $current = date("m/d/Y");
+       $alldata=AccountTransectionHead::where('date',$current)->orderBy('id','DESC')->get();
+        return view('accounts.reports.voucherlist',compact('alldata'));
+    }
+    public function voucherlistsearch(Request $request){
+           
+            if($request->no_date && $request->voucher){
+                $formdate=$request->formdate;
+                $to_date=$request->todate;
+                $voucher_name=$request->voucher;
+                $searchdata=AccountTransectionHead::where('voucher_type',$voucher_name)->whereBetween('date', [$formdate, $to_date])->get();
+                return view('accounts.reports.voucherlist',compact('searchdata','voucher_name','formdate','to_date'));
+            }elseif($request->no_date){
+                $formdate=$request->formdate;
+                $to_date=$request->todate;
+                $searchdata=AccountTransectionHead::whereBetween('date', [$formdate, $to_date])->get();
+                return view('accounts.reports.voucherlist',compact('searchdata','formdate','to_date'));
+            }
+            elseif($request->voucher){
+                $voucher_name=$request->voucher;
+                $searchdata=AccountTransectionHead::where('voucher_type',$voucher_name)->get();
+                return view('accounts.reports.voucherlist',compact('searchdata','voucher_name'));
+            }
+    }
 
 
+    // account recepipt and payment
+    public function accountreceiptandpayment(){
+        $alldata=AccountTransectionDetails::where('is_active',1)->where('is_deleted',0)->get();
+        $alldatareceipt=AccountTransectionDetails::where('is_active',1)->where('is_deleted',0)->where('cr_amount',NULL)->orderBy('id','DESC')->get();
+
+ 
+        return view('accounts.reports.accountreceiptandpayment',compact('alldata','alldatareceipt'));
+    }
 
   
 }

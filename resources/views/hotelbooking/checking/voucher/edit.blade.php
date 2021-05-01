@@ -1,4 +1,5 @@
 @extends('hotelbooking.master')
+
 @section('title', 'Create Account Transection| '.$seo->meta_title)
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -22,12 +23,12 @@ $current = date("m/d/Y");
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <div class="header-title">
-                            <h4 class="card-title">Account Transection</h4>
+                            <h4 class="card-title">Update Account Transection</h4>
                         </div>
-                       <a href="{{route('admin.purchase.index')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">All Purchase</span></i></button></a>
+                       <a href="{{route('admin.hotel')}}"><button  class="btn btn-sm bg-primary"><i class="ri-add-fill"><span class="pl-1">Home</span></i></button></a>
                     </div>
                 </div>
-                <form action="{{route('admin.transection.create')}}" method="post">
+                <form action="{{route('admin.transection.update',$edit->id)}}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-md-8">
@@ -43,25 +44,34 @@ $current = date("m/d/Y");
                                                     <td><label>Voucher Type:</label></td>
                                                     <td>   
                                                         <select name="voucher" id="voucher_type" class="form-control noradious" disabled>
-                                                            <option value="Cash Receipt Voucher">Cash Receipt Voucher</option>
+                                                            <option value="">--select--</option>
+                                                            <option value="Cash Payment Voucher"@if($edit->voucher_type=='Cash Payment Voucher') selected @endif>Cash Payment Voucher</option>
+                                                            <option value="Bank Payment Voucher"@if($edit->voucher_type=='Bank Payment Voucher') selected @endif>Bank Payment Voucher</option>
+                                                            <option value="Fund Transfer Voucher"@if($edit->voucher_type=='Fund Transfer Voucher') selected @endif>Fund Transfer Voucher</option>
+                                                            <option value="Cash Receipt Voucher"@if($edit->voucher_type=='Cash Receipt Voucher') selected @endif>Cash Receipt Voucher</option>
+                                                            <option value="Bank Receipt Voucher"@if($edit->voucher_type=='Bank Receipt Voucher') selected @endif>Bank Receipt Voucher</option>
+                                                            <option value="AorC Receivable Journal Voucher"@if($edit->voucher_type=='AorC Receivable Journal Voucher') selected @endif>A/C Receivable Journal Voucher</option>
+                                                            <option value="AorC Payble Journal Voucher"@if($edit->voucher_type=='AorC Payble Journal Voucher') selected @endif>A/C Payble Journal Voucher</option>
+                                                            <option value="Adjustment Journal Voucher"@if($edit->voucher_type=='Adjustment Journal Voucher') selected @endif>Adjustment Journal Voucher</option>
+                                                            <option value="Acount Opening Voucher"@if($edit->voucher_type=='Acount Opening Voucher') selected @endif>Acount Opening Voucher</option>
                                                         </select>
                                                         @error('voucher')
                                                             <p style="color:red">{{ $message }}</p>
                                                         @enderror
-                                                        <input type="hidden" id="voucher_name" name="voucher_name" value="Cash Receipt Voucher">
+                                                        <input type="hidden" id="voucher_name" name="voucher_name" value="{{$edit->voucher_type}}">
                                                      </td>
                                                      <td><span id="plus_icon" style="display:none"><a href="#" id="changeVoucher"><i class="fas fa-plus-square"></i></a></span></td>
                                                      <td></td>
                                                      <td><label>Referance:</label></td>
                                                    <td>
-                                                    <input type="text" class="form-control noradious" name="reference">
+                                                    <input type="text" class="form-control noradious" name="reference" value="{{$edit->reference}}">
                                                    </td>
                                                    
                                                 </tr>
                                                 <tr>
                                                     <td><label>Narration:</label></td>
                                                     <td colspan="5">
-                                                        <textarea name="narration" class="form-control noradious"></textarea>
+                                                        <textarea name="narration" class="form-control noradious">{{$edit->narration}}</textarea>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -73,67 +83,140 @@ $current = date("m/d/Y");
                              </div>
                             <div class="card shadow-sm shadow-showcase">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <table class="table table-borderless">
-                                            <tbody>
-                                                <tr>
-                                                    <td><label>Sourch Cash:</label></td>
-                                                    <td colspan="5">
-                                                        <select id="account_head_main" name="account_head_main" class="form-control noradious"> 
-                                                            <option value="">--Select--</option>
-                                                            @foreach($datasourche as $sorch_ofaccgg)
-                                                                <option value="{{$sorch_ofaccgg->code}}">{{$sorch_ofaccgg->desription_of_account}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <br>
+                                     <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Sourch Account:</label>
+                                            <div class="col-sm-6">
+                                            <select id="account_head_main" name="account_head_main" class="form-control"> 
+
+                                                <option value="">--Select--</option>
+                                                @foreach($datasourche as $account)
+                                                <option value="{{$account->code}}">{{$account->desription_of_account}}</option>
+                                                @endforeach
+
+                                            </select>
                                                         <span style="font-size:12px;color:#776b6b" id="current_balance_sourch"></span>
                                                         <input type="hidden" value="" name="sourch_cate_code" id="sourch_cate_code">
                                                         <input type="hidden" value="" name="sourch_Accountcate_code" id="sourch_Accountcate_code">
                                                         <input type="hidden" value="" name="sourch_subcate_codeone" id="sourch_subcate_codeone">
                                                         <input type="hidden" value="" name="sourch_subcate_codetwo" id="sourch_subcate_codetwo">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td><label>Account Head:</label></td>
-                                                    <td colspan="5">
-                                                        <select id="account_head" name="account_head" class="form-control noradious" width="60%"> 
-                                                            <option value="">--Select--</option>
-                                                        
-                                                            @foreach($allguest as $guest)
-                                                            <option value="{{$guest->guest_id}}">{{$guest->guest_name}} (Guest)</option>
-                                                            @endforeach
-                                                         
-                                                          
-                                                            
-                                                        </select><br>
-                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_head"></span>
+                                            </div>
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Amount:</label>
+                                            <div class="col-sm-2">
+                                            <input type="number" class="form-control form-control-lg" id="amount" name="amount" placeholder="">
+                                            <span style="color:red;font-size:10px;" id="accont_amount"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Account Head Type:</label>
+                                            <div class="col-sm-6">
+                                           
+                                                             @php
+                                                              
+                                                               $allcheckguest=App\Models\Checkin::where('booking_no',$booking_no)->select(['guest_name','guest_id'])->first();
+                                                               $allguest_id=App\Models\Guest::where('id',$allcheckguest->guest_id)->select(['guest_id'])->first();
+                                                               
+                                                            @endphp
+                                                            @php
+
+                                                            $balance=0;
+                                                                $allledger=DB::table('vAccountsHeadsLeadgerTbl')->where('Code',$allguest_id->guest_id)->select(['Balance'])->get();
+                                                                foreach($allledger as $ledger){
+                                                                        $balance=$balance + $ledger->Balance ;
+                                                                    }
+
+                                                            @endphp
+                                                            <input type="hidden" id="account_head" name="account_head" value="{{$allguest_id->guest_id}}">
+                                                            <input type="text" class="form-control" value="{{$allcheckguest->guest_name}}" disabled> 
+
+
+                                                        <span style="font-size:12px;color:#776b6b" id="current_balance_head">Current Balance: {{  $balance }}</span>
+
                                                         <span style="color:red" id="accont_head_err"></span>
                                                         <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
                                                         <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
                                                         <input type="hidden" value="" name="acchead_subcate_codeone" id="acchead_subcate_codeone">
                                                         <input type="hidden" value="" name="acchead_subcate_codetwo" id="acchead_subcate_codetwo">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td >
-                                                        <label>Qty:</label>
-                                                        <input type="checkbox" id="mainqty">
-                                                    </td>
-                                                    <td class="qty" style="display:none"> <input type="text" id="qty" name="qty"  class="form-control noradious" placeholder="Qty"></td>
-                                                    <td class="qty" style="display:none"> <input type="text" id="price" name="price" class="form-control noradious" placeholder="Price"></td>
-                                                    <td><label>Remarks:</label></td>
-                                                    <td colspan="2">
-                                                        <input type="text"  id="remarks" name="remarks" class="form-control noradious">
-                                                    </td>
-                                                </tr>
-                                                
-                                            </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                            </div>
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Davit/Cradit:</label>
+                                            <div class="col-sm-2">
+                                                            <select name="amount_cate" id="amount_cate" class="form-control">
+                                                                        <option value="Debit">Debit</option>
+                                                                        <option value="Cradit">Cradit</option>
+                                                                    </select>
+                                            </div>
+                                         </div>
+                                         <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Remarks: </label>
+                                            <div class="col-sm-6">
+                                                 <input type="text" id="remarks" name="remarks"  class="form-control form-control-lg" placeholder="Remarks">
+                                            </div>
+                                            <div class="col-sm-4 text-right">
+                                            <a id="additem" class="btn-sm" style="padding: 10px;background: #4788ff; color: #fff; cursor:pointer">Add</a>
+                                                </div>
+                                           
+                                         </div>
+                                         <div class="form-group row" id="check_r"  style="display:none">
+                                                <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Cheque Referance: </label>
+                                                <div class="col-sm-6">
+                                                <select name="cheque_reference" id="cheque_reference" class="form-control">
+                                                        <option value="">--select--</option>
+                                                    </select>
+                                                </div>
+                                               
+                                            </div>
+                                        
+
+                                            
+
+
+                                         <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">Qty:</label>
+                                            <div class="col-sm-1">
+                                            <input type="checkbox" id="mainqty">                                            
+                                            </div>
+                                          
+                                                <div class="col-sm-2 text-left qty" style="display:none">
+                                                    <input type="number" class="form-control form-control-lg" id="colFormLabelLg" placeholder="Quantity">
+                                                </div>
+                                                <div class="col-sm-3 qty" style="display:none">
+                                                    <input type="number" class="form-control form-control-lg" id="colFormLabelLg" placeholder="Price">
+                                                </div>
+                                            
+                                         </div>
+                                         <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">SubHead:</label>
+                                            <div class="col-sm-1">
+                                            <input type="checkbox" id="mainsubheadone">                                         
+                                            </div>
+                                           
+                                            <div class="col-sm-5 text-left subheadone" style="display:none">
+                                                        <select name="subcategory_codeone" id="subcategory_codeone" class="form-control">
+                                                            <option value="">--Select--</option>
+                                                            @foreach($allsubcategoryone as $subcate)
+                                                            <option value="{{$subcate->subcategory_codeone}}">{{$subcate->subcategory_nameone}}</option>
+                                                            @endforeach
+                                                        </select>
+                                            </div>
+                                            
+                                         </div>
+                                         <div class="form-group row">
+                                            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg text-right">SubHead-2:</label>
+                                            <div class="col-sm-1">
+                                            <input type="checkbox" id="mainsubheadtwo">                                       
+                                            </div>
+                                           
+                                            <div class="col-sm-5 text-left subheadtwo" style="display:none">
+                                                <select name="subcategory_codetwo" id="subcategory_codetwo" class="form-control">
+                                                    <option value="">--Select--</option>
+                                                    @foreach($allsubcategorytwo as $subcatetwo)
+                                                    <option value="{{$subcatetwo->subcategory_codetwo}}">{{$subcatetwo->subcategory_nametwo}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                         </div>
+
                                 </div>
-                             </div>
+                        </div>
                     </div>
                     <div class="col-md-4">
                             <div class="row">
@@ -144,64 +227,46 @@ $current = date("m/d/Y");
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="fname">Voucher No: *</label>
-                                                            <input type="text"  class="form-control noradious newinvoice" value="" disabled>
-                                                            <input type="hidden" name="invoice" id="invoice" class="newinvoice" value="">
-                                                            <input type="hidden" name="hiddeninvoice" id="hiddeninvoice" class="hiddeninvoice" value="{{$invoice}}">
+                                                            <input type="text"  class="form-control noradious newinvoice" value="{{$edit->voucher_no}}" disabled>
+                                                            <input type="hidden" name="invoice" id="invoice" class="newinvoice" value="{{$edit->voucher_no}}">
+                                                            <input type="hidden" name="hiddeninvoice" id="hiddeninvoice" class="hiddeninvoice" value="{{$edit->main_invoice}}">
                                                             <input type="hidden" name="accounttransecti_id" id="accounttransecti_id" >
+                                                            
                                                         </div>
                                                     </div>
                                                     </div>
-                                                    <div class="row" style="padding-bottom:15px">
+                                                <div class="row">
                                                     <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="fname">Voucher Date: *</label>
-                                                                <input type="text"  id="date" name="date" class="form-control noradious datepicker" value="{{$current}}">
+                                                                <input type="text" name="date" id="date" class="form-control noradious datepicker" value="{{$edit->date}}">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="" >Advice:</label>
-                                                                <input type="text" name="advice" class="form-control noradious" id="staticEmail" value="">
+                                                                <label for="staticEmail" class="col-form-label">Advice:</label>
+                                                                <input type="text" name="advice" class="form-control noradious" value="{{$edit->advice}}">
                                                             </div>
                                                         </div>
                                                 </div>
-                                              
-                                               
+                                                    <div class="row" id="check_r" @if($edit->voucher_type=='Bank Payment Voucher')  @elseif($edit->voucher_type=='Bank Receipt Voucher')  @else  style="display:none" @endif>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="staticEmail" class="col-form-label">Cheque Referance:</label>
+                                                                <select name="cheque_reference"  class="form-control" id="cheque_reference">
+                                                                    <option value="">--select--</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                             </div>
                                         </div>
                                         <div class="card shadow-sm shadow-showcase">
                                             <div class="card-body">
                                                 <div class="row">
-                                                        <!-- <div class="col-md-12">
-                                                             <div class="form-group row">
-                                                                <label for="staticEmail" class="col-sm-3 col-form-label">Location:</label>
-                                                                <div class="col-sm-9">
-                                                                <input type="text" class="form-control noradious" id="location" name="location">
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
-                                                        <div class="col-md-6">
-                                                            <div class="form-group row">
-                                                                <label for="staticEmail" class="col-sm-5 col-form-label">Amount:</label>
-                                                                <div class="col-sm-7">
-                                                                <input type="text" class="form-control noradious" id="amount" name="amount">
-                                                                <span style="color:red;font-size:10px;" id="accont_amount"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                             <div class="form-group row">
-                                                                <div class="col-sm-9">
-                                                                    <select name="amount_cate" id="amount_cate" class="form-control noradious">
-                                                                        <!-- <option value="Debit">Debit</option> -->
-                                                                        <option value="Cradit" selected>Cradit</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-2 ">
-                                                            <a id="additem" class="btn-sm" style="padding: 10px;background: red; color: #151515; cursor:pointer">Add</a>
-                                                        </div>
+                                                <div class="col-md-12 text-right">
+                                                        <button type="submit" class="btn btn-success">Update</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,9 +292,7 @@ $current = date("m/d/Y");
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
+                   
                 </div>
                 </form>
             </div>
@@ -255,110 +318,11 @@ $(document).ready(function() {
                 }
            });
        } else {
-           
+           //alert('danger');
        }
 
    });
 });
-</script>
-
-<!-- voucher type wise sourh account -->
-<script type="text/javascript">
-$(document).ready(function() {
-   $('#voucher_type').on('change', function(){
-       var voucher_type = $(this).val();
-      
-        
-       if(voucher_type) {
-           $.ajax({
-               url: "{{  url('/get/admin/vouchertype/sourchaccount/') }}/"+voucher_type,
-               type:"GET",
-               dataType:"json",
-               success:function(data) {
-                   
-                //console.log(data);
-                        $('#ref_in').empty();
-                        $('#ref_in').append(' <option>--select--</option>');
-                        $.each(data,function(index,districtObj){
-                          
-                         $('#ref_in').append('<option value="' + districtObj.desription_of_account + '">'+districtObj.desription_of_account+'</option>');
-                       });
-                    
-                }
-           });
-       } else {
-           
-       }
-
-   });
-});
-</script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-   $('#voucher_type').on('change', function(){
-       var voucher_type = $(this).val();
-      //alert("okkkkkk");
-        
-       if(voucher_type) {
-           $.ajax({
-               url: "{{  url('/get/admin/vouchertype/accountheadaccount/') }}/"+voucher_type,
-               type:"GET",
-               dataType:"json",
-               success:function(data) {
-                   
-                        console.log(data);
-                        $('#ref_inss').empty();
-                        $('#ref_inss').append(' <option>--select--</option>');
-                        $.each(data,function(index,districtObj){
-                         $('#ref_inss').append('<option value="' + districtObj.desription_of_account + '">'+districtObj.desription_of_account+'</option>');
-                       });
-                    
-                }
-           });
-       } else {
-           
-       }
-
-   });
-});
-</script>
-
-
-
-
-<script>
-
-$(document).ready(function() {
-   $('#account_head_main').on('change', function(){
-       var account_head = $(this).val();
-        //alert(account_head);
-       if(account_head) {
-           $.ajax({
-               url: "{{  url('/get/admin/accounthead/checkbok/all') }}/"+account_head,
-               type:"GET",
-               dataType:"json",
-               success:function(data) {
-                  
-                        $('#cheque_reference').empty();
-                        $('#cheque_reference').append(' <option value="">--select--</option>');
-                        $.each(data,function(index,districtObj){
-                         $('#cheque_reference').append('<option value="' + districtObj.id + '">'+districtObj.check_number+'</option>');
-                       });
-                    alldata();
-                    
-                }
-           });
-       } else {
-         
-       }
-
-   });
-});
-</script>
-
-
-
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -478,7 +442,51 @@ $(document).ready(function() {
    });
 });
 </script>
+<script>
+$(document).ready(function() {
+   $('#account_head_main').on('change', function(){
+       var source_account = $(this).val();
+        //alert(source_account);
+       if(source_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/source_account/current/blance/') }}/"+source_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_sourch').html("Current Balance:" +data);
+                    
+                    
+                }
+           });
+       }
 
+   });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+   $('#account_head').on('change', function(){
+       var head_account = $(this).val();
+        //alert(head_account);
+       if(head_account) {
+           $.ajax({
+               url: "{{  url('/get/admin/head_account/current/blance/') }}/"+head_account,
+               type:"GET",
+               dataType:"json",
+               success:function(data) {
+                  
+                        $('#current_balance_head').html("Current Balance: " +data);
+                    
+                    
+                }
+           });
+       }
+
+   });
+});
+</script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -656,7 +664,7 @@ $(document).ready(function() {
            
    
 	}
-
+	taxDatadelete();
 </script>
 
 <script>
@@ -736,53 +744,220 @@ function editdata(el) {
    
    
 	}
-
+	taxedit();
 
 </script>
 
 <script>
+
 $(document).ready(function() {
    $('#account_head_main').on('change', function(){
-       var source_account = $(this).val();
-        //alert(source_account);
-       if(source_account) {
+       var account_head = $(this).val();
+        //alert(account_head);
+       if(account_head) {
            $.ajax({
-               url: "{{  url('/get/admin/source_account/current/blance/') }}/"+source_account,
+               url: "{{  url('/get/admin/accounthead/checkbok/all') }}/"+account_head,
                type:"GET",
                dataType:"json",
                success:function(data) {
                   
-                        $('#current_balance_sourch').html("Current Balance:" +data);
-                    
+                        $('#cheque_reference').empty();
+                        $('#cheque_reference').append(' <option value="">--select--</option>');
+                        $.each(data,function(index,districtObj){
+                         $('#cheque_reference').append('<option value="' + districtObj.id + '">'+districtObj.check_number+'</option>');
+                       });
+                    alldata();
                     
                 }
            });
+       } else {
+         
        }
 
    });
 });
 </script>
 
-<script>
-$(document).ready(function() {
-   $('#account_head').on('change', function(){
-       var head_account = $(this).val();
-        //alert(head_account);
-       if(head_account) {
-           $.ajax({
-               url: "{{  url('/get/admin/head_account/current/blance/') }}/"+head_account,
-               type:"GET",
-               dataType:"json",
-               success:function(data) {
-                  
-                        $('#current_balance_head').html("Current Balance: " +data);
-                    
-                    
-                }
-           });
-       }
 
+
+
+@if(Session::has('accounthead'))
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="text-center printableAreasaveprintsectioninvoice">
+            <div class="modal-header" >
+                <h5 class="modal-title">INVOICE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                        @if(Session::has('accounthead'))
+                                    @php
+                                        $accounthead =session('accounthead');
+                                    
+                                        $totalamount=0;
+                                    @endphp
+                        @endif
+                    <div class="col-md-4">
+                        <img src="{{asset('public/uploads/logo/'.$logos->logo)}}" alt="" height="40px">
+                        
+                        <h6 style="margin-top:5px;font-size:10px">ChequeNo: {{ $accounthead['accountnew']->checque_reference }}<span id="ChequeNo"></span></h6>
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <h3></h3>
+                        <h6></h6>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 style="margin-top:5px;font-size:10px">VoucherNo: {{ $accounthead['accountnew']->voucher_no }}<span id="voucherno"></span></h6>
+                        <h6>Date:{{ $accounthead['accountnew']->date }}<span class="date"></span></h6>
+                        <p style="margin-top:2px;font-size:10px">ReferenceChecque:<span id="referenceno">{{ $accounthead['accountnew']->reference }}</span></p>
+                    </div>
+                    
+                    <div class="col-md-12">
+                            <div class="card shadow-sm shadow-showcase">
+                                <div class="card-body">
+                                    <div class="row asif">
+                                        <div class="col-md-12 text-left">
+                                        Narration:{{ $accounthead['accountnew']->narration }} <span id="Narration"></span>
+                                        </div>
+                                        <div class="col-md-12" style="font-size:12px">
+                                        <div class="card" id="">
+                                        <div class="card-body">
+                                            <table border="1" width="100%">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                    <th scope="col">A/C CODE</th>
+                                                    <th scope="col">HeadofAccount</th>
+                                                    <th scope="col">Details</th>
+                                                    <th scope="col">Dabit</th>
+                                                    <th scope="col">Cradit</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $total_amount=0;
+                                                        $accounts = $accounthead['accounthead'];
+                                                    
+                                                    @endphp
+                                                    @foreach($accounts as $head)
+                                                                    <tr>
+                                                                    <th scope="row">{{$head->account_head_code}}</th>
+                                                                    <td>{{$head->account_head_details}}</td>
+                                                                    <td>{{$head->remarks}}</td>
+                                                                    <td>{{$head->dr_amount}}</td>
+                                                                    <td>{{$head->cr_amount}}</td>
+                                                                </tr>
+                                                                @php
+                                                                    $total_amount=$total_amount + $head->dr_amount;
+                                                                @endphp
+                                                    
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            <table  border="0"  width="100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>Total: {{$total_amount}}</td>
+                                                    
+                                                    </tr>
+                                                
+                                                </tbody>
+                                            </table>
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row" style="margin-bottom:20px;font-size:10px">
+
+                                                <table  width="100%">
+                                                    <tbody>
+                                                    
+                                                    <tr>
+                                                        <th scope="row">In Word: ( {{$numToWord->numberTowords($total_amount)}} )</th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td> Total: {{$total_amount}} | {{$total_amount}}</td>
+                                                    </tr>
+                                                                
+                                                    </tbody>
+                                                </table>
+                                           
+                                        </div>
+                                        <br>
+                                        <div class="col-md-12 row">
+                                                <table  width="100%" style="font-size:12px">
+                                                    <tbody>
+                                                    
+                                                    <tr>
+                                                        <th scope="row">  <span style="border-top:2px solid #000; width:50%;"> PreparedBy:</span></th>
+                                                        <td> <span style="border-top:2px solid #000; width:50%;"> CheckedBy:</span></td>
+                                                        <td><span style="border-top:2px solid #000; width:50%;"> VerifiedBy:</span></td>
+                                                        <td> <span style="border-top:2px solid #000; width:50%;"> ApproveBy:</span></td>
+                                                        <td></td>
+                                                    </tr>
+                                                                
+                                                    </tbody>
+                                                </table>
+                                     
+                                       
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+                    
+                        <div class="modal-footer ">
+                                <div class="col-md-12 text-center">
+                                    <button type="button" class="btn btn-primary savepritbtnareainvoice"><i class="fa fa-print"></i></button>
+                                </div>
+                        </div>
+           
+            </div>
+         </div>
+      </div>
+   </div>
+</div> 
+@endif
+
+@if(Session::has('accounthead'))
+<script>
+   $(document).ready(function() {
+      $('#exampleModal').modal('show');
    });
-});
-</script>                                
+</script>
+
+ {{ Session::forget('accounthead')}}
+@endif
+
+<script>
+
+    $(function() {
+        $(".savepritbtnareainvoice").on('click', function() {
+               // alert("ok");
+            var mode = 'iframe'; //popup
+            var close = mode == "popup";
+            var options = {
+                mode: mode,
+                popClose: close
+            };
+            $("div.printableAreasaveprintsectioninvoice").printArea(options);
+            <?php session()->forget('accounthead'); ?>
+        });
+    });
+</script>
 @endsection

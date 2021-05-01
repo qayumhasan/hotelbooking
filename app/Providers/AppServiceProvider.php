@@ -8,8 +8,10 @@ use App\Models\Seo;
 use App\Models\Addon;
 use App\Models\ImageManager;
 use App\Models\CompanyInformation;
+
 use App\Models\Currency;
 use App\Traits\CalculatePerDayRoomTarrif;
+
 use App\Traits\NumberToWord;
 
 class AppServiceProvider extends ServiceProvider
@@ -47,9 +49,9 @@ class AppServiceProvider extends ServiceProvider
         view()->share('roomTarrif', $roomTarrif);
 
 
-        $currency = cache()->remember('currency',60*60*24,function(){
-            return Currency::where('is_default',1)->first(); 
-        });
-        view()->share('currency', $currency);
+        // $currency = cache()->remember('currency',60*60*24,function(){
+        //     return Currency::where('is_default',1)->first(); 
+        // });
+        // view()->share('currency', $currency);
     }
 }

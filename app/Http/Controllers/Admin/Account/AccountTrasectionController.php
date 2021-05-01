@@ -51,7 +51,11 @@ class AccountTrasectionController extends Controller
         $allchartofaccount=ChartOfAccount::get();
         $allsubcategoryone=AccountSubCategoryOne::where('is_deleted',0)->where('is_active',1)->get();
         $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
-        return view('accounts.accounttransection.create',compact('allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice'));
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allguest=Guest::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allbanquet=Banquet::where('is_deleted',0)->orderBy('id','DESC')->get();
+        return view('accounts.accounttransection.create',compact('allbanquet','allguest','allsuplier','allemployee','allchartofaccount','allsubcategoryone','allsubcategorytwo','invoice'));
     }
     // get ajax account
     public function getaccount($cate_id){
@@ -71,7 +75,7 @@ class AccountTrasectionController extends Controller
 
     // transection details insert
     public function transectiondetailsinsert(Request $request){
-        // return $request;
+         //return $request->account_head;
 
 
        if($request->accounttransecti_id == ''){
@@ -98,12 +102,12 @@ class AccountTrasectionController extends Controller
         $data->is_active = 0;
         $data->entry_by = Auth::user()->id;
 
-        if($request->subcategory_codeone==''){
+        if($request->subcategory_codeone== null){
             $data->subcategory_codeone =$account_hedcode->subcategoryone_code;
         }else{
             $data->subcategory_codeone = $request->subcategory_codeone;
         }
-        if($request->subcategory_codetwo==''){
+        if($request->subcategory_codetwo== null){
             $data->subcategory_codetwo = $account_hedcode->subcategorytwo_code;
         }else{
             $data->subcategory_codetwo = $request->subcategory_codetwo;
@@ -240,6 +244,28 @@ class AccountTrasectionController extends Controller
                 }
 
                 if($data->save()){
+
+                    $accounthead=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
+                    $accountnew=AccountTransectionHead::where('voucher_no',$request->invoice)->first();
+                
+                        
+                    $data = [
+                        'accounthead'=>$accounthead,
+                        'accountnew'=>$accountnew,
+                    ];
+
+                    Session::put('accounthead',$data);
+
+
+                    // $items = session('accounthead');
+
+                    // $accounts = $items['accounthead'];
+
+                    // foreach ($accounts as $key => $value) {
+                    //     return $value->date;
+                    // }
+                    
+
                     $notification = array(
                         'messege' => 'Insert Success',
                         'alert-type' => 'success'
@@ -317,7 +343,13 @@ class AccountTrasectionController extends Controller
         $allsubcategorytwo=AccountSubCategoryTwo::where('is_deleted',0)->where('is_active',1)->get();
 
         $edit=AccountTransectionHead::where('id',$id)->first();
-        return view('accounts.accounttransection.update',compact('edit','allcategory','allchartofaccount','allsubcategoryone','allsubcategorytwo'));
+
+        $allemployee=Employee::where('status',1)->orderBy('id','DESC')->get();
+        $allsuplier=Supplier::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allguest=Guest::where('is_deleted',0)->orderBy('id','DESC')->get();
+        $allbanquet=Banquet::where('is_deleted',0)->orderBy('id','DESC')->get();
+
+        return view('accounts.accounttransection.update',compact('allbanquet','allguest','allsuplier','allemployee','edit','allcategory','allchartofaccount','allsubcategoryone','allsubcategorytwo'));
     }
 
     public function delete($id){
@@ -403,6 +435,19 @@ class AccountTrasectionController extends Controller
                 }
 
                 if($data->save()){
+
+                    
+                    $accounthead=AccountTransectionDetails::where('voucher_no',$request->invoice)->get();
+                    $accountnew=AccountTransectionHead::where('voucher_no',$request->invoice)->first();
+                
+                        
+                    $data = [
+                        'accounthead'=>$accounthead,
+                        'accountnew'=>$accountnew,
+                    ];
+
+                    Session::put('accounthead',$data);
+
                     $notification = array(
                         'messege' => 'Update Success',
                         'alert-type' => 'success'

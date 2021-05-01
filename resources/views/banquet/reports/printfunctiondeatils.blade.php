@@ -67,8 +67,8 @@ $current = date("d/m/Y");
                                     <td>{{$data->guest_name}}</td>
                                     <td>{{$data->mobile}}</td>
                                     <td>{{$data->booking_date}}</td>
-                                   
-                                    <td> <a href=""><i class="fa fa-print"></i></a></td>
+                                   <td><a class="banquetdata" type="button" data-toggle="modal" data-target="#exampleModal" data-id="{{$data->id}}" ><i class="fa fa-print"></i></a> </td>
+                                     
                                 </tr>
                                 @endforeach
                             @else
@@ -84,7 +84,8 @@ $current = date("d/m/Y");
                                     <td>{{$data->booking_date}}</td>
                                    
                                     <td>
-                                        <a class="banquetdata" data-id="{{$data->id}}" type="button" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-print"></i></a>
+                                    <a class="banquetdata" type="button" data-toggle="modal" data-target="#exampleModal" data-id="{{$data->id}}" ><i class="fa fa-print"></i></a> 
+                                       
                                     </td>
                               </tr>
                               @endforeach
@@ -97,33 +98,12 @@ $current = date("d/m/Y");
             </div>
          </div>
       </div>
-      </div>
+    </div>
 
 
 
 
-<script>
-   $(document).ready(function() {
-      $('.banquetdata').on('click', function() {
-         var chid = $(this).data('id');
-         alert(chid);
-         $('#printfunctionajaxdata').empty();
-         if(checkin_id) {
-               $.ajax({
-                  url: "{{  url('/get/kothistory/data/') }}/"+checkin_id,
-                  type:"GET",
-                  success:function(data) {
 
-                        $('#printfunctionajaxdata').append(data);
-                        
-                     }
-
-                     
-               });
-            } 
-      });
-   });
-</script>
 
 
 
@@ -180,11 +160,11 @@ $current = date("d/m/Y");
                                 text-align: "."center;
                             }
                         </style>
-                        </head>
+                       
 
-                        <body id="printfunctionajaxdata">
+                        <div id="printfunctionajaxdata">
                           
-                        </body>
+                        </div>
 
                     </div>
                     <br>
@@ -195,4 +175,42 @@ $current = date("d/m/Y");
     </div>
 </div>
 
+
+<script>
+   $(document).ready(function() {
+      $('.banquetdata').on('click', function() {
+         var chid = $(this).data('id');
+        // alert("ok");
+         $('#printfunctionajaxdata').empty();
+         if(chid) {
+               $.ajax({
+                  url: "{{  url('/get/banquet/alldata/data/') }}/"+chid,
+                  type:"GET",
+                  success:function(data) {
+
+                        $('#printfunctionajaxdata').append(data);
+                        
+                     }
+
+                     
+               });
+            } 
+      });
+   });
+</script>
+
+<script>
+        $(function () {
+            $(".savepritbtn").on('click', function () {
+              //alert("ok");
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printableAreasaveprint").printArea(options);
+            });
+        });
+   </script>
 @endsection

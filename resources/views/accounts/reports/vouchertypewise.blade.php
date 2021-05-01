@@ -22,7 +22,7 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">DateWise Transection Reports</h4>
+                        <h4 class="card-title">Voucher Transection Reports</h4>
                      </div>
                      <span class="float-right mr-2">
                        
@@ -56,7 +56,7 @@ $current = date("m/d/Y");
                   </div>
                   <form>
                   <div class="card-body">
-                     <div class="table-responsive">
+                     <div class="table-responsive printableAreasaveprint">
                        
                               @if(isset($searchdata))
                               <table  class="table table-striped table-bordered" >
@@ -155,7 +155,7 @@ $current = date("m/d/Y");
                      </div>
                   </div>
                   <div class="card-body text-center">
-                     <a href="" class="btn btn-success">Print</a>
+                     <a href="#" class="btn btn-success savepritbtn">Print</a>
                   </div>
                </div>
             </div>
@@ -165,7 +165,7 @@ $current = date("m/d/Y");
 
 
 
-<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"  aria-hidden="true">
+<!-- <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog modal-lg">
       <div class="modal-content text-center printableAreasaveprint">
          <div class="modal-header " >
@@ -189,7 +189,7 @@ $current = date("m/d/Y");
          </div>
       </div>
    </div>
-</div> 
+</div>  -->
 
    <script>
         $(function () {

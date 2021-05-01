@@ -9,6 +9,7 @@
 <style>
 .form-control {
     height: 32px;
+    wodth: 50%;
 }
 
 
@@ -24,17 +25,18 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Employee Transection Reports</h4>
+                        <h4 class="card-title">Voucher List</h4>
                      </div>
                      <span class="float-right mr-2">
                        
                      </span>
                   </div>
-                  <form action="{{route('admin.account.reports.employee')}}" method="POST">
+                  <form action="{{route('admin.account.reports.voucherlist')}}" method="POST">
                   <div class="card-header d-flex justify-content-center row">
                      
                         @csrf
-                     <div class="col-md-2">
+            
+                        <div class="col-md-2">
                            <div class="form-group">
                                  <label for="fname">From Date:</label>
                                  <input type="text"  id="formdate" style="color:#f1dddd" name="formdate" class="formdate form-control noradious datepicker" @if(isset($formdate))  value="{{$formdate}}" style="color:#000"  @else value="{{$current}}" @endif >
@@ -52,76 +54,61 @@ $current = date("m/d/Y");
                            <input type="checkbox" class="" id="no_date" name="no_date" value="1">
                          </div>
                      </div>
-                    
                      <div class="col-md-3">
                            <div class="form-group">
-                                 <label for="fname">Name: *</label>
-                                 <select name="employee_name" id="employee_report" class="form-control noradious">
+                                 <label for="fname">Voucher Type: *</label>
+                                 <select name="voucher" id="vouchersearch" class="form-control noradious">
                                     <option value="">--select--</option>
-                                    @foreach($allemployee as $employee)
-                                    <option value="{{$employee->employee_id}}" >{{$employee->employee_name}}</option>
-                                    @endforeach
+                                    <option value="Cash Payment Voucher" @if(isset($searchdata)) @if($searchdata=='Cash Payment Voucher')  selected @endif @endif>Cash Payment Voucher</option>
+                                    <option value="Bank Payment Voucher" @if(isset($searchdata)) @if($searchdata=='Bank Payment Voucher')  selected @endif @endif>Bank Payment Voucher</option>
+                                    <option value="Fund Transfer Voucher" @if(isset($searchdata)) @if($searchdata=='Fund Transfer Voucher"')  selected @endif @endif>Fund Transfer Voucher</option>
+                                    <option value="Cash Receipt Voucher" @if(isset($searchdata)) @if($searchdata=='Cash Receipt Voucher')  selected @endif @endif>Cash Receipt Voucher</option>
+                                    <option value="Bank Receipt Voucher" @if(isset($searchdata)) @if($searchdata=='Bank Receipt Voucher')  selected @endif @endif>Bank Receipt Voucher</option>
+                                    <option value="AorC Receivable Journal Voucher" @if(isset($searchdata)) @if($searchdata=='AorC Receivable Journal Voucher')  selected @endif @endif>A/C Receivable Journal Voucher</option>
+                                    <option value="AorC Payble Journal Voucher" @if(isset($searchdata)) @if($searchdata=='AorC Payble Journal Voucher')  selected @endif @endif>A/C Payble Journal Voucher</option>
+                                    <option value="Adjustment Journal Voucher" @if(isset($searchdata)) @if($searchdata=='Adjustment Journal Voucher')  selected @endif @endif>Adjustment Journal Voucher</option>
+                                    <option value="Account Opening Voucher" @if(isset($searchdata)) @if($searchdata=='Account Opening Voucher')  selected @endif @endif>Account Opening Voucher</option>
+                                  
                                  </select>
-                                 @error('employee_name')
-                                    <div style="color:red">{{ $message }}</div>
-                                 @enderror
+                              
                            </div>
                      </div>
-                     <div class="col-md-3">
+                     <div class="col-md-2">
                           <button type="submit" class="btn btn-success">Search</button>
                      </div>
                   </div>
                   <form>
                   <div class="card-body">
-                     <div class="printableAreasaveprint">
+                     <div class="table-responsive printableAreasaveprint">
                               @if(isset($searchdata))
-                              <table width="100%" border="1" style="font-size:12px;">
+                              <table  class="table table-striped table-bordered" >
                                  <thead class="text-center">
                                     <tr>
                                        <th>#</th>
-                                       <th>ID</th>
-                                       <th>Name</th>
-                                       <th>TransectionID</th>
-                                       <th>TransectionType</th>
-                                       <th>Date</th>
-                                       <th>OpeningBalance</th>
-                                       <th>TransectionAmount</th>
-                                       <th>Balance</th>
+                                       <th>Voucher Type</th>
+                                       <th>Voucher NO</th>
+                                       <th>Voucher Reference</th>
+                                       <th>Check Reference</th>
+                                       <th>Advice</th>
+                                       <th>Remarks</th>
+                                      
                                       
                                     </tr>
                                  </thead>
                                  <tbody class="text-center">
-                                 @php
-                                 
-                                    $totaltransectionamount=0;
-                                    $totalbalance=0;
-                                    $minibalance=0;
-                                   
-                                 @endphp
+                                
                                  @foreach($searchdata as $key => $sdata)
                                  <tr>
-                                       <td>{{++$key}}</td>
-                                       <td>{{$sdata->EmployeeID}}</td>
-                                       <td>{{$sdata->EmployeeName}}</td>
-                                       <td>{{$sdata->TransecrionID}}</td>
-                                    
-                                       <td>{{$sdata->TransectionType}}</td>
-                                       <td>{{$sdata->Date}}</td>
-                                       <td>{{$sdata->OpeningBalance}}</td>
-                                       <td>{{$sdata->TransectionAmount}}</td>
-                                       
-                                       @php
-                                       
-                                          $minibalance = $minibalance + ($sdata->Balance);
-                                       @endphp
-                                       <td>{{ $minibalance }}</td>
+                                         <td>{{++$key}}</td>
+                                       <td>{{$sdata->voucher_type}}</td>
+                                       <td>{{$sdata->voucher_no}}</td>
+                                       <td>{{$sdata->reference}}</td>
+                                       <td>{{$sdata->cheque_reference}}</td>
+                                       <td>{{$sdata->advice}}</td>
+                                       <td>{{$sdata->narration}}</td>
                                  
                                  </tr>
-                                  @php
-                                    
-                                     $totaltransectionamount=$totaltransectionamount + $sdata->TransectionAmount ;
-                                     $totalbalance = $totalbalance +( $sdata->Balance) ;
-                                    @endphp
+                                
                                  @endforeach
                                  </tbody>
                                  <tfoot>
@@ -133,8 +120,7 @@ $current = date("m/d/Y");
                                        <td></td>
                                        <td></td>
                                        <td></td>
-                                       <td>Total: {{ $totaltransectionamount }}</td>
-                                       <td>Total: {{ $totalbalance }}</td>
+                                       <td></td>
                                     </tr>
                                  </tfoot>
                                </table>
@@ -142,36 +128,28 @@ $current = date("m/d/Y");
                               <table id="datatable" class="table data-table table-striped table-bordered" >
                                  <thead class="text-center">
                                     <tr>
-                                       <th>#</th>
-                                       <th>ID</th>
-                                       <th>Name</th>
-                                       <th>TransectionID</th>
-                                       <th>TransectionType</th>
-                                       <th>Date</th>
-                                       <th>OpeningBalance</th>
-                                       <th>TransectionAmount</th>
-                                       <th>Balance</th>
+                                        <th>#</th>
+                                       <th>Voucher Type</th>
+                                       <th>Voucher NO</th>
+                                       <th>Voucher Reference</th>
+                                       <th>Check Reference</th>
+                                       <th>Advice</th>
+                                       <th>Remarks</th>
                                       
                                     </tr>
                                  </thead>
                                  <tbody class="text-center">
-                              @foreach($alldata as $key => $data)
-                              <tr>
-                                 <td>{{++$key}}</td>
-                                 <td>{{$data->EmployeeID}}</td>
-                                 <td>{{$data->EmployeeName}}</td>
-                                 <td>{{$data->TransecrionID}}</td>
-                               
-                                 <td>{{$data->TransectionType}}</td>
-                                 <td>{{$data->Date}}</td>
-                                 <td>{{$data->OpeningBalance}}</td>
-                                 <td>{{$data->TransectionAmount}}</td>
-
-                                 
-                                 <td>{{$data->Balance }}</td>
-                                 
-                              </tr>
-                              @endforeach
+                                    @foreach($alldata as $key => $data)
+                                    <tr>
+                                       <td>{{++$key}}</td>
+                                       <td>{{$data->voucher_type}}</td>
+                                       <td>{{$data->voucher_no}}</td>
+                                       <td>{{$data->reference}}</td>
+                                       <td>{{$data->cheque_reference}}</td>
+                                       <td>{{$data->advice}}</td>
+                                       <td>{{$data->narration}}</td>
+                                    </tr>
+                                    @endforeach
                                  </tbody>
                                </table>
 
@@ -179,16 +157,45 @@ $current = date("m/d/Y");
                           
                      </div>
                   </div>
-                  <div class="card-body text-center">
                   @if(isset($searchdata))
-                     <a  class="btn btn-success savepritbtn"><i class="fa fa-print"></i></a>
-                  @endif
+                  <div class="card-body text-center">
+                     <a class="btn btn-success savepritbtn">Print</a>
                   </div>
+                  @endif
                </div>
             </div>
          </div>
       </div>
    </div>
+
+
+
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content text-center printableAreasaveprint">
+         <div class="modal-header " >
+               <h5 class="modal-title">INVOICE</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+         </div>
+         <div class="modal-body" id="maindata">
+            
+         </div>
+            <div class="modal-footer ">
+               <div class="col-md-12 text-right">
+                  <p>PrintDate:17/90/34</p><br>
+               </div>
+               <div class="col-md-12">
+               <button type="button" class="btn btn-primary savepritbtn">Print</button>
+               </div>
+            </div>
+           
+         </div>
+      </div>
+   </div>
+</div> 
+
    <script>
         $(function () {
             $(".savepritbtn").on('click', function () {

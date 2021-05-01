@@ -110,12 +110,12 @@
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
                             <ul id="Transection" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
-                                <li class="">
-                                    <a href="">
+                                <li class="{{ request()->routeIs('admin.banquet.alltransection*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.banquet.alltransection')}}">
                                         <i class="las la-list-alt"></i><span>Invoice Date Wise</span>
                                     </a>
                                 </li>
-                                <li class="">
+                                <!-- <li class="">
                                     <a href="{{route('admin.banquet.index')}}">
                                         <i class="las la-list-alt"></i><span>Banquet Wise invoice</span>
                                     </a>
@@ -124,10 +124,10 @@
                                     <a href="{{route('admin.banquet.index')}}">
                                         <i class="las la-list-alt"></i><span>Menu Wise  Booking</span>
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </li>
-                        <li class="">
+                        <!-- <li class="">
                             <a href="#Collection" class="collapsed" data-toggle="collapse" aria-expanded="false">
                             <i class="fas fa-bed"></i><span>Collection Reports</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
@@ -146,7 +146,7 @@
                                 </li>
                                
                             </ul>
-                        </li>
+                        </li> -->
                         <li class="">
                             <a href="#hall" class="collapsed" data-toggle="collapse" aria-expanded="false">
                             <i class="fas fa-map"></i><span>Venue</span>
@@ -458,6 +458,8 @@
 
     <!-- alert -->
     <script src="{{asset('public/backend')}}/assets/js/izitost.js"></script>
+    <script src="{{asset('public/backend')}}/assets/jquery.PrintArea.js"></script>
+
 
     <script>
         @if(Session::has('messege'))

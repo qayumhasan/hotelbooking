@@ -451,6 +451,10 @@ Route::post('admin/banquet/banquetwise/reports', [BanquetReportController::class
 Route::get('admin/banquet/printdetails', [BanquetReportController::class, 'printdetais'])->name('admin.banquet.printdetais');
 Route::post('admin/banquet/printdetails', [BanquetReportController::class, 'printdetaisresult'])->name('admin.banquet.printdetais');
 
+Route::get('admin/banquet/alltransection', [BanquetReportController::class, 'alltransection'])->name('admin.banquet.alltransection');
+
+Route::get('/get/banquet/alldata/data/{chid}', [BanquetReportController::class, 'getprintbanquet']);
+
 
 
 
@@ -566,7 +570,7 @@ Route::middleware(['admin'])->prefix(md5('admin/voucher'))->group(function () {
 
     Route::get('/list/voucher/{booking_no}', [VoucherController::class, 'listVoucher'])->name('admin.checkin.list.voucher');
 
-    Route::get('/edit/voucher/page/{id}', [VoucherController::class, 'editVoucherPage'])->name('admin.checkin.edit.voucher.page');
+    Route::get('/edit/voucher/page/{id}/{booking_no}', [VoucherController::class, 'editVoucherPage'])->name('admin.checkin.edit.voucher.page');
 
     Route::get('/edit/{id}', [VoucherController::class, 'editVoucher'])->name('admin.checkout.invoice_edit');
 
