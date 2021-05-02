@@ -25,13 +25,13 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Account Transaction Receipt and Payment</h4>
+                        <h4 class="card-title">Account Transaction(Receipt and Payment)</h4>
                      </div>
                      <span class="float-right mr-2">
                        
                      </span>
                   </div>
-                  <form action="{{route('admin.account.reports.voucherlist')}}" method="POST">
+                  <form action="{{route('admin.account.reports.accountreceiptandpayment')}}" method="POST">
                   <div class="card-header d-flex justify-content-center row">
                      
                         @csrf
@@ -45,7 +45,7 @@ $current = date("m/d/Y");
                      <div class="col-md-2">
                            <div class="form-group">
                                  <label for="fname">To Date:</label>
-                                 <input type="text"  id="todate"   name="todate" class="todate form-control noradious datepicker"  @if(isset($to_date))  value="{{$to_date}}"  @else value="{{$current}}" @endif>
+                                 <input type="text"  id="todate"   name="todate" class="todate form-control noradious datepicker"  @if(isset($todate))  value="{{$todate}}"  @else value="{{$current}}" @endif>
                                  
                            </div>
                      </div>
@@ -56,77 +56,123 @@ $current = date("m/d/Y");
                   <form>
                   <div class="card-body">
                      <div class="table-responsive printableAreasaveprint">
-                              @if(isset($searchdata))
-                              <table  class="table table-striped table-bordered" >
-                                 <thead class="text-center">
-                                    <tr>
-                                       <th>#</th>
-                                       <th>Date</th>
-                                       <th>Head Of Account(Receipt)</th>
-                                       <th>Amount</th>
-                                       <th>Head Of Account(Payment)</th>
-                                       <th>Amount</th>
-                                      
-                                    </tr>
-                                 </thead>
-                                 <tbody class="text-center">
-                                
-                                 @foreach($searchdata as $key => $sdata)
-                                 <tr>
-                                         <td>{{++$key}}</td>
-                                       <td>{{$sdata->voucher_type}}</td>
-                                       <td>{{$sdata->voucher_no}}</td>
-                                       <td>{{$sdata->reference}}</td>
-                                       <td>{{$sdata->cheque_reference}}</td>
-                                       <td>{{$sdata->advice}}</td>
-                                       <td>{{$sdata->narration}}</td>
-                                 </tr>
-                                
-                                 @endforeach
-                                 </tbody>
-                                 <tfoot>
-                                    <tr>
-                                       <td></td>
-                                       <td></td>
-                                       <td></td>
-                                       <td></td>
-                                       <td></td>
-                                       <td></td>
-                                       <td></td>
-                                       <td></td>
-                                    </tr>
-                                 </tfoot>
-                               </table>
-                              @else
-                              <table id="datatable" class="table data-table table-striped table-bordered" >
-                                 <thead class="text-center">
-                                    <tr>
-                                       <th>#</th>
-                                       <th>Date</th>
-                                       <th>Head Of Account(Receipt)</th>
-                                       <th>Amount</th>
-                                       <th>Head Of Account(Payment)</th>
-                                       <th>Amount</th>
-                                      
-                                    </tr>
-                                 </thead>
-                                 <tbody class="text-center">
-                                    @foreach($alldatareceipt as $key => $rdata)
-                                       <tr>
-                                             <td>{{ ++$key }}</td>
-                                             <td>{{ $rdata->date }}</td>
-                                             <td></td>
-                                             <td></td>
-                                       <tr>
-                                    @endforeach
-                                   
-                                   
+                             <div class="row">
+                              <div class="col-md-6">
+                              <table class="table table-striped table-bordered" style="font-size:12px;">
+                                       <thead class="text-center">
+                                          <tr>
+                                           
+                                             <th>Head Of Account(Receipt)</th>
+                                             <th>Amount</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody class="text-center">
+                                       @php
+                                       $amountdd=0;
+                                       $ttotal=0;
+                                       @endphp
+                                       @foreach($creadit_amount as $key => $camount)
+                                                   <tr>
+                                                      <td>{{$key}}</td>
+                                                      @php
+                                                      
+                                                         foreach( $camount as $cdam){
+                                                            $amountdd=  $amountdd + $cdam->dr_amount;
+                                                         }
 
-                                   
-                                 </tbody>
-                               </table>
+                                                      @endphp     
+                                                      <td> {{ $amountdd}}</td>
+                                                   </tr>
 
-                              @endif
+                                                   @php
+                                                         $ttotal=$ttotal +  $amountdd;
+                                                   @endphp
+
+                                          @endforeach
+                                       
+                                       </tbody>
+                                       <tfoot>
+                                             
+                                             <tr class="text-right">
+                                                   <td>Total:</td>
+                                                <td class="text-center">{{$ttotal}}</td>
+                                             </tr>
+                                             <tr class="text-right">
+                                                   <td>Opening Balance:</td>
+                                                <td class="text-center">{{$caamount}}</td>
+                                             </tr>
+                                             <tr class="text-right">
+                                                   <td>Total Balance:</td>
+                                                   @php
+                                                   $closingbalance=$caamount + $ttotal;
+                                                   @endphp
+                                                <td class="text-center">{{ $caamount + $ttotal}}</td>
+                                             </tr>
+                                       <tfoot>
+                                    </table>
+                              </div>
+                              <div class="col-md-6">
+                        
+
+
+                                    <table class="table table-striped table-bordered" style="font-size:12px;">
+                                       <thead class="text-center">
+                                       
+                                          <tr>
+                                             
+                                           
+                                             <th>Head Of Account(Payment)</th>
+                                             <th>Amount</th>
+                                          </tr>
+                                       </thead>
+                                       <tbody class="text-center">
+                                       @php
+                                          $amount=0;
+                                          $total=0;
+                                       @endphp
+                                       @foreach($davit_amount as $key => $damount)
+                                              <tr>
+                                                      
+                                                      <td>{{$key}}</td>
+                                                      @php
+                                                         foreach( $damount as $ddam){
+                                                            $amount=  $amount + $ddam->cr_amount;
+                                                         }
+                                                      @endphp     
+                                                      <td> {{ $amount}}</td>
+                                                   </tr>
+                                                   @php
+                                                            $total=$total +  $amount;
+                                                   @endphp
+
+                                       @endforeach
+                                       
+                                       </tbody>
+                                       <tfoot>
+                                             
+                                             <tr class="text-right">
+                                             <td>Total:</td>
+                                             <td class="text-center">{{$total}}</td>
+                                             </tr>
+                                           
+                                             <tr class="text-right">
+                                                   <td>Closing Balance:</td>
+                                                   
+                                                <td class="text-center">{{ $tbalance=$closingbalance - $total}}</td>
+                                             </tr>
+                                             <tr class="text-right">
+                                                   <td>Total Balance:</td>
+                                                <td class="text-center">{{ $tbalance + $total}}</td>
+                                             </tr>
+                                       <tfoot>
+                                    </table>
+                              </div>
+                              
+
+                             
+                             </div>
+                           
+                             
                           
                      </div>
                   </div>

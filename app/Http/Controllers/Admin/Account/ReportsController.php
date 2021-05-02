@@ -362,12 +362,112 @@ class ReportsController extends Controller
 
     // account recepipt and payment
     public function accountreceiptandpayment(){
-        $alldata=AccountTransectionDetails::where('is_active',1)->where('is_deleted',0)->get();
-        $alldatareceipt=AccountTransectionDetails::where('is_active',1)->where('is_deleted',0)->where('cr_amount',NULL)->orderBy('id','DESC')->get();
+         
+        date_default_timezone_set("asia/dhaka");
+        $current = date("m/d/Y");
 
- 
-        return view('accounts.reports.accountreceiptandpayment',compact('alldata','alldatareceipt'));
+        $creadit_amount=AccountTransectionDetails::where('date',$current)->where('is_active',1)->where('cr_amount',NULL)->OrderBy('id','DESC')->get();
+        $caamount=AccountTransectionDetails::where('date','<',$current)->where('is_active',1)->where('cr_amount',NULL)->sum('dr_amount');
+       
+
+        $creadit_amount=$creadit_amount->groupby('account_head_details');
+        $creadit_amount=$creadit_amount->all();
+        $davit_amount=AccountTransectionDetails::where('date',$current)->where('is_active',1)->where('dr_amount',NULL)->OrderBy('id','DESC')->get();
+        $dvamount=AccountTransectionDetails::where('date','<',$current)->where('is_active',1)->where('dr_amount',NULL)->sum('cr_amount');
+        $davit_amount=$davit_amount->groupby('account_head_details');
+        $davit_amount=$davit_amount->all();
+
+
+        return view('accounts.reports.accountreceiptandpayment',compact('caamount','creadit_amount','davit_amount','dvamount'));
     }
 
+    public function accountreceiptandpaymentsearch(Request $request){
+         
+         $formdate=$request->formdate;
+         $todate=$request->todate;
+
+
+         $creadit_amount=AccountTransectionDetails::whereBetween('date', [$formdate, $todate])->where('is_active',1)->where('cr_amount',NULL)->OrderBy('id','DESC')->get();
+         $caamount=AccountTransectionDetails::whereBetween('date', [$formdate, $todate])->where('is_active',1)->where('cr_amount',NULL)->sum('dr_amount');
+
+         $creadit_amount=$creadit_amount->groupby('account_head_details');
+         $creadit_amount=$creadit_amount->all();
+
+
+         $davit_amount=AccountTransectionDetails::whereBetween('date', [$formdate, $todate])->where('is_active',1)->where('dr_amount',NULL)->OrderBy('id','DESC')->get();
+         $dvamount=AccountTransectionDetails::whereBetween('date', [$formdate, $todate])->where('is_active',1)->where('dr_amount',NULL)->sum('cr_amount');
+
+         $davit_amount=$davit_amount->groupby('account_head_details');
+         $davit_amount=$davit_amount->all();
+
+        
+
+        
+        return view('accounts.reports.accountreceiptandpayment',compact('creadit_amount','davit_amount','formdate','todate','caamount','dvamount'));
+    }
+
+    // cash and bank
+    public function cashandbankdetails(){
+        date_default_timezone_set("asia/dhaka");
+        $current = date("m/d/Y");
+        $creadit_amount=AccountTransectionDetails::where('date',$current)->where('Accountcategory_code',19)->orderBy('id','DESC')->get();
+        $creadit_amount=$creadit_amount->groupby('account_head_details');
+        $creadit_amount=$creadit_amount->all();
+        
+        return view('accounts.reports.cashandbankdetails',compact('creadit_amount'));
+    }
+
+    public function cashandbankdetailssearch(Request $request){
+        $formdate=$request->form_date;
+        $todate=$request->to_date;
+        $searchdata=AccountTransectionDetails::whereBetween('date', [$formdate, $todate])->where('Accountcategory_code',19)->orderBy('id','DESC')->get();
+        $searchdata=$searchdata->groupby('account_head_details');
+        $searchdata=$searchdata->all();
+      
+        return view('accounts.reports.cashandbankdetails',compact('searchdata','formdate','todate'));
+    }
+
+
+    public function finalreport(){
+        $allchart_of_acc= DB::table('vchart_of_accounts')->get();
+        return view('accounts.reports.finalreport',compact('allchart_of_acc'));
+    }
+    public function finalreportsearch(Request $request){
+       
+        $formdate=$request->formdate;
+        $todate=$request->todate;
+        $allchart_of_acc= DB::table('vchart_of_accounts')->get();
+        if($request->Transection=='voucher_summary'){
+            $vouchername=$request->Transection;
+            $chartof_account=$request->chart_of_account;
+            $vsamary=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->where('Code',$chartof_account)->get();
+            $totalbalance=DB::table('vAccountsHeadsLeadgerTbl')->where('date', '<' ,$formdate)->where('Code',$chartof_account)->sum('Balance');
+            return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','vsamary','formdate','todate','allchart_of_acc','vouchername'));
+        }elseif($request->Transection=='voucher_summary_narration'){
+            $vouchername=$request->Transection;
+            $chartof_account=$request->chart_of_account;
+            $voucherwithnarration=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->where('Code',$chartof_account)->get();
+            $totalbalance=DB::table('vAccountsHeadsLeadgerTbl')->where('date', '<' ,$formdate)->where('Code',$chartof_account)->sum('Balance');
+            return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','voucherwithnarration','formdate','todate','allchart_of_acc','vouchername'));
+            
+        }elseif($request->Transection=='transaction_summary'){
+
+            $vouchername=$request->Transection;
+            $chartof_account=$request->chart_of_account;
+            $voucherwithnarration=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->where('Code',$chartof_account)->get();
+            $totalbalance=DB::table('vAccountsHeadsLeadgerTbl')->where('date', '<' ,$formdate)->where('Code',$chartof_account)->sum('Balance');
+            return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','voucherwithnarration','formdate','todate','allchart_of_acc','vouchername'));
+
+        }else{
+            
+            $vouchername=$request->Transection;
+            $chartof_account=$request->chart_of_account;
+            $voucherwithnarration=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->where('Code',$chartof_account)->get();
+            $totalbalance=DB::table('vAccountsHeadsLeadgerTbl')->where('date', '<' ,$formdate)->where('Code',$chartof_account)->sum('Balance');
+            return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','voucherwithnarration','formdate','todate','allchart_of_acc','vouchername'));
+        }
+    }
   
 }
+
+

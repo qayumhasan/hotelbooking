@@ -168,4 +168,11 @@ Route::get('admin/account/transection/voucherlist', [ReportsController::class, '
 Route::post('admin/account/transection/voucherlist', [ReportsController::class, 'voucherlistsearch'])->name('admin.account.reports.voucherlist');
 
 Route::get('admin/account/transection/receiprpayment', [ReportsController::class, 'accountreceiptandpayment'])->name('admin.account.reports.accountreceiptandpayment');
+Route::post('admin/account/transection/receiprpayment', [ReportsController::class, 'accountreceiptandpaymentsearch'])->name('admin.account.reports.accountreceiptandpayment');
+
+Route::get('admin/account/transection/cashandbankdeatils', [ReportsController::class, 'cashandbankdetails'])->name('admin.account.reports.cashandbankdetails');
+Route::post('admin/account/transection/cashandbankdeatils', [ReportsController::class, 'cashandbankdetailssearch'])->name('admin.account.reports.cashandbankdetails');
+
+Route::get('admin/account/transection/finalreport', [ReportsController::class, 'finalreport'])->name('admin.account.reports.finalreport');
+Route::post('admin/account/transection/finalreport', [ReportsController::class, 'finalreportsearch'])->name('admin.account.reports.finalreport');
 
