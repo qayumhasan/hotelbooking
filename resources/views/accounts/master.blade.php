@@ -232,9 +232,22 @@
                                 </li>
                                 <li class="{{ request()->routeIs('admin.account.reports.accountreceiptandpayment*') ? 'active' : '' }}">
                                     <a href="{{route('admin.account.reports.accountreceiptandpayment')}}">
-                                        <i class="las la-list-alt"></i><span>Account Payment & Receipt</span>
+                                        <i class="las la-list-alt"></i><span>Account Receipt & Payment</span>
                                     </a>
                                 </li>
+                                <li class="{{ request()->routeIs('admin.account.reports.cashandbankdetails*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.cashandbankdetails')}}">
+                                        <i class="las la-list-alt"></i><span>Cash & Bank Positions</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.account.reports.finalreport*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.finalreport')}}">
+                                        <i class="las la-list-alt"></i><span>Final Report</span>
+                                    </a>
+                                </li>
+                                
+
+
                             </ul>
                         </li>
                         <li class="">
@@ -634,6 +647,19 @@
             placeholder: '--Select--'
         });
     </script>
+       <script>
+        $("#chart_of_account").select2({
+            placeholder: '--Select--'
+        });
+    </script>
+
+    
+    <script>
+        $("#Transection").select2({
+            placeholder: '--Select--'
+        });
+    </script>
+    
      
      
      
