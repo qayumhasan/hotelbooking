@@ -451,21 +451,47 @@ class ReportsController extends Controller
             return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','voucherwithnarration','formdate','todate','allchart_of_acc','vouchername'));
             
         }elseif($request->Transection=='transaction_summary'){
-
+                
             $vouchername=$request->Transection;
             $chartof_account=$request->chart_of_account;
-            $voucherwithnarration=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->where('Code',$chartof_account)->get();
+            $transaction_summary=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->where('Code',$chartof_account)->get();
+            $transaction_summary=$transaction_summary->groupBy('date');
+            $transaction_summary=$transaction_summary->all();
+            // return $transaction_summary;
             $totalbalance=DB::table('vAccountsHeadsLeadgerTbl')->where('date', '<' ,$formdate)->where('Code',$chartof_account)->sum('Balance');
-            return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','voucherwithnarration','formdate','todate','allchart_of_acc','vouchername'));
+            return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','transaction_summary','formdate','todate','allchart_of_acc','vouchername'));
 
-        }else{
-            
+        }elseif($request->Transection=='None'){
+          
             $vouchername=$request->Transection;
             $chartof_account=$request->chart_of_account;
-            $voucherwithnarration=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->where('Code',$chartof_account)->get();
+            $none=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->where('Code',$chartof_account)->get();
             $totalbalance=DB::table('vAccountsHeadsLeadgerTbl')->where('date', '<' ,$formdate)->where('Code',$chartof_account)->sum('Balance');
-            return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','voucherwithnarration','formdate','todate','allchart_of_acc','vouchername'));
+            return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','none','formdate','todate','allchart_of_acc','vouchername'));
         }
+    }
+
+    // 
+    public function reporttrialbalance(){
+        return view('accounts.reports.trialbalance');
+    }
+
+    public function reporttrialbalancesearch(Request $request){
+       
+        $formdate=$request->formdate;
+        $todate=$request->todate;
+       
+        $allledger=DB::table('vchart_of_accounts')->select(['code'])->get();
+        $transaction_summary=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->get();
+        
+
+        $transaction_summary=$transaction_summary->groupBy('Code');
+        $transaction_summary=$transaction_summary->all();
+      
+       
+
+        return view('accounts.reports.trialbalance',compact('allledger','formdate','todate','transaction_summary'));
+
     }
   
 }

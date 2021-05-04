@@ -453,9 +453,7 @@
     </script>
     <!-- app JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-    <script>
-        $('.datepicker').datepicker();
-    </script>
+
     <script src="{{asset('public/backend')}}/assets/jquery.PrintArea.js"></script>
    <script>
         $(document).ready(function() {
@@ -471,7 +469,11 @@
             });
         });
    </script>
-     
+        <script>
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+        });
+    </script>
   
 
     <script src="{{asset('public/backend')}}/assets/js/app.js"></script>

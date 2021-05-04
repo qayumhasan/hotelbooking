@@ -13,7 +13,7 @@
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("m/d/Y");
+$current = date("d/m/Y");
 @endphp
  <div class="content-page">
       <div class="container-fluid">
@@ -52,16 +52,16 @@ $current = date("m/d/Y");
                   </div>
                   <form>
                   <div class="card-body">
-                     <div class="table-responsive">
+                     <div class="table-responsive saveallDataprint">
                        
                               @if(isset($searchdata))
-                              <table  class="table table-striped table-bordered" >
+                              <table  class="table table-striped table-bordered" style="font-size:12px;" >
                                  <thead class="text-center">
                                     <tr>
                                        <th>#</th>
                                        <th>Voucher No</th>
                                        <th>Date</th>
-                                       <th>Reference</th>
+                                       <th>Voucher Type</th>
                                        <th>Cheque Reference</th>
                                        <th>Voucher Amount</th>
                                        <th>Action</th>
@@ -73,16 +73,16 @@ $current = date("m/d/Y");
                                  <td>{{++$key}}</td>
                                     <td>{{$sdata->voucher_no}}</td>
                                     <td>{{$sdata->date}}</td>
-                                    <td>{{$sdata->reference}}</td>
+                                    <td>{{$sdata->voucher_type}}</td>
                                     <td>{{$sdata->cheque_reference}}</td>
                                     @php
                                        $amount=App\Models\AccountTransectionDetails::where('voucher_no',$sdata->voucher_no)->select(['dr_amount','cr_amount'])->first();
                                     @endphp
                                  
 
-                                    <td> @if($amount->dr_amount==NULL) {{$amount->cr_amount}} @elseif($amount->cr_amount==NULL) {{$data->dr_amount}} @endif</td>
+                                    <td> @if($amount->dr_amount==NULL) {{$amount->cr_amount}} @elseif($amount->cr_amount==NULL) {{$amount->dr_amount}} @endif</td>
                                     <td>
-                                    <a class="badge bg-success-light mr-2"  data-toggle="tooltip" data-placement="top"  href="" data-original-title="Print"><i class="la la-print"></i></a>
+                                    <a class="badge bg-success-light mr-2 print_click" data-id="{{$sdata->id}}" data-original-title="Print"><i class="la la-print"></i></a>
                                     <a class="badge bg-primary-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/account/transectionhead/edit/'.$sdata->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
                                     <a id="delete" class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/account/transectionhead/delete/'.$sdata->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
                                     
@@ -98,7 +98,7 @@ $current = date("m/d/Y");
                                        <th>#</th>
                                        <th>Voucher No</th>
                                        <th>Date</th>
-                                       <th>Voucher Reference</th>
+                                       <th>Voucher Type</th>
                                        <th>Cheque  Reference</th>
                                        <th>Voucher Amount</th>
                                        <th>Action</th>
@@ -113,12 +113,12 @@ $current = date("m/d/Y");
                                  <td>{{++$key}}</td>
                                  <td>{{$data->voucher_no}}</td>
                                  <td>{{$data->date}}</td>
-                                 <td>{{$data->reference}}</td>
+                                 <td>{{$data->voucher_type}}</td>
                                  <td>{{$data->cheque_reference}}</td>
                                  @php
                                     $amount=App\Models\AccountTransectionDetails::where('voucher_no',$data->voucher_no)->select(['dr_amount','cr_amount'])->first();
                                  @endphp
-                                 <td>  </td>
+                                 <td> @if($amount->dr_amount==NULL) {{$amount->cr_amount}} @elseif($amount->cr_amount==NULL) {{$amount->dr_amount}} @endif </td>
                                  <td>
                                    <a class="badge bg-success-light mr-2 print_click" data-id="{{$data->id}}" data-original-title="Print"><i class="la la-print"></i></a>
                                    <a class="badge bg-primary-light mr-2" data-toggle="tooltip" data-placement="top" href="{{url('admin/account/transectionhead/edit/'.$data->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
@@ -134,9 +134,11 @@ $current = date("m/d/Y");
                           
                      </div>
                   </div>
+                  @if(isset($searchdata))
                   <div class="card-body text-center">
-                     <a href="" class="btn btn-success">Print</a>
+                     <a href="#" class="btn btn-success saveAlldata">Print</a>
                   </div>
+                  @endif
                </div>
             </div>
          </div>
@@ -161,7 +163,7 @@ $current = date("m/d/Y");
                <p>PrintDate:{{ $current }}</p><br>
             </div>
             <div class="col-md-12">
-            <!-- <button type="button" class="btn btn-primary savepritbtn">Print</button> -->
+            <button type="button" class="btn btn-primary savepritbtn">Print</button>
             </div>
          </div>
            
@@ -184,6 +186,22 @@ $current = date("m/d/Y");
             });
         });
    </script>
+     <script>
+        $(function () {
+            $(".saveAlldata").on('click', function () {
+              //alert("ok");
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.saveallDataprint").printArea(options);
+            });
+        });
+   </script>
+   
+   
 
 <script>
 $(document).ready(function() {
