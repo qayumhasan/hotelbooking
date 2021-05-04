@@ -242,7 +242,12 @@
                                 </li>
                                 <li class="{{ request()->routeIs('admin.account.reports.finalreport*') ? 'active' : '' }}">
                                     <a href="{{route('admin.account.reports.finalreport')}}">
-                                        <i class="las la-list-alt"></i><span>Final Report</span>
+                                        <i class="las la-list-alt"></i><span>Control Ledger</span>
+                                    </a>
+                                </li>
+                                <li class="{{ request()->routeIs('admin.account.reports.trialbalance*') ? 'active' : '' }}">
+                                    <a href="{{route('admin.account.reports.trialbalance')}}">
+                                        <i class="las la-list-alt"></i><span>Trial Balance</span>
                                     </a>
                                 </li>
                                 
@@ -622,9 +627,7 @@
     </script>
     <!-- app JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-    <script>
-        $('.datepicker').datepicker();
-    </script>
+
 
     <script>
         $("#account_head_main").select2({
@@ -659,7 +662,11 @@
             placeholder: '--Select--'
         });
     </script>
-    
+       <script>
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy',
+        });
+    </script>
      
      
      

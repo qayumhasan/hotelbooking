@@ -658,9 +658,7 @@
     </script>
     <!-- app JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-    <script>
-        $('#datepicker').datepicker();
-    </script>
+
     <script>
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
@@ -668,10 +666,10 @@
     </script>
     <script>
         $('.datepickernew').datepicker({
-            format: 'dd-mm-yyyy',
+            format: 'dd/mm/yyyy',
         });
         $('#datepickerdaly').datepicker({
-        format: 'dd-mm-yyyy',
+        format: 'dd/mm/yyyy',
     });
     </script>
 

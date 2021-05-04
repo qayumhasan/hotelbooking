@@ -15,7 +15,7 @@
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("m/d/Y");
+$current = date("d/m/Y");
 @endphp
  <div class="content-page">
       <div class="container-fluid">
@@ -24,7 +24,7 @@ $current = date("m/d/Y");
                <div class="card">
                   <div class="card-header d-flex justify-content-between">
                      <div class="header-title">
-                        <h4 class="card-title">Account Transection Final Reports</h4>
+                        <h4 class="card-title">Account Transection Reports</h4>
                      </div>
                      <span class="float-right mr-2">
                        
@@ -70,10 +70,10 @@ $current = date("m/d/Y");
                            <div class="form-group">
                                  <label for="fname">Type*</label>
                                  <select name="Transection" id="Transection" class="form-control noradious">
-                                    <option value="control_ledger">None</option>
+                                    <option value="None"  @if(isset($vouchername)) @if($vouchername=='None') selected @endif @endif>None</option>
                                     <option value="voucher_summary" @if(isset($vouchername)) @if($vouchername=='voucher_summary') selected @endif @endif>Voucher Summary</option>
                                     <option value="voucher_summary_narration" @if(isset($vouchername)) @if($vouchername=='voucher_summary_narration') selected @endif @endif> Voucher Summary Narration</option>
-                                    <option value="transaction_summary">Transaction Summary</option>
+                                    <option value="transaction_summary" @if(isset($vouchername)) @if($vouchername=='transaction_summary') selected @endif @endif>Transaction Summary</option>
                                    
                                  </select>
                                
@@ -86,9 +86,10 @@ $current = date("m/d/Y");
                   </div>
                   <form>
                   <div class="card-body">
-                     <div class="table-responsive">
+                     <div class="table-responsive printableAreasaveprintsummarysavepritbtn">
                                 @if(isset($vsamary))
-                                    <div class="row">
+                                    
+                                    <div class="row ">
                                         <div class="col-md-10 text-center">
                                        
     
@@ -158,7 +159,8 @@ $current = date("m/d/Y");
                                     </tbody>
                                  </table>
                                  @elseif(isset($voucherwithnarration))
-                                 <div class="row">
+                                 
+                                 <div class="row ">
                                         <div class="col-md-10 text-center">
                                        
     
@@ -179,7 +181,7 @@ $current = date("m/d/Y");
                                           <th>#</th>
                                           <th>A/C Code</th>
                                           <th>Head Of Account</th>
-                                          <th>Dabit</th>
+                                          <th>Debit</th>
                                           <th>Credit</th>
                                           <th>Balance</th>
                                        </tr>
@@ -228,15 +230,192 @@ $current = date("m/d/Y");
                                         </tr>
                                     </tbody>
                                  </table>
+                                 @elseif(isset($none))
+                                 <div class="row ">
+                                        <div class="col-md-10 text-center">
+                                       
+                                            <h3 style=" font-size: 30px; font-weight: 600;"> {{$companyinformation->company_name}} </h3>
+                                            <h4>CashBook</h4>
+                                            @php
+                                                $chart_name= DB::table('vchart_of_accounts')->where('code',$chartof_account)->select(['desription_of_account'])->first();
+                                            @endphp
+                                            <h5>{{$chartof_account}} - {{$chart_name->desription_of_account}}</h5>
+                                            <p>( For the Period Of {{$formdate}} to {{$todate}} )</p>
+                                        </div>
+                                    </div>
+
+
+                                 <table class="table-striped table-bordered" width="100%" >
+                                    <thead class="text-center">
+                                       <tr>
+                                          <th>#</th>
+                                          <th class="text-left">A/C Code</th>
+                                          <th>Head Of Account</th>
+                                          <th>Debit</th>
+                                          <th>Credit</th>
+                                          <th>Balance</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        <tr style="background-color:#d4d4d4">
+                                            <td></td>
+                                            <td>{{ $formdate }}</td>
+                                            <td>Balance Before:</td>
+                                            <td>@if($totalbalance > 0) {{ $totalbalance }} @endif</td>
+                                            <td>@if($totalbalance < 0) {{ $totalbalance }} @endif</td>
+                                            <td>{{$totalbalance}}</td>
+                                        </tr>
+                                        @php
+                                            $cuimalativebalance=$totalbalance;
+                                        @endphp
+                                        @foreach($none as $vsum)
+
+                                            @php
+                                                if($vsum->DabitAmount==0){
+                                                    $cuimalativebalance=$cuimalativebalance - $vsum->CreditAmount ;
+                                                }
+                                                elseif($vsum->CreditAmount=='0'){
+                                                    $cuimalativebalance=$cuimalativebalance + $vsum->DabitAmount ;
+                                                }
+                                               $allvoucher=DB::table('vAccountsHeadsLeadgerTbl')->where('VoucherNo',$vsum->VoucherNo)->where('Code','!=',$chartof_account)->get();
+                                              
+
+                                            @endphp
+                                            <tr>
+                                                <td></td>
+                                                <td class="text-left">{{ $vsum->date }} 
+                                                @foreach($allvoucher as $voucherss)
+                                                <p style="font-size:10px;" class="text-center">{{ $voucherss->Accounts }} (@if($vsum->DabitAmount==0) @else{{ $vsum->DabitAmount }} @endif  @if($vsum->CreditAmount==0) @else {{ $vsum->CreditAmount }} @endif)
+                                                @endforeach
+                                                
+                                                @if($vsum->narration==NULL) @else <br><span style="background-color: #d3d6ec; font-size:12px">Narration:{{  $vsum->narration }}</span> @endif 
+                                                
+                                                </td>
+                                               
+                                                <td>{{ $vsum->VoucherNo }}</td>
+                                                <td>@if($vsum->DabitAmount==0) @else{{ $vsum->DabitAmount }} @endif</td>
+                                                <td>@if($vsum->CreditAmount==0) @else {{ $vsum->CreditAmount }} @endif</td>
+                                                <td> {{ $cuimalativebalance }}</td>
+                                            </tr>
+
+                                        @endforeach
+                                        <tr style="background-color:#d4d4d4">
+                                            <td></td>
+                                            <td></td>
+                                            <td>Closing Balance:</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{$cuimalativebalance}}</td>
+                                        </tr>
+                                    </tbody>
+                                 </table>
+
+                                 @elseif(isset($transaction_summary))
+                                 <div class="row ">
+                                        <div class="col-md-10 text-center">
+                                       
+                                            <h3 style=" font-size: 30px; font-weight: 600;"> {{$companyinformation->company_name}} </h3>
+                                            <h4>CashBook</h4>
+                                            @php
+                                                $chart_name= DB::table('vchart_of_accounts')->where('code',$chartof_account)->select(['desription_of_account'])->first();
+                                            @endphp
+                                            <h5>{{$chartof_account}} - {{$chart_name->desription_of_account}}</h5>
+                                            <p>( For the Period Of {{$formdate}} to {{$todate}} )</p>
+                                        </div>
+                                    </div>
+
+
+                                 <table class="table-striped table-bordered" width="100%" >
+                                    <thead class="text-center">
+                                       <tr>
+                                         
+                                          <th class="text-center">A/C Code</th>
+                                          <th>Head Of Account</th>
+                                          <th>Debit</th>
+                                          <th>Credit</th>
+                                          <th>Balance</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        <tr style="background-color:#d4d4d4">
+                                            <td>{{ $formdate }}</td>
+                                            <td>Balance Before:</td>
+                                            <td>@if($totalbalance > 0) {{ $totalbalance }} @endif</td>
+                                            <td>@if($totalbalance < 0) {{ $totalbalance }} @endif</td>
+                                            <td>{{$totalbalance}}</td>
+                                        </tr>
+                                        @php
+                                            $cuimalativebalance=$totalbalance;
+                                        @endphp
+                                        @foreach($transaction_summary as $key => $sss)
+                                            <tr>
+                                                    
+                                                    <td class="text-left">{{ $key}}</td>
+                                                    @foreach($sss as $gggg)
+
+                                                        @php
+                                                            $allvher=DB::table('vAccountsHeadsLeadgerTbl')->where('VoucherNo',$gggg->VoucherNo)->where('Code','!=',$chartof_account)->get();
+                                                        @endphp
+                                                        @foreach($allvher as $dal)
+
+                                                        @php
+                                                            if($dal->DabitAmount==0){
+                                                                $cuimalativebalance=$cuimalativebalance + $dal->CreditAmount ;
+                                                            }
+                                                            elseif($dal->CreditAmount==0){
+                                                                $cuimalativebalance=$cuimalativebalance - $dal->DabitAmount ;
+                                                            }
+                                                        @endphp
+                                                        <tr>
+                                                            
+                                                            <td>{{  $dal->Accounts}}</td>
+                                                            <td></td>
+                                                            <td> @if($dal->DabitAmount==0) @else {{ $dal->DabitAmount }} @endif</td>
+                                                            <td> @if($dal->CreditAmount==0) @else {{ $dal->CreditAmount }} @endif</td>
+                                                            <td>{{  $cuimalativebalance }}</td>
+                                                        </tr>
+                                                      
+                                                    @endforeach
+                                                @endforeach
+                                                   
+                                            </tr>
+                                            
+
+                                        @endforeach
+                                        <tr style="background-color:#d4d4d4">
+                                          
+                                            <td></td>
+                                            <td>Closing Balance:</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{$cuimalativebalance}}</td>
+                                        </tr>
+                                    </tbody>
+                                 </table>
                                  @endif
 
                              
                           
                      </div>
                   </div>
+                  @if(isset($vsamary))
                   <div class="card-body text-center">
-                     <a href="" class="btn btn-success">Print</a>
+                     <a href="#" class="btn btn-success summarysavepritbtn">Print</a>
                   </div>
+                  @elseif(isset($transaction_summary))
+                  <div class="card-body text-center">
+                     <a href="#" class="btn btn-success summarysavepritbtn">Print</a>
+                  </div>
+                  @elseif(isset($none))
+                  <div class="card-body text-center">
+                     <a href="#" class="btn btn-success summarysavepritbtn">Print</a>
+                  </div>
+                  @elseif(isset($voucherwithnarration))
+                  <div class="card-body text-center">
+                     <a href="#" class="btn btn-success summarysavepritbtn">Print</a>
+                  </div>
+                  @endif
+
                </div>
             </div>
          </div>
@@ -247,7 +426,7 @@ $current = date("m/d/Y");
 
    <script>
         $(function () {
-            $(".savepritbtn").on('click', function () {
+            $(".summarysavepritbtn").on('click', function () {
               //alert("ok");
                 var mode = 'iframe'; //popup
                 var close = mode == "popup";
@@ -255,10 +434,13 @@ $current = date("m/d/Y");
                     mode: mode,
                     popClose: close
                 };
-                $("div.printableAreasaveprint").printArea(options);
+                $("div.printableAreasaveprintsummarysavepritbtn").printArea(options);
             });
         });
    </script>
+      
+     
+    
 
 <script>
    $(document).ready(function() {

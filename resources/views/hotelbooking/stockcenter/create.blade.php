@@ -1,4 +1,4 @@
-@extends('hotelbooking.master')
+@extends('inventory.master')
 @section('title', 'Create Stock Center | '.$seo->meta_title)
 @section('content')
 <style>

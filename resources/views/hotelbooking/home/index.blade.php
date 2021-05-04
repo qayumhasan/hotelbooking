@@ -3,8 +3,9 @@
 
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("d/m/Y");
+
 $current = date("d-m-Y");
+$current = date("d/m/Y");
 $currentdate = date("d-m-Y");
 $time = date("h:i");
 @endphp

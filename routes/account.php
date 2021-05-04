@@ -176,3 +176,7 @@ Route::post('admin/account/transection/cashandbankdeatils', [ReportsController::
 Route::get('admin/account/transection/finalreport', [ReportsController::class, 'finalreport'])->name('admin.account.reports.finalreport');
 Route::post('admin/account/transection/finalreport', [ReportsController::class, 'finalreportsearch'])->name('admin.account.reports.finalreport');
 
+
+Route::get('admin/account/transection/trialbalance', [ReportsController::class, 'reporttrialbalance'])->name('admin.account.reports.trialbalance');
+Route::post('admin/account/transection/trialbalance', [ReportsController::class, 'reporttrialbalancesearch'])->name('admin.account.reports.trialbalance');
+

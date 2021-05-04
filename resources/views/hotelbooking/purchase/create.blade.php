@@ -15,7 +15,7 @@ button.btn-sm.btn-primary.mt-2 {
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("m/d/Y");
+$current = date("d/m/Y");
 @endphp
 <div class="content-page">
     <div class="container-fluid">
@@ -71,7 +71,7 @@ $current = date("m/d/Y");
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="fname">Date: </label>
-                                            <input id="datepicker" type="text" class="form-control" name="tax_date" value="{{$current}}"/>
+                                            <input  type="text" class="form-control datepicker" name="tax_date" value="{{$current}}"/>
 
                                         </div>
                                     </div>
