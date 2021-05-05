@@ -136,10 +136,6 @@ class CalculatePerDayRoomTarrif
                 $totaltarrif +=$checktarrif->new_tarrif * $diff;
             }
 
-                     
-       
-           
-
         }else{
             // if change tarrif not exits
             $startdate = strtotime($inday);
