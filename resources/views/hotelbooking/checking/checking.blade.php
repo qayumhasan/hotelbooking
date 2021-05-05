@@ -323,7 +323,7 @@ $time = date("h:i");
                                     <div class="form-group row">
                                         <label class="control-label col-sm-3 align-self-center" for="pwd1">Check-In Date <small class="text-danger">*</small></label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="controll-from datepicker" name="checkin_date" required value="{{$current}}" placeholder="d/m/y">
+                                            <input type="date" class="controll-from" name="checkin_date" required value="{{$current}}" placeholder="d-m-Y">
                                         </div>
                                         <div class="col-sm-2">
                                             <input type="time" class="controll-from" name="checkin_time" required id="pwd1" value="{{$time}}" placeholder="h:m">

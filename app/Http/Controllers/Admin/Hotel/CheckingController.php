@@ -572,7 +572,7 @@ class CheckingController extends Controller
 
         $checkindata = Checkin::where('room_id', $request->room_id)->where('is_occupy', 1)->with('checkin', 'foodandbeverage', 'restaurant', 'vouchers')->first();
 
-        $addi_checkins = Checkin::where('booking_no', $checkindata->booking_no)->get();
+        $addi_checkins = Checkin::where('booking_no', $request->booking_no)->get();
 
         $current = $request->date;
         return view('hotelbooking.home.ajax.checkout_ajax', compact('checkindata', 'current', 'addi_checkins'));
