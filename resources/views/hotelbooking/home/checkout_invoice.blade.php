@@ -261,6 +261,9 @@ $time = date("h:i");
                                                 @if(!$loop->first)
                                                 <td></td>
                                                 @endif
+                                                @if($loop->first)
+                                                <td></td>
+                                                @endif
                                                 <td width="25%">
                                                     <div class="row">
                                                         <div class="col-md-12">
@@ -781,6 +784,7 @@ $time = date("h:i");
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            
 
             <div class="modal-body">
                 <div class="row">
@@ -1059,6 +1063,8 @@ $time = date("h:i");
                             </table>
 
                     </div>
+
+                    
                     <br>
                     <button type="button" class="btn btn-primary mx-auto mt-5 savepritbtn">Print</button>
                 </div>

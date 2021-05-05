@@ -224,6 +224,9 @@ $time = date("h:i");
                                                 @if(!$loop->first)
                                                 <td></td>
                                                 @endif
+                                                @if($loop->first)
+                                                <td></td>
+                                                @endif
                                                 <td width="25%">
                                                     <div class="row">
                                                         <div class="col-md-12">
@@ -522,7 +525,7 @@ $time = date("h:i");
 
                                 <!-- hidden data -->
                                 <input type="hidden" id="room_id" value="{{$checkindata->room_id}}" name="room_id">
-                                <input type="hidden" value="{{$checkindata->booking_no}}" name="booking_no">
+                                <input type="hidden" id="booking_no" value="{{$checkindata->booking_no}}" name="booking_no">
                                 <input type="hidden" value="{{(int)$totalroomamount}}" name="room_total_amount">
                                 <input type="hidden" value="{{(int)$totalamountextra}}" name="extra_service">
                                 <input type="hidden" value="{{(int)$totalfandb}}" name="fb_bservice">
@@ -562,6 +565,7 @@ $time = date("h:i");
         $('#checkoutDate').change(function(e) {
             var date = e.target.value;
             var room_id = $('#room_id').val();
+            var booking_no = $('#booking_no').val();
             $('.addcheckout').empty();
             $('#preloader').show();
 
@@ -577,6 +581,7 @@ $time = date("h:i");
                 data: {
                     date: date,
                     room_id: room_id,
+                    booking_no: booking_no,
                 },
                 success: function(data) {
                     $('#preloader').hide();

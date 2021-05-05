@@ -17,72 +17,6 @@ class CalculatePerDayRoomTarrif
     public function getTotalTarrif($defaultAmount, $booking_no, $inday, $outday, $room_no)
     {
 
-        // return 'This is day'.$day.'This is Default Amount'.$defaultAmount. 'This is Booking NO'.$booking_no .'This In Day'.$inday.'This is Out Day'.$outday.'This is Room No'.$room_no;
-
-        // if($day == 1){
-        //     $inday = strtotime($inday);
-        //     $inday = date('d/m/Y', $inday);
-
-
-        //     $outday = strtotime($outday);
-        //     $outday = date('d/m/Y', $outday);
-
-        //    $checktarrif = ChangeTariff::where('booking_no', $booking_no)->where('apply_date',$inday)->where('room_no',$room_no)->first();
-
-        //     if($checktarrif){
-        //         return $checktarrif->tarrif;
-        //     }else{
-        //         return $defaultAmount;
-        //     }
-        // }
-
-        // $this->defaultamount = (int)$defaultAmount;
-
-        // $inday = strtotime($inday);
-        // $inday = date('Y-m-d', $inday);
-
-
-        // $outday = strtotime($outday);
-        // $outday = date('Y-m-d', $outday);
-
-        // $period = CarbonPeriod::create($inday,$outday);
-
-
-        // $countTarif = [];
-
-
-        // foreach ($period as $key => $date) {
-        //    $date=$date->format('d/m/Y');
-        //     $checktarrif = ChangeTariff::where('booking_no', $booking_no)->where('apply_date',$date)->where('room_no',$room_no)->first();
-
-        //     if($checktarrif){
-        //         $data['date']= $date;   
-        //         $data['tarrif']= $checktarrif->tarrif;   
-        //         array_push($countTarif,$data);
-        //         $this->defaultamount =$checktarrif->tarrif;
-        //     }else{
-        //         $this->defaultamount =$defaultAmount;
-        //         $data['date']=$date;   
-        //         $data['tarrif']= $this->defaultamount;   
-        //         array_push($countTarif,$data);
-        //     }
-        // }
-
-
-
-
-
-        // $totalAmount = 0;
-
-        // if(count($countTarif) == 0){
-        //     $totalAmount = $totalAmount+$defaultAmount;
-        // }else{
-        //     foreach ($countTarif as $row) {
-        //         $totalAmount = $totalAmount + $row['tarrif'];
-        //     }
-        // }
-
-        // return $totalAmount;
 
         $checktarrif = ChangeTariff::where('booking_no', $booking_no)->where('room_no', $room_no)->latest()->first();
         $totaltarrif = 0;
@@ -103,7 +37,6 @@ class CalculatePerDayRoomTarrif
                 $item['day'] = $row->old_apply_day;
 
                 array_push($datewiseshow,$item);
-
             }
 
             $startdate =$checktarrif->end_date;
