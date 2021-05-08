@@ -10,7 +10,7 @@
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("d/m/Y");
+$current = date("Y/m/d");
 @endphp
 <div class="content-page">
     <div class="container-fluid">
@@ -58,7 +58,7 @@ $current = date("d/m/Y");
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="fname">Date: </label>
-                                            <input id="datepicker" type="text" class="form-control" name="date" value="{{$current}}"/>
+                                            <input id="" type="text" class="form-control datepicker" name="date" value="{{$current}}"/>
 
                                         </div>
                                     </div>

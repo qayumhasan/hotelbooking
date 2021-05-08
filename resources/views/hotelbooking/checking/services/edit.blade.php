@@ -4,7 +4,9 @@
 
 @php
 date_default_timezone_set("Asia/Dhaka");
+
 $date = date("Y-m-d");
+
 $time = date("h:i:sa");
 @endphp
 <style>

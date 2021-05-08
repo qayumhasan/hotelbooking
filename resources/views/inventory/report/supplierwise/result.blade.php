@@ -11,7 +11,7 @@
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("d/m/Y");
+$current = date("Y/m/d"););
 @endphp
 
 <div class="content-page">

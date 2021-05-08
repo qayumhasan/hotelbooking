@@ -8,7 +8,7 @@
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("d/m/Y");
+$current = date("Y/m/d");
 @endphp
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="content-page">
@@ -488,7 +488,7 @@ $(document).ready(function() {
                                             <tr>
                                                 <td>{{$row->invoice_no}}</td>
                                                 <td>{{$row->item_name}}</td>
-                                                <td>{{$row->unitname->name}}</td>
+                                                <td></td>
                                                 <td>{{$row->qty}}</td>
                                             <tr>
                                         @endforeach

@@ -936,7 +936,7 @@ $(document).ready(function() {
                                                     
                                                     @endphp
                                                     @foreach($accounts as $head)
-                                                                    <tr>
+                                                                <tr>
                                                                     <th scope="row">{{$head->account_head_code}}</th>
                                                                     <td>{{$head->account_head_details}}</td>
                                                                     <td>{{$head->remarks}}</td>
@@ -950,30 +950,24 @@ $(document).ready(function() {
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                            <table  border="0"  width="100%">
+                                            <!-- <table  border="0"  width="100%">
                                                 <tbody>
                                                     <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td colspan="4"></td>
+                                                       
+                                                    
                                                         <td>Total: {{$total_amount}}</td>
                                                     
                                                     </tr>
                                                 
                                                 </tbody>
-                                            </table>
-                                            
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 row" style="margin-bottom:20px;font-size:10px">
-
-                                                <table  width="100%">
+                                            </table> -->
+                                            <table  width="100%">
                                                     <tbody>
                                                     
                                                     <tr>
-                                                        <th scope="row">In Word: ( {{$numToWord->numberTowords($total_amount)}} )</th>
+                                                        <td scope="row">In Word: ( {{$numToWord->numberTowords($total_amount)}} )</td>
+                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -983,8 +977,14 @@ $(document).ready(function() {
                                                                 
                                                     </tbody>
                                                 </table>
-                                           
+                                            
+                                            </div>
                                         </div>
+                                        <!-- <div class="col-md-12 row" style="margin-bottom:20px;font-size:10px">
+
+                                            
+                                           
+                                        </div> -->
                                         <br>
                                         <div class="col-md-12 row">
                                                 <table  width="100%" style="font-size:12px">

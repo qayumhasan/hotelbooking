@@ -20,7 +20,7 @@ $current = date("d/m/Y");
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("m/d/Y");
+$current = date("Y/m/d");
 @endphp
 <div class="content-page">
     <div class="container-fluid">
@@ -111,8 +111,9 @@ $current = date("m/d/Y");
 
 
                                                 
-                                                <span style="font-size:12px;color:#776b6b" id="current_balance_head">Current Balance:{{ $balance}}</span>
+                                              
                                                 <input type="text" class="form-control" value="{{$guestname->guest_name}}" disabled>
+                                                <span style="font-size:12px;color:#776b6b" id="current_balance_head">Current Balance:{{ $balance}}</span>
                                                 <span style="color:red" id="accont_head_err"></span>
                                                 <input type="hidden" value="" name="acchead_cate_code" id="acchead_cate_code">
                                                 <input type="hidden" value="" name="acchead_Accountcate_code" id="acchead_Accountcate_code">
