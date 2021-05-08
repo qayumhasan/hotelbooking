@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Hotel;
 
 use App\Http\Controllers\Controller;
 use App\Models\CheckinService;
+use App\Models\Employee;
 use App\Models\HouseKeeping;
 use App\Models\Room;
 use Illuminate\Http\Request;
@@ -40,7 +41,8 @@ class HouseKeepingReportController extends Controller
 
     public function employeeWiseHousekeeping()
     {
-        return view('hotelbooking.housekeeping_report.employee_wise_housekeeping');
+        $employees = Employee::where('status',1)->get();
+        return view('hotelbooking.housekeeping_report.employee_wise_housekeeping',compact('employees'));
     }
 
 }

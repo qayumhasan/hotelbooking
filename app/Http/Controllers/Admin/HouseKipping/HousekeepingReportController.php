@@ -88,7 +88,7 @@ class HousekeepingReportController extends Controller
         $from_date =$request->from_date;
         $to_date =$request->to_date;
         
-        $rooms=HouseKeeping::whereBetween('log_date',[$from_date, $to_date])->get();
+        $rooms=HouseKeeping::where('keeping_name',$request->keeping_name)->whereBetween('log_date',[$from_date, $to_date])->get();
         return view('housekipping.report.ajax.allajax_data',compact('rooms'));
     }
 }

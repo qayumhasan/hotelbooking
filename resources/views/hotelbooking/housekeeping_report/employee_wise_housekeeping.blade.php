@@ -4,13 +4,13 @@
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$date = date("d-m-Y");
+$date = date("Y/m/d");
 $time = date("h:i");
 @endphp
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$current =date("d-m-Y");
+$current =date("Y/m/d");
 $time = date("h:i");
 @endphp
 
@@ -26,23 +26,26 @@ $time = date("h:i");
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
                         <div class="col-sm-2">
-                            <input class="form-control datepickernew form-control-sm" name="from_date" type="text" value="{{$date}}">
+                            <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
                             <small class="text-danger from_date"></small>
                         </div>
 
                         <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
                         <div class="col-sm-2">
-                            <input class="form-control datepickernew form-control-sm" name="to_date" type="text" value="{{$current}}">
+                            <input class="form-control datepicker form-control-sm" name="to_date" type="text" value="{{$current}}">
                             <small class="text-danger to_date"></small>
                         </div>
                         
                         
 
-                        <label for="inputPassword" class="col-sm-1 col-form-label"><b>Employee:</b></label>
+                        <label for="inputPassword" class="col-sm-1 col-form-label"><b>Entry By:</b></label>
                         <div class="col-sm-2">
-                        <select class="form-control form-control-sm" id="updatedby" name="keeping_name">
-                                <option value="Qayum Hasan">Qayum Hasan</option>
-                                <option value="Asif Foysal">Asif Foysal</option>
+                        <select class="form-control form-control-sm select_room_no" id="updatedby" name="keeping_name">
+                                <option selected disabled>--Select A Employee Name--</option>
+                                @foreach($employees as $row)
+                                <option value="{{$row->id}}">{{$row->employee_name}}</option>
+                                @endforeach
+                                
 
                             </select>
                             <small class="text-danger room_no"></small>
@@ -162,6 +165,12 @@ $time = date("h:i");
 
             });
         });
+    });
+</script>
+
+<script>
+    $(".select_room_no").select2({
+        placeholder: '----Select Room No----'
     });
 </script>
 

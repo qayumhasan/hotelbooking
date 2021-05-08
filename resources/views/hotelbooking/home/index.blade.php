@@ -6,7 +6,7 @@ date_default_timezone_set("asia/dhaka");
 
 $current = date("d-m-Y");
 $current = date("d/m/Y");
-$currentdate = date("d-m-Y");
+$currentdate = date("Y/m/d");
 $time = date("h:i");
 @endphp
 
@@ -325,7 +325,7 @@ $time = date("h:i");
                <div class="form-group row">
                   <label for="inputPassword" class="col-sm-2 col-form-label">Date</label>
                   <div class="col-sm-6">
-                     <input type="text" required class="form-control form-control-sm datepickernew" name="keeping_date" id="keeping_date" value="{{$currentdate}}">
+                     <input type="text" required class="form-control form-control-sm datepicker" name="keeping_date" id="keeping_date" value="{{$currentdate}}">
                   </div>
                   <div class="col-sm-4">
                      <input type="time" required class="form-control form-control-sm" name="keeping_time" id="keeping_time" value="{{$time}}">

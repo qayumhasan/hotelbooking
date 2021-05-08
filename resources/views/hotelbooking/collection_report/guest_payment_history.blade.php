@@ -77,7 +77,7 @@
                                         <td>{{round($row->gross_amount ?? '',2)}}</td>
                                   
                                         <td>{{$row->voucher_amount}}</td>
-                                        <td>{{$row->outstanding_amount}}</td>
+                                        <td>{{round($row->outstanding_amount,2)}}</td>
                                         
                                     </tr>
                                     @endforeach
