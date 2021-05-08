@@ -10,6 +10,10 @@ $time = date("h:i");
 .form-control {
     height: 32px;
 
+
+}
+button.badge {
+    border: none;
 }
 .card-header.d-flex.justify-content-between.asif {
     background-color: #c1b8b8;

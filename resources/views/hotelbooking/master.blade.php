@@ -661,7 +661,7 @@
 
     <script>
         $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy/mm/dd',
         });
     </script>
     <script>

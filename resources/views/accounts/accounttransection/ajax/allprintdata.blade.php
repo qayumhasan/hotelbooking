@@ -56,26 +56,13 @@
                                                
                                              </tbody>
                                           </table>
-
-                                          <!-- <table class="table" border="1">
-                                             <tbody>
-                                                <tr>
-                                                   <td colspan="6">Total: {{$total_amount}}</td>
-                                                  
-                                                </tr>
-                                               
-                                             </tbody>
-                                          </table> -->
-                                        
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 row" style="margin-bottom:20px;font-size:10px">
-
-                                                <table  width="100%">
+                                          <table  width="100%">
                                                     <tbody>
                                                     
                                                     <tr>
                                                         <th scope="row">In Word: ( {{$numToWord->numberTowords($total_amount)}} )</th>
+                                                        <td></td>
+                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -85,6 +72,12 @@
                                                                 
                                                     </tbody>
                                                 </table>
+                                        
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 row" style="margin-bottom:20px;font-size:10px">
+
+                                              
                                            
                                         </div>
                                     <div class="col-md-12 row">
