@@ -165,11 +165,6 @@ $time = date("h:i:sa");
 
                             <table class="tableclass">
                                 <tbody>
-
-
-
-
-
                                     <tr class="item">
                                         <td class=" d-block">
                                             <a class="buttoncss add" href="{{route('admin.checkin.show.voucher',$checkin->booking_no)}}"><i class="fa fa-plus" aria-hidden="true"></i> Add Voucher</a>

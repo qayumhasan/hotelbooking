@@ -1,4 +1,5 @@
 @extends('foodandbeverage.master')
+@section('title', 'Complate Order| '.$seo->meta_title)
 @section('content')
  <div class="content-page">
       <div class="container-fluid">

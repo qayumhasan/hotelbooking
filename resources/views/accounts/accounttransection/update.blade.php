@@ -13,7 +13,7 @@
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("d/m/Y");
+    $current = date("Y-m-d");
 @endphp
 <div class="content-page">
     <div class="container-fluid">
@@ -111,6 +111,7 @@ $current = date("d/m/Y");
                                                     <select id="account_head" name="account_head" class="form-control"> 
 
                                                             <option value="">--Select--</option>
+
                                                             @foreach($allchartofaccount as $account)
                                                             <option value="{{$account->code}}">{{$account->desription_of_account}}</option>
                                                             @endforeach
@@ -118,12 +119,15 @@ $current = date("d/m/Y");
                                                             @foreach($allemployee as $employee)
                                                             <option value="{{$employee->employee_id}}">{{$employee->employee_name}} (Employee)</option>
                                                             @endforeach
+
                                                             @foreach($allsuplier as $suplier)
                                                             <option value="{{$suplier->supplier_id}}">{{$suplier->name}} (Supplier)</option>
                                                             @endforeach
+
                                                             @foreach($allguest as $guest)
                                                             <option value="{{$guest->guest_id}}">{{$guest->guest_name}} (Guest)</option>
                                                             @endforeach
+                                                            
                                                             @foreach($allbanquet as $banquet)
                                                             <option value="{{$banquet->booking_no}}">{{$banquet->guest_name}} ( {{$banquet->booking_no}} )</option>
                                                             @endforeach
@@ -239,7 +243,10 @@ $current = date("d/m/Y");
                                                     <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="fname">Voucher Date: *</label>
-                                                                <input type="text" name="date" id="date" class="form-control noradious datepicker" value="{{$edit->date}}">
+                                                                @php
+                                                                $dattt=date('Y/m/d', strtotime($edit->date));
+                                                            @endphp
+                                                                <input type="text" name="date" id="date" class="form-control noradious datepicker" value="{{$dattt}}">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -958,4 +965,5 @@ $(document).ready(function() {
         });
     });
 </script>
+
 @endsection

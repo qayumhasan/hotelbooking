@@ -112,7 +112,11 @@ $current = date("d/m/Y");
                               <tr>
                                  <td>{{++$key}}</td>
                                  <td>{{$data->voucher_no}}</td>
-                                 <td>{{$data->date}}</td>
+                                 @php
+                                    $dattt=date('d-m-Y', strtotime($data->date));
+                                 @endphp
+                                 <td>{{ $dattt }}</td>
+                               
                                  <td>{{$data->voucher_type}}</td>
                                  <td>{{$data->cheque_reference}}</td>
                                  @php
@@ -148,23 +152,25 @@ $current = date("d/m/Y");
 
 <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog modal-lg">
-      <div class="modal-content text-center printableAreasaveprint">
-         <div class="modal-header " >
-               <h5 class="modal-title">INVOICE</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-               </button>
-         </div>
-         <div class="modal-body" id="maindata">
-            
-         </div>
+      <div class="modal-content text-center ">
+         <div class="text-center printableAreasaveprint">
+               <div class="modal-header " >
+                     <h5 class="modal-title">INVOICE</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+               </div>
+               <div class="modal-body" id="maindata">
+                  
+               </div>
+         <div>
          <div class="modal-footer ">
-            <div class="col-md-12 text-right">
-               <p>PrintDate:{{ $current }}</p><br>
-            </div>
-            <div class="col-md-12">
-            <button type="button" class="btn btn-primary savepritbtn">Print</button>
-            </div>
+               <div class="col-md-12 text-right">
+                  <p>PrintDate:{{ $current }}</p><br>
+               </div>
+               <div class="col-md-12">
+                  <button type="button" class="btn btn-primary savepritbtn">Print</button>
+               </div>
          </div>
            
          </div>

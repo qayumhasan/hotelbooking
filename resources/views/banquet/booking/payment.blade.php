@@ -1,10 +1,6 @@
 @extends('banquet.master')
 @section('title', 'Voucher | '.$seo->meta_title)
 
-@php
-date_default_timezone_set("asia/dhaka");
-$current = date("d/m/Y");
-@endphp
 
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,7 +15,7 @@ $current = date("d/m/Y");
 </style>
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("m/d/Y");
+$current = date("Y/m/d");
 @endphp
 <div class="content-page">
     <div class="container-fluid">

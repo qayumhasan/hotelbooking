@@ -2,18 +2,9 @@
 @section('title', 'Create Account Transection| '.$seo->meta_title)
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<style>
-.form-control {
-    height: 35px;
- 
-}
-.noradious{
-    border-radius:0px;
-}
-</style>
 @php
-date_default_timezone_set("asia/dhaka");
-$current = date("d/m/Y");
+    date_default_timezone_set("asia/dhaka");
+    $current = date("Y/m/d");
 @endphp
 <div class="content-page">
     <div class="container-fluid">

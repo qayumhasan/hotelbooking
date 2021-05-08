@@ -27,7 +27,8 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 </head>
 
-<body class="  ">
+<body>
+   
     <!-- loader Start -->
     <div id="loading">
         <div id="loading-center">
@@ -36,6 +37,10 @@
     <style>
         .form-control {
             border: 1px solid #443f3f;
+            height: 35px;
+        }
+        .noradious{
+            border-radius:0px;
         }
     </style>
     <!-- loader END -->
@@ -664,7 +669,7 @@
     </script>
        <script>
         $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy/mm/dd',
         });
     </script>
      
