@@ -7,7 +7,6 @@
             <th>Guest</th>
             <th>Room</th>
             <th>Mode</th>
-            <th>Remarks</th>
             <th>Cashier</th>
             <th>Amount</th>
         </tr>
@@ -23,7 +22,6 @@
             <td>{{$row->guest_name}}</td>
             <td>{{$row->room_no}}</td>
             <td>{{$row->voucher_type}}</td>
-            <td>{{$row->remarks}}</td>
             <td>{{$row->admin->username ?? '' }}</td>
             <td>{!!$currency->symbol ?? ' '!!} {{abs($row->TransectionAmount)}}</td>    
         </tr>

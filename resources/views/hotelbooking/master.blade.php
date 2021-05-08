@@ -42,7 +42,6 @@
         .form-control {
             border: 1px solid #443f3f;
         }
-      
     </style>
     <!-- loader END -->
     <!-- Wrapper Start -->
@@ -69,7 +68,7 @@
                         </li>
                         <li class=" ">
                             <a href="#user" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                            <i class="fas fa-bed"></i><span>Room</span>
+                                <i class="fas fa-bed"></i><span>Room</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -100,7 +99,7 @@
 
                         <li class=" ">
                             <a href="#advance_booking" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                            <i class="fas fa-money-bill-alt"></i><span>Advance Booking</span>
+                                <i class="fas fa-money-bill-alt"></i><span>Advance Booking</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -206,7 +205,7 @@
 
                         <li class="">
                             <a href="#housekeepingreport" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                            <i class="fas fa-broom"></i><span>HouseKeeping Report</span>
+                                <i class="fas fa-broom"></i><span>HouseKeeping Report</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -248,7 +247,7 @@
 
                         <li class="">
                             <a href="#reservation" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                           <i class="fas fa-chart-pie"></i><span>Reservation Analysis</span>
+                                <i class="fas fa-chart-pie"></i><span>Reservation Analysis</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -271,7 +270,7 @@
 
                         <li class="">
                             <a href="#collectionreport" class="collapsed" data-toggle="collapse" aria-expanded="false">
-                            <i class="fas fa-box"></i><span>Collection Report</span>
+                                <i class="fas fa-box"></i><span>Collection Report</span>
                                 <i class="las la-angle-right iq-arrow-right arrow-active"></i>
                                 <i class="las la-angle-down iq-arrow-right arrow-hover"></i>
                             </a>
@@ -300,7 +299,7 @@
                                     </a>
                                 </li>
 
-                              
+
 
                             </ul>
                         </li>
@@ -610,25 +609,29 @@
             case 'success':
 
                 iziToast.success({
-                    message: '{{ Session::get('messege') }}',
+                    message: '{{ Session::get('
+                    messege ') }}',
                     'position': 'topCenter'
                 });
                 brack;
             case 'info':
                 iziToast.info({
-                    message: '{{ Session::get('messege') }}',
+                    message: '{{ Session::get('
+                    messege ') }}',
                     'position': 'topRight'
                 });
                 brack;
             case 'warning':
                 iziToast.warning({
-                    message: '{{ Session::get('messege')}}',
+                    message: '{{ Session::get('
+                    messege ')}}',
                     'position': 'topRight'
                 });
                 break;
             case 'error':
                 iziToast.error({
-                    message: '{{ Session::get('messege')}}',
+                    message: '{{ Session::get('
+                    messege ')}}',
                     'position': 'topRight'
                 });
                 break;
@@ -669,16 +672,21 @@
             format: 'dd-mm-yyyy',
         });
         $('#datepickerdaly').datepicker({
-        format: 'dd/mm/yyyy',
-    });
+            format: 'dd/mm/yyyy',
+        });
     </script>
 
 
 
     <script>
-        $("#select_room_no").select2({
-            placeholder: '----Select Room No----'
-        });
+        $(document).ready(function() {
+            $("#select_room_no").select2({
+                placeholder: '----Select Room No----'
+            });
+            $(".select_room_no").select2({
+                placeholder: '----Select Room No----'
+            });
+        })
     </script>
 
 
@@ -696,12 +704,12 @@
             });
         });
     </script>
-     <script>
+    <script>
         $("#account_head_main").select2({
             placeholder: '--Select--'
         });
     </script>
-     <script>
+    <script>
         $("#account_head").select2({
             placeholder: '--Select--'
         });

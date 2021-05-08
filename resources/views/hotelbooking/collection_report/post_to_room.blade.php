@@ -4,7 +4,7 @@
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$date = date("d-m-Y");
+$date = date("Y/m/d");;
 $time = date("h:i");
 @endphp
 
@@ -30,13 +30,13 @@ $time = date("h:i");
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
                             <div class="col-sm-2">
-                                <input class="form-control datepickernew form-control-sm" name="from_date" type="text" value="{{$date}}">
+                                <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
                                 <small class="text-danger from_date"></small>
                             </div>
 
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
                             <div class="col-sm-2">
-                                <input class="form-control datepickernew form-control-sm" value="{{$date}}" name="to_date" type="text">
+                                <input class="form-control datepicker form-control-sm" value="{{$date}}" name="to_date" type="text">
                                 <small class="text-danger to_date"></small>
                             </div>
 
@@ -45,7 +45,7 @@ $time = date("h:i");
                                 <select class="form-control form-control-sm" name="guest_name" id="select_room_no">
                                     <option selected disabled>---Select A Employee---</option>
                                     @foreach($guests as $row)
-                                    <option value="{{$row->guest_name}}">{{$row->guest_name}}</option>
+                                    <option value="{{$row->id}}">{{$row->guest_name}}</option>
                                     @endforeach
                                 </select>
                                 <small class="text-danger employee"></small>
@@ -89,12 +89,12 @@ $time = date("h:i");
                                 <tbody>
                                     <tr>
                                         <th scope="row">{{$loop->iteration}}</th>
-                                        <td>{{$row->checkin->booking_no ?? ''}}</td>
-                                        <td>{{$row->checkin->checkin_date ?? ''}}</td>
-                                        <td>{{$row->checkin->guest_name ?? ''}}</td>
-                                        <td>{{$row->checkin->company_name ?? ''}}</td>
-                                        <td>{{$row->checkin->checkinstatus ?? ''}}</td>
-                                        <td>{{$row->checkin->checkout->checkout_date ?? ''}}</td>
+                                        <td>{{$row->booking_no ?? ''}}</td>
+                                        <td>{{$row->checkin_date ?? ''}}</td>
+                                        <td>{{$row->guest_name ?? ''}}</td>
+                                        <td>{{$row->company_name ?? ''}}</td>
+                                        <td>{{$row->checkinstatus ?? ''}}</td>
+                                        <td>{{$row->checkout_date ?? ''}}</td>
                                         <td>
                                             <a href="{{route('admin.post.to.room.invoice.print',$row->id)}}" class="btn btn-primary badge bg-info-light mr-2 invoicebtn" data-toggle="modal" data-target="#invoiceprint"><i class="las la-print"></i></a>
                                         </td>
@@ -114,12 +114,12 @@ $time = date("h:i");
 
                                     <tr>
                                         <td></td>
-                                        <td>{{$row->orderDetail->kot_date ?? ''}}</td>
-                                        <td>{{$row->orderDetail->invoice_id ?? ''}}</td>
+                                        <td>{{$row->payment_date ?? ''}}</td>
+                                        <td>{{$row->invoice_no ?? ''}}</td>
 
                                         <td>Durbar-Restaturant</td>
-                                        <td>{{$row->checkin->room_no ?? ''}}</td>
-                                        <td>{{$row->orderDetail->waiter->employee_name ?? ''}}</td>
+                                        <td>{{$row->room_no ?? ''}}</td>
+                                        <td>{{$row->waiter->employee_name?? ''}}</td>
                                         <td class="text-center" colspan="2">{!!$currency->symbol ?? ' '!!} {{round($row->gross_amount,2)}}</td>
 
                                     </tr>

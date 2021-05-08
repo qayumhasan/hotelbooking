@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Checkin;
 use App\Models\Checkout;
 use App\Models\Guest;
+use App\Models\PostToRoomReport;
 use App\Models\Restaurant_Order_head;
 use App\Models\TransectionReport;
 use App\Models\Voucher;
@@ -105,7 +106,7 @@ class CollectionReportController extends Controller
     {
         
         
-           return $checkinguests = TransectionReport::where('guest_id',$request->guestid)->where('is_occupy',0)->get();
+           $checkinguests = TransectionReport::where('guest_id',$request->guestid)->where('is_occupy',0)->get();
             return view('hotelbooking.collection_report.ajax.guest_payment_history_ajax',compact('checkinguests'));
      
 
@@ -145,7 +146,9 @@ class CollectionReportController extends Controller
         $guests =Guest::where('is_active',1)->where('is_deleted',0)->get();
 
         
-        $postToRooms = Restaurant_Order_head::with(['orderDetail','checkin'])->where('payment_method',5)->get();
+        // $postToRooms = Restaurant_Order_head::with(['orderDetail','checkin'])->where('payment_method',5)->get();
+
+        $postToRooms = PostToRoomReport::all();
 
         return view('hotelbooking.collection_report.post_to_room',compact('guests','postToRooms'));
     }
@@ -169,12 +172,18 @@ class CollectionReportController extends Controller
             'to_date'=>'required',
         ]);
 
+        $fromDate = $request->from_date;
+        $toDate = $request->to_date;
+
         $guestname = $request->guest_name;
-        $postToRooms = Restaurant_Order_head::whereHas('checkin',function($query) use($guestname,$request){
-                $query->where('guest_name', 'like', '%'.$guestname.'%')->orWhereNotBetween('checkin_date',[$request->from_date,$request->to_date]);
-        })->with(['orderDetail','checkin'=>function($query) use($guestname){
-            $query->where('guest_name', 'like', '%'.$guestname.'%');
-        }])->where('payment_method',5)->get();
+        // $postToRooms = Restaurant_Order_head::whereHas('checkin',function($query) use($guestname,$request){
+        //         $query->where('guest_name', 'like', '%'.$guestname.'%');
+        // })->with(['orderDetail','checkin'=>function($query) use($guestname){
+        //     $query->where('guest_name', 'like', '%'.$guestname.'%');
+        // }])->where('payment_method',5)->whereBetween('payment_date',[$fromDate,$toDate])->get();
+            
+         $postToRooms = PostToRoomReport::where('guest_id',$guestname)->whereBetween('payment_date',[$fromDate,$toDate])->get();
+
 
 
 

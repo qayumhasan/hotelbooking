@@ -4,13 +4,13 @@
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$date = date("d-m-Y");
+$date = date("Y/m/d");
 $time = date("h:i");
 @endphp
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$current =date("d-m-Y");
+$current =date("Y/m/d");
 $time = date("h:i");
 @endphp
 
@@ -27,13 +27,13 @@ $time = date("h:i");
                         <div class="col-sm-2"></div>
                         <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
                         <div class="col-sm-2">
-                            <input class="form-control datepickernew form-control-sm" name="from_date" type="text" value="{{$date}}">
+                            <input class="form-control datepicker form-control-sm" name="from_date" type="text" value="{{$date}}">
                             <small class="text-danger from_date"></small>
                         </div>
 
                         <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
                         <div class="col-sm-2">
-                            <input class="form-control datepickernew form-control-sm" name="to_date" type="text" value="{{$date}}">
+                            <input class="form-control datepicker form-control-sm" name="to_date" type="text" value="{{$date}}">
                             <small class="text-danger to_date"></small>
                         </div>
                         
@@ -103,9 +103,9 @@ $time = date("h:i");
 
 
 <script>
-    $('.datepickernew').datepicker(
+    $('.datepicker').datepicker(
         {
-            format: 'dd-mm-yyyy',
+            format: 'yyyy/mm/dd',
         }
     );
 </script>

@@ -4,7 +4,7 @@
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$date = date("d-m-Y");
+$date = date("Y/m/d");
 $time = date("h:i");
 @endphp
 
@@ -19,13 +19,13 @@ $time = date("h:i");
                         <div class="form-group row">
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>From Date:</b></label>
                             <div class="col-sm-2">
-                                <input class="form-control form-control-sm" id="datepickerdaly" name="from_date" type="text" value="{{$date}}">
+                                <input class="form-control form-control-sm datepicker" name="from_date" type="text" value="{{$date}}">
                                 <small class="text-danger from_date"></small>
                             </div>
 
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
                             <div class="col-sm-2">
-                                <input class="form-control datepickernew form-control-sm" name="to_date" type="text" value="{{$date}}">
+                                <input class="form-control datepicker form-control-sm" name="to_date" type="text" value="{{$date}}">
                                 <small class="text-danger to_date"></small>
                             </div>
 
@@ -75,7 +75,6 @@ $time = date("h:i");
                                         <th>Guest</th>
                                         <th>Room</th>
                                         <th>Mode</th>
-                                        <th>Remarks</th>
                                         <th>Cashier</th>
                                         <th>Amount</th>
                                     </tr>
@@ -91,7 +90,6 @@ $time = date("h:i");
                                         <td>{{$row->guest_name}}</td>
                                         <td>{{$row->room_no}}</td>
                                         <td>{{$row->voucher_type}}</td>
-                                        <td>{{$row->remarks}}</td>
                                         <td>{{$row->admin->username ?? '' }}</td>
                                         <td>{!!$currency->symbol ?? ' '!!} {{abs($row->TransectionAmount)}}</td>
                                     </tr>

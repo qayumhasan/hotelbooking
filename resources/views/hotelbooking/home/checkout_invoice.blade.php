@@ -3,7 +3,7 @@
 
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("d-m-Y");
+$current =date("Y/m/d");
 $time = date("h:i");
 @endphp
 <style>
@@ -190,7 +190,7 @@ $time = date("h:i");
 
                                                 <div class="row">
                                                     <div class="col">
-                                                        <input type="text" id="invoice_date" name="invoicedate" value="{{$current}}" class="form-control form-control-sm datepickernew">
+                                                        <input type="text" id="invoice_date" name="invoicedate" value="{{$current}}" class="form-control form-control-sm datepicker">
                                                     </div>
                                                 </div>
 
@@ -890,12 +890,29 @@ $time = date("h:i");
                             <table class="w-100 table-bordered p-4">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
+                                        <th class="text-center">Room No</th>
                                         <th class="text-center">Details</th>
-                                        <th width: 10%>Amount</th>
+                                        <th class="text-center">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $totalroomprice = 0;
+                                    @endphp
+                                    @foreach($roomdata as $key=>$row)
+                                    <tr>
+                                        <th class="text-center">{{$row->room_no}}</th>
+                                        <td class="text-center">{{$row->additional_room_day}} Days @ {!!$currency->symbol ?? ' '!!} {{$row->tarif}}</td>
+                                        @php
+                                            $totalroomprice = $totalroomprice +$row->additional_room_amount;
+                                        @endphp
+                                        <td class="text-center">{!!$currency->symbol ?? ' '!!} {{$totalroomprice}}</td>
+
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            <table>
+
                                     <!-- room area start from here -->
                                     <tr class="text-center">
                                     <th scope="row" class="text-left">Room</th>
