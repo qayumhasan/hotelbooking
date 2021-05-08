@@ -91,6 +91,7 @@ class AccountTrasectionController extends Controller
         $data->account_head_details = $account_hedcode->desription_of_account;
         $data->account_head_code = $account_hedcode->code;
         $data->voucher_no = $request->invoice;
+
         $data->date = $request->date;
         $data->rand_id = $rand_id;
         $data->location = $request->location;
@@ -137,7 +138,7 @@ class AccountTrasectionController extends Controller
 
         
         $newdata->voucher_no = $request->invoice;
-        $newdata->date = $request->date;
+        $newdata->date = Carbon::parse($request->date)->format('Y/m/d');
         $newdata->rand_id = $rand_id;
         $newdata->price = $request->price;
         $newdata->qty = $request->qty;

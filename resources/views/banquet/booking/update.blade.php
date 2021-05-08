@@ -3,7 +3,7 @@
 @section('content')
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("m/d/Y");
+$current = date("Y/m/d");
 $time = date("h:i");
 @endphp
 <style>

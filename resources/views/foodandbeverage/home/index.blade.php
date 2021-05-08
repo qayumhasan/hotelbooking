@@ -1,4 +1,5 @@
 @extends('foodandbeverage.master')
+@section('title', 'Food And Braverage | '.$seo->meta_title)
 @section('content')
 <style>
    .card-item {
@@ -118,7 +119,6 @@ $time = date("h:i");
 </div>
 
 <!-- history -->
-
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog modal-lg">

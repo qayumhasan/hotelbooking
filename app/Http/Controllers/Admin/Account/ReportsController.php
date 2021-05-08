@@ -466,7 +466,9 @@ class ReportsController extends Controller
             $vouchername=$request->Transection;
             $chartof_account=$request->chart_of_account;
             $none=DB::table('vAccountsHeadsLeadgerTbl')->whereBetween('date', [$formdate, $todate])->where('Code',$chartof_account)->get();
+
             $totalbalance=DB::table('vAccountsHeadsLeadgerTbl')->where('date', '<' ,$formdate)->where('Code',$chartof_account)->sum('Balance');
+            
             return view('accounts.reports.finalreport',compact('chartof_account','totalbalance','none','formdate','todate','allchart_of_acc','vouchername'));
         }
     }

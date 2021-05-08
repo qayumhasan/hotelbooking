@@ -27,9 +27,6 @@ class VoucherController extends Controller
 
     public function showvoucher($booking_no)
     {
-
-     
-        
         $guestname = Checkin::where('booking_no',$booking_no)->where('is_occupy',1)->first(); 
 
         $voucher_no = date("M").'/'.rand(111,999);
