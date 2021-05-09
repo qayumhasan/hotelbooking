@@ -897,26 +897,7 @@ $(document).ready(function() {
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                            <table  border="0"  width="100%">
-                                                <tbody>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>Total: {{$total_amount}}</td>
-                                                    
-                                                    </tr>
-                                                
-                                                </tbody>
-                                            </table>
-                                            
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 row" style="margin-bottom:20px;font-size:10px">
-
-                                                <table  width="100%">
+                                                <table width="100%">
                                                     <tbody>
                                                     
                                                     <tr>
@@ -930,6 +911,12 @@ $(document).ready(function() {
                                                                 
                                                     </tbody>
                                                 </table>
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 row" style="margin-bottom:20px;font-size:10px">
+
+                                               
                                            
                                         </div>
                                         <br>

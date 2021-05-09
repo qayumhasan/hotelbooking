@@ -69,7 +69,7 @@
                             <ul id="user" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.user.create*') ? 'active' : '' }}">
                                     <a href="{{route('admin.user.create')}}">
-                                        <i class="las la-user-plus"></i><span>User Add</span>
+                                        <i class="las la-list-alt"></i><span>User Add</span>
                                     </a>
                                 </li>
                                 <li class="{{ request()->routeIs('admin.user*') ? 'active' : '' }} ">
@@ -97,7 +97,7 @@
                             <ul id="employee" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="">
                                     <a href="{{route('admin.employee.create')}}">
-                                        <i class="las la-user-plus"></i><span>Employee Add</span>
+                                        <i class="las la-list-alt"></i><span>Employee Add</span>
                                     </a>
                                 </li>
                                 <li class=" ">
@@ -147,7 +147,7 @@
                             <ul id="branch" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                                 <li class="{{ request()->routeIs('admin.branch.index*') ? 'active' : '' }}">
                                     <a href="{{route('admin.branch.index')}}">
-                                        <i class="las la-user-plus"></i><span>All Branch</span>
+                                         <i class="las la-list-alt"></i><span>All Branch</span>
                                     </a>
                                 </li>
                                 <li class="{{ request()->routeIs('admin.branch.create*') ? 'active' : '' }}">
