@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\ChangeTariff;
 use App\Models\Checkin;
+use App\Models\Checkout;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use DateInterval;
@@ -89,6 +90,14 @@ class CalculatePerDayRoomTarrif
             $item['tarrif'] = $defaultAmount;
             $item['day'] = $diff;
             array_push($datewiseshow,$item);
+        }
+
+
+
+        $checkout = Checkout::where('booking_no', $booking_no)->first();
+        if($checkout){
+            $checkout->details = json_encode($datewiseshow);
+            $checkout->save();
         }
 
 

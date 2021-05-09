@@ -18,6 +18,7 @@
                                 </thead>
                              
                                 <tbody class="text-center">
+                                @if(count($checkins) > 0)
                                 @foreach($checkins as $row)
                                     <tr>
                                         <td>{{$row->booking_no}}</td>
@@ -34,6 +35,11 @@
                                         <td>{{$row->user->username}}</td>
                                     </tr>
                                 @endforeach
+                                @else
+                                <tr class="text-center">
+                                    <td colspan="12">No Data Found!</td>
+                                </tr>
+                                @endif
                                 </tbody>
 
 

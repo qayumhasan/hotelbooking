@@ -1,3 +1,4 @@
+@if(count($itemIssues) > 0)
 @foreach($itemIssues as $key=>$row)
 <tr class="deleteditem">
     <th scope="row">{{$loop->iteration}}</th>
@@ -10,3 +11,8 @@
     </td>
 </tr>
 @endforeach
+@else
+<tr class="text-center">
+    <th colspan="5">No Data Found!</th>
+</tr>
+@endif

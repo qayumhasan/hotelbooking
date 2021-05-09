@@ -3,7 +3,7 @@
 @section('content')
 @php
 date_default_timezone_set("asia/dhaka");
-$current = date("d-m-Y");
+$current = date("Y/m/d");
 $time = date("h:i A");
 @endphp
 
@@ -147,7 +147,7 @@ $time = date("h:i A");
                                             <div class="form-group row">
                                                 <label class="control-label col-sm-3 align-self-center" for="email">CheckOut Date And Time:</label>
                                                 <div class="col-sm-4">
-                                                    <input type="text" name="date" class="form-control form-control-sm datepickernew" value="{{$current}}">
+                                                    <input type="text" name="date" class="form-control form-control-sm datepicker" value="{{$current}}">
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <input type="text" name="time" class="form-control form-control-sm" value="{{$time}}">
@@ -161,7 +161,7 @@ $time = date("h:i A");
                                     <div class="col-md-4">
                                         <div class=" text-center">
                                             <span id="start-one">
-                                                <button id="file-upload-btn" type="submit" class="btn btn-lg btn-primary">Check Before Submit</button>
+                                                <!-- <button id="file-upload-btn" type="submit" class="btn btn-lg btn-primary">Check Before Submit</button> -->
                                             </span>
 
                                         </div>

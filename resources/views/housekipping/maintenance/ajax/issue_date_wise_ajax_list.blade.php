@@ -35,6 +35,7 @@
         $total = 0;
         @endphp
 
+        @if(count($row) > 0)
         @foreach($row as $data)
 
         <tr>
@@ -50,6 +51,11 @@
         </tr>
 
         @endforeach
+        @else
+        <tr class="text-center">
+            <th>No Data Found!</th>
+        </tr>
+        @endif
         <tr>
             <td></td>
             <th class="text-success">Total</th>
