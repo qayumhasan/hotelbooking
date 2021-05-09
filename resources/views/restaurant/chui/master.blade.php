@@ -380,7 +380,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script>
         $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy/mm/dd',
         });
     </script>
     <script>

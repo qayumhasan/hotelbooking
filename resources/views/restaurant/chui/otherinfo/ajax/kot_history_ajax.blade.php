@@ -44,6 +44,10 @@
         </tr>
 
         @endforeach
+        @else
+        <tr class="text-center">
+          <th colspan="6">No Data Found!</th>
+        </tr>
         @endif
     </tbody>
 </table>

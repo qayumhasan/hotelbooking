@@ -4,13 +4,13 @@
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$date = date("d/m/Y");
+$date = date("Y/m/d");
 $time = date("h:i");
 @endphp
 
 @php
 date_default_timezone_set("Asia/Dhaka");
-$current =date("d/m/Y");
+$current =date("Y/m/d");
 $time = date("h:i");
 @endphp
 
@@ -33,7 +33,7 @@ $time = date("h:i");
 
                             <label for="inputPassword" class="col-sm-1 col-form-label"><b>To Date:</b></label>
                             <div class="col-sm-4">
-                                <input class="form-control datepicker form-control-sm" name="to_date" type="text">
+                                <input class="form-control datepicker form-control-sm" value="{{$date}}" name="to_date" type="text">
                                 <small class="text-danger to_date"></small>
                             </div>
 
@@ -141,7 +141,7 @@ $time = date("h:i");
                     type:type,
                     data: request,
                     success:function(data){
-                        console.log(data);
+                        $('#additemlist').empty();
                         $('#additemlist').append(data);
                     },
                     error:function(err){
