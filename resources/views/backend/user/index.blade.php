@@ -50,7 +50,7 @@
                                    @endif
                                    <a class="badge bg-primary-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/user/edit/'.$data->id)}}" data-original-title="Edit"><i class="lar la-edit"></i></a>
                                    <a id="delete" class="badge bg-danger-light mr-2"  data-toggle="tooltip" data-placement="top" href="{{url('admin/user/delete/'.$data->id)}}" data-original-title="Delete"> <i class="la la-trash"></i></a>
-                                   <a class="badge bg-success-light mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="View" href="{{url('admin/user/view/'.$data->id)}}"><i class="lar la-eye"></i></a>
+                                   <!-- <a class="badge bg-success-light mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="View" href="{{url('admin/user/view/'.$data->id)}}"><i class="lar la-eye"></i></a> -->
                                  </td>
                               </tr>
                               @endforeach

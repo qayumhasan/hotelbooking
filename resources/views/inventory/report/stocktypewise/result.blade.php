@@ -64,7 +64,7 @@ $current = date("Y/m/d");
                        </div>
                        </form>
                       <br>
-                     <div class="table-responsive" id="printarea">
+                     <div class="table-responsive printableAreasavepr">
                         <table class="table table-striped table-bordered" >
                            <thead class="text-center">
                               <tr>
@@ -181,6 +181,20 @@ $current = date("Y/m/d");
          </div>
       </div>
 </div>
-
+     
+<script>
+        $(function () {
+            $(".printPage").on('click', function () {
+              //alert("ok");
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printableAreasavepr").printArea(options);
+            });
+        });
+   </script> 
       
 @endsection

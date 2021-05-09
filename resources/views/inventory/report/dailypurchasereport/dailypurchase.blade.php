@@ -51,8 +51,8 @@ $current = date("Y/m/d");
                               </div>
                        </div>
                        </form>
-                     <div class="table-responsive" id="printarea">
-                        <table class="table table-striped table-bordered" >
+                     <div class="table-responsive printableAreasaveprint">
+                        <table class="table table-striped table-bordered" width="100%" >
                            <thead class="text-center">
                               <tr>
                                  <th>SNo.</th>
@@ -111,7 +111,7 @@ $current = date("Y/m/d");
                         <p class="text-right">Total Purchase Amount: {{round($total_amount)}} tk</p>
                         <br>
                         <br>
-                        <table class="table table-striped table-bordered" >
+                        <table class="table table-striped table-bordered" width="100%">
                            <p>Summary Of Taxes & Discount</p>
                            <tbody class="text-center">
                            <!--  -->
@@ -144,7 +144,8 @@ $current = date("Y/m/d");
                            <div class="col-md-6 text-right">
                            <p>Created By: {{Auth::user()->name}}</p>
                            </div>
-                        </div>
+                     </div>
+
                      <div class="row text-center">
                         <div class="col-md-12">
                            <button type="button" class="btn-sm btn-info printPage">Print</button>
@@ -157,5 +158,18 @@ $current = date("Y/m/d");
       </div>
 </div>
 
-      
+<script>
+        $(function () {
+            $(".printPage").on('click', function () {
+              //alert("ok");
+                var mode = 'iframe'; //popup
+                var close = mode == "popup";
+                var options = {
+                    mode: mode,
+                    popClose: close
+                };
+                $("div.printableAreasaveprint").printArea(options);
+            });
+        });
+   </script>
 @endsection
